@@ -7,7 +7,13 @@
       "lon": 14.3375753,
       "address": "Nad Lávkou 672/5, Praha 6",
       "notes": "Nad Lávkou 672/5, Praha 6\nV areálu SK Aritma Praha, více na www.skaritma.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
     },
     "geo": {
       "x0": -748682.8518148813,
@@ -94,7 +100,13 @@
       "lon": 14.5980378,
       "address": "Na Korunce 580, Praha 9",
       "notes": "Na Korunce 580, Praha 9\nV areálu Sokola Běchovice, více na www.sokolbechovice.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
+        "lisovky": "forbidden",
+        "ag": "allowed",
+        "summary": "AG or turf, no lisovky"
+      }
     },
     "geo": {
       "x0": -730554.3445797338,
@@ -181,7 +193,13 @@
       "lon": 14.3653978,
       "address": "Smrčinská 3346/5, Praha 5",
       "notes": "Smrčinská 3346/5, Praha 5\nV areálu SK Čechie Smíchov, více na www.cechiesmichov.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+        "lisovky": "forbidden",
+        "ag": "allowed",
+        "summary": "AG or turf, no lisovky"
+      }
     },
     "geo": {
       "x0": -747061.8024701173,
@@ -271,7 +289,13 @@
       "lon": 14.3778769,
       "address": "Na Hanspaulce 166/2, Praha 6",
       "notes": "Na Hanspaulce 166/2, Praha 6\nVe Sportovním areálu Hanspaulka, více na https://sportovniarealhanspaulka.cz .\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+        "lisovky": "forbidden",
+        "ag": "allowed",
+        "summary": "AG or turf, no lisovky"
+      }
     },
     "geo": {
       "x0": -745713.398836245,
@@ -358,7 +382,13 @@
       "lon": 14.3600775,
       "address": "Butovická 592/35, Praha 5",
       "notes": "Butovická 592/35, Praha 5\nV areálu SK Motorlet Praha, více na www.sk-motorlet.cz, www.fotbal-motorlet.cz.\n\r\nKabiny a sprchy jsou v buňkách u horního fotbalového hřiště s UMT.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je vpravo za administrativní budovou oddílu, č. 4 je za fotbalovým hřištěm s UMT, které je nad tribunou stadionu.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
     },
     "geo": {
       "x0": -747813.2425217289,
@@ -445,7 +475,13 @@
       "lon": 14.4748442,
       "address": "Za Žižkovskou vozovnou 2716/19, Praha 3",
       "notes": "Za Žižkovskou vozovnou 2716/19, Praha 3\nVe „Sportovním a rekreačním areálu“ Pražačka, více na www.prazacka.cz. UMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže kabinám, č. 3 je nejvzdálenější.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze vhodit do schránky nalevo před vchodem do bistra Pražanda.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
     },
     "geo": {
       "x0": -739028.2437026588,
@@ -596,7 +632,13 @@
       "lon": 14.5487886,
       "address": "Turínská 1483/3, Praha 10",
       "notes": "Turínská 1483/3, Praha 10\nV areálu Tenis Hostivař, více na www.scmecholupy.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší než hř. č. 2.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány! \n\r\nPoznámka: kabiny jsou do 30.6.2026 mimo provoz! (jsou na úrovni parkoviště uprostřed areálu za budovou prosklené recepce pod fotbalovým hřištěm). \n\r\nPokud UO nebude svítit, dojděte o rozsvícení požádat do recepce Tenisu Hostivař - pod úrovni hřiště, mezi parkovištěm a kurty.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
+        "lisovky": "forbidden",
+        "ag": "forbidden",
+        "summary": "turf / indoor only"
+      }
     },
     "geo": {
       "x0": -734598.5317911864,
@@ -686,7 +728,13 @@
       "lon": 14.5487886,
       "address": "Turínská 1483/3, Praha 10",
       "notes": "Turínská 1483/3, Praha 10\nV areálu Tenis Hostivař, více na www.scmecholupy.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší než hř. č. 2.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány! \n\r\nPoznámka: kabiny jsou do 30.6.2026 mimo provoz! (jsou na úrovni parkoviště uprostřed areálu za budovou prosklené recepce pod fotbalovým hřištěm). \n\r\nPokud UO nebude svítit, dojděte o rozsvícení požádat do recepce Tenisu Hostivař - pod úrovni hřiště, mezi parkovištěm a kurty.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
+        "lisovky": "forbidden",
+        "ag": "forbidden",
+        "summary": "turf / indoor only"
+      }
     },
     "geo": {
       "x0": -734598.5317911864,
@@ -777,7 +825,13 @@
       "lon": 14.5536542,
       "address": "U Školy 430, Praha 10",
       "notes": "U Školy 430, Praha 10\nV areálu za sportovní halou.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže hale, č. 3 nejdále.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
     },
     "geo": {
       "x0": -733771.2841315186,
@@ -929,7 +983,13 @@
       "lon": 14.5536542,
       "address": "U Školy 430, Praha 10",
       "notes": "U Školy 430, Praha 10\nV areálu za sportovní halou.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže hale, č. 3 nejdále.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
-      "surface": "artificial"
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
     },
     "geo": {
       "x0": -733771.2841315186,

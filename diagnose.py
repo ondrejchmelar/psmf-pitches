@@ -83,21 +83,25 @@ def diagnose(code, venues, overrides, meas, res, half):
         n = mid - ctr
         n = n / np.linalg.norm(n)
         side = M._compass(float(n[0]), float(n[1]))
-        # which profile and which end of it does this edge sit on?
-        horizontal = abs(n[0] * np.cos(np.radians(ang)) + n[1] * np.sin(np.radians(ang)))
-        if horizontal > 0.5:
-            prof, pos = col_src, (x0 if _is_low(a, b, rot, 0, x0) else x1)
-        else:
-            prof, pos = row_src, (y0 if _is_low(a, b, rot, 1, y0) else y1)
+        # Which profile, and which end of it? Decide by whichever of the four
+        # rotated-frame bounds the edge midpoint actually sits on. Inferring it
+        # from the edge normal instead made opposite edges resolve to the same
+        # bound whenever the rectangle was strongly rotated.
+        mr = cv2.transform(mid.reshape(1, 1, 2), rot).reshape(2)
+        opts = [(abs(float(mr[0]) - x0), col_src, x0),
+                (abs(float(mr[0]) - x1), col_src, x1),
+                (abs(float(mr[1]) - y0), row_src, y0),
+                (abs(float(mr[1]) - y1), row_src, y1)]
+        _, prof, pos = min(opts, key=lambda o: o[0])
         pk = peaks_near(prof, pos, res)
         kind = "blue" if (prof is colC or prof is rowC) else "white"
-        print(f"    {side} edge ({kind:5s}) nearest lines: {pk}")
+        # The strongest peak nearby is often the kerb or the surround rather
+        # than a marking, so report the closest one separately: that is the
+        # number to act on.
+        closest = min(pk, key=lambda t: abs(t[0])) if pk else None
+        head = f"{closest[0]:+.2f} m ({closest[1]}x)" if closest else "no line found"
+        print(f"    {side} edge ({kind:5s}) {head:22s} candidates: {pk}")
     _render(img, pts, code, cand, ROOT / "out" / f"diag_{code}.png", res)
-
-
-def _is_low(a, b, rot, axis, low):
-    m = cv2.transform(((a + b) / 2.0).reshape(1, 1, 2), rot).reshape(2)
-    return abs(float(m[axis]) - low) < 1.0
 
 
 def _render(img, pts, code, cand, path, res, pad_m=8.0):

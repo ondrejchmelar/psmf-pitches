@@ -102,6 +102,13 @@ parent-field segmentation.
 `out/measurements.json` with only the venues it touched, silently dropping the
 rest. It now loads the existing file first.
 
+**The strongest nearby peak is often not a marking.** At several grounds the
+kerb or the surround outshines the touchline, which is why HANSP carries a
+`fit_out_m` that starts the search inside the carpet. `diagnose.py` prints the
+*closest* peak first for this reason; a stronger one 1-3 m out is usually the
+surround, not evidence the fit is wrong. Confirm against the image before
+chasing it.
+
 **Nudge signs are inverted between opposite edges.** Apply, re-run
 `diagnose.py`, confirm the offset moved toward zero. Do not reason it out.
 
