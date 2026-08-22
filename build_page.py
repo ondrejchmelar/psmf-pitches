@@ -36,35 +36,20 @@ def esc(s):
 
 trs = []
 for r in rows:
-    ha = "home" if r["home"] else "away"
     trs.append(f'''<tr>
 <td class="num">{r["round"]}</td>
 <td class="date">{esc(r["date"])}<span class="t">{esc(r["time"])}</span></td>
-<td><span class="chip {ha}">{"H" if r["home"] else "A"}</span></td>
 <td>{esc(r["opponent"])}</td>
 <td>{esc(r["venue"])} <code>{esc(r["code"])}</code></td>
 <td class="dim">{r["l"]} &times; {r["w"]}</td>
 <td class="num">{r["area"]}</td>
-<td><span class="conf {r["conf"]}">{r["conf"]}</span></td>
 </tr>''')
 
 cards = []
 for p in pitches:
     c = p["cand"]
-    kind = ("whole pitch" if c["kind"] == "whole_pitch"
-            else c["kind"].replace("_", " "))
     fx = ", ".join(f'R{f["round"]} {"vs" if f["home"] else "at"} {esc(f["opponent"])}'
                    for f in p["fixtures"])
-    edges = " / ".join(f'{e:.0f}' for e in (p["edges"] or [])) or "n/a"
-    extra = ""
-    if c["kind"] != "whole_pitch":
-        extra = (f'<div class="kv"><span>Full football pitch</span><b>{round(c["parent_l_m"])} &times; '
-                 f'{round(c["parent_w_m"])} m</b></div>')
-        if c.get("section_order"):
-            extra += (f'<div class="kv"><span>Numbering</span><b>'
-                      f'{esc(c["section_order"])}</b></div>')
-    lines = (f'<div class="kv"><span>Painted lines</span><b>{c["line_l_m"]} &times; '
-             f'{c["line_w_m"]} m</b></div>') if c.get("line_l_m") else ""
     cards.append(f'''<article class="card">
   <figure><img src="{p["img"]}" alt="Orthophoto of {esc(p["venue"])} with the measured rectangle drawn on" loading="lazy"></figure>
   <div class="body">
@@ -73,14 +58,7 @@ for p in pitches:
       <p class="d">{p["l"]} &times; {p["w"]} m</p>
     </header>
     <div class="bar"><i style="width:{100*p["area"]/mx:.1f}%"></i><span>{p["area"]} m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>{kind}</b></div>
-    {extra}{lines}
-    <div class="kv"><span>Turf carpet</span><b>{esc(p["turf"])} m</b></div>
-    <div class="kv"><span>Exact fit</span><b>{p["l_exact"]} &times; {p["w_exact"]} m</b></div>
-    <div class="kv"><span>Imagery</span><b>{esc(p["capture"])}</b></div>
-    <div class="kv"><span>Edge confidence</span><b>{esc(p["conf"])} ({edges})</b></div>
     <p class="fx">{fx}</p>
-    <p class="nt">{esc(ov.get(p["code"], {}).get("note", ""))}</p>
   </div>
 </article>''')
 
@@ -148,16 +126,6 @@ tbody tr:hover {{ background:var(--sunk); }}
 .date .t {{ color:var(--faint); margin-left:7px; font-size:13px; }}
 code {{ font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }}
-.chip {{ display:inline-block; min-width:20px; text-align:center;
-  font:700 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace; border-radius:2px;
-  padding:0 5px; border:1px solid currentColor; }}
-.chip.home {{ color:var(--home); }} .chip.away {{ color:var(--away); }}
-.conf {{ font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
-  text-transform:uppercase; letter-spacing:.04em; padding:0 6px; border-radius:2px;
-  border:1px solid currentColor; }}
-.conf.high {{ color:var(--home); }}
-.conf.medium {{ color:var(--mark); }}
-.conf.low {{ color:var(--away); }}
 .grid {{ display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   align-items:start; }}
 .card {{ background:var(--surface); border:1px solid var(--rule); border-radius:3px;
@@ -179,12 +147,6 @@ code {{ font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var
 .kv span {{ color:var(--faint); }}
 .kv b {{ font-weight:600; font-variant-numeric:tabular-nums; text-align:right; }}
 .fx {{ margin:4px 0 0; font-size:12.5px; color:var(--muted); }}
-.nt {{ margin:0; font-size:12.5px; line-height:1.5; color:var(--faint); }}
-.note {{ background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--mark);
-  border-radius:3px; padding:20px 22px; }}
-.note p {{ margin:0 0 11px; font-size:14.5px; color:var(--muted); max-width:70ch; }}
-.note p:last-child {{ margin-bottom:0; }}
-.note b {{ color:var(--ink); font-weight:620; }}
 footer {{ margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }}
 a {{ color:var(--accent); }}
@@ -211,8 +173,8 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
 <hr class="rule">
 <h2>Season fixtures</h2>
 <div class="scroll"><table>
-<thead><tr><th>R</th><th>Date</th><th>H/A</th><th>Opponent</th><th>Venue</th>
-<th>Painted pitch L &times; W</th><th>Area m&sup2;</th><th>Conf.</th></tr></thead>
+<thead><tr><th>R</th><th>Date</th><th>Opponent</th><th>Venue</th>
+<th>Painted pitch L &times; W</th><th>Area m&sup2;</th></tr></thead>
 <tbody>
 {chr(10).join(trs)}
 </tbody></table></div>
@@ -221,17 +183,6 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
 <h2>Pitch by pitch &middot; largest to smallest</h2>
 <div class="grid">
 {chr(10).join(cards)}
-</div>
-
-<hr class="rule">
-<h2>How to read these numbers</h2>
-<div class="note">
-<p><b>These are the painted lines, not the turf carpet.</b> The carpet includes a run-off margin and
-reads 1&ndash;3&nbsp;m bigger; the figures here are fitted to the markings themselves. Three things
-made that possible: 5&nbsp;cm imagery, where a 12&nbsp;cm line is 2&ndash;3&nbsp;px instead of barely
-one; a line filter that keys on <em>thin structures differing in colour from the turf</em> rather
-than on whiteness; and a tight search band, since a touchline sits within about a metre of the turf
-edge while the penalty-area line is metres inside it.</p>
 </div>
 
 <footer>

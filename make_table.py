@@ -35,15 +35,14 @@ for f in fx["fixtures"]:
         "note": ov.get(code, {}).get("note", ""),
     })
 
-hdr = ("| R | Date | Venue | Code | H/A | Opponent | Painted pitch L x W (m) | Area (m2) | Type | Conf |\n"
-       "|---:|---|---|---|:--:|---|---|---:|---|---|")
+hdr = ("| R | Date | Venue | Code | Opponent | Painted pitch L x W (m) | Area (m2) |\n"
+       "|---:|---|---|---|---|---|---:|")
 lines = [hdr]
 for r in rows:
     dim = f'{r["l"]} x {r["w"]}' if r["l"] else "n/a"
     kind = {"whole_pitch": "whole pitch"}.get(r["kind"] or "", (r["kind"] or "").replace("_", " "))
     lines.append(f'| {r["round"]} | {r["date"]} {r["time"]} | {r["venue"]} | {r["code"]} | '
-                 f'{"H" if r["home"] else "A"} | {r["opponent"]} | {dim} | {r["area"] or "-"} | '
-                 f'{kind} | {r["conf"]} |')
+                 f'{r["opponent"]} | {dim} | {r["area"] or "-"} |')
 table = "\n".join(lines)
 (ROOT / "out/table.md").write_text(table + "\n", "utf-8")
 (ROOT / "out/table.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), "utf-8")

@@ -62,16 +62,6 @@ tbody tr:hover { background:var(--sunk); }
 .date .t { color:var(--faint); margin-left:7px; font-size:13px; }
 code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }
-.chip { display:inline-block; min-width:20px; text-align:center;
-  font:700 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace; border-radius:2px;
-  padding:0 5px; border:1px solid currentColor; }
-.chip.home { color:var(--home); } .chip.away { color:var(--away); }
-.conf { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
-  text-transform:uppercase; letter-spacing:.04em; padding:0 6px; border-radius:2px;
-  border:1px solid currentColor; }
-.conf.high { color:var(--home); }
-.conf.medium { color:var(--mark); }
-.conf.low { color:var(--away); }
 .grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   align-items:start; }
 .card { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
@@ -93,12 +83,6 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .kv span { color:var(--faint); }
 .kv b { font-weight:600; font-variant-numeric:tabular-nums; text-align:right; }
 .fx { margin:4px 0 0; font-size:12.5px; color:var(--muted); }
-.nt { margin:0; font-size:12.5px; line-height:1.5; color:var(--faint); }
-.note { background:var(--surface); border:1px solid var(--rule); border-left:2px solid var(--mark);
-  border-radius:3px; padding:20px 22px; }
-.note p { margin:0 0 11px; font-size:14.5px; color:var(--muted); max-width:70ch; }
-.note p:last-child { margin-bottom:0; }
-.note b { color:var(--ink); font-weight:620; }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }
 a { color:var(--accent); }
@@ -125,118 +109,96 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
 <hr class="rule">
 <h2>Season fixtures</h2>
 <div class="scroll"><table>
-<thead><tr><th>R</th><th>Date</th><th>H/A</th><th>Opponent</th><th>Venue</th>
-<th>Painted pitch L &times; W</th><th>Area m&sup2;</th><th>Conf.</th></tr></thead>
+<thead><tr><th>R</th><th>Date</th><th>Opponent</th><th>Venue</th>
+<th>Painted pitch L &times; W</th><th>Area m&sup2;</th></tr></thead>
 <tbody>
 <tr>
 <td class="num">1</td>
 <td class="date">St 9.9.26<span class="t">20:45</span></td>
-<td><span class="chip away">A</span></td>
 <td>Orange Predators B</td>
 <td>Čechie Smíchov <code>CESMI</code></td>
 <td class="dim">45 &times; 22</td>
 <td class="num">990</td>
-<td><span class="conf high">high</span></td>
 </tr>
 <tr>
 <td class="num">2</td>
 <td class="date">Čt 17.9.26<span class="t">20:30</span></td>
-<td><span class="chip home">H</span></td>
 <td>Gremio</td>
 <td>Motorlet <code>MOTO4</code></td>
 <td class="dim">50 &times; 31</td>
 <td class="num">1550</td>
-<td><span class="conf high">high</span></td>
 </tr>
 <tr>
 <td class="num">3</td>
 <td class="date">Čt 24.9.26<span class="t">19:15</span></td>
-<td><span class="chip away">A</span></td>
 <td>Mestek 97 FC</td>
 <td>Hanspaulka <code>HANSP</code></td>
 <td class="dim">44 &times; 21</td>
 <td class="num">924</td>
-<td><span class="conf medium">medium</span></td>
 </tr>
 <tr>
 <td class="num">4</td>
 <td class="date">St 30.9.26<span class="t">18:15</span></td>
-<td><span class="chip home">H</span></td>
 <td>Kluci z Vršovic</td>
 <td>Štěrboholy <code>STER3</code></td>
 <td class="dim">48 &times; 28</td>
 <td class="num">1344</td>
-<td><span class="conf medium">medium</span></td>
 </tr>
 <tr>
 <td class="num">5</td>
 <td class="date">Čt 8.10.26<span class="t">20:45</span></td>
-<td><span class="chip away">A</span></td>
 <td>Intertoto</td>
 <td>Pražačka <code>P2</code></td>
 <td class="dim">45 &times; 24</td>
 <td class="num">1080</td>
-<td><span class="conf low">low</span></td>
 </tr>
 <tr>
 <td class="num">6</td>
 <td class="date">St 21.10.26<span class="t">18:00</span></td>
-<td><span class="chip home">H</span></td>
 <td>Nulová šance</td>
 <td>SC Měcholupy <code>SANC2</code></td>
 <td class="dim">45 &times; 25</td>
 <td class="num">1125</td>
-<td><span class="conf medium">medium</span></td>
 </tr>
 <tr>
 <td class="num">7</td>
 <td class="date">Čt 29.10.26<span class="t">18:00</span></td>
-<td><span class="chip away">A</span></td>
 <td>1.FP Praha</td>
 <td>SC Měcholupy <code>SANC1</code></td>
 <td class="dim">45 &times; 24</td>
 <td class="num">1080</td>
-<td><span class="conf medium">medium</span></td>
 </tr>
 <tr>
 <td class="num">8</td>
 <td class="date">Čt 5.11.26<span class="t">18:15</span></td>
-<td><span class="chip home">H</span></td>
 <td>Tohle není hokej?</td>
 <td>Aritma <code>ARIT</code></td>
 <td class="dim">55 &times; 24</td>
 <td class="num">1320</td>
-<td><span class="conf high">high</span></td>
 </tr>
 <tr>
 <td class="num">9</td>
 <td class="date">Čt 19.11.26<span class="t">18:15</span></td>
-<td><span class="chip away">A</span></td>
 <td>Bandidoz</td>
 <td>Štěrboholy <code>STER2</code></td>
 <td class="dim">48 &times; 28</td>
 <td class="num">1344</td>
-<td><span class="conf medium">medium</span></td>
 </tr>
 <tr>
 <td class="num">10</td>
 <td class="date">Čt 26.11.26<span class="t">20:45</span></td>
-<td><span class="chip home">H</span></td>
 <td>Zavináč FC</td>
 <td>Pražačka <code>P2</code></td>
 <td class="dim">45 &times; 24</td>
 <td class="num">1080</td>
-<td><span class="conf low">low</span></td>
 </tr>
 <tr>
 <td class="num">11</td>
 <td class="date">Čt 10.12.26<span class="t">20:45</span></td>
-<td><span class="chip away">A</span></td>
 <td>Dromedarians Praha</td>
 <td>Běchovice 2 <code>BECH</code></td>
 <td class="dim">44 &times; 24</td>
 <td class="num">1056</td>
-<td><span class="conf high">high</span></td>
 </tr>
 </tbody></table></div>
 
@@ -251,14 +213,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">50 &times; 31 m</p>
     </header>
     <div class="bar"><i style="width:100.0%"></i><span>1550 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>50 x 31 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>49.62 &times; 30.79 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2024 leaf-off</b></div>
-    <div class="kv"><span>Edge confidence</span><b>high (24 / 18 / 17 / 16)</b></div>
     <p class="fx">R2 vs Gremio</p>
-    <p class="nt">Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here.</p>
   </div>
 </article>
 <article class="card">
@@ -269,14 +224,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">48 &times; 28 m</p>
     </header>
     <div class="bar"><i style="width:86.7%"></i><span>1344 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>section 3 of 3</b></div>
-    <div class="kv"><span>Full football pitch</span><b>99 &times; 63 m</b></div><div class="kv"><span>Numbering</span><b>section 1 at the W end</b></div>
-    <div class="kv"><span>Turf carpet</span><b>99 x 63 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>48.2 &times; 27.74 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2024 leaf-off</b></div>
-    <div class="kv"><span>Edge confidence</span><b>medium (2 / 3 / 9 / 15)</b></div>
     <p class="fx">R4 vs Kluci z Vršovic</p>
-    <p class="nt">Pitch 3 of 3 on the same parent field as STER2. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking.</p>
   </div>
 </article>
 <article class="card">
@@ -287,14 +235,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">48 &times; 28 m</p>
     </header>
     <div class="bar"><i style="width:86.7%"></i><span>1344 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>section 2 of 3</b></div>
-    <div class="kv"><span>Full football pitch</span><b>99 &times; 63 m</b></div><div class="kv"><span>Numbering</span><b>section 1 at the W end</b></div>
-    <div class="kv"><span>Turf carpet</span><b>99 x 63 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>48.14 &times; 27.53 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2024 leaf-off</b></div>
-    <div class="kv"><span>Edge confidence</span><b>medium (3 / 2 / 11 / 13)</b></div>
     <p class="fx">R9 at Bandidoz</p>
-    <p class="nt">Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue.</p>
   </div>
 </article>
 <article class="card">
@@ -305,14 +246,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">55 &times; 24 m</p>
     </header>
     <div class="bar"><i style="width:85.2%"></i><span>1320 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>55 x 24 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>54.9 &times; 23.92 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>high (15 / 17 / 8 / 8)</b></div>
     <p class="fx">R8 vs Tohle není hokej?</p>
-    <p class="nt">Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.</p>
   </div>
 </article>
 <article class="card">
@@ -323,14 +257,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">45 &times; 25 m</p>
     </header>
     <div class="bar"><i style="width:72.6%"></i><span>1125 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>53 x 30 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>45.1 &times; 25.16 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>medium (5 / 6 / 6 / 4)</b></div>
     <p class="fx">R6 vs Nulová šance</p>
-    <p class="nt">Right of the two adjacent pitches; west and north edges nudged in off the surround.</p>
   </div>
 </article>
 <article class="card">
@@ -341,14 +268,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">45 &times; 24 m</p>
     </header>
     <div class="bar"><i style="width:69.7%"></i><span>1080 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>section 2 of 3</b></div>
-    <div class="kv"><span>Full football pitch</span><b>115 &times; 52 m</b></div><div class="kv"><span>Numbering</span><b>section 1 at the W end</b></div>
-    <div class="kv"><span>Turf carpet</span><b>115 x 52 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>45.27 &times; 24.0 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>low (1 / 2 / 5 / 4)</b></div>
     <p class="fx">R5 at Intertoto, R10 vs Zavináč FC</p>
-    <p class="nt">Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks.</p>
   </div>
 </article>
 <article class="card">
@@ -359,14 +279,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">45 &times; 24 m</p>
     </header>
     <div class="bar"><i style="width:69.7%"></i><span>1080 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>52 x 28 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>45.18 &times; 24.07 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>medium (8 / 8 / 3 / 5)</b></div>
     <p class="fx">R7 at 1.FP Praha</p>
-    <p class="nt">Left of the two adjacent pitches; north edge nudged in off a stray marking.</p>
   </div>
 </article>
 <article class="card">
@@ -377,14 +290,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">44 &times; 24 m</p>
     </header>
     <div class="bar"><i style="width:68.1%"></i><span>1056 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>44 x 25 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>43.9 &times; 23.91 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>high (8 / 7 / 12 / 12)</b></div>
     <p class="fx">R11 at Dromedarians Praha</p>
-    <p class="nt">Single artificial pitch beside the clay tennis courts.</p>
   </div>
 </article>
 <article class="card">
@@ -395,14 +301,7 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">45 &times; 22 m</p>
     </header>
     <div class="bar"><i style="width:63.9%"></i><span>990 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>49 x 23 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>44.8 &times; 21.91 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2025</b></div>
-    <div class="kv"><span>Edge confidence</span><b>high (8 / 8 / 7 / 6)</b></div>
     <p class="fx">R1 at Orange Predators B</p>
-    <p class="nt">Single artificial pitch north of the natural-grass field. East edge nudged in: the automatic fit ran past the touchline onto the surround.</p>
   </div>
 </article>
 <article class="card">
@@ -413,27 +312,9 @@ orthophoto imagery at 5&nbsp;cm per pixel. Every rectangle below was checked aga
       <p class="d">44 &times; 21 m</p>
     </header>
     <div class="bar"><i style="width:59.6%"></i><span>924 m&sup2;</span></div>
-    <div class="kv"><span>Type</span><b>whole pitch</b></div>
-    
-    <div class="kv"><span>Turf carpet</span><b>49 x 25 m</b></div>
-    <div class="kv"><span>Exact fit</span><b>44.26 &times; 21.31 m</b></div>
-    <div class="kv"><span>Imagery</span><b>2024 leaf-off</b></div>
-    <div class="kv"><span>Edge confidence</span><b>medium (4 / 4 / 3 / 4)</b></div>
     <p class="fx">R3 at Mestek 97 FC</p>
-    <p class="nt">Single artificial pitch among the tennis courts. Pinned to the 2024 leaf-off capture: in summer flights a tree shadow swallows the east end. The search band starts 1 m inside the carpet because the bright teal kerb sits exactly where the touchline search would otherwise land.</p>
   </div>
 </article>
-</div>
-
-<hr class="rule">
-<h2>How to read these numbers</h2>
-<div class="note">
-<p><b>These are the painted lines, not the turf carpet.</b> The carpet includes a run-off margin and
-reads 1&ndash;3&nbsp;m bigger; the figures here are fitted to the markings themselves. Three things
-made that possible: 5&nbsp;cm imagery, where a 12&nbsp;cm line is 2&ndash;3&nbsp;px instead of barely
-one; a line filter that keys on <em>thin structures differing in colour from the turf</em> rather
-than on whiteness; and a tight search band, since a touchline sits within about a metre of the turf
-edge while the penalty-area line is metres inside it.</p>
 </div>
 
 <footer>
