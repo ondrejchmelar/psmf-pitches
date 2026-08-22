@@ -1,0 +1,1076 @@
+{
+  "ARIT": {
+    "venue": {
+      "code": "ARIT",
+      "name": "Aritma",
+      "lat": 50.0978261,
+      "lon": 14.3375753,
+      "address": "Nad Lávkou 672/5, Praha 6",
+      "notes": "Nad Lávkou 672/5, Praha 6\nV areálu SK Aritma Praha, více na www.skaritma.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -748682.8518148813,
+      "y1": -1040951.8510608376,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -748582.8518148813,
+        -1041051.8510608376
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 55.3,
+        "turf_w_m": 24.0,
+        "turf_area_m2": 1329,
+        "aspect": 2.3,
+        "rectness": 0.933,
+        "border_support": 1.0,
+        "bearing_deg": 179.8,
+        "centre_lat": 50.0978804,
+        "centre_lon": 14.3375279,
+        "rect_px": [
+          [
+            1711.1,
+            2425.0
+          ],
+          [
+            1707.0,
+            1319.1
+          ],
+          [
+            2187.7,
+            1317.3
+          ],
+          [
+            2191.9,
+            2423.2
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 54.9,
+        "painted_w_m": 23.92,
+        "painted_angle": 179.78,
+        "edge_strength": [
+          15.4,
+          16.7,
+          8.2,
+          8.3
+        ],
+        "play_l_m": 54.9,
+        "play_w_m": 23.92,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1708.8,
+            1324.7
+          ],
+          [
+            2187.2,
+            1322.9
+          ],
+          [
+            2191.3,
+            2420.9
+          ],
+          [
+            1712.9,
+            2422.7
+          ]
+        ]
+      }
+    ]
+  },
+  "BECH": {
+    "venue": {
+      "code": "BECH",
+      "name": "Běchovice 2",
+      "lat": 50.075445,
+      "lon": 14.5980378,
+      "address": "Na Korunce 580, Praha 9",
+      "notes": "Na Korunce 580, Praha 9\nV areálu Sokola Běchovice, více na www.sokolbechovice.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -730554.3445797338,
+      "y1": -1045947.5089646525,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -730454.3445797338,
+        -1046047.5089646525
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 44.1,
+        "turf_w_m": 24.9,
+        "turf_area_m2": 1098,
+        "aspect": 1.77,
+        "rectness": 0.871,
+        "border_support": 0.989,
+        "bearing_deg": 100.9,
+        "centre_lat": 50.0754487,
+        "centre_lon": 14.5980286,
+        "rect_px": [
+          [
+            2149.1,
+            2470.3
+          ],
+          [
+            1660.3,
+            2376.2
+          ],
+          [
+            1827.0,
+            1509.7
+          ],
+          [
+            2315.8,
+            1603.8
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 43.9,
+        "painted_w_m": 23.91,
+        "painted_angle": 100.89,
+        "edge_strength": [
+          8.0,
+          6.9,
+          11.6,
+          11.8
+        ],
+        "play_l_m": 43.9,
+        "play_w_m": 23.91,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1680.0,
+            2380.0
+          ],
+          [
+            1845.9,
+            1517.8
+          ],
+          [
+            2315.5,
+            1608.2
+          ],
+          [
+            2149.6,
+            2470.4
+          ]
+        ]
+      }
+    ]
+  },
+  "CESMI": {
+    "venue": {
+      "code": "CESMI",
+      "name": "Čechie Smíchov",
+      "lat": 50.0748253,
+      "lon": 14.3653978,
+      "address": "Smrčinská 3346/5, Praha 5",
+      "notes": "Smrčinská 3346/5, Praha 5\nV areálu SK Čechie Smíchov, více na www.cechiesmichov.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -747061.8024701173,
+      "y1": -1043759.0598910794,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -746961.8024701173,
+        -1043859.0598910794
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 48.7,
+        "turf_w_m": 23.2,
+        "turf_area_m2": 1132,
+        "aspect": 2.1,
+        "rectness": 0.845,
+        "border_support": 1.0,
+        "bearing_deg": 102.7,
+        "centre_lat": 50.0748252,
+        "centre_lon": 14.3654193,
+        "rect_px": [
+          [
+            2454.7,
+            2338.2
+          ],
+          [
+            1504.2,
+            2124.0
+          ],
+          [
+            1606.3,
+            1670.6
+          ],
+          [
+            2556.9,
+            1884.8
+          ]
+        ],
+        "kind": "whole_pitch",
+        "edge_nudged": {
+          "E": 3.3
+        },
+        "painted_l_m": 44.8,
+        "painted_w_m": 21.91,
+        "painted_angle": 104.0,
+        "edge_strength": [
+          7.6,
+          7.9,
+          6.8,
+          6.1
+        ],
+        "play_l_m": 44.8,
+        "play_w_m": 21.91,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2386.8,
+            2319.3
+          ],
+          [
+            1517.3,
+            2102.6
+          ],
+          [
+            1623.4,
+            1677.4
+          ],
+          [
+            2492.8,
+            1894.2
+          ]
+        ]
+      }
+    ]
+  },
+  "HANSP": {
+    "venue": {
+      "code": "HANSP",
+      "name": "Hanspaulka",
+      "lat": 50.1052731,
+      "lon": 14.3778769,
+      "address": "Na Hanspaulce 166/2, Praha 6",
+      "notes": "Na Hanspaulce 166/2, Praha 6\nVe Sportovním areálu Hanspaulka, více na https://sportovniarealhanspaulka.cz .\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -745713.398836245,
+      "y1": -1040526.8813715919,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -745613.398836245,
+        -1040626.8813715919
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 48.9,
+        "turf_w_m": 25.0,
+        "turf_area_m2": 1221,
+        "aspect": 1.96,
+        "rectness": 0.781,
+        "border_support": 0.99,
+        "bearing_deg": 144.3,
+        "centre_lat": 50.1052736,
+        "centre_lon": 14.3778889,
+        "rect_px": [
+          [
+            1765.5,
+            2489.5
+          ],
+          [
+            1474.2,
+            2083.9
+          ],
+          [
+            2268.8,
+            1513.2
+          ],
+          [
+            2560.1,
+            1918.7
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 44.26,
+        "painted_w_m": 21.31,
+        "painted_angle": 144.11,
+        "edge_strength": [
+          4.0,
+          4.4,
+          3.4,
+          3.5
+        ],
+        "play_l_m": 44.26,
+        "play_w_m": 21.31,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1526.1,
+            2087.5
+          ],
+          [
+            2243.2,
+            1568.6
+          ],
+          [
+            2493.1,
+            1913.9
+          ],
+          [
+            1775.9,
+            2432.8
+          ]
+        ]
+      }
+    ]
+  },
+  "MOTO4": {
+    "venue": {
+      "code": "MOTO4",
+      "name": "Motorlet",
+      "lat": 50.0502897,
+      "lon": 14.3600775,
+      "address": "Butovická 592/35, Praha 5",
+      "notes": "Butovická 592/35, Praha 5\nV areálu SK Motorlet Praha, více na www.sk-motorlet.cz, www.fotbal-motorlet.cz.\n\r\nKabiny a sprchy jsou v buňkách u horního fotbalového hřiště s UMT.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je vpravo za administrativní budovou oddílu, č. 4 je za fotbalovým hřištěm s UMT, které je nad tribunou stadionu.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -747813.2425217289,
+      "y1": -1046409.9128933494,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -747713.2425217289,
+        -1046509.9128933494
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 49.8,
+        "turf_w_m": 30.8,
+        "turf_area_m2": 1535,
+        "aspect": 1.61,
+        "rectness": 0.943,
+        "border_support": 1.0,
+        "bearing_deg": 108.1,
+        "centre_lat": 50.0502931,
+        "centre_lon": 14.36008,
+        "rect_px": [
+          [
+            2382.0,
+            2440.6
+          ],
+          [
+            1435.7,
+            2131.7
+          ],
+          [
+            1627.0,
+            1545.6
+          ],
+          [
+            2573.3,
+            1854.4
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 49.62,
+        "painted_w_m": 30.79,
+        "painted_angle": 108.07,
+        "edge_strength": [
+          23.8,
+          18.3,
+          16.6,
+          16.3
+        ],
+        "play_l_m": 49.62,
+        "play_w_m": 30.79,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1438.1,
+            2133.2
+          ],
+          [
+            1629.1,
+            1547.8
+          ],
+          [
+            2572.6,
+            1855.7
+          ],
+          [
+            2381.6,
+            2441.1
+          ]
+        ]
+      }
+    ]
+  },
+  "P2": {
+    "venue": {
+      "code": "P2",
+      "name": "Pražačka",
+      "lat": 50.0929106,
+      "lon": 14.4748442,
+      "address": "Za Žižkovskou vozovnou 2716/19, Praha 3",
+      "notes": "Za Žižkovskou vozovnou 2716/19, Praha 3\nVe „Sportovním a rekreačním areálu“ Pražačka, více na www.prazacka.cz. UMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže kabinám, č. 3 je nejvzdálenější.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze vhodit do schránky nalevo před vchodem do bistra Pražanda.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -739028.2437026588,
+      "y1": -1042834.2694544455,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738928.2437026588,
+        -1042934.2694544455
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 114.8,
+        "turf_w_m": 51.5,
+        "turf_area_m2": 5911,
+        "aspect": 2.23,
+        "rectness": 0.755,
+        "border_support": 1.0,
+        "bearing_deg": 152.3,
+        "centre_lat": 50.092884,
+        "centre_lon": 14.4747584,
+        "rect_px": [
+          [
+            1093.5,
+            3031.9
+          ],
+          [
+            614.4,
+            2120.6
+          ],
+          [
+            2647.1,
+            1051.9
+          ],
+          [
+            3126.2,
+            1963.3
+          ]
+        ],
+        "kind": "section_2_of_3",
+        "parent_l_m": 114.8,
+        "parent_w_m": 51.5,
+        "section_rects_px": [
+          [
+            [
+              1144.7,
+              3005.0
+            ],
+            [
+              665.6,
+              2093.7
+            ],
+            [
+              1314.1,
+              1752.7
+            ],
+            [
+              1793.2,
+              2664.1
+            ]
+          ],
+          [
+            [
+              1793.2,
+              2664.1
+            ],
+            [
+              1314.1,
+              1752.7
+            ],
+            [
+              1977.6,
+              1403.9
+            ],
+            [
+              2456.7,
+              2315.3
+            ]
+          ],
+          [
+            [
+              2456.7,
+              2315.3
+            ],
+            [
+              1977.6,
+              1403.9
+            ],
+            [
+              2631.2,
+              1060.3
+            ],
+            [
+              3110.4,
+              1971.7
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "division_strength": 1.7,
+        "goal_strength": 4.0,
+        "edge_nudged": {
+          "W": 13.48
+        },
+        "painted_l_m": 45.27,
+        "painted_w_m": 24.0,
+        "painted_angle": 152.37,
+        "edge_strength": [
+          1.0,
+          1.5,
+          5.0,
+          3.8
+        ],
+        "play_l_m": 45.27,
+        "play_w_m": 24.0,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2000.9,
+            2479.8
+          ],
+          [
+            1579.6,
+            1678.3
+          ],
+          [
+            2004.4,
+            1455.0
+          ],
+          [
+            2425.8,
+            2256.5
+          ]
+        ]
+      }
+    ]
+  },
+  "SANC1": {
+    "venue": {
+      "code": "SANC1",
+      "name": "SC Měcholupy",
+      "lat": 50.0386478,
+      "lon": 14.5487886,
+      "address": "Turínská 1483/3, Praha 10",
+      "notes": "Turínská 1483/3, Praha 10\nV areálu Tenis Hostivař, více na www.scmecholupy.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší než hř. č. 2.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány! \n\r\nPoznámka: kabiny jsou do 30.6.2026 mimo provoz! (jsou na úrovni parkoviště uprostřed areálu za budovou prosklené recepce pod fotbalovým hřištěm). \n\r\nPokud UO nebude svítit, dojděte o rozsvícení požádat do recepce Tenisu Hostivař - pod úrovni hřiště, mezi parkovištěm a kurty.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -734598.5317911864,
+      "y1": -1049529.3620085737,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -734498.5317911864,
+        -1049629.3620085737
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 51.7,
+        "turf_w_m": 27.7,
+        "turf_area_m2": 1435,
+        "aspect": 1.86,
+        "rectness": 0.805,
+        "border_support": 1.0,
+        "bearing_deg": 158.7,
+        "centre_lat": 50.0387075,
+        "centre_lon": 14.5488161,
+        "rect_px": [
+          [
+            1986.6,
+            2456.3
+          ],
+          [
+            1610.3,
+            1492.9
+          ],
+          [
+            2127.2,
+            1291.0
+          ],
+          [
+            2503.5,
+            2254.4
+          ]
+        ],
+        "kind": "whole_pitch",
+        "edge_nudged": {
+          "N": 2.8
+        },
+        "painted_l_m": 45.18,
+        "painted_w_m": 24.07,
+        "painted_angle": 160.37,
+        "edge_strength": [
+          7.8,
+          7.7,
+          2.7,
+          5.0
+        ],
+        "play_l_m": 45.18,
+        "play_w_m": 24.07,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1984.6,
+            2387.7
+          ],
+          [
+            1681.0,
+            1536.7
+          ],
+          [
+            2134.5,
+            1374.9
+          ],
+          [
+            2438.1,
+            2226.0
+          ]
+        ]
+      }
+    ]
+  },
+  "SANC2": {
+    "venue": {
+      "code": "SANC2",
+      "name": "SC Měcholupy",
+      "lat": 50.0386478,
+      "lon": 14.5487886,
+      "address": "Turínská 1483/3, Praha 10",
+      "notes": "Turínská 1483/3, Praha 10\nV areálu Tenis Hostivař, více na www.scmecholupy.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší než hř. č. 2.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány! \n\r\nPoznámka: kabiny jsou do 30.6.2026 mimo provoz! (jsou na úrovni parkoviště uprostřed areálu za budovou prosklené recepce pod fotbalovým hřištěm). \n\r\nPokud UO nebude svítit, dojděte o rozsvícení požádat do recepce Tenisu Hostivař - pod úrovni hřiště, mezi parkovištěm a kurty.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -734598.5317911864,
+      "y1": -1049529.3620085737,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -734498.5317911864,
+        -1049629.3620085737
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 52.6,
+        "turf_w_m": 30.0,
+        "turf_area_m2": 1576,
+        "aspect": 1.76,
+        "rectness": 0.762,
+        "border_support": 1.0,
+        "bearing_deg": 160.0,
+        "centre_lat": 50.0388319,
+        "centre_lon": 14.5492049,
+        "rect_px": [
+          [
+            2544.2,
+            2271.2
+          ],
+          [
+            2184.7,
+            1282.5
+          ],
+          [
+            2747.9,
+            1077.7
+          ],
+          [
+            3107.4,
+            2066.4
+          ]
+        ],
+        "kind": "whole_pitch",
+        "edge_nudged": {
+          "W": 2.35,
+          "N": 3.2
+        },
+        "painted_l_m": 45.1,
+        "painted_w_m": 25.16,
+        "painted_angle": 160.72,
+        "edge_strength": [
+          5.4,
+          6.4,
+          5.7,
+          3.6
+        ],
+        "play_l_m": 45.1,
+        "play_w_m": 25.16,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2570.3,
+            2186.7
+          ],
+          [
+            2272.4,
+            1335.2
+          ],
+          [
+            2747.4,
+            1169.0
+          ],
+          [
+            3045.3,
+            2020.5
+          ]
+        ]
+      }
+    ]
+  },
+  "STER2": {
+    "venue": {
+      "code": "STER2",
+      "name": "Štěrboholy",
+      "lat": 50.0708439,
+      "lon": 14.5536542,
+      "address": "U Školy 430, Praha 10",
+      "notes": "U Školy 430, Praha 10\nV areálu za sportovní halou.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže hale, č. 3 nejdále.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -733771.2841315186,
+      "y1": -1046028.0034199689,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -733671.2841315186,
+        -1046128.0034199689
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 98.7,
+        "turf_w_m": 63.4,
+        "turf_area_m2": 6257,
+        "aspect": 1.56,
+        "rectness": 0.849,
+        "border_support": 1.0,
+        "bearing_deg": 163.6,
+        "centre_lat": 50.070828,
+        "centre_lon": 14.5537238,
+        "rect_px": [
+          [
+            1326.5,
+            2935.7
+          ],
+          [
+            967.7,
+            1719.9
+          ],
+          [
+            2861.4,
+            1161.0
+          ],
+          [
+            3220.2,
+            2376.8
+          ]
+        ],
+        "kind": "section_2_of_3",
+        "parent_l_m": 98.7,
+        "parent_w_m": 63.4,
+        "section_rects_px": [
+          [
+            [
+              1438.0,
+              2902.8
+            ],
+            [
+              1079.2,
+              1687.0
+            ],
+            [
+              1610.1,
+              1530.3
+            ],
+            [
+              1968.9,
+              2746.1
+            ]
+          ],
+          [
+            [
+              1968.9,
+              2746.1
+            ],
+            [
+              1610.1,
+              1530.3
+            ],
+            [
+              2138.1,
+              1374.5
+            ],
+            [
+              2496.9,
+              2590.3
+            ]
+          ],
+          [
+            [
+              2496.9,
+              2590.3
+            ],
+            [
+              2138.1,
+              1374.5
+            ],
+            [
+              2670.1,
+              1217.5
+            ],
+            [
+              3029.0,
+              2433.3
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "division_strength": 1.8,
+        "goal_strength": 3.8,
+        "edge_nudged": {
+          "N": -8.0,
+          "S": 8.0
+        },
+        "painted_l_m": 48.78,
+        "painted_w_m": 27.53,
+        "painted_angle": 164.26,
+        "edge_strength": [
+          2.7,
+          2.2,
+          10.7,
+          13.4
+        ],
+        "play_l_m": 48.78,
+        "play_w_m": 27.53,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1903.9,
+            2526.0
+          ],
+          [
+            1627.8,
+            1590.4
+          ],
+          [
+            2155.8,
+            1434.6
+          ],
+          [
+            2431.9,
+            2370.2
+          ]
+        ]
+      }
+    ]
+  },
+  "STER3": {
+    "venue": {
+      "code": "STER3",
+      "name": "Štěrboholy",
+      "lat": 50.0708439,
+      "lon": 14.5536542,
+      "address": "U Školy 430, Praha 10",
+      "notes": "U Školy 430, Praha 10\nV areálu za sportovní halou.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže hale, č. 3 nejdále.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial"
+    },
+    "geo": {
+      "x0": -733771.2841315186,
+      "y1": -1046028.0034199689,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -733671.2841315186,
+        -1046128.0034199689
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 98.7,
+        "turf_w_m": 63.4,
+        "turf_area_m2": 6257,
+        "aspect": 1.56,
+        "rectness": 0.849,
+        "border_support": 1.0,
+        "bearing_deg": 163.6,
+        "centre_lat": 50.070828,
+        "centre_lon": 14.5537238,
+        "rect_px": [
+          [
+            1326.5,
+            2935.7
+          ],
+          [
+            967.7,
+            1719.9
+          ],
+          [
+            2861.4,
+            1161.0
+          ],
+          [
+            3220.2,
+            2376.8
+          ]
+        ],
+        "kind": "section_3_of_3",
+        "parent_l_m": 98.7,
+        "parent_w_m": 63.4,
+        "section_rects_px": [
+          [
+            [
+              1438.0,
+              2902.8
+            ],
+            [
+              1079.2,
+              1687.0
+            ],
+            [
+              1610.1,
+              1530.3
+            ],
+            [
+              1968.9,
+              2746.1
+            ]
+          ],
+          [
+            [
+              1968.9,
+              2746.1
+            ],
+            [
+              1610.1,
+              1530.3
+            ],
+            [
+              2138.1,
+              1374.5
+            ],
+            [
+              2496.9,
+              2590.3
+            ]
+          ],
+          [
+            [
+              2496.9,
+              2590.3
+            ],
+            [
+              2138.1,
+              1374.5
+            ],
+            [
+              2670.1,
+              1217.5
+            ],
+            [
+              3029.0,
+              2433.3
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "division_strength": 1.8,
+        "goal_strength": 3.8,
+        "edge_nudged": {
+          "N": -8.0,
+          "S": 8.0
+        },
+        "painted_l_m": 48.78,
+        "painted_w_m": 27.74,
+        "painted_angle": 164.16,
+        "edge_strength": [
+          2.1,
+          3.4,
+          8.6,
+          14.9
+        ],
+        "play_l_m": 48.78,
+        "play_w_m": 27.74,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2431.9,
+            2370.2
+          ],
+          [
+            2155.8,
+            1434.6
+          ],
+          [
+            2687.9,
+            1277.6
+          ],
+          [
+            2964.0,
+            2213.2
+          ]
+        ]
+      }
+    ]
+  }
+}

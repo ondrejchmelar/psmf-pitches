@@ -1,0 +1,138 @@
+{
+  "_comment": "Region of interest per venue code, in metres relative to the PSMF GPS point (x east, y south), read off the orthophoto. The ROI isolates the pitch we actually play on so neighbouring pitches cannot merge into the same turf blob. 'sections' marks codes that are a numbered cross-pitch of a larger parent field rather than a standalone pitch (per the PSMF venue notes).",
+  "ARIT": {
+    "roi_m": [
+      -24,
+      16,
+      -42,
+      26
+    ],
+    "note": "Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.",
+    "layer": 284
+  },
+  "CESMI": {
+    "roi_m": [
+      -34,
+      62,
+      -28,
+      24
+    ],
+    "note": "Single artificial pitch north of the natural-grass field. East edge nudged in: the automatic fit ran past the touchline onto the surround.",
+    "layer": 284,
+    "edge_nudge_m": {
+      "E": 3.3
+    }
+  },
+  "HANSP": {
+    "roi_m": [
+      -28,
+      16,
+      -22,
+      28
+    ],
+    "note": "Single artificial pitch among the tennis courts. Pinned to the 2024 leaf-off capture: in summer flights a tree shadow swallows the east end. The search band starts 1 m inside the carpet because the bright teal kerb sits exactly where the touchline search would otherwise land.",
+    "layer": 272,
+    "fit_out_m": -1.0,
+    "fit_in_m": 4.0
+  },
+  "MOTO4": {
+    "roi_m": [
+      -34,
+      46,
+      -32,
+      36
+    ],
+    "note": "Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here.",
+    "layer": 272
+  },
+  "BECH": {
+    "roi_m": [
+      -28,
+      16,
+      -32,
+      28
+    ],
+    "note": "Single artificial pitch beside the clay tennis courts.",
+    "layer": 284
+  },
+  "SANC1": {
+    "roi_m": [
+      -18,
+      28,
+      -34,
+      32
+    ],
+    "note": "Left of the two adjacent pitches; north edge nudged in off a stray marking.",
+    "layer": 284,
+    "edge_nudge_m": {
+      "N": 2.8
+    }
+  },
+  "SANC2": {
+    "roi_m": [
+      18,
+      62,
+      -38,
+      28
+    ],
+    "note": "Right of the two adjacent pitches; west and north edges nudged in off the surround.",
+    "layer": 284,
+    "edge_nudge_m": {
+      "W": 2.35,
+      "N": 3.2
+    }
+  },
+  "P2": {
+    "roi_m": [
+      -80,
+      42,
+      -38,
+      30
+    ],
+    "sections": 3,
+    "section_index": 2,
+    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks.",
+    "first_end": "W",
+    "layer": 284,
+    "goal_flush": "N",
+    "edge_nudge_m": {
+      "W": 13.48
+    }
+  },
+  "STER2": {
+    "roi_m": [
+      -42,
+      62,
+      -40,
+      38
+    ],
+    "sections": 3,
+    "section_index": 2,
+    "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue. Size fits well; translated north onto the painted goal-line pair, leaving the spare ground at the south end.",
+    "first_end": "W",
+    "layer": 272,
+    "goal_flush": "N",
+    "edge_nudge_m": {
+      "N": -8.0,
+      "S": 8.0
+    }
+  },
+  "STER3": {
+    "roi_m": [
+      -42,
+      62,
+      -40,
+      38
+    ],
+    "sections": 3,
+    "section_index": 3,
+    "note": "Pitch 3 of 3 on the same parent field as STER2; all three thirds are the same size.",
+    "first_end": "W",
+    "layer": 272,
+    "goal_flush": "N",
+    "edge_nudge_m": {
+      "N": -8.0,
+      "S": 8.0
+    }
+  }
+}
