@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 fx = json.loads((ROOT / "data/fixtures.json").read_text("utf-8"))
 ms = json.loads((ROOT / "out/measurements.json").read_text("utf-8"))
+TRAINING = [c for c, m in ms.items()
+            if not c.startswith("_") and m.get("venue", {}).get("training")]
 ov = json.loads((ROOT / "data/overrides.json").read_text("utf-8"))
 
 rows = []
@@ -47,6 +49,13 @@ table = "\n".join(lines)
 (ROOT / "out/table.md").write_text(table + "\n", "utf-8")
 (ROOT / "out/table.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), "utf-8")
 print(table)
+
+for code in TRAINING:
+    c = (ms[code].get("candidates") or [None])[0]
+    if c:
+        print(f'\nTraining pitch: {ms[code]["venue"]["name"]}  '
+              f'{round(c["play_l_m"])} x {round(c["play_w_m"])} m  '
+              f'({round(round(c["play_l_m"]) * round(c["play_w_m"]))} m2)')
 
 uniq = {r["code"]: r for r in rows}
 print("\nDistinct pitches:", len(uniq))

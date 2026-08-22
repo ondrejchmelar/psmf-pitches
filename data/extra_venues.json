@@ -1,0 +1,13 @@
+{
+  "_comment": "Venues that are not on the PSMF fixture list. Kept separate from data/venues.json so re-running scrape_psmf.py cannot overwrite them.",
+  "UJEZD": {
+    "code": "UJEZD",
+    "name": "Ujezd (training)",
+    "lat": 50.0819710,
+    "lon": 14.4036747,
+    "address": "Ujezd, Praha 1",
+    "notes": "Our training pitch. Not a PSMF fixture venue; measured for comparison.",
+    "surface": "artificial",
+    "training": true
+  }
+}

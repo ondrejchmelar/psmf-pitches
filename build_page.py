@@ -31,6 +31,32 @@ for r in rows:
 pitches.sort(key=lambda p: -p["area"])
 mx = max(p["area"] for p in pitches)
 
+# venues we do not play fixtures at (our training pitch) ride along for scale
+training = []
+for code, m in ms.items():
+    if code.startswith("_") or not m.get("venue", {}).get("training"):
+        continue
+    c = (m.get("candidates") or [None])[0]
+    if not c:
+        continue
+    l, w = round(c["play_l_m"]), round(c["play_w_m"])
+    training.append({"code": code, "venue": m["venue"]["name"], "l": l, "w": w,
+                     "area": l * w, "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png")})
+
+def card(p, scale, sub=""):
+    return f'''<article class="card">
+  <figure><img src="{p["img"]}" alt="Orthophoto of {esc(p["venue"])} with the measured rectangle drawn on" loading="lazy"></figure>
+  <div class="body">
+    <header class="ch">
+      <h3>{esc(p["venue"])} <code>{esc(p["code"])}</code></h3>
+      <p class="d">{p["l"]} &times; {p["w"]} m</p>
+    </header>
+    <div class="bar"><i style="width:{100 * p["area"] / scale:.1f}%"></i><span>{p["area"]} m&sup2;</span></div>
+    {sub}
+  </div>
+</article>'''
+
+
 def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
@@ -50,17 +76,20 @@ for p in pitches:
     c = p["cand"]
     fx = ", ".join(f'R{f["round"]} {"vs" if f["home"] else "at"} {esc(f["opponent"])}'
                    for f in p["fixtures"])
-    cards.append(f'''<article class="card">
-  <figure><img src="{p["img"]}" alt="Orthophoto of {esc(p["venue"])} with the measured rectangle drawn on" loading="lazy"></figure>
-  <div class="body">
-    <header class="ch">
-      <h3>{esc(p["venue"])} <code>{esc(p["code"])}</code></h3>
-      <p class="d">{p["l"]} &times; {p["w"]} m</p>
-    </header>
-    <div class="bar"><i style="width:{100*p["area"]/mx:.1f}%"></i><span>{p["area"]} m&sup2;</span></div>
-    <p class="fx">{fx}</p>
-  </div>
-</article>''')
+    cards.append(card(p, mx, f'<p class="fx">{fx}</p>'))
+
+tcards = [card(t, mx, '<p class="fx">Training pitch &mdash; not a fixture venue</p>')
+          for t in training]
+tsection = ""
+if training:
+    t = training[0]
+    biggest = pitches[0]
+    tsection = f'''<hr class="rule">
+<h2>Our training pitch, for scale</h2>
+<div class="grid">{"".join(tcards)}</div>
+<p class="lede" style="margin-top:18px">Every pitch we play on this season is bigger.
+{esc(biggest["venue"])} is {biggest["area"] / t["area"]:.1f}&times; the area, and the smallest
+of them still has {min(p["area"] for p in pitches) - t["area"]} m&sup2; more.</p>'''
 
 html = f'''<title>Pitch dimensions &mdash; 7-G podzim 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -185,6 +214,7 @@ at 5&nbsp;cm per pixel.</p>
 {chr(10).join(cards)}
 </div>
 
+{tsection}
 <footer>
 Imagery: IPR Praha orthophoto archive, 0.05&nbsp;m/px, EPSG:5514 (S-JTSK); capture chosen per venue.
 Fixtures and venue coordinates scraped from psmf.cz. Generated 21 August 2026.

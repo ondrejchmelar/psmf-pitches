@@ -1072,5 +1072,93 @@
         ]
       }
     ]
+  },
+  "UJEZD": {
+    "venue": {
+      "code": "UJEZD",
+      "name": "Ujezd (training)",
+      "lat": 50.081971,
+      "lon": 14.4036747,
+      "address": "Ujezd, Praha 1",
+      "notes": "Our training pitch. Not a PSMF fixture venue; measured for comparison.",
+      "surface": "artificial",
+      "training": true
+    },
+    "geo": {
+      "x0": -744239.2622872085,
+      "y1": -1043346.5912552818,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -744139.2622872085,
+        -1043446.5912552818
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 40.2,
+        "turf_w_m": 20.1,
+        "turf_area_m2": 806,
+        "aspect": 2.0,
+        "rectness": 0.918,
+        "border_support": 1.0,
+        "bearing_deg": 97.4,
+        "centre_lat": 50.0819462,
+        "centre_lon": 14.4036828,
+        "rect_px": [
+          [
+            2151.0,
+            2480.6
+          ],
+          [
+            1753.3,
+            2429.0
+          ],
+          [
+            1856.8,
+            1631.7
+          ],
+          [
+            2254.5,
+            1683.3
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 40.05,
+        "painted_w_m": 19.93,
+        "painted_angle": 97.5,
+        "edge_strength": [
+          8.0,
+          10.5,
+          10.8,
+          8.5
+        ],
+        "play_l_m": 40.05,
+        "play_w_m": 19.93,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1754.1,
+            2428.1
+          ],
+          [
+            1858.6,
+            1633.9
+          ],
+          [
+            2253.9,
+            1685.9
+          ],
+          [
+            2149.3,
+            2480.1
+          ]
+        ]
+      }
+    ]
   }
 }

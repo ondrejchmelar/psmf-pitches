@@ -162,6 +162,20 @@ def pick_layer(lat, lon, res, code, candidates=tuple(IPR_LAYERS), probe_m=55.0):
     return best, round(best_score, 1)
 
 
+def load_venues():
+    """PSMF venue directory plus any extra venues (e.g. our training pitch).
+
+    Extras live in their own file so re-running scrape_psmf.py, which rewrites
+    venues.json wholesale, cannot drop them.
+    """
+    venues = json.loads((DATA / "venues.json").read_text("utf-8"))
+    extra = DATA / "extra_venues.json"
+    if extra.exists():
+        venues.update({k: v for k, v in json.loads(extra.read_text("utf-8")).items()
+                       if not k.startswith("_")})
+    return venues
+
+
 def px_to_lonlat(pt, geo):
     x = geo["x0"] + pt[0] * geo["res"]
     y = geo["y1"] - pt[1] * geo["res"]
@@ -836,14 +850,18 @@ def main():
                     help="probe the archive and use the sharpest capture per venue")
     args = ap.parse_args()
 
-    venues = json.loads((DATA / "venues.json").read_text("utf-8"))
+    venues = load_venues()
     overrides = json.loads((DATA / "overrides.json").read_text("utf-8"))
     fixtures = json.loads((DATA / "fixtures.json").read_text("utf-8"))["fixtures"]
     codes = ([c.strip() for c in args.codes.split(",")] if args.codes
-             else sorted({f["venue_code"] for f in fixtures}))
+             else sorted({f["venue_code"] for f in fixtures}
+                         | {k for k, v in venues.items() if v.get("training")}))
 
     OUT.mkdir(exist_ok=True)
-    results = {}
+    # a --codes run must not drop the venues it did not touch
+    out_path = OUT / "measurements.json"
+    results = (json.loads(out_path.read_text("utf-8"))
+               if out_path.exists() and args.codes else {})
     for code in codes:
         v = venues.get(code)
         if not v:
@@ -882,8 +900,7 @@ def main():
         summary = ", ".join(parts) or "none"
         print(f'{code:<6} {v["name"]:<16} {len(cands)}: {summary}')
 
-    (OUT / "measurements.json").write_text(
-        json.dumps(results, ensure_ascii=False, indent=2), "utf-8")
+    out_path.write_text(json.dumps(results, ensure_ascii=False, indent=2), "utf-8")
     print(f"\n-> {OUT/'measurements.json'}; overview + per-pitch PNGs in {OUT}/")
 
 

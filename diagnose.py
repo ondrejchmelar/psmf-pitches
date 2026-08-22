@@ -137,7 +137,7 @@ def main():
     ap.add_argument("--half", type=float, default=100.0)
     args = ap.parse_args()
 
-    venues = json.loads((ROOT / "data/venues.json").read_text("utf-8"))
+    venues = M.load_venues()
     overrides = json.loads((ROOT / "data/overrides.json").read_text("utf-8"))
     meas = json.loads((ROOT / "out/measurements.json").read_text("utf-8"))
     codes = ([c.strip() for c in args.codes.split(",")] if args.codes

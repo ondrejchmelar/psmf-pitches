@@ -8,6 +8,7 @@ hard way and several "obvious" fixes here are wrong.
 
 ```
 scrape_psmf.py      fixtures + venue directory  -> data/fixtures.json, data/venues.json
+data/extra_venues.json  venues not on the fixture list (our training pitch)
 measure_pitches.py  segment turf, fit the lines -> out/measurements.json, out/*.png
 diagnose.py         how far is each edge off?   -> out/diag_*.png
 make_table.py       season table                -> out/table.md, out/table.json
@@ -42,6 +43,14 @@ Venue codes carry over between seasons, so an existing entry in
    pitches — if the ROI clips into a neighbour, the blob fills the ROI, scores a
    perfect rectangularity with zero border support, and is rejected.
 4. Run `diagnose.py --codes NEW1` and nudge until every edge reads ~0.0.
+
+### A venue that is not on the fixture list
+
+Our training pitch at Újezd is measured for comparison. Non-PSMF venues go in
+`data/extra_venues.json`, not `data/venues.json`, because `scrape_psmf.py`
+rewrites the latter wholesale and would drop them. Give the entry
+`"training": true` and it is measured automatically, kept out of the fixture
+table, and shown on the page as a scale comparison.
 
 ### overrides.json keys
 
@@ -88,6 +97,10 @@ breaks a venue, so `fetch_crop` validates and refetches.
 a tree shadow swallows the east end. `--auto-layer` scores captures by line
 contrast, but check the result: it picked leaf-off for P2, where it breaks the
 parent-field segmentation.
+
+**`--codes` merges, it does not replace.** A partial run used to rewrite
+`out/measurements.json` with only the venues it touched, silently dropping the
+rest. It now loads the existing file first.
 
 **Nudge signs are inverted between opposite edges.** Apply, re-run
 `diagnose.py`, confirm the offset moved toward zero. Do not reason it out.
