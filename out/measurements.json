@@ -885,10 +885,10 @@
         "division_strength": 1.8,
         "goal_strength": 3.8,
         "edge_nudged": {
-          "N": -8.0,
+          "N": -7.36,
           "S": 8.0
         },
-        "painted_l_m": 48.78,
+        "painted_l_m": 48.14,
         "painted_w_m": 27.53,
         "painted_angle": 164.26,
         "edge_strength": [
@@ -897,7 +897,7 @@
           10.7,
           13.4
         ],
-        "play_l_m": 48.78,
+        "play_l_m": 48.14,
         "play_w_m": 27.53,
         "play_src": "painted lines",
         "play_rect_px": [
@@ -906,12 +906,12 @@
             2526.0
           ],
           [
-            1627.8,
-            1590.4
+            1631.4,
+            1602.7
           ],
           [
-            2155.8,
-            1434.6
+            2159.4,
+            1446.9
           ],
           [
             2431.9,
@@ -1037,10 +1037,10 @@
         "division_strength": 1.8,
         "goal_strength": 3.8,
         "edge_nudged": {
-          "N": -8.0,
-          "S": 8.0
+          "N": -7.01,
+          "S": 7.59
         },
-        "painted_l_m": 48.78,
+        "painted_l_m": 48.2,
         "painted_w_m": 27.74,
         "painted_angle": 164.16,
         "edge_strength": [
@@ -1049,25 +1049,25 @@
           8.6,
           14.9
         ],
-        "play_l_m": 48.78,
+        "play_l_m": 48.2,
         "play_w_m": 27.74,
         "play_src": "painted lines",
         "play_rect_px": [
           [
-            2431.9,
-            2370.2
+            2434.3,
+            2378.1
           ],
           [
-            2155.8,
-            1434.6
+            2161.4,
+            1453.6
           ],
           [
-            2687.9,
-            1277.6
+            2693.5,
+            1296.6
           ],
           [
-            2964.0,
-            2213.2
+            2966.3,
+            2221.0
           ]
         ]
       }

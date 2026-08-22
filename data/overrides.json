@@ -108,12 +108,12 @@
     ],
     "sections": 3,
     "section_index": 2,
-    "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue. Size fits well; translated north onto the painted goal-line pair, leaving the spare ground at the south end.",
+    "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue.",
     "first_end": "W",
     "layer": 272,
     "goal_flush": "N",
     "edge_nudge_m": {
-      "N": -8.0,
+      "N": -7.36,
       "S": 8.0
     }
   },
@@ -126,13 +126,13 @@
     ],
     "sections": 3,
     "section_index": 3,
-    "note": "Pitch 3 of 3 on the same parent field as STER2; all three thirds are the same size.",
+    "note": "Pitch 3 of 3 on the same parent field as STER2. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking.",
     "first_end": "W",
     "layer": 272,
     "goal_flush": "N",
     "edge_nudge_m": {
-      "N": -8.0,
-      "S": 8.0
+      "N": -7.01,
+      "S": 7.59
     }
   }
 }
