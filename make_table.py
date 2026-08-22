@@ -9,6 +9,24 @@ ms = json.loads((ROOT / "out/measurements.json").read_text("utf-8"))
 TRAINING = [c for c, m in ms.items()
             if not c.startswith("_") and m.get("venue", {}).get("training")]
 ov = json.loads((ROOT / "data/overrides.json").read_text("utf-8"))
+venues = json.loads((ROOT / "data/venues.json").read_text("utf-8"))
+
+# short label for the table; the full PSMF wording rides along for the cards
+BOOTS = {("allowed", None): "lisovky OK",
+         ("forbidden", "forbidden"): "turf only",
+         ("forbidden", "allowed"): "no lisovky"}
+
+
+def boots(code):
+    fw = venues.get(code, {}).get("footwear") or {}
+    lis, ag = fw.get("lisovky", "unknown"), fw.get("ag", "unknown")
+    if lis == "allowed":
+        label = "lisovky OK"
+    elif lis == "forbidden":
+        label = "turf only" if ag == "forbidden" else "no lisovky"
+    else:
+        label = ""
+    return label, fw.get("text", "")
 
 rows = []
 for f in fx["fixtures"]:
@@ -17,6 +35,7 @@ for f in fx["fixtures"]:
     c = (m.get("candidates") or [None])[0]
     v = m.get("venue", {})
     edges = (c or {}).get("edge_strength") or []
+    boots_label, boots_text = boots(code)
     rows.append({
         "round": f["round"], "date": f["date"], "time": f["time"],
         "opponent": f["opponent"], "home": f["home"], "code": code,
@@ -34,17 +53,18 @@ for f in fx["fixtures"]:
         # marking is faint there and the number is a best fit, not a reading
         "conf": ("high" if edges and min(edges) >= 4
                  else "medium" if edges and min(edges) >= 2 else "low"),
+        "boots": boots_label, "boots_text": boots_text,
         "note": ov.get(code, {}).get("note", ""),
     })
 
-hdr = ("| R | Date | Venue | Code | Opponent | Pitch size (m) | Area (m2) |\n"
-       "|---:|---|---|---|---|---|---:|")
+hdr = ("| R | Date | Venue | Code | Opponent | Pitch size (m) | Area (m2) | Boots |\n"
+       "|---:|---|---|---|---|---|---:|---|")
 lines = [hdr]
 for r in rows:
     dim = f'{r["l"]} x {r["w"]}' if r["l"] else "n/a"
     kind = {"whole_pitch": "whole pitch"}.get(r["kind"] or "", (r["kind"] or "").replace("_", " "))
     lines.append(f'| {r["round"]} | {r["date"]} {r["time"]} | {r["venue"]} | {r["code"]} | '
-                 f'{r["opponent"]} | {dim} | {r["area"] or "-"} |')
+                 f'{r["opponent"]} | {dim} | {r["area"] or "-"} | {r["boots"] or "-"} |')
 table = "\n".join(lines)
 (ROOT / "out/table.md").write_text(table + "\n", "utf-8")
 (ROOT / "out/table.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2), "utf-8")

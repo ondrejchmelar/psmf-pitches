@@ -110,6 +110,17 @@ left in a north-up view is often the rectangle's south edge. `diagnose.py`
 draws N/S/E/W on the image; use those when someone reports "too wide on the
 left".
 
+## Footwear
+
+`parse_footwear()` in scrape_psmf.py reads the venue's `Obuv:` line. Both
+phrasings mention lisovky, so presence alone decides nothing — the rule is
+whether lisovky sits nearer "povoleny" or "zakazany" in the sentence. Same test
+for AG, which Mecholupy bans alongside lisovky while the others allow it.
+
+This season: lisovky OK at Aritma, Motorlet, Prazacka and both Sterboholy
+pitches; banned at Cechie Smichov, Hanspaulka and Bechovice; Mecholupy is turf
+or indoor only.
+
 ## PSMF quirks
 
 A venue code is not always a pitch. `STER2`, `STER3` and `P2` are numbered

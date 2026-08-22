@@ -23,6 +23,8 @@
       6.1
     ],
     "conf": "high",
+    "boots": "no lisovky",
+    "boots_text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
     "note": "Single artificial pitch north of the natural-grass field. East edge nudged in: the automatic fit ran past the touchline onto the surround."
   },
   {
@@ -49,6 +51,8 @@
       16.3
     ],
     "conf": "high",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here."
   },
   {
@@ -75,6 +79,8 @@
       3.5
     ],
     "conf": "medium",
+    "boots": "no lisovky",
+    "boots_text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
     "note": "Single artificial pitch among the tennis courts. Pinned to the 2024 leaf-off capture: in summer flights a tree shadow swallows the east end. The search band starts 1 m inside the carpet because the bright teal kerb sits exactly where the touchline search would otherwise land."
   },
   {
@@ -101,6 +107,8 @@
       14.9
     ],
     "conf": "medium",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Pitch 3 of 3 on the same parent field as STER2. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking."
   },
   {
@@ -127,6 +135,8 @@
       3.8
     ],
     "conf": "low",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks."
   },
   {
@@ -153,6 +163,8 @@
       3.6
     ],
     "conf": "medium",
+    "boots": "turf only",
+    "boots_text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
     "note": "Right of the two adjacent pitches; west and north edges nudged in off the surround."
   },
   {
@@ -179,6 +191,8 @@
       5.0
     ],
     "conf": "medium",
+    "boots": "turf only",
+    "boots_text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
     "note": "Left of the two adjacent pitches; north edge nudged in off a stray marking."
   },
   {
@@ -205,6 +219,8 @@
       8.3
     ],
     "conf": "high",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east."
   },
   {
@@ -231,6 +247,8 @@
       13.4
     ],
     "conf": "medium",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue."
   },
   {
@@ -257,6 +275,8 @@
       3.8
     ],
     "conf": "low",
+    "boots": "lisovky OK",
+    "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
     "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks."
   },
   {
@@ -283,6 +303,8 @@
       11.8
     ],
     "conf": "high",
+    "boots": "no lisovky",
+    "boots_text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
     "note": "Single artificial pitch beside the clay tennis courts."
   }
 ]

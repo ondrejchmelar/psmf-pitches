@@ -69,6 +69,7 @@ for r in rows:
 <td>{esc(r["venue"])} <code>{esc(r["code"])}</code></td>
 <td class="dim">{r["l"]} &times; {r["w"]}</td>
 <td class="num">{r["area"]}</td>
+<td><span class="boots {r["boots"].split()[0] if r["boots"] else ""}">{esc(r["boots"] or "-")}</span></td>
 </tr>''')
 
 cards = []
@@ -76,7 +77,10 @@ for p in pitches:
     c = p["cand"]
     fx = ", ".join(f'R{f["round"]} {"vs" if f["home"] else "at"} {esc(f["opponent"])}'
                    for f in p["fixtures"])
-    cards.append(card(p, mx, f'<p class="fx">{fx}</p>'))
+    sub = f'<p class="fx">{fx}</p>'
+    if p.get("boots_text"):
+        sub += f'<p class="nt">{esc(p["boots_text"])}</p>'
+    cards.append(card(p, mx, sub))
 
 tcards = [card(t, mx, '<p class="fx">Training pitch &mdash; not a fixture venue</p>')
           for t in training]
@@ -176,6 +180,13 @@ code {{ font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var
 .kv span {{ color:var(--faint); }}
 .kv b {{ font-weight:600; font-variant-numeric:tabular-nums; text-align:right; }}
 .fx {{ margin:4px 0 0; font-size:12.5px; color:var(--muted); }}
+.nt {{ margin:2px 0 0; font-size:12px; line-height:1.45; color:var(--faint); }}
+.boots {{ font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
+  white-space:nowrap; }}
+.boots.lisovky {{ color:var(--home); }}
+.boots.no {{ color:var(--mark); }}
+.boots.turf {{ color:var(--away); }}
 footer {{ margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }}
 a {{ color:var(--accent); }}
@@ -203,7 +214,7 @@ at 5&nbsp;cm per pixel.</p>
 <h2>Season fixtures</h2>
 <div class="scroll"><table>
 <thead><tr><th>R</th><th>Date</th><th>Opponent</th><th>Venue</th>
-<th>Pitch size</th><th>Area m&sup2;</th></tr></thead>
+<th>Pitch size</th><th>Area m&sup2;</th><th>Boots</th></tr></thead>
 <tbody>
 {chr(10).join(trs)}
 </tbody></table></div>

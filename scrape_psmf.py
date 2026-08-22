@@ -54,13 +54,19 @@ def parse_venues(html: str) -> dict:
                 "address": text.split("\n")[0].strip(),
                 "notes": text,
                 "surface": classify_surface(text),
+                "footwear": parse_footwear(text),
             }
     return venues
 
 
+def norm(s: str) -> str:
+    s = unicodedata.normalize("NFKD", s.lower())
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return s
+
+
 def classify_surface(text: str) -> str:
-    t = unicodedata.normalize("NFKD", text.lower())
-    t = "".join(c for c in t if not unicodedata.combining(c))
+    t = norm(text)
     if "umela" in t or "umt" in t:
         return "artificial"
     if "skvara" in t or "antuka" in t:
@@ -70,15 +76,56 @@ def classify_surface(text: str) -> str:
     return "unknown"
 
 
-def norm(s: str) -> str:
-    s = unicodedata.normalize("NFKD", s.lower())
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    return re.sub(r"[^a-z0-9]+", "", s)
+def slug(s: str) -> str:
+    """Comparison key for team names: no diacritics, no punctuation."""
+    return re.sub(r"[^a-z0-9]+", "", norm(s))
+
+
+def parse_footwear(notes: str) -> dict:
+    """Read the venue's `Obuv:` line into a boot rule.
+
+    PSMF writes it two ways: "kopacky povoleny i s lisovanymi koliky" (studs of
+    any kind fine) or a list of what is allowed followed by what is "zakazany".
+    Both mention lisovky, so presence alone says nothing -- what decides it is
+    whether lisovky sits nearer the permission or the prohibition. Same for AG,
+    which Mecholupy bans alongside lisovky while others allow.
+    """
+    line = next((l.strip() for l in notes.split("\n")
+                 if norm(l).startswith("obuv")), "")
+    if not line:
+        return {"text": "", "lisovky": "unknown", "ag": "unknown", "summary": ""}
+    t = unicodedata.normalize("NFKD", line.lower())
+    t = "".join(c for c in t if not unicodedata.combining(c))
+
+    def verdict(term):
+        hit = re.search(term, t)
+        if not hit:
+            return "unknown"
+        here = hit.start()
+        allow = [m.start() for m in re.finditer(r"povolen", t)]
+        deny = [m.start() for m in re.finditer(r"zakazan", t)]
+        if not deny:
+            return "allowed" if allow else "unknown"
+        if not allow:
+            return "forbidden"
+        return ("forbidden" if min(abs(here - d) for d in deny)
+                <= min(abs(here - a) for a in allow) else "allowed")
+
+    lisovky, ag = verdict(r"lisov"), verdict(r"\bag\b")
+    if lisovky == "allowed":
+        summary = "lisovky OK"
+    elif ag == "forbidden":
+        summary = "turf / indoor only"
+    elif ag == "allowed":
+        summary = "AG or turf, no lisovky"
+    else:
+        summary = "no lisovky"
+    return {"text": line, "lisovky": lisovky, "ag": ag, "summary": summary}
 
 
 def parse_fixtures(html: str) -> tuple[str, list]:
     team = strip_tags(re.search(r'class="component__title">(.*?)</h1>', html, re.S).group(1))
-    tkey = norm(team)
+    tkey = slug(team)
     fixtures, seen = [], set()
     # rows look like: ... <a href="/souteze/.../tymy/<slug>/">Opponent</a> ... <a href="/hriste/#CODE">CODE</a>
     for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S | re.I):
@@ -90,7 +137,7 @@ def parse_fixtures(html: str) -> tuple[str, list]:
         date = next((c for c in cells if re.search(r"\d{1,2}\.\s?\d{1,2}\.\s?\d{2,4}", c)), "")
         time = next((c for c in cells if re.fullmatch(r"\d{1,2}[:.]\d{2}", c.strip())), "")
         opp_names = [strip_tags(t) for _, t in opp_links]
-        if tkey not in {norm(o) for o in opp_names}:
+        if tkey not in {slug(o) for o in opp_names}:
             continue  # other teams' matches also listed on this venue/day
         rnd = next((int(c.rstrip(".")) for c in cells if re.fullmatch(r"\d{1,2}\.", c.strip())), None)
         key = (date, time, code_m.group(1))
@@ -103,8 +150,8 @@ def parse_fixtures(html: str) -> tuple[str, list]:
             "time": time,
             "venue_code": code_m.group(1),
             "opponents": opp_names,
-            "opponent": next((o for o in opp_names if norm(o) != tkey), ""),
-            "home": bool(opp_names) and norm(opp_names[0]) == tkey,
+            "opponent": next((o for o in opp_names if slug(o) != tkey), ""),
+            "home": bool(opp_names) and slug(opp_names[0]) == tkey,
             "raw_cells": cells,
         })
     return team, fixtures
