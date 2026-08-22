@@ -174,7 +174,7 @@ at 5&nbsp;cm per pixel.</p>
 <h2>Season fixtures</h2>
 <div class="scroll"><table>
 <thead><tr><th>R</th><th>Date</th><th>Opponent</th><th>Venue</th>
-<th>Painted pitch L &times; W</th><th>Area m&sup2;</th></tr></thead>
+<th>Pitch size</th><th>Area m&sup2;</th></tr></thead>
 <tbody>
 {chr(10).join(trs)}
 </tbody></table></div>

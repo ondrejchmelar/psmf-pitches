@@ -1,4 +1,4 @@
-| R | Date | Venue | Code | Opponent | Painted pitch L x W (m) | Area (m2) |
+| R | Date | Venue | Code | Opponent | Pitch size (m) | Area (m2) |
 |---:|---|---|---|---|---|---:|
 | 1 | St 9.9.26 20:45 | Čechie Smíchov | CESMI | Orange Predators B | 45 x 22 | 990 |
 | 2 | Čt 17.9.26 20:30 | Motorlet | MOTO4 | Gremio | 50 x 31 | 1550 |

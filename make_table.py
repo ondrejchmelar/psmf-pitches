@@ -35,7 +35,7 @@ for f in fx["fixtures"]:
         "note": ov.get(code, {}).get("note", ""),
     })
 
-hdr = ("| R | Date | Venue | Code | Opponent | Painted pitch L x W (m) | Area (m2) |\n"
+hdr = ("| R | Date | Venue | Code | Opponent | Pitch size (m) | Area (m2) |\n"
        "|---:|---|---|---|---|---|---:|")
 lines = [hdr]
 for r in rows:
