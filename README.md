@@ -98,6 +98,10 @@ than buried in tuned thresholds:
   bright kerb sits exactly where the search would otherwise land.
 * `goal_flush` -- which end the marked cross-pitches start from. Peak strength
   alone picks the wrong pair at Sterboholy.
+* `section_gap_m` -- how much run-off may sit *between* numbered cross-pitches.
+  Sterboholy's three are 23.9 m wide with 3.8 m between them, so each has its
+  own pair of side lines; fitted as contiguous thirds they came out 3.8 m too
+  wide, each borrowing its neighbour's line.
 * `edge_nudge_m` -- per-edge corrections in metres by compass side, positive
   inward. A matched +/- pair translates a rectangle without resizing it, which
   is what Sterboholy needed: the size fitted well but sat too far south.
@@ -122,8 +126,8 @@ wrong.
 PSMF publishes one GPS point per *areal*, and some codes are a numbered
 cross-pitch of a larger field rather than a standalone pitch:
 
-* `STER2`/`STER3` — thirds of one big UMT field ("c. 1 je nejblize hale, c. 3
-  nejdale"). All three thirds are the same size.
+* `STER2`/`STER3` — cross-pitches on one big UMT field ("c. 1 je nejblize hale,
+  c. 3 nejdale"). All three are the same size, 3.8 m of spare turf apart.
 * `P2` — the middle of three pitches marked across the stadium infield.
 
 For those, the section size is derived from the parent field, not measured

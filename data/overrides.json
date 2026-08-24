@@ -108,10 +108,11 @@
     ],
     "sections": 3,
     "section_index": 2,
-    "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue.",
+    "note": "Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue. The three pitches do not touch: ~3.8 m of spare turf sits between them, so each has its own pair of blue side lines and section_gap_m lets the fit find them.",
     "first_end": "W",
     "layer": 272,
     "goal_flush": "N",
+    "section_gap_m": 6.0,
     "edge_nudge_m": {
       "N": -7.36,
       "S": 8.0
@@ -126,10 +127,11 @@
     ],
     "sections": 3,
     "section_index": 3,
-    "note": "Pitch 3 of 3 on the same parent field as STER2. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking.",
+    "note": "Pitch 3 of 3 on the same parent field as STER2, easternmost. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking. Same ~3.8 m gap to its neighbour, hence section_gap_m.",
     "first_end": "W",
     "layer": 272,
     "goal_flush": "N",
+    "section_gap_m": 6.0,
     "edge_nudge_m": {
       "N": -7.01,
       "S": 7.59

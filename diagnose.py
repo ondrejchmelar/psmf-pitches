@@ -52,7 +52,16 @@ def diagnose(code, venues, overrides, meas, res, half):
         return
     img, geo = M.fetch_crop(v["lat"], v["lon"], half, res, code, layer=cfg.get("layer"))
     best, _, _ = M.measure_roi(img, geo, cfg["roi_m"])
-    (pcx, pcy), (pw, ph), ang = best["rect"]
+    (pcx, pcy), (pw, ph), turf_ang = best["rect"]
+    # Profile in the frame of the *paint*, not of the turf carpet. At
+    # Sterboholy the markings sit 0.7 deg off the carpet, which is half a metre
+    # of drift over a 48 m line: enough to smear a faint blue touchline flat and
+    # have this print "no line found" for an edge sitting right on it.
+    ang = cand.get("painted_angle", turf_ang)
+    while ang - turf_ang > 90:
+        ang -= 180
+    while turf_ang - ang > 90:
+        ang += 180
 
     white = M.line_response(img, res, mode="white")
     chroma = M.line_response(img, res, mode="chroma")

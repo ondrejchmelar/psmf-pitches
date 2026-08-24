@@ -362,6 +362,22 @@ def _subpix(prof, i):
     return float(i) if abs(d) < 1e-9 else float(i) - 0.5 * (c - a) / d
 
 
+def _snap(prof, pos, res, base, rng_m=0.5, min_rel=1.5):
+    """Settle a modelled line position onto its own peak, if it has one.
+
+    Only a peak clearly above background counts. Where the division lines are
+    too faint to see at all -- Prazacka -- the local maximum is turf noise, and
+    following it would move the edge off the geometry that was actually fitted;
+    there the modelled position stands, interpolated in place as before.
+    """
+    a, b = int(round(pos - rng_m / res)), int(round(pos + rng_m / res))
+    a, b = max(a, 1), min(b, len(prof) - 2)
+    if b <= a:
+        return float(pos)
+    i = a + int(np.argmax(prof[a:b + 1]))
+    return _subpix(prof, i if prof[i] > min_rel * base else int(round(pos)))
+
+
 def _rotate(resp, centre, ang):
     M = cv2.getRotationMatrix2D(centre, ang, 1.0)
     return cv2.warpAffine(resp, M, (resp.shape[1], resp.shape[0]),
@@ -451,13 +467,24 @@ def fit_painted(resp_cols, resp_rows, rect, res, out_m=0.4, in_m=3.5,
             "edge_strength": [round(c, 1) for c in conf]}
 
 
-def find_divisions(chroma, rect, n, res, tol_m=6.0):
-    """Locate the n+1 cross-pitch boundaries on a parent field, all at once.
+def find_divisions(chroma, rect, n, res, tol_m=6.0, gap_m=0.0):
+    """Locate the cross-pitch side lines on a parent field, all at once.
 
     Fitting each section on its own lets neighbouring thirds disagree about
-    where the line between them is. The boundaries are near-evenly spaced, so
-    fitting one (offset, spacing) pair to the whole set is both more robust and
-    self-consistent: every section then shares its edges with its neighbours.
+    where the line between them is. The sections are evenly pitched, so fitting
+    one (offset, width, gap) triple to the whole set is both more robust and
+    self-consistent.
+
+    `gap_m` is the widest run-off to consider *between* sections. At zero the
+    sections are contiguous and share n+1 boundaries, which is what Prazacka
+    wants. Sterboholy does not: its three pitches are separated by ~3.8 m of
+    spare turf and each has its own pair of side lines, so taking a section's
+    west edge from its neighbour's east edge made it ~3.8 m too wide on that
+    side -- with the goals then visibly off-centre. Fitting the gap puts every
+    edge on its own paint.
+
+    Returns one (lo, hi) pair per section; with no gap the pairs share endpoints
+    and this is the old n+1 boundaries by another name.
     """
     (cx, cy), (w, h), ang = rect
     long_is_w = w >= h
@@ -473,24 +500,48 @@ def find_divisions(chroma, rect, n, res, tol_m=6.0):
         start0 = cy - L / 2
 
     span = tol_m / res
+    # allow the marked pitches to leave a margin inside the parent
+    totals = np.arange(L * 0.75, L * 1.001, 2.0)
+    # Contiguous sections start within tol_m of the parent edge. Gapped ones do
+    # not -- Sterboholy's first side line is 9.5 m in -- so the block is free to
+    # sit anywhere it fits inside the parent.
+    starts = (np.arange(start0 - span, start0 + span + 1, 2.0) if not gap_m
+              else np.arange(start0, start0 + L, 2.0))
     best, best_score = None, -1.0
-    for start in np.arange(start0 - span, start0 + span + 1, 2.0):
-        # allow the marked pitches to leave a margin inside the parent
-        for total in np.arange(L * 0.75, L * 1.001, 2.0):
-            step = total / n
-            idx = np.round(start + np.arange(n + 1) * step).astype(int)
-            if idx[0] < 0 or idx[-1] >= len(prof):
+    for gap in np.arange(0.0, gap_m / res + 0.01, 2.0):
+        steps = (totals - (n - 1) * gap) / n
+        ok = steps > 0
+        if not ok.any():
+            continue
+        tot, step_v = totals[ok], steps[ok]
+        for start in starts:
+            los = start + np.arange(n)[:, None] * (step_v + gap)
+            # with no gap the section edges coincide: score the n+1 distinct
+            # boundaries, not the interior ones twice
+            edges = (np.vstack([los, los + step_v]) if gap else
+                     start + np.arange(n + 1)[:, None] * step_v)
+            idx = np.round(edges).astype(int)
+            valid = ((idx.min(axis=0) >= 0) & (idx.max(axis=0) < len(prof))
+                     & (start - start0 + tot <= L))
+            if not valid.any():
                 continue
-            score = float(prof[idx].sum()) / (n + 1)
-            if score > best_score:
-                best, best_score = (float(start), float(step)), score
+            scores = np.where(valid, prof[np.clip(idx, 0, len(prof) - 1)].mean(axis=0), -1.0)
+            i = int(np.argmax(scores))
+            if scores[i] > best_score:
+                best_score = float(scores[i])
+                best = (float(start), float(step_v[i]), float(gap))
     if best is None:
         return None, 0.0
-    start, step = best
+    start, step, gap = best
     base = max(float(np.median(prof[prof > 0])) if (prof > 0).any() else 0.0, 1e-6)
-    edges = [_subpix(prof, int(round(start + i * step))) for i in range(n + 1)]
+    # One width for every section is the right model but not the last word: the
+    # thirds differ by a few tens of centimetres. Let each edge settle on its
+    # own peak, close enough that it cannot leave the line it was fitted to.
+    edges = [(_snap(prof, start + i * (step + gap), res, base),
+              _snap(prof, start + i * (step + gap) + step, res, base))
+             for i in range(n)]
     strength = round(best_score / base, 1)
-    return {"edges": edges, "long_is_w": long_is_w, "angle": ang,
+    return {"edges": edges, "gap": gap, "long_is_w": long_is_w, "angle": ang,
             "centre": (cx, cy), "size": (w, h)}, strength
 
 
@@ -600,7 +651,14 @@ def nudge_rect(pts, nudges, res):
 
 
 def _apply_goals(div, target, goals, res, fit):
-    """Replace the fitted length with the shared goal-line pair."""
+    """Replace the fitted length with the shared goal-line pair.
+
+    The rectangle comes out at the angle `fit` refined, not the turf carpet's:
+    at Sterboholy the paint sits 0.7 deg off the carpet, and emitting the carpet
+    angle left the side lines crossing the blue paint instead of lying along it
+    -- while the JSON reported the refined angle, which was simply untrue of the
+    rectangle beside it.
+    """
     (tcx, tcy), (tw, th), ang = target
     g0, g1 = sorted(goals)
     length = (g1 - g0) * res
@@ -617,7 +675,12 @@ def _apply_goals(div, target, goals, res, fit):
         c_rot = (float(mid), float(tc_rot[1]))
         size = (g1 - g0, th)
     c = cv2.transform(np.array([[c_rot]], np.float32), Minv).reshape(2)
-    rect = ((float(c[0]), float(c[1])), size, ang)
+    paint = fit["angle"]                     # reported modulo 180
+    while paint - ang > 90:
+        paint -= 180
+    while ang - paint > 90:
+        paint += 180
+    rect = ((float(c[0]), float(c[1])), size, paint)
     pts = cv2.boxPoints(rect)
     width = min(fit["l_m"], fit["w_m"])
     return {**fit, "l_m": round(max(length, width), 2),
@@ -625,7 +688,8 @@ def _apply_goals(div, target, goals, res, fit):
 
 
 def rects_from_divisions(div, n, first_end="W"):
-    """Turn fitted boundaries into n section rectangles, ordered from `first_end`."""
+    """Turn the fitted (lo, hi) edge pairs into n section rectangles, ordered
+    from `first_end`."""
     cx, cy = div["centre"]
     w, h = div["size"]
     ang = div["angle"]
@@ -633,7 +697,7 @@ def rects_from_divisions(div, n, first_end="W"):
     Minv = cv2.invertAffineTransform(cv2.getRotationMatrix2D((cx, cy), ang, 1.0))
     out = []
     for i in range(n):
-        a, b = e[i], e[i + 1]
+        a, b = e[i]
         if div["long_is_w"]:
             c_rot, size = ((a + b) / 2.0, cy), (b - a, h)
         else:
@@ -719,13 +783,15 @@ def detect(img, geo, roi_m, cfg):
         # across the whole parent so neighbouring sections agree, then fit only
         # the goal lines here.
         chroma = line_response(img, geo["res"], mode="chroma")
-        div, div_strength = find_divisions(chroma, best["rect"], n, geo["res"])
+        div, div_strength = find_divisions(chroma, best["rect"], n, geo["res"],
+                                           gap_m=cfg.get("section_gap_m", 0.0))
         if div:
             secs = rects_from_divisions(div, n, cfg.get("first_end", "W"))
             cand["section_rects_px"] = [[[round(float(a), 1), round(float(b), 1)]
                                          for a, b in cv2.boxPoints(r)] for r in secs]
             target = secs[idx - 1]
             cand["division_strength"] = div_strength
+            cand["section_gap_m"] = round(div["gap"] * geo["res"], 2)
             resp_cols = chroma if div["long_is_w"] else white
             resp_rows = white if div["long_is_w"] else chroma
             # The goal lines are shared by all three sections and are inset

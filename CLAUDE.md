@@ -60,6 +60,7 @@ table, and shown on the page as a scale comparison.
 | `layer` | which capture (see IPR_LAYERS); leaf-off wins wherever trees are |
 | `fit_out_m` / `fit_in_m` | touchline search band, for grounds with a bright kerb |
 | `sections` / `section_index` / `first_end` / `goal_flush` | numbered cross-pitches |
+| `section_gap_m` | widest run-off to allow *between* cross-pitches (0 = they touch) |
 | `edge_nudge_m` | per-edge correction in metres by compass side |
 
 Corrections belong here, per venue. Twice I tried to generalise a fix into the
@@ -109,6 +110,13 @@ kerb or the surround outshines the touchline, which is why HANSP carries a
 surround, not evidence the fit is wrong. Confirm against the image before
 chasing it.
 
+**A section edge with no line under it keeps its modelled position.** The
+division fit interpolates each edge onto its own peak, since the thirds differ
+by tens of centimetres. Where the blue lines are invisible — Pražačka — the
+nearest local maximum is turf noise, so `_snap` only moves an edge onto a peak
+that is clearly above background. Do not drop that guard: without it Pražačka's
+west edge walks 0.4 m and its hand-set nudge no longer means what it says.
+
 **Nudge signs are inverted between opposite edges.** Apply, re-run
 `diagnose.py`, confirm the offset moved toward zero. Do not reason it out.
 
@@ -133,14 +141,31 @@ or indoor only.
 A venue code is not always a pitch. `STER2`, `STER3` and `P2` are numbered
 cross-pitches marked across one full-size field, per the venue notes ("č. 1 je
 nejblíže hale", "č. 1 nejblíže kabinám"). They are found by fitting one
-(offset, spacing) pair across the whole parent so neighbouring thirds share
-edges, then a goal-line pair ~45 m apart. The marked pitches do not fill the
+(offset, width, gap) triple across the whole parent so the sections stay
+consistent with each other, then a goal-line pair ~45 m apart. The marked pitches do not fill the
 parent and are not centred in it — at Štěrboholy the spare ground is all at the
 south end, which is what `goal_flush` encodes.
 
 At Štěrboholy the north goal line coincides with a white marking while the
 other three edges are blue; that edge is therefore the one that can be located
 precisely.
+
+**Cross-pitches need not touch.** Štěrboholy's three are 23.9 m wide with 3.8 m
+of spare turf between them, so each has its own pair of blue side lines — six
+lines, not four. Fitted as contiguous thirds, STER2 and STER3 each took their
+west edge from the *neighbour's* east line and came out 27.5 m wide, ~3.8 m too
+wide on that side, with the goals visibly off-centre. `section_gap_m` lets the
+(offset, width, gap) fit find the real pairs; leave it out and the sections
+share edges as Pražačka's do. A block of gapped sections no longer starts near
+the parent's edge (Štěrboholy's first side line is 9.5 m in), so with a gap the
+block is free to sit anywhere inside the parent instead of within `tol_m`.
+
+**The paint is not square to the turf.** At Štěrboholy the markings sit 0.7°
+off the turf carpet's rectangle: half a metre of drift along a 48 m line. That
+is enough to smear a faint blue line flat in a carpet-frame profile, which is
+why `diagnose.py` profiles at the *fitted* angle and `_apply_goals` emits the
+rectangle at it too. Before, the JSON reported the refined angle beside a
+rectangle that was not at it.
 
 Verified per-venue state as of autumn 2026 is in `data/overrides.json`, each
 entry with a `note` saying why it is set that way.
