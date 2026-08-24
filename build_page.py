@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build a self-contained HTML page from the measurements + annotated crops."""
 import base64, io, json
+from datetime import date
 from pathlib import Path
 import cv2
 
@@ -95,6 +96,7 @@ if training:
 {esc(biggest["venue"])} is {biggest["area"] / t["area"]:.1f}&times; the area, and the smallest
 of them still has {min(p["area"] for p in pitches) - t["area"]} m&sup2; more.</p>'''
 
+today = date.today().strftime("%-d %B %Y")
 html = f'''<title>Pitch dimensions &mdash; 7-G podzim 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -228,7 +230,7 @@ at 5&nbsp;cm per pixel.</p>
 {tsection}
 <footer>
 Imagery: IPR Praha orthophoto archive, 0.05&nbsp;m/px, EPSG:5514 (S-JTSK); capture chosen per venue.
-Fixtures and venue coordinates scraped from psmf.cz. Generated 21 August 2026.
+Fixtures and venue coordinates scraped from psmf.cz. Generated {today}.
 </footer>
 </div>
 '''
