@@ -3,6 +3,10 @@
 Measures the pitch we play on at every venue in our PSMF fixture list, straight
 from Prague orthophoto imagery.
 
+The season's report is published at
+<https://ondrejchmelar.github.io/psmf-pitches/> — GitHub Pages serves
+`docs/index.html`, which `build_page.py` writes as one self-contained file.
+
 ## Usage
 
 ```bash
