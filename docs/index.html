@@ -320,9 +320,12 @@ input.addEventListener('blur', () => setTimeout(closeList, 120));
 
 const lookup = v => {
   const f = fold(v);
-  let i = keys.indexOf(f);
+  const i = keys.indexOf(f);
   if (i >= 0) return i;
-  const bare = D.teams.map((t, n) => n).filter(n => fold(D.teams[n].name) === f);
+  // Fall back to the bare name, so a link shared last season still opens on the
+  // team after it has moved division -- but only when the name picks out one.
+  const stripped = f.replace(/\s*\([^)]*\)\s*$/, '');
+  const bare = D.teams.map((t, n) => n).filter(n => fold(D.teams[n].name) === stripped);
   return bare.length === 1 ? bare[0] : null;
 };
 
