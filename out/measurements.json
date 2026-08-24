@@ -467,6 +467,161 @@
       }
     ]
   },
+  "P1": {
+    "venue": {
+      "code": "P1",
+      "name": "Pražačka",
+      "lat": 50.0929106,
+      "lon": 14.4748442,
+      "address": "Za Žižkovskou vozovnou 2716/19, Praha 3",
+      "notes": "Za Žižkovskou vozovnou 2716/19, Praha 3\nVe „Sportovním a rekreačním areálu“ Pražačka, více na www.prazacka.cz. UMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže kabinám, č. 3 je nejvzdálenější.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze vhodit do schránky nalevo před vchodem do bistra Pražanda.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739028.2437026588,
+      "y1": -1042834.2694544455,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738928.2437026588,
+        -1042934.2694544455
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 114.8,
+        "turf_w_m": 51.5,
+        "turf_area_m2": 5911,
+        "aspect": 2.23,
+        "rectness": 0.755,
+        "border_support": 1.0,
+        "bearing_deg": 152.3,
+        "centre_lat": 50.092884,
+        "centre_lon": 14.4747584,
+        "rect_px": [
+          [
+            1093.5,
+            3031.9
+          ],
+          [
+            614.4,
+            2120.6
+          ],
+          [
+            2647.1,
+            1051.9
+          ],
+          [
+            3126.2,
+            1963.3
+          ]
+        ],
+        "kind": "section_1_of_3",
+        "parent_l_m": 114.8,
+        "parent_w_m": 51.5,
+        "section_rects_px": [
+          [
+            [
+              1507.8,
+              2814.2
+            ],
+            [
+              1028.7,
+              1902.8
+            ],
+            [
+              1453.5,
+              1679.4
+            ],
+            [
+              1932.6,
+              2590.8
+            ]
+          ],
+          [
+            [
+              2033.6,
+              2537.8
+            ],
+            [
+              1554.4,
+              1626.4
+            ],
+            [
+              1977.5,
+              1404.0
+            ],
+            [
+              2456.6,
+              2315.3
+            ]
+          ],
+          [
+            [
+              2559.3,
+              2261.4
+            ],
+            [
+              2080.2,
+              1350.0
+            ],
+            [
+              2504.2,
+              1127.1
+            ],
+            [
+              2983.3,
+              2038.5
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 5.75,
+        "goal_strength": 4.0,
+        "painted_l_m": 45.27,
+        "painted_w_m": 24.0,
+        "painted_angle": 152.27,
+        "edge_strength": [
+          1.3,
+          1.3,
+          5.6,
+          3.8
+        ],
+        "play_l_m": 45.27,
+        "play_w_m": 24.0,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1476.8,
+            2755.3
+          ],
+          [
+            1055.5,
+            1953.8
+          ],
+          [
+            1480.4,
+            1730.5
+          ],
+          [
+            1901.7,
+            2532.0
+          ]
+        ]
+      }
+    ]
+  },
   "P2": {
     "venue": {
       "code": "P2",
@@ -532,94 +687,246 @@
         "section_rects_px": [
           [
             [
-              1144.7,
-              3005.0
+              1507.8,
+              2814.2
             ],
             [
-              665.6,
-              2093.7
+              1028.7,
+              1902.8
             ],
             [
-              1314.1,
-              1752.7
+              1453.5,
+              1679.4
             ],
             [
-              1793.2,
-              2664.1
+              1932.6,
+              2590.8
             ]
           ],
           [
             [
-              1793.2,
-              2664.1
+              2033.6,
+              2537.8
             ],
             [
-              1314.1,
-              1752.7
+              1554.4,
+              1626.4
             ],
             [
-              1977.6,
-              1403.9
+              1977.5,
+              1404.0
             ],
             [
-              2456.7,
+              2456.6,
               2315.3
             ]
           ],
           [
             [
-              2456.7,
-              2315.3
+              2559.3,
+              2261.4
             ],
             [
-              1977.6,
-              1403.9
+              2080.2,
+              1350.0
             ],
             [
-              2631.6,
-              1060.1
+              2504.2,
+              1127.1
             ],
             [
-              3110.8,
-              1971.5
+              2983.3,
+              2038.5
             ]
           ]
         ],
         "section_order": "section 1 at the W end",
-        "division_strength": 1.7,
-        "section_gap_m": 0.0,
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 5.75,
         "goal_strength": 4.0,
-        "edge_nudged": {
-          "W": 13.48
-        },
         "painted_l_m": 45.27,
-        "painted_w_m": 24.0,
+        "painted_w_m": 23.9,
         "painted_angle": 152.37,
         "edge_strength": [
-          1.0,
+          1.5,
           1.5,
           5.0,
-          3.8
+          4.0
         ],
         "play_l_m": 45.27,
-        "play_w_m": 24.0,
+        "play_w_m": 23.9,
         "play_src": "painted lines",
         "play_rect_px": [
           [
-            2000.1,
-            2480.0
+            2001.7,
+            2478.9
           ],
           [
-            1580.2,
-            1677.8
+            1581.8,
+            1676.7
           ],
           [
-            2005.5,
-            1455.2
+            2005.3,
+            1455.0
           ],
           [
-            2425.4,
-            2257.4
+            2425.2,
+            2257.3
+          ]
+        ]
+      }
+    ]
+  },
+  "P3": {
+    "venue": {
+      "code": "P3",
+      "name": "Pražačka",
+      "lat": 50.0929106,
+      "lon": 14.4748442,
+      "address": "Za Žižkovskou vozovnou 2716/19, Praha 3",
+      "notes": "Za Žižkovskou vozovnou 2716/19, Praha 3\nVe „Sportovním a rekreačním areálu“ Pražačka, více na www.prazacka.cz. UMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže kabinám, č. 3 je nejvzdálenější.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze vhodit do schránky nalevo před vchodem do bistra Pražanda.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739028.2437026588,
+      "y1": -1042834.2694544455,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738928.2437026588,
+        -1042934.2694544455
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 114.8,
+        "turf_w_m": 51.5,
+        "turf_area_m2": 5911,
+        "aspect": 2.23,
+        "rectness": 0.755,
+        "border_support": 1.0,
+        "bearing_deg": 152.3,
+        "centre_lat": 50.092884,
+        "centre_lon": 14.4747584,
+        "rect_px": [
+          [
+            1093.5,
+            3031.9
+          ],
+          [
+            614.4,
+            2120.6
+          ],
+          [
+            2647.1,
+            1051.9
+          ],
+          [
+            3126.2,
+            1963.3
+          ]
+        ],
+        "kind": "section_3_of_3",
+        "parent_l_m": 114.8,
+        "parent_w_m": 51.5,
+        "section_rects_px": [
+          [
+            [
+              1507.8,
+              2814.2
+            ],
+            [
+              1028.7,
+              1902.8
+            ],
+            [
+              1453.5,
+              1679.4
+            ],
+            [
+              1932.6,
+              2590.8
+            ]
+          ],
+          [
+            [
+              2033.6,
+              2537.8
+            ],
+            [
+              1554.4,
+              1626.4
+            ],
+            [
+              1977.5,
+              1404.0
+            ],
+            [
+              2456.6,
+              2315.3
+            ]
+          ],
+          [
+            [
+              2559.3,
+              2261.4
+            ],
+            [
+              2080.2,
+              1350.0
+            ],
+            [
+              2504.2,
+              1127.1
+            ],
+            [
+              2983.3,
+              2038.5
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 5.75,
+        "goal_strength": 4.0,
+        "painted_l_m": 45.27,
+        "painted_w_m": 23.95,
+        "painted_angle": 152.37,
+        "edge_strength": [
+          1.4,
+          1.4,
+          6.6,
+          4.6
+        ],
+        "play_l_m": 45.27,
+        "play_w_m": 23.95,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2527.5,
+            2202.5
+          ],
+          [
+            2107.6,
+            1400.3
+          ],
+          [
+            2531.9,
+            1178.2
+          ],
+          [
+            2951.9,
+            1980.4
           ]
         ]
       }
@@ -813,6 +1120,165 @@
           [
             3045.3,
             2020.5
+          ]
+        ]
+      }
+    ]
+  },
+  "STER1": {
+    "venue": {
+      "code": "STER1",
+      "name": "Štěrboholy",
+      "lat": 50.0708439,
+      "lon": 14.5536542,
+      "address": "U Školy 430, Praha 10",
+      "notes": "U Školy 430, Praha 10\nV areálu za sportovní halou.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je nejblíže hale, č. 3 nejdále.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -733771.2841315186,
+      "y1": -1046028.0034199689,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 272,
+      "capture": "2024 leaf-off",
+      "centre_jtsk": [
+        -733671.2841315186,
+        -1046128.0034199689
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 98.7,
+        "turf_w_m": 63.4,
+        "turf_area_m2": 6257,
+        "aspect": 1.56,
+        "rectness": 0.849,
+        "border_support": 1.0,
+        "bearing_deg": 163.6,
+        "centre_lat": 50.070828,
+        "centre_lon": 14.5537238,
+        "rect_px": [
+          [
+            1326.5,
+            2935.7
+          ],
+          [
+            967.7,
+            1719.9
+          ],
+          [
+            2861.4,
+            1161.0
+          ],
+          [
+            3220.2,
+            2376.8
+          ]
+        ],
+        "kind": "section_1_of_3",
+        "parent_l_m": 98.7,
+        "parent_w_m": 63.4,
+        "section_rects_px": [
+          [
+            [
+              1508.5,
+              2882.0
+            ],
+            [
+              1149.7,
+              1666.2
+            ],
+            [
+              1611.4,
+              1529.9
+            ],
+            [
+              1970.2,
+              2745.7
+            ]
+          ],
+          [
+            [
+              2042.2,
+              2724.5
+            ],
+            [
+              1683.4,
+              1508.7
+            ],
+            [
+              2139.0,
+              1374.2
+            ],
+            [
+              2497.8,
+              2590.0
+            ]
+          ],
+          [
+            [
+              2572.6,
+              2567.9
+            ],
+            [
+              2213.8,
+              1352.1
+            ],
+            [
+              2670.1,
+              1217.5
+            ],
+            [
+              3029.0,
+              2433.3
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "division_strength": 1.9,
+        "section_gap_m": 3.7,
+        "goal_strength": 3.8,
+        "edge_nudged": {
+          "N": -7.71,
+          "S": 8.41
+        },
+        "painted_l_m": 48.08,
+        "painted_w_m": 24.07,
+        "painted_angle": 164.26,
+        "edge_strength": [
+          3.2,
+          2.7,
+          7.5,
+          6.7
+        ],
+        "play_l_m": 48.08,
+        "play_w_m": 24.07,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1436.7,
+            2652.3
+          ],
+          [
+            1175.9,
+            1726.8
+          ],
+          [
+            1639.2,
+            1596.2
+          ],
+          [
+            1900.0,
+            2521.7
           ]
         ]
       }

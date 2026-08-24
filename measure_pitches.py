@@ -545,6 +545,29 @@ def find_divisions(chroma, rect, n, res, tol_m=6.0, gap_m=0.0):
             "centre": (cx, cy), "size": (w, h)}, strength
 
 
+def divisions_from_edges(rect, edges_m, res):
+    """Take the section boundaries as measured, in metres along the parent.
+
+    Prazacka cannot be fitted. Its cross-pitch side lines are there in the
+    imagery -- six of them, 24 m apart in pairs -- but the parent's own goal,
+    penalty and halfway lines are twice as bright, and any search that can see
+    the faint ones locks onto the bright ones instead (it scores the parent's
+    markings 5.4 against the real pitches' 4.0). Rather than anchor a section to
+    a fit that lands in the wrong place and cancel the error with a nudge, the
+    positions are written down here as read off the orthophoto: 0 is the low
+    end of the parent's long axis, the same coordinate `diagnose.py` reports.
+    """
+    (cx, cy), (w, h), ang = rect
+    long_is_w = w >= h
+    L = w if long_is_w else h
+    start0 = (cx if long_is_w else cy) - L / 2
+    edges = [(start0 + a / res, start0 + b / res) for a, b in edges_m]
+    gaps = [edges[i + 1][0] - edges[i][1] for i in range(len(edges) - 1)]
+    return {"edges": edges, "gap": float(np.mean(gaps)) if gaps else 0.0,
+            "long_is_w": long_is_w, "angle": ang, "centre": (cx, cy),
+            "size": (w, h)}
+
+
 def find_goal_lines(white, div, res, sep_m=(42.0, 50.0), flush=None):
     """Find the cross-pitch goal lines: a pair of white lines ~45 m apart.
 
@@ -783,14 +806,21 @@ def detect(img, geo, roi_m, cfg):
         # across the whole parent so neighbouring sections agree, then fit only
         # the goal lines here.
         chroma = line_response(img, geo["res"], mode="chroma")
-        div, div_strength = find_divisions(chroma, best["rect"], n, geo["res"],
-                                           gap_m=cfg.get("section_gap_m", 0.0))
+        if cfg.get("section_edges_m"):
+            div = divisions_from_edges(best["rect"], cfg["section_edges_m"], geo["res"])
+            div_strength = None
+        else:
+            div, div_strength = find_divisions(chroma, best["rect"], n, geo["res"],
+                                               gap_m=cfg.get("section_gap_m", 0.0))
         if div:
             secs = rects_from_divisions(div, n, cfg.get("first_end", "W"))
             cand["section_rects_px"] = [[[round(float(a), 1), round(float(b), 1)]
                                          for a, b in cv2.boxPoints(r)] for r in secs]
             target = secs[idx - 1]
-            cand["division_strength"] = div_strength
+            if div_strength is None:
+                cand["section_src"] = "edges measured by hand (overrides.json)"
+            else:
+                cand["division_strength"] = div_strength
             cand["section_gap_m"] = round(div["gap"] * geo["res"], 2)
             resp_cols = chroma if div["long_is_w"] else white
             resp_rows = white if div["long_is_w"] else chroma
@@ -921,7 +951,11 @@ def main():
     fixtures = json.loads((DATA / "fixtures.json").read_text("utf-8"))["fixtures"]
     codes = ([c.strip() for c in args.codes.split(",")] if args.codes
              else sorted({f["venue_code"] for f in fixtures}
-                         | {k for k, v in venues.items() if v.get("training")}))
+                         | {k for k, v in venues.items() if v.get("training")}
+                         # sibling pitches at grounds we play at: no fixture of
+                         # ours, but measured so the numbers are already there
+                         | {k for k, v in overrides.items()
+                            if isinstance(v, dict) and v.get("measure")}))
 
     OUT.mkdir(exist_ok=True)
     # a --codes run must not drop the venues it did not touch

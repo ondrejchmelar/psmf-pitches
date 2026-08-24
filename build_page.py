@@ -32,6 +32,24 @@ for r in rows:
 pitches.sort(key=lambda p: -p["area"])
 mx = max(p["area"] for p in pitches)
 
+# Numbered cross-pitches at grounds we do play at, but not the one we are
+# drawn on. No fixture, so they stay out of the season table; measured anyway
+# so the number is already there if next season puts us on one.
+siblings = []
+for code, m in ms.items():
+    if code.startswith("_") or code in seen or m.get("venue", {}).get("training"):
+        continue
+    c = (m.get("candidates") or [None])[0]
+    if not c:
+        continue
+    l, w = round(c["play_l_m"]), round(c["play_w_m"])
+    n_of = c["kind"].split("_")            # section_1_of_3
+    siblings.append({"code": code, "venue": m["venue"]["name"], "l": l, "w": w,
+                     "area": l * w, "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
+                     "which": (f"Pitch {n_of[1]} of {n_of[3]}"
+                               if len(n_of) == 4 else "Other pitch")})
+siblings.sort(key=lambda p: (p["venue"], p["code"]))
+
 # venues we do not play fixtures at (our training pitch) ride along for scale
 training = []
 for code, m in ms.items():
@@ -82,6 +100,19 @@ for p in pitches:
     if p.get("boots_text"):
         sub += f'<p class="nt">{esc(p["boots_text"])}</p>'
     cards.append(card(p, mx, sub))
+
+scards = [card(sb, mx, f'<p class="fx">{sb["which"]} at {esc(sb["venue"])} '
+                        f'&mdash; no fixture of ours this season</p>')
+          for sb in siblings]
+ssection = ""
+if siblings:
+    grounds = sorted({sb["venue"] for sb in siblings})
+    ssection = f'''<hr class="rule">
+<h2>The other pitches at these grounds</h2>
+<p class="lede" style="margin-bottom:18px">{" and ".join(grounds)} mark several
+pitches across one big field. We play one of them; these are the rest, measured
+the same way so the numbers are ready if the draw moves us.</p>
+<div class="grid">{"".join(scards)}</div>'''
 
 tcards = [card(t, mx, '<p class="fx">Training pitch &mdash; not a fixture venue</p>')
           for t in training]
@@ -227,6 +258,7 @@ at 5&nbsp;cm per pixel.</p>
 {chr(10).join(cards)}
 </div>
 
+{ssection}
 {tsection}
 <footer>
 Imagery: IPR Praha orthophoto archive, 0.05&nbsp;m/px, EPSG:5514 (S-JTSK); capture chosen per venue.

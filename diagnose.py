@@ -77,11 +77,16 @@ def diagnose(code, venues, overrides, meas, res, half):
     colC = Rc[int(y0):int(y1), :].mean(axis=0)
     rowC = Rc[:, int(x0):int(x1)].mean(axis=1)
 
-    # sections: divisions run along the parent's long axis and are blue
+    # Sections: the side lines run along the parent's long axis. They are blue
+    # at Sterboholy and white-ish at Prazacka, so try chroma and fall back to
+    # luminance rather than reporting "no line found" for an edge that is on
+    # paint this profile simply cannot see.
     sectioned = bool(cfg.get("sections"))
     div_on_x = pw >= ph
     col_src = (colC if (sectioned and div_on_x) else colW)
     row_src = (rowC if (sectioned and not div_on_x) else rowW)
+    col_alt = colW if col_src is colC else None
+    row_alt = rowW if row_src is rowC else None
 
     ctr = pts.mean(0)
     print(f"--- {code}  {cand['play_l_m']} x {cand['play_w_m']} m   "
@@ -97,12 +102,14 @@ def diagnose(code, venues, overrides, meas, res, half):
         # from the edge normal instead made opposite edges resolve to the same
         # bound whenever the rectangle was strongly rotated.
         mr = cv2.transform(mid.reshape(1, 1, 2), rot).reshape(2)
-        opts = [(abs(float(mr[0]) - x0), col_src, x0),
-                (abs(float(mr[0]) - x1), col_src, x1),
-                (abs(float(mr[1]) - y0), row_src, y0),
-                (abs(float(mr[1]) - y1), row_src, y1)]
-        _, prof, pos = min(opts, key=lambda o: o[0])
+        opts = [(abs(float(mr[0]) - x0), col_src, col_alt, x0),
+                (abs(float(mr[0]) - x1), col_src, col_alt, x1),
+                (abs(float(mr[1]) - y0), row_src, row_alt, y0),
+                (abs(float(mr[1]) - y1), row_src, row_alt, y1)]
+        _, prof, alt, pos = min(opts, key=lambda o: o[0])
         pk = peaks_near(prof, pos, res)
+        if not pk and alt is not None:
+            prof, pk = alt, peaks_near(alt, pos, res)
         kind = "blue" if (prof is colC or prof is rowC) else "white"
         # The strongest peak nearby is often the kerb or the surround rather
         # than a marking, so report the closest one separately: that is the

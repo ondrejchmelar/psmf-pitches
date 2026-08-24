@@ -122,22 +122,22 @@
     "l": 45,
     "w": 24,
     "l_exact": 45.27,
-    "w_exact": 24.0,
+    "w_exact": 23.9,
     "area": 1080,
     "kind": "section_2_of_3",
     "src": "painted lines",
     "turf": "115 x 52",
     "capture": "2025",
     "edges": [
-      1.0,
+      1.5,
       1.5,
       5.0,
-      3.8
+      4.0
     ],
     "conf": "low",
     "boots": "lisovky OK",
     "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
-    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks."
+    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge."
   },
   {
     "round": 6,
@@ -262,22 +262,22 @@
     "l": 45,
     "w": 24,
     "l_exact": 45.27,
-    "w_exact": 24.0,
+    "w_exact": 23.9,
     "area": 1080,
     "kind": "section_2_of_3",
     "src": "painted lines",
     "turf": "115 x 52",
     "capture": "2025",
     "edges": [
-      1.0,
+      1.5,
       1.5,
       5.0,
-      3.8
+      4.0
     ],
     "conf": "low",
     "boots": "lisovky OK",
     "boots_text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
-    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). Middle third, so the same whichever end the numbering starts from. The blue division lines are too faint to fit, so the west edge is set by mirroring the east one about the centre circle at 65 m; both land on real white line peaks."
+    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge."
   },
   {
     "round": 11,

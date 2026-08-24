@@ -102,6 +102,10 @@ than buried in tuned thresholds:
   bright kerb sits exactly where the search would otherwise land.
 * `goal_flush` -- which end the marked cross-pitches start from. Peak strength
   alone picks the wrong pair at Sterboholy.
+* `section_edges_m` -- the cross-pitch boundaries as measured off the imagery,
+  for the ground where no fit can find them. At Prazacka the parent's own
+  markings are twice as bright as the cross-pitch ones, so any search that can
+  see the faint lines locks onto the bright ones.
 * `section_gap_m` -- how much run-off may sit *between* numbered cross-pitches.
   Sterboholy's three are 23.9 m wide with 3.8 m between them, so each has its
   own pair of side lines; fitted as contiguous thirds they came out 3.8 m too
@@ -130,12 +134,14 @@ wrong.
 PSMF publishes one GPS point per *areal*, and some codes are a numbered
 cross-pitch of a larger field rather than a standalone pitch:
 
-* `STER2`/`STER3` — cross-pitches on one big UMT field ("c. 1 je nejblize hale,
-  c. 3 nejdale"). All three are the same size, 3.8 m of spare turf apart.
-* `P2` — the middle of three pitches marked across the stadium infield.
+* `STER1`/`STER2`/`STER3` — cross-pitches on one big UMT field ("c. 1 je
+  nejblize hale, c. 3 nejdale"). All three the same size, 3.8 m of spare turf
+  apart.
+* `P1`/`P2`/`P3` — three pitches marked across the stadium infield, 24 m wide
+  with 5.7 m between them and a shared pair of goal lines 45.3 m apart.
 
-For those, the section size is derived from the parent field, not measured
-directly, and is flagged `section_N_of_M` in the output. `SANC1`/`SANC2` are two
+Each of those is measured off its own pair of side lines, not divided out of
+the parent, and is flagged `section_N_of_M` in the output. `SANC1`/`SANC2` are two
 genuinely separate adjacent pitches; PSMF's numbering is relative to the changing
 rooms, which the imagery cannot resolve, but the two measure within ~3 m of each
 other so it makes little practical difference.
