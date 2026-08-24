@@ -25,7 +25,6 @@ ov = json.loads((ROOT / "data/overrides.json").read_text("utf-8"))
 venues = json.loads((ROOT / "data/venues.json").read_text("utf-8"))
 season_path = ROOT / "data/season.json"
 season = json.loads(season_path.read_text("utf-8")) if season_path.exists() else {"teams": []}
-ours = json.loads((ROOT / "data/fixtures.json").read_text("utf-8")).get("team", "")
 
 IMG_W, IMG_Q = 720, 72        # 40-odd venues ride in this file; keep each light
 
@@ -92,9 +91,10 @@ for t in season.get("teams", []):
     if fx:
         teams.append({"name": t["name"], "div": t["division"].upper(), "fx": fx})
 teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
-default = next((i for i, t in enumerate(teams) if t["name"] == ours), 0)
 
-blob = json.dumps({"venues": V, "teams": teams, "default": default},
+# No team is selected on load. The page is for the league, so it opens on the
+# whole directory rather than on whoever built it.
+blob = json.dumps({"venues": V, "teams": teams},
                   ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
 
 CSS = """
@@ -226,7 +226,10 @@ function card(v, sub) {
 
 function renderTeam(i) {
   const host = document.getElementById('team');
-  const t = D.teams[i];
+  const t = i == null ? null : D.teams[i];
+  document.getElementById('all-head').textContent =
+    t ? 'Every pitch in the directory · largest to smallest'
+      : 'All pitches · largest to smallest';
   if (!t) { host.innerHTML = ''; return; }
 
   const rows = t.fx.map(f => {
@@ -302,14 +305,12 @@ document.getElementById('teams').innerHTML =
   D.teams.map(t => `<option value="${esc(label(t))}"></option>`).join('');
 input.addEventListener('input', () => {
   const k = key(input.value);
+  if (!k) { renderTeam(null); return; }       // cleared -> back to the directory
   const i = byLabel.has(k) ? byLabel.get(k) : byBare.get(k);
   if (i !== undefined && i !== null) renderTeam(i);
 });
 renderAll();
-if (D.teams.length) {
-  input.value = label(D.teams[D.default]);
-  renderTeam(D.default);
-}
+renderTeam(null);
 """
 
 html = f"""<title>Pitch dimensions &mdash; PSMF Hanspaulsk&aacute; liga</title>
@@ -338,7 +339,7 @@ browser, so that part needs JavaScript. The measurements themselves are in
 <div id="team"></div>
 
 <hr class="rule">
-<h2>Every pitch in the directory &middot; largest to smallest</h2>
+<h2 id="all-head">All pitches &middot; largest to smallest</h2>
 <p class="lede" style="margin-bottom:18px">{len(play)} grounds. {smallest["venue"]}
 &mdash; the smallest &mdash; would fit inside {largest["venue"]}
 {largest["area"] / smallest["area"]:.1f} times over.</p>
