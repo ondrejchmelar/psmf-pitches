@@ -92,6 +92,15 @@ of 10 cm even when the tile is 5 cm; sharper imagery raises local texture
 variance and the adaptive sd threshold floods the mask. Line fitting uses the
 full 5 cm.
 
+**Three grounds, three paints.** Sterboholy's cross-pitch lines are blue,
+Prazacka's are white, and Podvinny mlyn's are ORANGE — barely a luminance step,
+and lost in `chroma` because that mixes both colour axes against the turf's own
+noise. Orange over green moves b* and little else, which is what
+`line_response(mode="orange")` scores. `diagnose.py` now asks all three and
+keeps whichever has a peak nearest the edge; taking the first that finds *any*
+peak let turf noise in one channel outrank the real line in another, and had it
+reporting Podvinny's edges 2-4 m off when they were on the paint.
+
 **Whole pitches are white; only sections use chroma.** Feeding chroma into a
 whole-pitch fit lets turf colour noise compete with real touchlines. The
 cross-pitch boundaries at STER/P2 are painted faint blue and are invisible to a
@@ -114,6 +123,12 @@ parent-field segmentation.
 **`--codes` merges, it does not replace.** A partial run used to rewrite
 `out/measurements.json` with only the venues it touched, silently dropping the
 rest. It now loads the existing file first.
+
+**A ground can carry two nested rectangles.** At Hostivar the pitch is the
+inner one and the fit had taken the outer line on one axis and the inner on the
+other, so it was too big on all four sides at once. When a venue reads as "too
+big in every dimension", look for the second rectangle before touching the
+detector.
 
 **The strongest nearby peak is often not a marking.** At several grounds the
 kerb or the surround outshines the touchline, which is why HANSP carries a

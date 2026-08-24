@@ -13,21 +13,21 @@
   "ASTR1": {
     "pitch_m": [
       1.66,
-      21.56,
+      41.56,
       4.44,
-      49.49
+      24.34
     ],
-    "note": "Court 1 of 2 at Astra: two futsal courts side by side on one carpet, each 19.9 x 45.05 m, sharing the line between them. PSMF marks this ground futsal-only. The halfway line and a centre circle 2.6 m in radius sit at 26.97 m, the exact midpoint, which is what fixes the ends. Numbered from the hall ('c. 1 blize hale'), which the imagery cannot place; both measure the same. diagnose.py reports a stronger line 1.1 m outside the east edge: that is the surround, not the court line, which reads 2-3x here.",
+    "note": "Court 1 of 2 at Astra, the western and so the one nearer the hall ('c. 1 blize hale'; confirmed by longitude). Two futsal courts side by side, each a regulation 39.9 x 19.9 m with 5.25 m between them. The parent's long axis runs north-south here, so splitting its other axis put the rectangle across both courts, 90 degrees out. diagnose.py reports a stronger line about a metre outside the east edge: that is the surround, not the court line, which reads 2-3x.",
     "measure": true
   },
   "ASTR2": {
     "pitch_m": [
-      21.56,
+      1.66,
       41.56,
-      4.44,
+      29.59,
       49.49
     ],
-    "note": "Court 2 of 2 at Astra. See the ASTR1 note on the numbering.",
+    "note": "Court 2 of 2 at Astra, the eastern one. See the ASTR1 note on the orientation and on the surround outshining the court line.",
     "measure": true
   },
   "BECH": {
@@ -58,8 +58,11 @@
     "measure": true
   },
   "DEKAN": {
-    "note": "Single artificial pitch at SK Nusle; found on defaults.",
-    "measure": true
+    "note": "Single artificial pitch at SK Nusle. The west edge ran 3.5 m past the goal line onto a carpet line; the real goal lines are confirmed by the halfway line at their midpoint and penalty areas 5.7 m inside each.",
+    "measure": true,
+    "edge_nudge_m": {
+      "W": 3.5
+    }
   },
   "HANSP": {
     "roi_m": [
@@ -74,8 +77,13 @@
     "fit_in_m": 4.0
   },
   "HOSTI": {
-    "note": "Single artificial pitch at SK Hostivar. Genuinely a wide one -- 45.8 x 36.9 m, confirmed by a halfway line at the exact midpoint of the long axis -- not a merge of two.",
-    "measure": true
+    "note": "Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. Nudged in onto the inner line on each. 43.85 x 33.06 m -- still a wide pitch, and the halfway line sits at the midpoint of the long axis.",
+    "measure": true,
+    "edge_nudge_m": {
+      "W": 1.0,
+      "N": 3.86,
+      "E": 0.98
+    }
   },
   "HRAB1": {
     "sections": 3,
@@ -160,9 +168,10 @@
     "measure": true
   },
   "MALES": {
-    "note": "Single artificial pitch. The north edge fitted the carpet edge, 5.7 m beyond the goal line; nudged onto the paint. Confirmed by the halfway line at 27.47 m, which is the exact midpoint of 5.52 and 49.42, and by penalty-area lines 5.9 m inside each.",
+    "note": "Single artificial pitch. The north edge fitted the carpet edge, 5.7 m beyond the goal line, and the west edge another carpet line 2.95 m out; both nudged onto the paint. Confirmed by the halfway line at 27.47 m, the exact midpoint of the goal lines, and penalty areas 5.9 m inside each.",
     "edge_nudge_m": {
-      "N": 5.73
+      "N": 5.73,
+      "W": 2.95
     },
     "measure": true
   },
@@ -209,27 +218,27 @@
       11.85,
       49.85
     ],
-    "note": "Pitch 1 of 4 at Mikulova: the east column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "note": "Pitch 1 of 4 at Mikulova: the east column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is about 38 x 24 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand -- the imagery cannot place them.",
     "measure": true
   },
   "MIKU2": {
-    "pitch_m": [
-      38.59,
-      62.49,
-      63.95,
-      101.9
-    ],
-    "note": "Pitch 2 of 4 at Mikulova: the east column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
-    "measure": true
-  },
-  "MIKU3": {
     "pitch_m": [
       5.19,
       29.14,
       11.85,
       49.85
     ],
-    "note": "Pitch 3 of 4 at Mikulova: the west column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "note": "Pitch 2 of 4 at Mikulova: the west column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is about 38 x 24 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand -- the imagery cannot place them.",
+    "measure": true
+  },
+  "MIKU3": {
+    "pitch_m": [
+      38.59,
+      62.49,
+      63.95,
+      101.9
+    ],
+    "note": "Pitch 3 of 4 at Mikulova: the east column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is about 38 x 24 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand -- the imagery cannot place them.",
     "measure": true
   },
   "MIKU4": {
@@ -239,7 +248,7 @@
       63.95,
       101.9
     ],
-    "note": "Pitch 4 of 4 at Mikulova: the west column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "note": "Pitch 4 of 4 at Mikulova: the west column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is about 38 x 24 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand -- the imagery cannot place them.",
     "measure": true
   },
   "MOTO1": {
@@ -365,15 +374,15 @@
     "first_end": "W",
     "section_edges_m": [
       [
-        0.18,
-        27.93
+        4.2,
+        26.15
       ],
       [
-        27.93,
-        55.68
+        29.75,
+        51.65
       ]
     ],
-    "note": "Pitch 1 of 2 at Podvinny mlyn: two pitches side by side on one carpet, each 27.75 m wide, sharing the line between them and a pair of goal lines 45.8 m apart. The division is white, invisible to the chroma fit, so the edges are measured. PSMF numbers from the toilet cabins ('c.1 blize bunkam'), which the imagery cannot place; both measure the same.",
+    "note": "Pitch 1 of 2 at Podvinny mlyn: two pitches side by side on one carpet, each 22 m wide, with goal lines 45.8 m apart. Their side lines are ORANGE, not white -- they barely lift luminance and are lost in chroma, but stand out in b* (yellow). The white lines further out are the carpet's own, which is what the fit first took. PSMF numbers from the toilet cabins ('c.1 blize bunkam'), which the imagery cannot place; both measure the same.",
     "measure": true
   },
   "PODV2": {
@@ -382,15 +391,15 @@
     "first_end": "W",
     "section_edges_m": [
       [
-        0.18,
-        27.93
+        4.2,
+        26.15
       ],
       [
-        27.93,
-        55.68
+        29.75,
+        51.65
       ]
     ],
-    "note": "Pitch 2 of 2 at Podvinny mlyn. See the PODV1 note on the numbering.",
+    "note": "Pitch 2 of 2 at Podvinny mlyn. See the PODV1 note: the side lines are orange, not the white ones further out.",
     "measure": true
   },
   "PRKOP": {
@@ -438,8 +447,11 @@
     "measure": true
   },
   "SLIVE": {
-    "note": "Single artificial pitch at AFK Slivenec; found on defaults.",
-    "measure": true
+    "note": "Single artificial pitch at AFK Slivenec. The north edge fitted 3 m beyond the goal line; the pair that works is confirmed by the halfway line at their midpoint.",
+    "measure": true,
+    "edge_nudge_m": {
+      "N": 3.0
+    }
   },
   "STER1": {
     "roi_m": [
@@ -516,8 +528,11 @@
     "measure": true
   },
   "TEMPO": {
-    "note": "Single artificial pitch at FC Tempo; found on defaults.",
-    "measure": true
+    "note": "Single artificial pitch at FC Tempo. The north edge sat 0.9 m outside its line, on a fainter marking; the real one reads 10x. The corners are under leaf cover, so go by the line rather than the turf edge.",
+    "measure": true,
+    "edge_nudge_m": {
+      "N": 0.9
+    }
   },
   "UJEZD": {
     "roi_m": [

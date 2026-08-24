@@ -68,6 +68,7 @@ def diagnose(code, venues, overrides, meas, res, half):
 
     white = M.line_response(img, res, mode="white")
     chroma = M.line_response(img, res, mode="chroma")
+    orange = M.line_response(img, res, mode="orange")
     pts = np.array(cand["play_rect_px"], np.float32)
     rot = cv2.getRotationMatrix2D((pcx, pcy), ang, 1.0)
     rp = cv2.transform(pts.reshape(-1, 1, 2), rot).reshape(-1, 2)
@@ -75,10 +76,13 @@ def diagnose(code, venues, overrides, meas, res, half):
     y0, y1 = float(rp[:, 1].min()), float(rp[:, 1].max())
 
     Rw, Rc = M._rotate(white, (pcx, pcy), ang), M._rotate(chroma, (pcx, pcy), ang)
+    Ro = M._rotate(orange, (pcx, pcy), ang)
     colW = Rw[int(y0):int(y1), :].mean(axis=0)
     rowW = Rw[:, int(x0):int(x1)].mean(axis=1)
     colC = Rc[int(y0):int(y1), :].mean(axis=0)
     rowC = Rc[:, int(x0):int(x1)].mean(axis=1)
+    colO = Ro[int(y0):int(y1), :].mean(axis=0)
+    rowO = Ro[:, int(x0):int(x1)].mean(axis=1)
 
     # Sections: the side lines run along the parent's long axis. They are blue
     # at Sterboholy and white-ish at Prazacka, so try chroma and fall back to
@@ -88,8 +92,9 @@ def diagnose(code, venues, overrides, meas, res, half):
     div_on_x = pw >= ph
     col_src = (colC if (sectioned and div_on_x) else colW)
     row_src = (rowC if (sectioned and not div_on_x) else rowW)
-    col_alt = colW if col_src is colC else None
-    row_alt = rowW if row_src is rowC else None
+    # blue first, then white, then orange: three grounds, three paints
+    col_alt = [colW, colO] if col_src is colC else []
+    row_alt = [rowW, rowO] if row_src is rowC else []
 
     ctr = pts.mean(0)
     print(f"--- {code}  {cand['play_l_m']} x {cand['play_w_m']} m   "
@@ -110,10 +115,22 @@ def diagnose(code, venues, overrides, meas, res, half):
                 (abs(float(mr[1]) - y0), row_src, row_alt, y0),
                 (abs(float(mr[1]) - y1), row_src, row_alt, y1)]
         _, prof, alt, pos = min(opts, key=lambda o: o[0])
-        pk = peaks_near(prof, pos, res)
-        if not pk and alt is not None:
-            prof, pk = alt, peaks_near(alt, pos, res)
-        kind = "blue" if (prof is colC or prof is rowC) else "white"
+        # Three grounds, three paints: blue at Sterboholy, white at Prazacka,
+        # orange at Podvinny mlyn. Ask each profile and keep whichever has a
+        # peak nearest this edge -- taking the first that finds *any* peak lets
+        # a bit of turf noise in one channel outrank the real line in another.
+        best = None
+        for src in [prof, *alt]:
+            got = peaks_near(src, pos, res)
+            if not got:
+                continue
+            near = min(got, key=lambda t: abs(t[0]))
+            score = (abs(near[0]), -near[1])
+            if best is None or score < best[0]:
+                best = (score, src, got)
+        prof, pk = (best[1], best[2]) if best else (prof, [])
+        kind = ("blue" if prof is colC or prof is rowC
+                else "orange" if prof is colO or prof is rowO else "white")
         # The strongest peak nearby is often the kerb or the surround rather
         # than a marking, so report the closest one separately: that is the
         # number to act on.

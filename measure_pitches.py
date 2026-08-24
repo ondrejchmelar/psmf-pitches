@@ -342,12 +342,18 @@ def line_response(img, res, line_w_m=0.12, bg_m=1.6, mode="white"):
     blue over green: barely any luminance step, but a clear chroma one. Their
     side boundaries need `mode="chroma"`, while their goal lines lie on the
     parent's white touchlines and still want `mode="white"`.
+
+    Podvinny mlyn is marked in orange, which is a third case: it barely lifts
+    luminance, and in `chroma` it is lost among the turf's own colour noise
+    because that mixes both axes. Orange over green moves b* (yellow) one way
+    and almost nothing else, so `mode="orange"` scores that alone.
     """
     lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB).astype(np.float32)
     bg = cv2.cvtColor(cv2.medianBlur(img, min(_px(bg_m, res), 31)),
                       cv2.COLOR_BGR2LAB).astype(np.float32)
     d = lab - bg
     mag = (np.abs(d[..., 0]) if mode == "white"
+           else np.maximum(d[..., 2], 0) if mode == "orange"
            else np.sqrt(d[..., 1] ** 2 + d[..., 2] ** 2))
     k = _k(_px(line_w_m * 3.5, res))
     return np.maximum(cv2.morphologyEx(mag, cv2.MORPH_TOPHAT, k), 0)
@@ -928,7 +934,11 @@ def pitch_crop(img, cand, geo, code, name, path, pad_m=12.0):
     all the sections, so the pitch can be located within the ground it sits on.
     """
     play = np.array(cand["play_rect_px"], dtype=np.float32)
-    frame = np.array(cand["rect_px"], dtype=np.float32)   # parent when sectioned
+    # Frame the parent *and* the pitch. For a section the parent contains it and
+    # nothing changes; where the rectangle was measured by hand it can sit
+    # outside the turf blob it was derived from -- Stodulky's blob is half the
+    # pitch -- and framing the blob alone cropped the pitch in two.
+    frame = np.vstack([np.array(cand["rect_px"], dtype=np.float32), play])
     pad = pad_m / geo["res"]
     x0, y0 = np.floor(frame.min(0) - pad).astype(int)
     x1, y1 = np.ceil(frame.max(0) + pad).astype(int)
