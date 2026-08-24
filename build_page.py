@@ -101,6 +101,15 @@ teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 blob = json.dumps({"venues": V, "teams": teams},
                   ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
 
+# Applied before the page paints, so a stored choice does not arrive as a flash
+# of the other theme. Kept apart from the main script, which runs at the end.
+EARLY_JS = """
+try {
+  var t = localStorage.getItem('psmf-theme');
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+} catch (e) { }
+"""
+
 CSS = """
 :root {
   --ground:#F6F7F3; --surface:#FFFFFF; --sunk:#EDEFE8;
@@ -158,7 +167,19 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
 .pick input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
 .pick .who { font-size:13px; color:var(--faint); }
 .combo { position:relative; flex:1 1 260px; min-width:0; }
-.combo input { width:100%; }
+.combo input { width:100%; padding-right:38px; }
+.clear { position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  width:26px; height:26px; display:grid; place-items:center; padding:0;
+  border:0; border-radius:3px; background:none; color:var(--faint);
+  font:400 20px/1 system-ui,sans-serif; cursor:pointer; }
+.clear:hover { background:var(--sunk); color:var(--ink); }
+.clear[hidden] { display:none; }
+.top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+.theme { font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
+  white-space:nowrap; flex:none; }
+.theme:hover { color:var(--ink); border-color:var(--muted); }
 .sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
   max-height:320px; overflow-y:auto; background:var(--surface);
   border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
@@ -327,8 +348,40 @@ function renderAll() {
     .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
 }
 
+// ---- theme: system by default, with an explicit choice remembered.
+const THEMES = [
+  ['auto',  'motiv: systém'],
+  ['light', 'motiv: světlý'],
+  ['dark',  'motiv: tmavý'],
+];
+const themeBtn = document.getElementById('theme');
+let themeIdx = 0;
+try {
+  const stored = localStorage.getItem('psmf-theme');
+  const n = THEMES.findIndex(t => t[0] === stored);
+  if (n > 0) themeIdx = n;
+} catch (e) { }
+
+function applyTheme() {
+  const [name, text] = THEMES[themeIdx];
+  const root = document.documentElement;
+  if (name === 'auto') root.removeAttribute('data-theme');
+  else root.setAttribute('data-theme', name);
+  themeBtn.textContent = text;
+  try {
+    if (name === 'auto') localStorage.removeItem('psmf-theme');
+    else localStorage.setItem('psmf-theme', name);
+  } catch (e) { /* private window, blocked storage: the toggle still works */ }
+}
+themeBtn.addEventListener('click', () => {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  applyTheme();
+});
+applyTheme();
+
 const input = document.getElementById('team-input');
 const sugg = document.getElementById('sugg');
+const clearBtn = document.getElementById('clear');
 const label = t => `${t.name} (${t.div})`;
 // Fold case and diacritics: nobody types Pražačka with the háček when hunting.
 const fold = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -367,12 +420,24 @@ function openList(q) {
   input.setAttribute('aria-expanded', 'true');
 }
 
+function showClear() { clearBtn.hidden = !input.value; }
+
 function choose(i) {
   input.value = label(D.teams[i]);
   renderTeam(i);
   setParam(D.teams[i]);
   closeList();
+  showClear();
 }
+
+clearBtn.addEventListener('click', () => {
+  input.value = '';
+  renderTeam(null);
+  setParam(null);
+  closeList();
+  showClear();
+  input.focus();
+});
 
 function highlight(n) {
   const btns = sugg.querySelectorAll('button');
@@ -387,6 +452,7 @@ sugg.addEventListener('mousedown', e => {          // before blur
   if (b) { e.preventDefault(); choose(Number(b.dataset.i)); }
 });
 input.addEventListener('input', () => {
+  showClear();
   if (!input.value.trim()) { renderTeam(null); setParam(null); closeList(); return; }
   openList(input.value);
 });
@@ -428,14 +494,19 @@ let start = null;
 try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
 if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
 else renderTeam(null);
+showClear();
 """
 
 html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>{CSS}</style>
+<script>{EARLY_JS}</script>
 
 <div class="wrap">
-<p class="eyebrow">PSMF &middot; Hanspaulsk&aacute; liga &middot; {season.get("season", "").replace("-", " ")}</p>
+<div class="top">
+  <p class="eyebrow">PSMF &middot; Hanspaulsk&aacute; liga &middot; {season.get("season", "").replace("-", " ")}</p>
+  <button type="button" class="theme" id="theme" aria-live="polite">motiv</button>
+</div>
 <h1>Všechna hřiště v lize, změřená ze vzduchu</h1>
 <p class="lede">Rozměry vyznačených hřišť na všech {len(play)} hřištích z adresáře
 PSMF, proměřené podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel.
@@ -448,6 +519,8 @@ Vyberte tým a uvidíte, na čem letos hraje.</p>
     <input id="team-input" type="text" placeholder="Začněte psát název týmu&hellip;"
            role="combobox" aria-expanded="false" aria-autocomplete="list"
            aria-controls="sugg" spellcheck="false">
+    <button type="button" class="clear" id="clear" hidden
+            aria-label="Vymazat výběr týmu" title="Vymazat">&times;</button>
     <div class="sugg" id="sugg" role="listbox" hidden></div>
   </div>
   <span class="who">{len(teams)} týmů &middot; odkaz na vybraný tým lze sdílet</span>
