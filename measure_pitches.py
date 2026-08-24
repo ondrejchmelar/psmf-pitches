@@ -902,7 +902,7 @@ def detect(img, geo, roi_m, cfg):
 
 
 # --------------------------------------------------------------------------- output
-LINE_ALPHA = 0.55        # the rectangle is evidence, so let the paint show through
+LINE_ALPHA = 0.32        # the rectangle is evidence, so let the paint show through
 
 
 def _blend(img, overlay, alpha=LINE_ALPHA):
