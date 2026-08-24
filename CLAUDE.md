@@ -183,10 +183,15 @@ rectangle that was not at it.
 `STER1`, `P1` and `P3` are the cross-pitches we have no fixture on. They carry
 `measure: true` so a default run still measures them — the numbers are then
 already there if the draw moves us — and the page lists them apart from the
-season table. Which outer third PSMF calls 1 and which 3 at Prazacka depends on
-where the kabiny are, which the imagery cannot resolve; all three measure the
-same, so it makes no practical difference, exactly as with `SANC1`/`SANC2`. At
-Sterboholy the hall is visible, so its numbering is not ambiguous.
+season table.
+
+Both grounds number from a landmark, which is what `first_end` records. At
+Sterboholy the hall is in the imagery, at the west end, so `first_end: "W"`
+follows from the picture. At Prazacka the kabiny are not something the
+orthophoto can pick out; they are at the **east** end of the infield, known
+from the ground rather than read off the image, so `first_end: "E"` and P1 is
+the eastern third. Getting that backwards swaps P1 and P3 and nothing else —
+all three measure within 0.1 m of each other — but it is worth having right.
 
 Verified per-venue state as of autumn 2026 is in `data/overrides.json`, each
 entry with a `note` saying why it is set that way.

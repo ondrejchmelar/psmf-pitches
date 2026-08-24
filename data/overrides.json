@@ -91,8 +91,8 @@
     ],
     "sections": 3,
     "section_index": 1,
-    "note": "Pitch 1 of 3 at Prazacka, same parent and same measured edges as P2. We have no fixture here; measured so the number is ready if we are drawn on it. Which outer third PSMF calls 1 and which 3 depends on where the kabiny are, which the imagery cannot resolve -- but all three measure the same, so it makes no practical difference (same caveat as SANC1/SANC2).",
-    "first_end": "W",
+    "note": "Pitch 1 of 3 at Prazacka: the eastern third, nearest the kabiny (PSMF: 'c. 1 nejblize kabinam'). Which end that is cannot be read off the imagery -- confirmed by hand, hence first_end E. Same parent and same measured edges as P2. We have no fixture here; measured so the number is ready if we are drawn on it.",
+    "first_end": "E",
     "layer": 284,
     "goal_flush": "N",
     "section_edges_m": [
@@ -120,8 +120,8 @@
     ],
     "sections": 3,
     "section_index": 2,
-    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam'). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge.",
-    "first_end": "W",
+    "note": "Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam', which is the east end). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge. Middle third, so unaffected by which end the numbering starts from.",
+    "first_end": "E",
     "layer": 284,
     "goal_flush": "N",
     "section_edges_m": [
@@ -148,8 +148,8 @@
     ],
     "sections": 3,
     "section_index": 3,
-    "note": "Pitch 3 of 3 at Prazacka, the other outer third. See the P1 note on which end is which.",
-    "first_end": "W",
+    "note": "Pitch 3 of 3 at Prazacka, the western third and so the one furthest from the kabiny. See the P1 note on which end is which.",
+    "first_end": "E",
     "layer": 284,
     "goal_flush": "N",
     "section_edges_m": [

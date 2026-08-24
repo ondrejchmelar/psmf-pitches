@@ -138,7 +138,8 @@ cross-pitch of a larger field rather than a standalone pitch:
   nejblize hale, c. 3 nejdale"). All three the same size, 3.8 m of spare turf
   apart.
 * `P1`/`P2`/`P3` — three pitches marked across the stadium infield, 24 m wide
-  with 5.7 m between them and a shared pair of goal lines 45.3 m apart.
+  with 5.7 m between them and a shared pair of goal lines 45.3 m apart. They are
+  numbered from the kabiny, at the east end.
 
 Each of those is measured off its own pair of side lines, not divided out of
 the parent, and is flagged `section_N_of_M` in the output. `SANC1`/`SANC2` are two
