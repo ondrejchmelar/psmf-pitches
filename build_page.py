@@ -62,19 +62,12 @@ for code, m in ms.items():
     if not c:
         continue
     v = m.get("venue", {})
-    edges = c.get("edge_strength") or []
     label, cls, text = boots(code)
     l, w = round(c["play_l_m"]), round(c["play_w_m"])
     V[code] = {
         "code": code, "venue": v.get("name", code), "l": l, "w": w, "area": l * w,
         "exact": f'{c["play_l_m"]} x {c["play_w_m"]}',
         "kind": c.get("kind", ""), "capture": m.get("geo", {}).get("capture", "?"),
-        # every edge backed by a clear line -> trust it; a weak edge means the
-        # marking is faint there and the number is a best fit, not a reading
-        "conf": ("high" if edges and min(edges) >= 4
-                 else "medium" if edges and min(edges) >= 2 else "low"),
-        "confCz": ("vysoká" if edges and min(edges) >= 4
-                   else "střední" if edges and min(edges) >= 2 else "nízká"),
         "boots": label, "bootsClass": cls, "bootsText": text,
         "note": (ov.get(code) or {}).get("note", ""),
         "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
@@ -229,7 +222,7 @@ function card(v, sub) {
       </header>
       <div class="bar"><i style="width:${(100 * v.area / mx).toFixed(1)}%"></i><span>${v.area} m&sup2;</span></div>
       ${sub || ''}
-      <p class="meta">${bootsTag(v)}<span class="conf ${v.conf}">přesnost ${v.confCz}</span></p>
+      <p class="meta">${bootsTag(v)}</p>
       <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
     </div></article>`;
 }
@@ -304,6 +297,8 @@ D.teams.forEach((t, i) => {
   const k = key(t.name);
   byBare.set(k, byBare.has(k) ? null : i);
 });
+document.getElementById('teams').innerHTML =
+  D.teams.map(t => `<option value="${esc(label(t))}"></option>`).join('');
 const lookup = v => {
   const k = key(v);
   const i = byLabel.has(k) ? byLabel.get(k) : byBare.get(k);
@@ -369,8 +364,7 @@ vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 <footer>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
 zvlášť pro každé hřiště. Rozpisy a souřadnice hřišť z <a href="https://www.psmf.cz/">psmf.cz</a>.
-Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj;
-při vysoké přesnosti počítejte s odchylkou kolem &plusmn;0,5&nbsp;m.
+Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj.
 Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 </footer>
 </div>

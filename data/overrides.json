@@ -77,12 +77,13 @@
     "fit_in_m": 4.0
   },
   "HOSTI": {
-    "note": "Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. Nudged in onto the inner line on each. 43.85 x 33.06 m -- still a wide pitch, and the halfway line sits at the midpoint of the long axis.",
+    "note": "Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. The south touchline is the awkward one -- the bright line the fit preferred is the carpet edge and the paint 2.78 m inside it is worn nearly to nothing (3x background). It is the right one: it puts the two goals symmetric about the pitch's centre line, which the brighter line does not.",
     "measure": true,
     "edge_nudge_m": {
       "W": 1.0,
       "N": 3.86,
-      "E": 0.98
+      "E": 0.98,
+      "S": 2.78
     }
   },
   "HRAB1": {
