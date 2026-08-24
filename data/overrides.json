@@ -77,13 +77,13 @@
     "fit_in_m": 4.0
   },
   "HOSTI": {
-    "note": "Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. The south touchline is the awkward one -- the bright line the fit preferred is the carpet edge and the paint 2.78 m inside it is worn nearly to nothing (3x background). It is the right one: it puts the two goals symmetric about the pitch's centre line, which the brighter line does not.",
+    "note": "Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. The south touchline is the awkward one. Three candidates sit within 4 m of each other -- the carpet edge (bright), a line 2.78 m inside it (3x), and the paint at 4.08 m, worn down to 1.2x background. It is the last of those, confirmed from the ground; the brighter two are the carpet and an older marking, and no automatic score will prefer the right one here.",
     "measure": true,
     "edge_nudge_m": {
       "W": 1.0,
       "N": 3.86,
       "E": 0.98,
-      "S": 2.78
+      "S": 4.08
     }
   },
   "HRAB1": {

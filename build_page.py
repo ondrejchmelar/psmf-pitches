@@ -149,6 +149,17 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
   color:var(--ink); background:var(--ground); border:1px solid var(--rule); border-radius:3px; }
 .pick input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
 .pick .who { font-size:13px; color:var(--faint); }
+.combo { position:relative; flex:1 1 260px; min-width:0; }
+.combo input { width:100%; }
+.sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
+  max-height:320px; overflow-y:auto; background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
+.sugg[hidden] { display:none; }
+.sugg button { display:block; width:100%; text-align:left; font:inherit; font-size:15px;
+  padding:7px 10px; border:0; border-radius:2px; background:none; color:var(--ink); cursor:pointer; }
+.sugg button:hover, .sugg button[aria-selected="true"] { background:var(--sunk); }
+.sugg button span { color:var(--faint); font-size:13px; margin-left:6px; }
+.sugg .none { padding:8px 10px; color:var(--faint); font-size:14px; }
 .scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
 table { border-collapse:collapse; width:100%; min-width:720px; font-size:14.5px; }
 th { text-align:left; font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -286,28 +297,90 @@ function renderAll() {
 }
 
 const input = document.getElementById('team-input');
+const sugg = document.getElementById('sugg');
 const label = t => `${t.name} (${t.div})`;
-const key = s => s.trim().toLowerCase();
-// Match the datalist label, but also a bare team name typed without its
-// division: several teams share a name across divisions, so that only counts
-// when it picks out exactly one.
-const byLabel = new Map(D.teams.map((t, i) => [key(label(t)), i]));
-const byBare = new Map();
-D.teams.forEach((t, i) => {
-  const k = key(t.name);
-  byBare.set(k, byBare.has(k) ? null : i);
+// Fold case and diacritics: nobody types Pražačka with the háček when hunting.
+const fold = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const keys = D.teams.map(t => fold(label(t)));
+
+// A datalist looked like the obvious control and is not: Chrome and Edge
+// suppress it whenever the input carries autocomplete="off", and with 720
+// entries the native list is a scroll rather than a search. This is a plain
+// filtered listbox, so what it does is the same in every browser.
+let matches = [], active = -1;
+
+function closeList() {
+  sugg.hidden = true; sugg.innerHTML = ''; matches = []; active = -1;
+  input.setAttribute('aria-expanded', 'false');
+}
+
+function openList(q) {
+  const f = fold(q);
+  matches = f ? D.teams.map((t, i) => i).filter(i => keys[i].indexOf(f) >= 0) : [];
+  if (!matches.length) {
+    sugg.innerHTML = f ? '<p class="none">Žádný tým neodpovídá.</p>' : '';
+    sugg.hidden = !f;
+    input.setAttribute('aria-expanded', String(!!f));
+    return;
+  }
+  const shown = matches.slice(0, 40);
+  sugg.innerHTML = shown.map((i, n) => {
+    const t = D.teams[i];
+    return `<button type="button" role="option" data-i="${i}" aria-selected="${n === 0}">` +
+           `${esc(t.name)}<span>${esc(t.div)}</span></button>`;
+  }).join('') + (matches.length > shown.length
+    ? `<p class="none">…a dalších ${matches.length - shown.length}</p>` : '');
+  matches = shown;
+  active = 0;
+  sugg.hidden = false;
+  input.setAttribute('aria-expanded', 'true');
+}
+
+function choose(i) {
+  input.value = label(D.teams[i]);
+  renderTeam(i);
+  setParam(D.teams[i]);
+  closeList();
+}
+
+function highlight(n) {
+  const btns = sugg.querySelectorAll('button');
+  if (!btns.length) return;
+  active = (n + btns.length) % btns.length;
+  btns.forEach((b, k) => b.setAttribute('aria-selected', String(k === active)));
+  btns[active].scrollIntoView({ block: 'nearest' });
+}
+
+sugg.addEventListener('mousedown', e => {          // before blur
+  const b = e.target.closest('button');
+  if (b) { e.preventDefault(); choose(Number(b.dataset.i)); }
 });
-document.getElementById('teams').innerHTML =
-  D.teams.map(t => `<option value="${esc(label(t))}"></option>`).join('');
+input.addEventListener('input', () => {
+  if (!input.value.trim()) { renderTeam(null); setParam(null); closeList(); return; }
+  openList(input.value);
+});
+input.addEventListener('keydown', e => {
+  if (sugg.hidden) { if (e.key === 'ArrowDown') openList(input.value); return; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); highlight(active + 1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); highlight(active - 1); }
+  else if (e.key === 'Enter') {
+    const btns = sugg.querySelectorAll('button');
+    if (btns.length && active >= 0) { e.preventDefault(); choose(Number(btns[active].dataset.i)); }
+  } else if (e.key === 'Escape') closeList();
+});
+input.addEventListener('focus', () => { if (input.value.trim()) openList(input.value); });
+input.addEventListener('blur', () => setTimeout(closeList, 120));
+
 const lookup = v => {
-  const k = key(v);
-  const i = byLabel.has(k) ? byLabel.get(k) : byBare.get(k);
-  return (i === undefined || i === null) ? null : i;
+  const f = fold(v);
+  let i = keys.indexOf(f);
+  if (i >= 0) return i;
+  const bare = D.teams.map((t, n) => n).filter(n => fold(D.teams[n].name) === f);
+  return bare.length === 1 ? bare[0] : null;
 };
 
 // The chosen team lives in the URL, so a link shares the view rather than the
-// page. Written with replaceState: picking through a datalist fires often, and
-// each pick should not become a back-button step.
+// page. Written with replaceState: nothing here should become a back step.
 function setParam(t) {
   try {
     const u = new URL(location.href);
@@ -315,12 +388,6 @@ function setParam(t) {
     history.replaceState(null, '', u);
   } catch (e) { /* file:// and the like */ }
 }
-
-input.addEventListener('input', () => {
-  if (!key(input.value)) { renderTeam(null); setParam(null); return; }
-  const i = lookup(input.value);
-  if (i !== null) { renderTeam(i); setParam(D.teams[i]); }
-});
 
 renderAll();
 let start = null;
@@ -343,9 +410,12 @@ Vyberte tým a uvidíte, na čem letos hraje.</p>
 <hr class="rule">
 <div class="pick">
   <label for="team-input">Tým</label>
-  <input id="team-input" list="teams" placeholder="Začněte psát název týmu&hellip;"
-         autocomplete="off" spellcheck="false">
-  <datalist id="teams"></datalist>
+  <div class="combo">
+    <input id="team-input" type="text" placeholder="Začněte psát název týmu&hellip;"
+           role="combobox" aria-expanded="false" aria-autocomplete="list"
+           aria-controls="sugg" spellcheck="false">
+    <div class="sugg" id="sugg" role="listbox" hidden></div>
+  </div>
   <span class="who">{len(teams)} týmů &middot; odkaz na vybraný tým lze sdílet</span>
 </div>
 <noscript><p class="lede" style="margin-top:18px">Výběr týmu probíhá v prohlížeči,
