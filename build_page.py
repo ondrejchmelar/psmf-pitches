@@ -41,16 +41,16 @@ def jpeg_uri(path, width=IMG_W, q=IMG_Q):
 
 
 def boots(code):
-    """Short label plus the venue's own wording, as make_table.py does it."""
+    """Short Czech label, its CSS class, and the venue's own wording."""
     fw = (venues.get(code, {}) or {}).get("footwear") or {}
     lis, ag = fw.get("lisovky", "unknown"), fw.get("ag", "unknown")
     if lis == "allowed":
-        label = "lisovky OK"
+        label, cls = "lisovky OK", "lisovky"
     elif lis == "forbidden":
-        label = "turf only" if ag == "forbidden" else "no lisovky"
+        label, cls = ("jen turfy", "turf") if ag == "forbidden" else ("bez lisovek", "no")
     else:
-        label = ""
-    return label, fw.get("text", "")
+        label, cls = "", ""
+    return label, cls, fw.get("text", "")
 
 
 # --------------------------------------------------------------------- venues
@@ -63,7 +63,7 @@ for code, m in ms.items():
         continue
     v = m.get("venue", {})
     edges = c.get("edge_strength") or []
-    label, text = boots(code)
+    label, cls, text = boots(code)
     l, w = round(c["play_l_m"]), round(c["play_w_m"])
     V[code] = {
         "code": code, "venue": v.get("name", code), "l": l, "w": w, "area": l * w,
@@ -73,13 +73,16 @@ for code, m in ms.items():
         # marking is faint there and the number is a best fit, not a reading
         "conf": ("high" if edges and min(edges) >= 4
                  else "medium" if edges and min(edges) >= 2 else "low"),
-        "boots": label, "bootsText": text,
+        "confCz": ("vysoká" if edges and min(edges) >= 4
+                   else "střední" if edges and min(edges) >= 2 else "nízká"),
+        "boots": label, "bootsClass": cls, "bootsText": text,
         "note": (ov.get(code) or {}).get("note", ""),
-        "training": bool(v.get("training")),
         "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
     }
+    if v.get("training"):
+        V.pop(code)          # measured for our own comparison, not a PSMF ground
 
-play = {k: x for k, x in V.items() if not x["training"]}
+play = V
 smallest = min(play.values(), key=lambda x: x["area"])
 largest = max(play.values(), key=lambda x: x["area"])
 
@@ -127,7 +130,7 @@ body {
   font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-.wrap { max-width:1120px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,36px) 96px; }
+.wrap { max-width:1440px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,36px) 96px; }
 .eyebrow {
   font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;
@@ -168,7 +171,7 @@ tbody tr:hover { background:var(--sunk); }
 .date .t { color:var(--faint); margin-left:7px; font-size:13px; }
 code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }
-.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
   align-items:start; }
 .card { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
   overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; }
@@ -195,6 +198,7 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .conf { font:600 10px/16px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.06em;
   text-transform:uppercase; color:var(--faint); }
 .conf.low { color:var(--away); }
+.meta { margin:2px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 .empty { color:var(--faint); font-size:14px; }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }
@@ -207,12 +211,17 @@ JS = r"""
 const D = JSON.parse(document.getElementById('psmf-data').textContent);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g,
   c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const playable = Object.values(D.venues).filter(v => !v.training);
-const mx = Math.max(...playable.map(v => v.area));
+const mx = Math.max(...Object.values(D.venues).map(v => v.area));
+
+function bootsTag(v) {
+  return v.boots ? `<span class="boots ${v.bootsClass}">${esc(v.boots)}</span>` : '';
+}
 
 function card(v, sub) {
+  const kind = v.kind.indexOf('section') === 0
+    ? `hřiště ${v.kind.split('_')[1]} ze ${v.kind.split('_')[3]}` : 'celé hřiště';
   return `<article class="card">
-    <figure><img src="${v.img}" alt="Orthophoto of ${esc(v.venue)} with the measured rectangle drawn on" loading="lazy"></figure>
+    <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem" loading="lazy"></figure>
     <div class="body">
       <header class="ch">
         <h3>${esc(v.venue)} <code>${esc(v.code)}</code></h3>
@@ -220,7 +229,8 @@ function card(v, sub) {
       </header>
       <div class="bar"><i style="width:${(100 * v.area / mx).toFixed(1)}%"></i><span>${v.area} m&sup2;</span></div>
       ${sub || ''}
-      ${v.bootsText ? `<p class="nt">${esc(v.bootsText)}</p>` : ''}
+      <p class="meta">${bootsTag(v)}<span class="conf ${v.conf}">přesnost ${v.confCz}</span></p>
+      <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
     </div></article>`;
 }
 
@@ -228,8 +238,7 @@ function renderTeam(i) {
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
   document.getElementById('all-head').textContent =
-    t ? 'Every pitch in the directory · largest to smallest'
-      : 'All pitches · largest to smallest';
+    t ? 'Všechna hřiště v adresáři · od největšího' : 'Všechna hřiště · od největšího';
   if (!t) { host.innerHTML = ''; return; }
 
   const rows = t.fx.map(f => {
@@ -239,9 +248,9 @@ function renderTeam(i) {
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td>${esc(f.o)}</td>
       <td>${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
-      <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">not measured</span>'}</td>
+      <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
-      <td>${v && v.boots ? `<span class="boots ${v.boots.split(' ')[0]}">${esc(v.boots)}</span>` : ''}</td>
+      <td>${v ? bootsTag(v) : ''}</td>
     </tr>`;
   }).join('');
 
@@ -250,7 +259,7 @@ function renderTeam(i) {
   codes.sort((a, b) => D.venues[b].area - D.venues[a].area);
   const cards = codes.map(c => {
     const at = t.fx.filter(f => f.c === c)
-      .map(f => `R${f.r} ${f.h ? 'vs' : 'at'} ${esc(f.o)}`).join(', ');
+      .map(f => `${f.r}. kolo ${f.h ? 'doma' : 'venku'} s ${esc(f.o)}`).join(', ');
     return card(D.venues[c], `<p class="fx">${at}</p>`);
   }).join('');
 
@@ -260,33 +269,27 @@ function renderTeam(i) {
   host.innerHTML = `
     <hr class="rule">
     <div class="stats">
-      <div class="stat"><b>${t.fx.length}</b><span>Fixtures</span></div>
-      <div class="stat"><b>${codes.length}</b><span>Distinct pitches</span></div>
-      <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Smallest</span></div>
-      <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Largest</span></div>
-      <div class="stat"><b>${ratio}</b><span>Largest ÷ smallest</span></div>
+      <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
+      <div class="stat"><b>${codes.length}</b><span>Různých hřišť</span></div>
+      <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Nejmenší</span></div>
+      <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
+      <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
     </div>
     <hr class="rule">
-    <h2>${esc(t.name)} &middot; ${esc(t.div)} &middot; season fixtures</h2>
+    <h2>${esc(t.name)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
     <div class="scroll"><table>
-      <thead><tr><th>R</th><th>Date</th><th>Opponent</th><th>Venue</th>
-      <th>Pitch size</th><th>Area m&sup2;</th><th>Boots</th></tr></thead>
+      <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
+      <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
-    ${missing ? `<p class="nt">${missing} fixture${missing > 1 ? 's' : ''} at a ground with no measurement — an indoor hall, or a code the PSMF ground directory does not carry.</p>` : ''}
+    ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
-    <h2>Their pitches &middot; largest to smallest</h2>
-    <div class="grid">${cards || '<p class="empty">No measured pitches for this team.</p>'}</div>`;
+    <h2>Hřiště tohoto týmu &middot; od největšího</h2>
+    <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
 }
 
 function renderAll() {
-  document.getElementById('all').innerHTML =
-    playable.slice().sort((a, b) => b.area - a.area).map(v => card(v,
-      `<p class="fx">${v.kind.indexOf('section') === 0
-        ? esc(v.kind.replace(/_/g, ' ')) : 'Whole pitch'} &middot; ${esc(v.exact)} m<span
-        class="conf ${v.conf}"> &middot; ${v.conf} confidence</span></p>`)).join('');
-  const t = Object.values(D.venues).find(v => v.training);
-  if (t) document.getElementById('training').innerHTML =
-    card(t, '<p class="fx">Training pitch &mdash; not a PSMF venue</p>');
+  document.getElementById('all').innerHTML = Object.values(D.venues)
+    .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
 }
 
 const input = document.getElementById('team-input');
@@ -301,60 +304,74 @@ D.teams.forEach((t, i) => {
   const k = key(t.name);
   byBare.set(k, byBare.has(k) ? null : i);
 });
-document.getElementById('teams').innerHTML =
-  D.teams.map(t => `<option value="${esc(label(t))}"></option>`).join('');
-input.addEventListener('input', () => {
-  const k = key(input.value);
-  if (!k) { renderTeam(null); return; }       // cleared -> back to the directory
+const lookup = v => {
+  const k = key(v);
   const i = byLabel.has(k) ? byLabel.get(k) : byBare.get(k);
-  if (i !== undefined && i !== null) renderTeam(i);
+  return (i === undefined || i === null) ? null : i;
+};
+
+// The chosen team lives in the URL, so a link shares the view rather than the
+// page. Written with replaceState: picking through a datalist fires often, and
+// each pick should not become a back-button step.
+function setParam(t) {
+  try {
+    const u = new URL(location.href);
+    if (t) u.searchParams.set('team', label(t)); else u.searchParams.delete('team');
+    history.replaceState(null, '', u);
+  } catch (e) { /* file:// and the like */ }
+}
+
+input.addEventListener('input', () => {
+  if (!key(input.value)) { renderTeam(null); setParam(null); return; }
+  const i = lookup(input.value);
+  if (i !== null) { renderTeam(i); setParam(D.teams[i]); }
 });
+
 renderAll();
-renderTeam(null);
+let start = null;
+try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
+if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
+else renderTeam(null);
 """
 
-html = f"""<title>Pitch dimensions &mdash; PSMF Hanspaulsk&aacute; liga</title>
+html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>{CSS}</style>
 
 <div class="wrap">
 <p class="eyebrow">PSMF &middot; Hanspaulsk&aacute; liga &middot; {season.get("season", "").replace("-", " ")}</p>
-<h1>Every pitch in the league, measured from the air</h1>
-<p class="lede">Painted pitch dimensions for all {len(play)} grounds in the PSMF
-directory, fitted to the markings in IPR Praha orthophoto imagery at 5&nbsp;cm per
-pixel. Pick a team to see the pitches it plays on this season.</p>
+<h1>Všechna hřiště v lize, změřená ze vzduchu</h1>
+<p class="lede">Rozměry vyznačených hřišť na všech {len(play)} hřištích z adresáře
+PSMF, proměřené podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel.
+Vyberte tým a uvidíte, na čem letos hraje.</p>
 
 <hr class="rule">
 <div class="pick">
-  <label for="team-input">Team</label>
-  <input id="team-input" list="teams" placeholder="Start typing a team name&hellip;"
+  <label for="team-input">Tým</label>
+  <input id="team-input" list="teams" placeholder="Začněte psát název týmu&hellip;"
          autocomplete="off" spellcheck="false">
   <datalist id="teams"></datalist>
-  <span class="who">{len(teams)} teams</span>
+  <span class="who">{len(teams)} týmů &middot; odkaz na vybraný tým lze sdílet</span>
 </div>
-<noscript><p class="lede" style="margin-top:18px">Picking a team happens in the
-browser, so that part needs JavaScript. The measurements themselves are in
-<code>out/measurements.json</code> in the repository.</p></noscript>
+<noscript><p class="lede" style="margin-top:18px">Výběr týmu probíhá v prohlížeči,
+takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
+<code>out/measurements.json</code> v repozitáři.</p></noscript>
 
 <div id="team"></div>
 
 <hr class="rule">
-<h2 id="all-head">All pitches &middot; largest to smallest</h2>
-<p class="lede" style="margin-bottom:18px">{len(play)} grounds. {smallest["venue"]}
-&mdash; the smallest &mdash; would fit inside {largest["venue"]}
-{largest["area"] / smallest["area"]:.1f} times over.</p>
+<h2 id="all-head">Všechna hřiště &middot; od největšího</h2>
+<p class="lede" style="margin-bottom:18px">{len(play)} hřišť. Nejmenší z nich,
+{smallest["venue"]}, by se do největšího ({largest["venue"]})
+vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 <div class="grid" id="all"></div>
 
-<hr class="rule">
-<h2>Our training pitch, for scale</h2>
-<div class="grid" id="training"></div>
-
 <footer>
-Imagery: IPR Praha orthophoto archive, 0.05&nbsp;m/px, EPSG:5514 (S-JTSK); capture chosen per venue.
-Fixtures and venue coordinates scraped from <a href="https://www.psmf.cz/">psmf.cz</a>.
-Every rectangle is a fit to the paint and can be checked against the photo beside it;
-expect about &plusmn;0.5&nbsp;m where confidence is high.
-Generated {date.today().strftime("%-d %B %Y")}.
+Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
+zvlášť pro každé hřiště. Rozpisy a souřadnice hřišť z <a href="https://www.psmf.cz/">psmf.cz</a>.
+Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj;
+při vysoké přesnosti počítejte s odchylkou kolem &plusmn;0,5&nbsp;m.
+Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 </footer>
 </div>
 

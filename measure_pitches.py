@@ -950,8 +950,35 @@ def pitch_crop(img, cand, geo, code, name, path, pad_m=12.0):
     shift = np.array([x0, y0])
 
     if cand.get("section_rects_px"):
+        # Draw the neighbouring pitches the way this one is drawn: at the fitted
+        # angle and the fitted goal-line extent, keeping only each section's own
+        # side lines. The raw sections come from the turf frame and run the full
+        # depth of the parent, so drawn as they are they sit a degree off the
+        # pitch beside them and overhang it by metres -- which reads as noise on
+        # the photo rather than as context.
+        (pc, _, pang) = cv2.minAreaRect(play)
+        rot = cv2.getRotationMatrix2D(pc, pang, 1.0)
+        inv = cv2.invertAffineTransform(rot)
+
+        def to_rot(pts_):
+            return cv2.transform(np.asarray(pts_, np.float32).reshape(-1, 1, 2),
+                                 rot).reshape(-1, 2)
+
+        pr = to_rot(play)
+        px0, px1 = pr[:, 0].min(), pr[:, 0].max()
+        py0, py1 = pr[:, 1].min(), pr[:, 1].max()
         for box in cand["section_rects_px"]:
-            cv2.polylines(crop, [(np.array(box, np.float32) - shift).astype(np.int32)],
+            b = to_rot(box)
+            bx0, bx1 = b[:, 0].min(), b[:, 0].max()
+            by0, by1 = b[:, 1].min(), b[:, 1].max()
+            if abs((bx0 + bx1) - (px0 + px1)) >= abs((by0 + by1) - (py0 + py1)):
+                xs, ys = (bx0, bx1), (py0, py1)      # sections divide this axis
+            else:
+                xs, ys = (px0, px1), (by0, by1)
+            quad = np.array([[xs[0], ys[0]], [xs[1], ys[0]],
+                             [xs[1], ys[1]], [xs[0], ys[1]]], np.float32)
+            world = cv2.transform(quad.reshape(-1, 1, 2), inv).reshape(-1, 2)
+            cv2.polylines(crop, [(world - shift).astype(np.int32)],
                           True, (210, 210, 210), 2)
 
     sp = (play - shift).astype(np.int32)
