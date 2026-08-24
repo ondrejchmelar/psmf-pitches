@@ -7,14 +7,23 @@ hard way and several "obvious" fixes here are wrong.
 ## Layout
 
 ```
-scrape_psmf.py      fixtures + venue directory  -> data/fixtures.json, data/venues.json
+scrape_psmf.py      our fixtures + venue directory -> data/fixtures.json, data/venues.json
+scrape_season.py    every team's fixtures          -> data/season.json
 data/extra_venues.json  venues not on the fixture list (our training pitch)
-measure_pitches.py  segment turf, fit the lines -> out/measurements.json, out/*.png
-diagnose.py         how far is each edge off?   -> out/diag_*.png
-make_table.py       season table                -> out/table.md, out/table.json
-build_page.py       self-contained HTML report  -> docs/index.html
-data/overrides.json the per-venue human input   (the important file)
+measure_pitches.py  segment turf, fit the lines    -> out/measurements.json, out/*.png
+diagnose.py         how far is each edge off?      -> out/diag_*.png
+make_table.py       our season table               -> out/table.md, out/table.json
+build_page.py       self-contained HTML report     -> docs/index.html
+data/overrides.json the per-venue human input      (the important file)
 ```
+
+The page is for the whole league, not just us: every venue in the directory,
+every team's fixtures, and the team picked in the browser. It renders
+client-side from one JSON blob because the file is mostly data-URI imagery —
+rendering the cards in Python would repeat each venue's image once per team
+that plays there. `scrape_season.py` is ~720 requests, one per team, because a
+division page carries only a window of the schedule; run it rarely and leave
+the pause in.
 
 ## New season, from scratch
 

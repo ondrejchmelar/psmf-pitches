@@ -3,17 +3,21 @@
 Measures the pitch we play on at every venue in our PSMF fixture list, straight
 from Prague orthophoto imagery.
 
-The season's report is published at
-<https://ondrejchmelar.github.io/psmf-pitches/> — GitHub Pages serves
-`docs/index.html`, which `build_page.py` writes as one self-contained file.
+The report is published at <https://ondrejchmelar.github.io/psmf-pitches/>:
+every ground in the PSMF directory, and a team picker that shows any team's
+fixtures with the size of each pitch they play on. GitHub Pages serves
+`docs/index.html`, which `build_page.py` writes as one self-contained file —
+imagery included, so that file on its own is the whole site.
 
 ## Usage
 
 ```bash
 python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
-./.venv/bin/python scrape_psmf.py            # fixtures + venue directory -> data/
+./.venv/bin/python scrape_psmf.py            # our fixtures + venue directory -> data/
+./.venv/bin/python scrape_season.py          # every team's fixtures -> data/season.json
 ./.venv/bin/python measure_pitches.py --auto-layer   # measure + annotate -> out/
-./.venv/bin/python make_table.py             # season table -> out/table.md
+./.venv/bin/python make_table.py             # our season table -> out/table.md
+./.venv/bin/python build_page.py             # the published page -> docs/index.html
 ```
 
 `scrape_psmf.py` takes an optional team URL; it defaults to our 7-G team page.
