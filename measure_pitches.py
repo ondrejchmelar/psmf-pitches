@@ -902,6 +902,19 @@ def detect(img, geo, roi_m, cfg):
 
 
 # --------------------------------------------------------------------------- output
+LINE_ALPHA = 0.55        # the rectangle is evidence, so let the paint show through
+
+
+def _blend(img, overlay, alpha=LINE_ALPHA):
+    """Fade drawn geometry into the photo, in place.
+
+    The point of these images is to check the rectangle against the markings,
+    which an opaque line defeats exactly where it matters -- along the line it
+    is claiming to sit on. Text stays opaque; draw it after this.
+    """
+    cv2.addWeighted(overlay, alpha, img, 1.0 - alpha, 0.0, img)
+
+
 def _label(img, text, org, scale=1.0, colour=(0, 255, 255)):
     cv2.putText(img, text, org, cv2.FONT_HERSHEY_SIMPLEX, scale, (0, 0, 0), 6)
     cv2.putText(img, text, org, cv2.FONT_HERSHEY_SIMPLEX, scale, colour, 2)
@@ -910,16 +923,19 @@ def _label(img, text, org, scale=1.0, colour=(0, 255, 255)):
 def overview(img, cands, geo, code, name, path):
     vis = img.copy()
     c = geo["size"] // 2
-    cv2.drawMarker(vis, (c, c), (0, 0, 255), cv2.MARKER_CROSS, 46, 3)
-    _label(vis, "PSMF GPS", (c + 26, c - 12), 0.9, (0, 0, 255))
+    over = vis.copy()
+    cv2.drawMarker(over, (c, c), (0, 0, 255), cv2.MARKER_CROSS, 46, 3)
     for cand in cands:
         # the parent field, thin, when this code is only a section of it
         if cand.get("section_rects_px"):
-            cv2.polylines(vis, [np.array(cand["rect_px"], np.int32)], True, (200, 200, 200), 2)
+            cv2.polylines(over, [np.array(cand["rect_px"], np.int32)], True, (200, 200, 200), 2)
             for box in cand["section_rects_px"]:
-                cv2.polylines(vis, [np.array(box, np.int32)], True, (200, 200, 200), 2)
+                cv2.polylines(over, [np.array(box, np.int32)], True, (200, 200, 200), 2)
+        cv2.polylines(over, [np.array(cand["play_rect_px"], np.int32)], True, (0, 255, 255), 4)
+    _blend(vis, over)
+    _label(vis, "PSMF GPS", (c + 26, c - 12), 0.9, (0, 0, 255))
+    for cand in cands:
         box = np.array(cand["play_rect_px"], dtype=np.int32)
-        cv2.polylines(vis, [box], True, (0, 255, 255), 4)
         _label(vis, f'{cand["play_l_m"]:.0f}x{cand["play_w_m"]:.0f} m',
                tuple(box[1] + np.array([6, -12])), 1.1)
     _label(vis, f"{code} - {name}  ({geo['source']} {geo['res']} m/px)",
@@ -948,6 +964,7 @@ def pitch_crop(img, cand, geo, code, name, path, pad_m=12.0):
     if crop.size == 0:
         return
     shift = np.array([x0, y0])
+    over = crop.copy()
 
     if cand.get("section_rects_px"):
         # Draw the neighbouring pitches the way this one is drawn: at the fitted
@@ -978,13 +995,14 @@ def pitch_crop(img, cand, geo, code, name, path, pad_m=12.0):
             quad = np.array([[xs[0], ys[0]], [xs[1], ys[0]],
                              [xs[1], ys[1]], [xs[0], ys[1]]], np.float32)
             world = cv2.transform(quad.reshape(-1, 1, 2), inv).reshape(-1, 2)
-            cv2.polylines(crop, [(world - shift).astype(np.int32)],
+            cv2.polylines(over, [(world - shift).astype(np.int32)],
                           True, (210, 210, 210), 2)
 
     sp = (play - shift).astype(np.int32)
-    cv2.polylines(crop, [sp], True, (0, 255, 255), 3)
+    cv2.polylines(over, [sp], True, (0, 255, 255), 3)
     for (px, py) in sp:
-        cv2.circle(crop, (int(px), int(py)), 6, (0, 0, 255), -1)
+        cv2.circle(over, (int(px), int(py)), 6, (0, 0, 255), -1)
+    _blend(crop, over)
 
     def side(a, b, text):
         mid = ((sp[a] + sp[b]) // 2).astype(int)

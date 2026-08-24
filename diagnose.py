@@ -142,7 +142,11 @@ def diagnose(code, venues, overrides, meas, res, half):
 
 def _render(img, pts, code, cand, path, res, pad_m=8.0):
     vis = img.copy()
-    cv2.polylines(vis, [pts.astype(np.int32)], True, (0, 255, 255), 3)
+    over = vis.copy()
+    cv2.polylines(over, [pts.astype(np.int32)], True, (0, 255, 255), 3)
+    for p_ in pts:
+        cv2.circle(over, tuple(p_.astype(int)), 8, (0, 0, 255), 2)
+    M._blend(vis, over)
     ctr = pts.mean(0)
     for i in range(4):
         a, b = pts[i], pts[(i + 1) % 4]
@@ -153,8 +157,6 @@ def _render(img, pts, code, cand, path, res, pad_m=8.0):
         org = tuple((mid + n * (2.5 / res)).astype(int))
         cv2.putText(vis, label, org, cv2.FONT_HERSHEY_SIMPLEX, 1.8, (0, 0, 0), 8)
         cv2.putText(vis, label, org, cv2.FONT_HERSHEY_SIMPLEX, 1.8, (0, 0, 255), 3)
-    for p in pts:
-        cv2.circle(vis, tuple(p.astype(int)), 8, (0, 0, 255), 2)
     pad = int(pad_m / res)
     x0, y0 = np.floor(pts.min(0) - pad).astype(int)
     x1, y1 = np.ceil(pts.max(0) + pad).astype(int)
