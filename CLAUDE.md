@@ -12,7 +12,7 @@ data/extra_venues.json  venues not on the fixture list (our training pitch)
 measure_pitches.py  segment turf, fit the lines -> out/measurements.json, out/*.png
 diagnose.py         how far is each edge off?   -> out/diag_*.png
 make_table.py       season table                -> out/table.md, out/table.json
-build_page.py       self-contained HTML report  -> out/pitches.html
+build_page.py       self-contained HTML report  -> docs/index.html
 data/overrides.json the per-venue human input   (the important file)
 ```
 

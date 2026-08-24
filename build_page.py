@@ -234,6 +234,12 @@ Fixtures and venue coordinates scraped from psmf.cz. Generated {today}.
 </footer>
 </div>
 '''
-out = ROOT / "out/pitches.html"
+# docs/ is what GitHub Pages serves, so the page is written straight there
+# rather than to out/. It carries its imagery as data URIs, so index.html on
+# its own is the whole site. .nojekyll keeps Pages from running the file
+# through Jekyll.
+out = ROOT / "docs/index.html"
+out.parent.mkdir(exist_ok=True)
+(out.parent / ".nojekyll").touch()
 out.write_text(html, "utf-8")
 print(f"{out}  {out.stat().st_size/1e6:.2f} MB")
