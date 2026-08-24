@@ -92,6 +92,194 @@
       }
     ]
   },
+  "ASTR1": {
+    "venue": {
+      "code": "ASTR1",
+      "name": "Astra Zahradní město",
+      "lat": 50.0563942,
+      "lon": 14.4914603,
+      "address": "V Korytech 157/27, Praha 10",
+      "notes": "V Korytech 157/27, Praha 10\nV areálu TJ Astra Zahradní Město, více na www.tjastra.cz .\n\r\nUMT 2. generace, osvětlení.\n\r\nHřiště č. 1 je blíže hale, č. 2 je vzdálenější.\n\r\nObuv pro futsal: povoleny jen turfy a sálová obuv!\n\r\nPoznámka: hřiště je jen pro futsal.\n\r\nZáloha na klíč od kabin je 100,- Kč.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv pro futsal: povoleny jen turfy a sálová obuv!",
+        "lisovky": "unknown",
+        "ag": "unknown",
+        "summary": "no lisovky"
+      }
+    },
+    "geo": {
+      "x0": -738400.2060064549,
+      "y1": -1047019.3363234629,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738300.2060064549,
+        -1047119.3363234629
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 50.9,
+        "turf_w_m": 44.9,
+        "turf_area_m2": 2286,
+        "aspect": 1.13,
+        "rectness": 0.865,
+        "border_support": 0.891,
+        "bearing_deg": 101.8,
+        "centre_lat": 50.0564,
+        "centre_lon": 14.491446,
+        "rect_px": [
+          [
+            2387.9,
+            2528.2
+          ],
+          [
+            1390.8,
+            2319.4
+          ],
+          [
+            1574.9,
+            1440.7
+          ],
+          [
+            2571.9,
+            1649.5
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 45.07,
+        "painted_w_m": 19.94,
+        "painted_angle": 102.03,
+        "edge_strength": [
+          2.2,
+          1.7,
+          2.9,
+          3.3
+        ],
+        "play_l_m": 45.07,
+        "play_w_m": 19.94,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1483.8,
+            2304.5
+          ],
+          [
+            1567.0,
+            1914.4
+          ],
+          [
+            2448.5,
+            2102.3
+          ],
+          [
+            2365.3,
+            2492.4
+          ]
+        ]
+      }
+    ]
+  },
+  "ASTR2": {
+    "venue": {
+      "code": "ASTR2",
+      "name": "Astra Zahradní město",
+      "lat": 50.0563942,
+      "lon": 14.4914603,
+      "address": "V Korytech 157/27, Praha 10",
+      "notes": "V Korytech 157/27, Praha 10\nV areálu TJ Astra Zahradní Město, více na www.tjastra.cz .\n\r\nUMT 2. generace, osvětlení.\n\r\nHřiště č. 1 je blíže hale, č. 2 je vzdálenější.\n\r\nObuv pro futsal: povoleny jen turfy a sálová obuv!\n\r\nPoznámka: hřiště je jen pro futsal.\n\r\nZáloha na klíč od kabin je 100,- Kč.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv pro futsal: povoleny jen turfy a sálová obuv!",
+        "lisovky": "unknown",
+        "ag": "unknown",
+        "summary": "no lisovky"
+      }
+    },
+    "geo": {
+      "x0": -738400.2060064549,
+      "y1": -1047019.3363234629,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738300.2060064549,
+        -1047119.3363234629
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 50.9,
+        "turf_w_m": 44.9,
+        "turf_area_m2": 2286,
+        "aspect": 1.13,
+        "rectness": 0.865,
+        "border_support": 0.891,
+        "bearing_deg": 101.8,
+        "centre_lat": 50.0564,
+        "centre_lon": 14.491446,
+        "rect_px": [
+          [
+            2387.9,
+            2528.2
+          ],
+          [
+            1390.8,
+            2319.4
+          ],
+          [
+            1574.9,
+            1440.7
+          ],
+          [
+            2571.9,
+            1649.5
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 45.06,
+        "painted_w_m": 19.97,
+        "painted_angle": 101.93,
+        "edge_strength": [
+          1.7,
+          2.2,
+          3.5,
+          3.6
+        ],
+        "play_l_m": 45.06,
+        "play_w_m": 19.97,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1566.4,
+            1915.1
+          ],
+          [
+            1649.0,
+            1524.3
+          ],
+          [
+            2530.7,
+            1710.6
+          ],
+          [
+            2448.1,
+            2101.4
+          ]
+        ]
+      }
+    ]
+  },
   "BECH": {
     "venue": {
       "code": "BECH",
@@ -281,6 +469,192 @@
       }
     ]
   },
+  "CZU": {
+    "venue": {
+      "code": "CZU",
+      "name": "Sportcentrum ČZU",
+      "lat": 50.1297406,
+      "lon": 14.3785564,
+      "address": "Kamýcká 1275, Praha 6",
+      "notes": "Kamýcká 1275, Praha 6\nV areálu Sportcentra ČZU. \n\r\nOznačené kabiny se sprchami jsou u atletického oválu, klíče jsou k vyzvednutí na recepci uvnitř Sportcentra.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -745292.7318116794,
+      "y1": -1037837.8505460002,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -745192.7318116794,
+        -1037937.8505460002
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 48.6,
+        "turf_w_m": 25.9,
+        "turf_area_m2": 1257,
+        "aspect": 1.88,
+        "rectness": 0.901,
+        "border_support": 0.878,
+        "bearing_deg": 116.6,
+        "centre_lat": 50.1297104,
+        "centre_lon": 14.3785316,
+        "rect_px": [
+          [
+            2274.1,
+            2510.4
+          ],
+          [
+            1405.6,
+            2076.1
+          ],
+          [
+            1637.1,
+            1613.2
+          ],
+          [
+            2505.6,
+            2047.5
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 44.28,
+        "painted_w_m": 24.38,
+        "painted_angle": 117.27,
+        "edge_strength": [
+          8.0,
+          7.8,
+          6.3,
+          6.0
+        ],
+        "play_l_m": 44.28,
+        "play_w_m": 24.38,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1459.7,
+            2072.8
+          ],
+          [
+            1683.1,
+            1639.4
+          ],
+          [
+            2470.3,
+            2045.1
+          ],
+          [
+            2246.9,
+            2478.5
+          ]
+        ]
+      }
+    ]
+  },
+  "DEKAN": {
+    "venue": {
+      "code": "DEKAN",
+      "name": "Děkanka",
+      "lat": 50.0530644,
+      "lon": 14.4298419,
+      "address": "Děkanská vinice I 987/5, Praha 4",
+      "notes": "Děkanská vinice I 987/5, Praha 4\nV areálu SK Nusle, více na www.sknusle.com.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ i kopačky AG zakázány!",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ i kopačky AG zakázány!",
+        "lisovky": "forbidden",
+        "ag": "forbidden",
+        "summary": "turf / indoor only"
+      }
+    },
+    "geo": {
+      "x0": -742821.970275842,
+      "y1": -1046787.0277224333,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -742721.970275842,
+        -1046887.0277224333
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 47.7,
+        "turf_w_m": 24.5,
+        "turf_area_m2": 1170,
+        "aspect": 1.95,
+        "rectness": 0.801,
+        "border_support": 1.0,
+        "bearing_deg": 116.2,
+        "centre_lat": 50.0530701,
+        "centre_lon": 14.429832,
+        "rect_px": [
+          [
+            2307.2,
+            2416.4
+          ],
+          [
+            1451.3,
+            1994.9
+          ],
+          [
+            1668.0,
+            1554.9
+          ],
+          [
+            2523.9,
+            1976.4
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 43.89,
+        "painted_w_m": 23.11,
+        "painted_angle": 114.42,
+        "edge_strength": [
+          10.7,
+          10.9,
+          2.5,
+          12.5
+        ],
+        "play_l_m": 43.89,
+        "play_w_m": 23.11,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1470.7,
+            2009.7
+          ],
+          [
+            1661.8,
+            1588.8
+          ],
+          [
+            2461.2,
+            1951.7
+          ],
+          [
+            2270.1,
+            2372.6
+          ]
+        ]
+      }
+    ]
+  },
   "HANSP": {
     "venue": {
       "code": "HANSP",
@@ -369,6 +743,1512 @@
           [
             1775.9,
             2432.8
+          ]
+        ]
+      }
+    ]
+  },
+  "HOSTI": {
+    "venue": {
+      "code": "HOSTI",
+      "name": "SK Hostivař",
+      "lat": 50.0525669,
+      "lon": 14.5208144,
+      "address": "Švehlova 1362/36, Praha 10",
+      "notes": "Švehlova 1362/36, Praha 10\nV areálu SK Hostivař, více na http://skhostivar.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -736375.0686060721,
+      "y1": -1047725.2940006836,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -736275.0686060721,
+        -1047825.2940006836
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 48.2,
+        "turf_w_m": 40.6,
+        "turf_area_m2": 1958,
+        "aspect": 1.19,
+        "rectness": 0.903,
+        "border_support": 1.0,
+        "bearing_deg": 98.7,
+        "centre_lat": 50.0525618,
+        "centre_lon": 14.5208137,
+        "rect_px": [
+          [
+            2412.1,
+            2485.9
+          ],
+          [
+            1459.2,
+            2339.4
+          ],
+          [
+            1582.8,
+            1536.2
+          ],
+          [
+            2535.7,
+            1682.8
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 45.83,
+        "painted_w_m": 36.92,
+        "painted_angle": 99.35,
+        "edge_strength": [
+          3.7,
+          3.1,
+          8.5,
+          6.0
+        ],
+        "play_l_m": 45.83,
+        "play_w_m": 36.92,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1492.0,
+            2298.7
+          ],
+          [
+            1611.9,
+            1570.0
+          ],
+          [
+            2516.3,
+            1718.8
+          ],
+          [
+            2396.3,
+            2447.5
+          ]
+        ]
+      }
+    ]
+  },
+  "HRAB1": {
+    "venue": {
+      "code": "HRAB1",
+      "name": "Hrabákova",
+      "lat": 50.0296181,
+      "lon": 14.4818272,
+      "address": "Hrabákova 2001/21, Praha 4",
+      "notes": "Hrabákova 2001/21, Praha 4\nVe Sportovním areálu Hrabákova, více na www.jihomestska.cz/sportovni-areal-hrabakova. \n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nHřiště č. 1 je při pohledu od restaurace první zprava, č. 3 první zleva. \n\r\nPoznámka: přísný zákaz vjezdu motorových vozidel účastníků soutěží PSMF do areálu (nejsnazší parkování ve Westfield Chodov).",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739487.2235536085,
+      "y1": -1049876.4470096242,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739387.2235536085,
+        -1049976.4470096242
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 104.2,
+        "turf_w_m": 47.9,
+        "turf_area_m2": 4994,
+        "aspect": 2.17,
+        "rectness": 0.869,
+        "border_support": 1.0,
+        "bearing_deg": 177.3,
+        "centre_lat": 50.029569,
+        "centre_lon": 14.4818449,
+        "rect_px": [
+          [
+            1580.2,
+            3174.7
+          ],
+          [
+            1482.6,
+            1093.5
+          ],
+          [
+            2440.3,
+            1048.5
+          ],
+          [
+            2538.0,
+            3129.8
+          ]
+        ],
+        "kind": "section_1_of_3",
+        "parent_l_m": 104.2,
+        "parent_w_m": 47.9,
+        "section_rects_px": [
+          [
+            [
+              1515.5,
+              1795.9
+            ],
+            [
+              1493.2,
+              1320.4
+            ],
+            [
+              2451.0,
+              1275.5
+            ],
+            [
+              2473.3,
+              1751.0
+            ]
+          ],
+          [
+            [
+              1542.0,
+              2360.3
+            ],
+            [
+              1518.7,
+              1862.8
+            ],
+            [
+              2476.4,
+              1817.9
+            ],
+            [
+              2499.8,
+              2315.3
+            ]
+          ],
+          [
+            [
+              1567.5,
+              2903.7
+            ],
+            [
+              1545.2,
+              2428.2
+            ],
+            [
+              2502.9,
+              2383.3
+            ],
+            [
+              2525.2,
+              2858.8
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the N end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 3.38,
+        "goal_strength": 1.7,
+        "edge_nudged": {
+          "E": -2.25
+        },
+        "painted_l_m": 44.89,
+        "painted_w_m": 23.8,
+        "painted_angle": 177.21,
+        "edge_strength": [
+          6.3,
+          5.3,
+          1.2,
+          1.2
+        ],
+        "play_l_m": 44.89,
+        "play_w_m": 23.8,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1547.3,
+            1795.2
+          ],
+          [
+            1524.1,
+            1319.7
+          ],
+          [
+            2420.8,
+            1276.1
+          ],
+          [
+            2444.0,
+            1751.5
+          ]
+        ]
+      }
+    ]
+  },
+  "HRAB2": {
+    "venue": {
+      "code": "HRAB2",
+      "name": "Hrabákova",
+      "lat": 50.0296181,
+      "lon": 14.4818272,
+      "address": "Hrabákova 2001/21, Praha 4",
+      "notes": "Hrabákova 2001/21, Praha 4\nVe Sportovním areálu Hrabákova, více na www.jihomestska.cz/sportovni-areal-hrabakova. \n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nHřiště č. 1 je při pohledu od restaurace první zprava, č. 3 první zleva. \n\r\nPoznámka: přísný zákaz vjezdu motorových vozidel účastníků soutěží PSMF do areálu (nejsnazší parkování ve Westfield Chodov).",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739487.2235536085,
+      "y1": -1049876.4470096242,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739387.2235536085,
+        -1049976.4470096242
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 104.2,
+        "turf_w_m": 47.9,
+        "turf_area_m2": 4994,
+        "aspect": 2.17,
+        "rectness": 0.869,
+        "border_support": 1.0,
+        "bearing_deg": 177.3,
+        "centre_lat": 50.029569,
+        "centre_lon": 14.4818449,
+        "rect_px": [
+          [
+            1580.2,
+            3174.7
+          ],
+          [
+            1482.6,
+            1093.5
+          ],
+          [
+            2440.3,
+            1048.5
+          ],
+          [
+            2538.0,
+            3129.8
+          ]
+        ],
+        "kind": "section_2_of_3",
+        "parent_l_m": 104.2,
+        "parent_w_m": 47.9,
+        "section_rects_px": [
+          [
+            [
+              1515.5,
+              1795.9
+            ],
+            [
+              1493.2,
+              1320.4
+            ],
+            [
+              2451.0,
+              1275.5
+            ],
+            [
+              2473.3,
+              1751.0
+            ]
+          ],
+          [
+            [
+              1542.0,
+              2360.3
+            ],
+            [
+              1518.7,
+              1862.8
+            ],
+            [
+              2476.4,
+              1817.9
+            ],
+            [
+              2499.8,
+              2315.3
+            ]
+          ],
+          [
+            [
+              1567.5,
+              2903.7
+            ],
+            [
+              1545.2,
+              2428.2
+            ],
+            [
+              2502.9,
+              2383.3
+            ],
+            [
+              2525.2,
+              2858.8
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the N end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 3.38,
+        "goal_strength": 1.7,
+        "edge_nudged": {
+          "E": -2.25
+        },
+        "painted_l_m": 44.89,
+        "painted_w_m": 24.9,
+        "painted_angle": 177.21,
+        "edge_strength": [
+          5.1,
+          6.4,
+          1.2,
+          1.1
+        ],
+        "play_l_m": 44.89,
+        "play_w_m": 24.9,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1573.8,
+            2359.6
+          ],
+          [
+            1549.5,
+            1862.2
+          ],
+          [
+            2446.2,
+            1818.5
+          ],
+          [
+            2470.4,
+            2315.9
+          ]
+        ]
+      }
+    ]
+  },
+  "HRAB3": {
+    "venue": {
+      "code": "HRAB3",
+      "name": "Hrabákova",
+      "lat": 50.0296181,
+      "lon": 14.4818272,
+      "address": "Hrabákova 2001/21, Praha 4",
+      "notes": "Hrabákova 2001/21, Praha 4\nVe Sportovním areálu Hrabákova, více na www.jihomestska.cz/sportovni-areal-hrabakova. \n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nHřiště č. 1 je při pohledu od restaurace první zprava, č. 3 první zleva. \n\r\nPoznámka: přísný zákaz vjezdu motorových vozidel účastníků soutěží PSMF do areálu (nejsnazší parkování ve Westfield Chodov).",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739487.2235536085,
+      "y1": -1049876.4470096242,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739387.2235536085,
+        -1049976.4470096242
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 104.2,
+        "turf_w_m": 47.9,
+        "turf_area_m2": 4994,
+        "aspect": 2.17,
+        "rectness": 0.869,
+        "border_support": 1.0,
+        "bearing_deg": 177.3,
+        "centre_lat": 50.029569,
+        "centre_lon": 14.4818449,
+        "rect_px": [
+          [
+            1580.2,
+            3174.7
+          ],
+          [
+            1482.6,
+            1093.5
+          ],
+          [
+            2440.3,
+            1048.5
+          ],
+          [
+            2538.0,
+            3129.8
+          ]
+        ],
+        "kind": "section_3_of_3",
+        "parent_l_m": 104.2,
+        "parent_w_m": 47.9,
+        "section_rects_px": [
+          [
+            [
+              1515.5,
+              1795.9
+            ],
+            [
+              1493.2,
+              1320.4
+            ],
+            [
+              2451.0,
+              1275.5
+            ],
+            [
+              2473.3,
+              1751.0
+            ]
+          ],
+          [
+            [
+              1542.0,
+              2360.3
+            ],
+            [
+              1518.7,
+              1862.8
+            ],
+            [
+              2476.4,
+              1817.9
+            ],
+            [
+              2499.8,
+              2315.3
+            ]
+          ],
+          [
+            [
+              1567.5,
+              2903.7
+            ],
+            [
+              1545.2,
+              2428.2
+            ],
+            [
+              2502.9,
+              2383.3
+            ],
+            [
+              2525.2,
+              2858.8
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the N end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 3.38,
+        "goal_strength": 1.7,
+        "edge_nudged": {
+          "E": -2.25
+        },
+        "painted_l_m": 44.89,
+        "painted_w_m": 23.8,
+        "painted_angle": 177.11,
+        "edge_strength": [
+          4.9,
+          5.4,
+          1.2,
+          1.1
+        ],
+        "play_l_m": 44.89,
+        "play_w_m": 23.8,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1599.7,
+            2903.7
+          ],
+          [
+            1575.7,
+            2428.3
+          ],
+          [
+            2472.3,
+            2383.0
+          ],
+          [
+            2496.3,
+            2858.4
+          ]
+        ]
+      }
+    ]
+  },
+  "KORAB": {
+    "venue": {
+      "code": "KORAB",
+      "name": "SC Koráb",
+      "lat": 50.1132244,
+      "lon": 14.4659458,
+      "address": "Krejčího 2261/2a, Praha 8",
+      "notes": "Krejčího 2261/2a, Praha 8\nV areálu SC Koráb, více na www.sckorab.cz. \n\r\nUMT 3. generace, osvětlení. Pokud by nebylo UO zapnuté, musíte zajít a požádat o zapnutí do restaurace.\n\r\nObuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány! \n\r\nPoznámka: kabiny se sprchami jsou za prvním parkovištěm v 1. patře. Skříňky lze použít po zadání čtyřmístného kódu (PINu).\n\r\nHřiště nešlo využívat, majitelé areál uzavřeli ke 30.6.2026. Během srpna se situace změnila, v pondělí 31.8.2026 lze utkání odehrát.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
+        "lisovky": "forbidden",
+        "ag": "allowed",
+        "summary": "AG or turf, no lisovky"
+      }
+    },
+    "geo": {
+      "x0": -739352.3802082421,
+      "y1": -1040509.4767513162,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739252.3802082421,
+        -1040609.4767513162
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 51.0,
+        "turf_w_m": 31.8,
+        "turf_area_m2": 1625,
+        "aspect": 1.6,
+        "rectness": 0.868,
+        "border_support": 1.0,
+        "bearing_deg": 176.5,
+        "centre_lat": 50.1132255,
+        "centre_lon": 14.465963,
+        "rect_px": [
+          [
+            1737.8,
+            2529.5
+          ],
+          [
+            1675.8,
+            1511.1
+          ],
+          [
+            2311.6,
+            1472.5
+          ],
+          [
+            2373.5,
+            2490.9
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 45.58,
+        "painted_w_m": 24.99,
+        "painted_angle": 176.72,
+        "edge_strength": [
+          5.2,
+          4.6,
+          3.2,
+          1.9
+        ],
+        "play_l_m": 45.58,
+        "play_w_m": 24.99,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1730.2,
+            1558.4
+          ],
+          [
+            2229.2,
+            1529.8
+          ],
+          [
+            2281.4,
+            2439.9
+          ],
+          [
+            1782.4,
+            2468.5
+          ]
+        ]
+      }
+    ]
+  },
+  "LITVI": {
+    "venue": {
+      "code": "LITVI",
+      "name": "Litvínovská",
+      "lat": 50.1202406,
+      "lon": 14.4875981,
+      "address": "Litvínovská 500/5, Praha 9",
+      "notes": "Litvínovská 500/5, Praha 9\nV areálu Sportcentrum Prosek, více na www.sportcentrumprosek.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!",
+        "lisovky": "forbidden",
+        "ag": "unknown",
+        "summary": "no lisovky"
+      }
+    },
+    "geo": {
+      "x0": -737712.396679626,
+      "y1": -1039946.2900935293,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737612.396679626,
+        -1040046.2900935293
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 44.9,
+        "turf_w_m": 22.3,
+        "turf_area_m2": 1000,
+        "aspect": 2.01,
+        "rectness": 0.943,
+        "border_support": 1.0,
+        "bearing_deg": 140.7,
+        "centre_lat": 50.1202393,
+        "centre_lon": 14.4875982,
+        "rect_px": [
+          [
+            2111.4,
+            2491.2
+          ],
+          [
+            1543.2,
+            1796.5
+          ],
+          [
+            1888.2,
+            1514.4
+          ],
+          [
+            2456.3,
+            2209.1
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 43.63,
+        "painted_w_m": 21.89,
+        "painted_angle": 140.83,
+        "edge_strength": [
+          7.1,
+          6.7,
+          8.3,
+          8.3
+        ],
+        "play_l_m": 43.63,
+        "play_w_m": 21.89,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1556.7,
+            1802.8
+          ],
+          [
+            1896.1,
+            1526.2
+          ],
+          [
+            2447.3,
+            2202.7
+          ],
+          [
+            2107.9,
+            2479.3
+          ]
+        ]
+      }
+    ]
+  },
+  "MALES": {
+    "venue": {
+      "code": "MALES",
+      "name": "AFK Malešice",
+      "lat": 50.0852672,
+      "lon": 14.5147994,
+      "address": "Heldova 555/1, Praha 10",
+      "notes": "Heldova 555/1, Praha 10\nV areálu AFK Slavia Malešice, více na www.sportarealsafarka.cz .\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -736310.5571438564,
+      "y1": -1044063.5284521922,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -736210.5571438564,
+        -1044163.5284521922
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 49.7,
+        "turf_w_m": 24.8,
+        "turf_area_m2": 1234,
+        "aspect": 2.0,
+        "rectness": 0.807,
+        "border_support": 1.0,
+        "bearing_deg": 153.0,
+        "centre_lat": 50.0852827,
+        "centre_lon": 14.5147684,
+        "rect_px": [
+          [
+            1965.4,
+            2515.4
+          ],
+          [
+            1513.7,
+            1629.8
+          ],
+          [
+            1956.1,
+            1404.1
+          ],
+          [
+            2407.9,
+            2289.7
+          ]
+        ],
+        "kind": "whole_pitch",
+        "edge_nudged": {
+          "N": 5.73
+        },
+        "painted_l_m": 43.86,
+        "painted_w_m": 24.86,
+        "painted_angle": 153.07,
+        "edge_strength": [
+          15.7,
+          9.0,
+          1.7,
+          5.3
+        ],
+        "play_l_m": 43.86,
+        "play_w_m": 24.86,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1959.6,
+            2511.1
+          ],
+          [
+            1562.4,
+            1729.0
+          ],
+          [
+            2005.6,
+            1503.9
+          ],
+          [
+            2402.9,
+            2286.0
+          ]
+        ]
+      }
+    ]
+  },
+  "METE1": {
+    "venue": {
+      "code": "METE1",
+      "name": "Meteor 8",
+      "lat": 50.1094372,
+      "lon": 14.4699986,
+      "address": "U Meteoru 29/3, Praha 8",
+      "notes": "U Meteoru 29/3, Praha 8\nV areálu FK Meteor Praha 8, více na www.fkmeteorpraha.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je blíže kabinám, hř. č. 2 je dále od kabin, tedy blíže Zenklově ulici.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: kabiny a sprchy jsou v budově pod restaurací, tedy až za \"hlavním\" travnatým hřištěm.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739122.3528667048,
+      "y1": -1040966.1340169928,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739022.3528667048,
+        -1041066.1340169928
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 96.8,
+        "turf_w_m": 46.4,
+        "turf_area_m2": 4492,
+        "aspect": 2.08,
+        "rectness": 0.882,
+        "border_support": 1.0,
+        "bearing_deg": 93.8,
+        "centre_lat": 50.1094369,
+        "centre_lon": 14.4699961,
+        "rect_px": [
+          [
+            2931.4,
+            2526.9
+          ],
+          [
+            1000.6,
+            2400.1
+          ],
+          [
+            1061.4,
+            1473.4
+          ],
+          [
+            2992.3,
+            1600.2
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 40.2,
+        "painted_w_m": 27.87,
+        "painted_angle": 92.36,
+        "edge_strength": [
+          6.0,
+          5.8,
+          5.8,
+          6.0
+        ],
+        "play_l_m": 40.2,
+        "play_w_m": 27.87,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1263.2,
+            2370.4
+          ],
+          [
+            1296.3,
+            1567.0
+          ],
+          [
+            1853.2,
+            1589.9
+          ],
+          [
+            1820.1,
+            2393.3
+          ]
+        ]
+      }
+    ]
+  },
+  "METE2": {
+    "venue": {
+      "code": "METE2",
+      "name": "Meteor 8",
+      "lat": 50.1094372,
+      "lon": 14.4699986,
+      "address": "U Meteoru 29/3, Praha 8",
+      "notes": "U Meteoru 29/3, Praha 8\nV areálu FK Meteor Praha 8, více na www.fkmeteorpraha.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je blíže kabinám, hř. č. 2 je dále od kabin, tedy blíže Zenklově ulici.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: kabiny a sprchy jsou v budově pod restaurací, tedy až za \"hlavním\" travnatým hřištěm.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -739122.3528667048,
+      "y1": -1040966.1340169928,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -739022.3528667048,
+        -1041066.1340169928
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 96.8,
+        "turf_w_m": 46.4,
+        "turf_area_m2": 4492,
+        "aspect": 2.08,
+        "rectness": 0.882,
+        "border_support": 1.0,
+        "bearing_deg": 93.8,
+        "centre_lat": 50.1094369,
+        "centre_lon": 14.4699961,
+        "rect_px": [
+          [
+            2931.4,
+            2526.9
+          ],
+          [
+            1000.6,
+            2400.1
+          ],
+          [
+            1061.4,
+            1473.4
+          ],
+          [
+            2992.3,
+            1600.2
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 40.23,
+        "painted_w_m": 27.92,
+        "painted_angle": 92.36,
+        "edge_strength": [
+          5.5,
+          5.2,
+          6.3,
+          6.0
+        ],
+        "play_l_m": 40.23,
+        "play_w_m": 27.92,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2221.5,
+            2417.0
+          ],
+          [
+            2254.6,
+            1613.1
+          ],
+          [
+            2812.5,
+            1636.0
+          ],
+          [
+            2779.4,
+            2439.9
+          ]
+        ]
+      }
+    ]
+  },
+  "MIKU1": {
+    "venue": {
+      "code": "MIKU1",
+      "name": "Mikulova",
+      "lat": 50.0297817,
+      "lon": 14.5107133,
+      "address": "Mikulova 1594/4, Praha 4",
+      "notes": "Mikulova 1594/4, Praha 4\nVe Sportovním areálu Mikulovka, více na www.mikulovka.cz.\n\r\nKvůli stavbě v blízkosti areálu se významně zhoršila možnost parkování.\n\r\nDoporučujeme používat hromadnou dopravu.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší vpravo, za ním je hř. č. 2. Hřiště číslo 3 je při pohledu od kabin na fotbalové hřiště bližší vlevo, za ním je hř. č. 4. \n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze v době konání utkání vhodit do schránky napravo od dveří do kantýny.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737434.2605275293,
+      "y1": -1050138.4975626518,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737334.2605275293,
+        -1050238.4975626518
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 108.3,
+        "turf_w_m": 66.9,
+        "turf_area_m2": 7242,
+        "aspect": 1.62,
+        "rectness": 0.878,
+        "border_support": 0.944,
+        "bearing_deg": 178.3,
+        "centre_lat": 50.0297513,
+        "centre_lon": 14.5106691,
+        "rect_px": [
+          [
+            1291.3,
+            3160.4
+          ],
+          [
+            1227.5,
+            996.0
+          ],
+          [
+            2564.8,
+            956.5
+          ],
+          [
+            2628.6,
+            3121.0
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 37.99,
+        "painted_w_m": 23.9,
+        "painted_angle": 177.91,
+        "edge_strength": [
+          2.8,
+          10.6,
+          2.2,
+          4.8
+        ],
+        "play_l_m": 37.99,
+        "play_w_m": 23.9,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2002.9,
+            1205.6
+          ],
+          [
+            2480.5,
+            1188.2
+          ],
+          [
+            2508.2,
+            1947.5
+          ],
+          [
+            2030.6,
+            1964.9
+          ]
+        ]
+      }
+    ]
+  },
+  "MIKU2": {
+    "venue": {
+      "code": "MIKU2",
+      "name": "Mikulova",
+      "lat": 50.0297817,
+      "lon": 14.5107133,
+      "address": "Mikulova 1594/4, Praha 4",
+      "notes": "Mikulova 1594/4, Praha 4\nVe Sportovním areálu Mikulovka, více na www.mikulovka.cz.\n\r\nKvůli stavbě v blízkosti areálu se významně zhoršila možnost parkování.\n\r\nDoporučujeme používat hromadnou dopravu.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší vpravo, za ním je hř. č. 2. Hřiště číslo 3 je při pohledu od kabin na fotbalové hřiště bližší vlevo, za ním je hř. č. 4. \n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze v době konání utkání vhodit do schránky napravo od dveří do kantýny.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737434.2605275293,
+      "y1": -1050138.4975626518,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737334.2605275293,
+        -1050238.4975626518
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 108.3,
+        "turf_w_m": 66.9,
+        "turf_area_m2": 7242,
+        "aspect": 1.62,
+        "rectness": 0.878,
+        "border_support": 0.944,
+        "bearing_deg": 178.3,
+        "centre_lat": 50.0297513,
+        "centre_lon": 14.5106691,
+        "rect_px": [
+          [
+            1291.3,
+            3160.4
+          ],
+          [
+            1227.5,
+            996.0
+          ],
+          [
+            2564.8,
+            956.5
+          ],
+          [
+            2628.6,
+            3121.0
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 38.5,
+        "painted_w_m": 23.9,
+        "painted_angle": 177.91,
+        "edge_strength": [
+          2.8,
+          12.5,
+          4.6,
+          4.4
+        ],
+        "play_l_m": 38.5,
+        "play_w_m": 23.9,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2039.8,
+            2245.8
+          ],
+          [
+            2517.5,
+            2228.4
+          ],
+          [
+            2545.5,
+            2997.9
+          ],
+          [
+            2067.9,
+            3015.3
+          ]
+        ]
+      }
+    ]
+  },
+  "MIKU3": {
+    "venue": {
+      "code": "MIKU3",
+      "name": "Mikulova",
+      "lat": 50.0297817,
+      "lon": 14.5107133,
+      "address": "Mikulova 1594/4, Praha 4",
+      "notes": "Mikulova 1594/4, Praha 4\nVe Sportovním areálu Mikulovka, více na www.mikulovka.cz.\n\r\nKvůli stavbě v blízkosti areálu se významně zhoršila možnost parkování.\n\r\nDoporučujeme používat hromadnou dopravu.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší vpravo, za ním je hř. č. 2. Hřiště číslo 3 je při pohledu od kabin na fotbalové hřiště bližší vlevo, za ním je hř. č. 4. \n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze v době konání utkání vhodit do schránky napravo od dveří do kantýny.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737434.2605275293,
+      "y1": -1050138.4975626518,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737334.2605275293,
+        -1050238.4975626518
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 108.3,
+        "turf_w_m": 66.9,
+        "turf_area_m2": 7242,
+        "aspect": 1.62,
+        "rectness": 0.878,
+        "border_support": 0.944,
+        "bearing_deg": 178.3,
+        "centre_lat": 50.0297513,
+        "centre_lon": 14.5106691,
+        "rect_px": [
+          [
+            1291.3,
+            3160.4
+          ],
+          [
+            1227.5,
+            996.0
+          ],
+          [
+            2564.8,
+            956.5
+          ],
+          [
+            2628.6,
+            3121.0
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 37.97,
+        "painted_w_m": 23.91,
+        "painted_angle": 177.91,
+        "edge_strength": [
+          11.8,
+          2.6,
+          2.6,
+          4.5
+        ],
+        "play_l_m": 37.97,
+        "play_w_m": 23.91,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1335.2,
+            1231.1
+          ],
+          [
+            1813.1,
+            1213.7
+          ],
+          [
+            1840.8,
+            1972.6
+          ],
+          [
+            1362.9,
+            1990.1
+          ]
+        ]
+      }
+    ]
+  },
+  "MIKU4": {
+    "venue": {
+      "code": "MIKU4",
+      "name": "Mikulova",
+      "lat": 50.0297817,
+      "lon": 14.5107133,
+      "address": "Mikulova 1594/4, Praha 4",
+      "notes": "Mikulova 1594/4, Praha 4\nVe Sportovním areálu Mikulovka, více na www.mikulovka.cz.\n\r\nKvůli stavbě v blízkosti areálu se významně zhoršila možnost parkování.\n\r\nDoporučujeme používat hromadnou dopravu.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je při pohledu od kabin na fotbalové hřiště bližší vpravo, za ním je hř. č. 2. Hřiště číslo 3 je při pohledu od kabin na fotbalové hřiště bližší vlevo, za ním je hř. č. 4. \n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: Zápisy o utkání lze v době konání utkání vhodit do schránky napravo od dveří do kantýny.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737434.2605275293,
+      "y1": -1050138.4975626518,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737334.2605275293,
+        -1050238.4975626518
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 108.3,
+        "turf_w_m": 66.9,
+        "turf_area_m2": 7242,
+        "aspect": 1.62,
+        "rectness": 0.878,
+        "border_support": 0.944,
+        "bearing_deg": 178.3,
+        "centre_lat": 50.0297513,
+        "centre_lon": 14.5106691,
+        "rect_px": [
+          [
+            1291.3,
+            3160.4
+          ],
+          [
+            1227.5,
+            996.0
+          ],
+          [
+            2564.8,
+            956.5
+          ],
+          [
+            2628.6,
+            3121.0
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 38.43,
+        "painted_w_m": 23.93,
+        "painted_angle": 177.91,
+        "edge_strength": [
+          12.8,
+          2.4,
+          3.5,
+          3.4
+        ],
+        "play_l_m": 38.43,
+        "play_w_m": 23.93,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1372.4,
+            2271.1
+          ],
+          [
+            1850.6,
+            2253.7
+          ],
+          [
+            1878.6,
+            3021.8
+          ],
+          [
+            1400.4,
+            3039.3
+          ]
+        ]
+      }
+    ]
+  },
+  "MOTO1": {
+    "venue": {
+      "code": "MOTO1",
+      "name": "Motorlet",
+      "lat": 50.0514194,
+      "lon": 14.3617619,
+      "address": "Butovická 592/35, Praha 5",
+      "notes": "Butovická 592/35, Praha 5\nV areálu SK Motorlet Praha, více na www.sk-motorlet.cz, www.fotbal-motorlet.cz.\n\r\nKabiny a sprchy jsou v buňkách u horního fotbalového hřiště s UMT.\n\r\nUMT 3. generace, osvětlení.\n\r\nHřiště č. 1 je vpravo za administrativní budovou oddílu, č. 4 je za fotbalovým hřištěm s UMT, které je nad tribunou stadionu.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -747676.5275404833,
+      "y1": -1046301.995773706,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -747576.5275404833,
+        -1046401.995773706
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 51.9,
+        "turf_w_m": 32.1,
+        "turf_area_m2": 1666,
+        "aspect": 1.61,
+        "rectness": 0.951,
+        "border_support": 1.0,
+        "bearing_deg": 90.5,
+        "centre_lat": 50.0514222,
+        "centre_lon": 14.3617789,
+        "rect_px": [
+          [
+            2540.6,
+            2322.9
+          ],
+          [
+            1503.7,
+            2313.9
+          ],
+          [
+            1509.2,
+            1671.5
+          ],
+          [
+            2546.2,
+            1680.5
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 49.8,
+        "painted_w_m": 30.83,
+        "painted_angle": 89.89,
+        "edge_strength": [
+          9.6,
+          11.3,
+          13.9,
+          12.5
+        ],
+        "play_l_m": 49.8,
+        "play_w_m": 30.83,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1523.9,
+            2301.8
+          ],
+          [
+            1522.8,
+            1685.3
+          ],
+          [
+            2518.7,
+            1683.5
+          ],
+          [
+            2519.8,
+            2300.0
           ]
         ]
       }
@@ -932,6 +2812,507 @@
       }
     ]
   },
+  "PLAM": {
+    "venue": {
+      "code": "PLAM",
+      "name": "Plamínkové",
+      "lat": 50.0528111,
+      "lon": 14.4352975,
+      "address": "Plamínkové 1593/2, Praha 4",
+      "notes": "Plamínkové 1593/2, Praha 4\nV areálu ZŠ Plamínkové.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: vchod do areálu pouze z ul. Plamínkové naproti hřišti, kabiny jsou v buňkách, hraje se na hřišti blíže škole.\n\r\nV areálu školy platí přísný zákaz kouření.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -742438.7689019066,
+      "y1": -1046868.1381404954,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -742338.7689019066,
+        -1046968.1381404954
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 60.2,
+        "turf_w_m": 46.2,
+        "turf_area_m2": 2779,
+        "aspect": 1.3,
+        "rectness": 0.89,
+        "border_support": 1.0,
+        "bearing_deg": 168.2,
+        "centre_lat": 50.0529412,
+        "centre_lon": 14.4352216,
+        "rect_px": [
+          [
+            1601.9,
+            2381.6
+          ],
+          [
+            1356.8,
+            1203.7
+          ],
+          [
+            2261.4,
+            1015.4
+          ],
+          [
+            2506.5,
+            2193.4
+          ]
+        ],
+        "kind": "section_1_of_2",
+        "parent_l_m": 60.2,
+        "parent_w_m": 46.2,
+        "section_rects_px": [
+          [
+            [
+              1468.1,
+              1738.2
+            ],
+            [
+              1370.7,
+              1270.2
+            ],
+            [
+              2275.3,
+              1082.0
+            ],
+            [
+              2372.6,
+              1550.0
+            ]
+          ],
+          [
+            [
+              1590.5,
+              2326.6
+            ],
+            [
+              1492.9,
+              1857.7
+            ],
+            [
+              2397.5,
+              1669.4
+            ],
+            [
+              2495.1,
+              2138.4
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the N end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 6.1,
+        "painted_l_m": 44.88,
+        "painted_w_m": 24.12,
+        "painted_angle": 168.34,
+        "edge_strength": [
+          7.8,
+          7.9,
+          1.7,
+          1.2
+        ],
+        "play_l_m": 44.88,
+        "play_w_m": 24.12,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1393.3,
+            1263.2
+          ],
+          [
+            2272.4,
+            1081.9
+          ],
+          [
+            2369.8,
+            1554.3
+          ],
+          [
+            1490.8,
+            1735.6
+          ]
+        ]
+      }
+    ]
+  },
+  "PODV1": {
+    "venue": {
+      "code": "PODV1",
+      "name": "Podvinný mlýn",
+      "lat": 50.10945,
+      "lon": 14.4919236,
+      "address": "Kovanecká, Praha 9",
+      "notes": "Kovanecká, Praha 9\nV areálu Podvinný mlýn (hala, rugby). Při pohledu od haly jsou hřiště až za nafukovací halou. Hřiště č.1 je blíže buňkám se sociálním zařízením. \n\r\nUMT 3.generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737568.4145610238,
+      "y1": -1041177.2709146517,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737468.4145610238,
+        -1041277.2709146517
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 56.3,
+        "turf_w_m": 49.2,
+        "turf_area_m2": 2771,
+        "aspect": 1.15,
+        "rectness": 0.925,
+        "border_support": 1.0,
+        "bearing_deg": 97.9,
+        "centre_lat": 50.1094588,
+        "centre_lon": 14.4919745,
+        "rect_px": [
+          [
+            2484.3,
+            2616.3
+          ],
+          [
+            1510.1,
+            2480.7
+          ],
+          [
+            1665.4,
+            1364.5
+          ],
+          [
+            2639.6,
+            1500.1
+          ]
+        ],
+        "kind": "section_1_of_2",
+        "parent_l_m": 56.3,
+        "parent_w_m": 49.2,
+        "section_rects_px": [
+          [
+            [
+              2484.8,
+              2612.7
+            ],
+            [
+              1510.6,
+              2477.1
+            ],
+            [
+              1587.1,
+              1927.4
+            ],
+            [
+              2561.3,
+              2063.0
+            ]
+          ],
+          [
+            [
+              2561.3,
+              2063.0
+            ],
+            [
+              1587.1,
+              1927.4
+            ],
+            [
+              1663.5,
+              1377.7
+            ],
+            [
+              2637.8,
+              1513.3
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 0.0,
+        "painted_l_m": 45.87,
+        "painted_w_m": 27.75,
+        "painted_angle": 98.42,
+        "edge_strength": [
+          2.2,
+          3.0,
+          10.2,
+          9.0
+        ],
+        "play_l_m": 45.87,
+        "play_w_m": 27.75,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1559.6,
+            2480.1
+          ],
+          [
+            1640.8,
+            1931.1
+          ],
+          [
+            2548.3,
+            2065.4
+          ],
+          [
+            2467.0,
+            2614.4
+          ]
+        ]
+      }
+    ]
+  },
+  "PODV2": {
+    "venue": {
+      "code": "PODV2",
+      "name": "Podvinný mlýn",
+      "lat": 50.10945,
+      "lon": 14.4919236,
+      "address": "Kovanecká, Praha 9",
+      "notes": "Kovanecká, Praha 9\nV areálu Podvinný mlýn (hala, rugby). Při pohledu od haly jsou hřiště až za nafukovací halou. Hřiště č.1 je blíže buňkám se sociálním zařízením. \n\r\nUMT 3.generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -737568.4145610238,
+      "y1": -1041177.2709146517,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -737468.4145610238,
+        -1041277.2709146517
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 56.3,
+        "turf_w_m": 49.2,
+        "turf_area_m2": 2771,
+        "aspect": 1.15,
+        "rectness": 0.925,
+        "border_support": 1.0,
+        "bearing_deg": 97.9,
+        "centre_lat": 50.1094588,
+        "centre_lon": 14.4919745,
+        "rect_px": [
+          [
+            2484.3,
+            2616.3
+          ],
+          [
+            1510.1,
+            2480.7
+          ],
+          [
+            1665.4,
+            1364.5
+          ],
+          [
+            2639.6,
+            1500.1
+          ]
+        ],
+        "kind": "section_2_of_2",
+        "parent_l_m": 56.3,
+        "parent_w_m": 49.2,
+        "section_rects_px": [
+          [
+            [
+              2484.8,
+              2612.7
+            ],
+            [
+              1510.6,
+              2477.1
+            ],
+            [
+              1587.1,
+              1927.4
+            ],
+            [
+              2561.3,
+              2063.0
+            ]
+          ],
+          [
+            [
+              2561.3,
+              2063.0
+            ],
+            [
+              1587.1,
+              1927.4
+            ],
+            [
+              1663.5,
+              1377.7
+            ],
+            [
+              2637.8,
+              1513.3
+            ]
+          ]
+        ],
+        "section_order": "section 1 at the W end",
+        "section_src": "edges measured by hand (overrides.json)",
+        "section_gap_m": 0.0,
+        "painted_l_m": 45.89,
+        "painted_w_m": 27.75,
+        "painted_angle": 98.42,
+        "edge_strength": [
+          2.9,
+          2.3,
+          11.2,
+          6.5
+        ],
+        "play_l_m": 45.89,
+        "play_w_m": 27.75,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1641.0,
+            1931.1
+          ],
+          [
+            1722.2,
+            1382.1
+          ],
+          [
+            2630.1,
+            1516.5
+          ],
+          [
+            2548.8,
+            2065.5
+          ]
+        ]
+      }
+    ]
+  },
+  "PRKOP": {
+    "venue": {
+      "code": "PRKOP",
+      "name": "Přední Kopanina",
+      "lat": 50.1149497,
+      "lon": 14.2955425,
+      "address": "Ke Goniu 123, Praha 6",
+      "notes": "Ke Goniu 123, Praha 6\nV areálu FC Přední Kopanina, více na www.fcpk.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -751398.5733557035,
+      "y1": -1038651.450748844,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -751298.5733557035,
+        -1038751.450748844
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 43.9,
+        "turf_w_m": 22.9,
+        "turf_area_m2": 1006,
+        "aspect": 1.91,
+        "rectness": 0.948,
+        "border_support": 1.0,
+        "bearing_deg": 157.3,
+        "centre_lat": 50.1149497,
+        "centre_lon": 14.2955405,
+        "rect_px": [
+          [
+            1680.8,
+            2380.6
+          ],
+          [
+            1503.7,
+            1957.5
+          ],
+          [
+            2313.4,
+            1618.5
+          ],
+          [
+            2490.5,
+            2041.6
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 43.48,
+        "painted_w_m": 22.68,
+        "painted_angle": 156.99,
+        "edge_strength": [
+          3.4,
+          2.8,
+          8.6,
+          7.8
+        ],
+        "play_l_m": 43.48,
+        "play_w_m": 22.68,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1511.7,
+            1957.9
+          ],
+          [
+            2312.2,
+            1617.9
+          ],
+          [
+            2489.5,
+            2035.4
+          ],
+          [
+            1689.0,
+            2375.4
+          ]
+        ]
+      }
+    ]
+  },
   "SANC1": {
     "venue": {
       "code": "SANC1",
@@ -1120,6 +3501,195 @@
           [
             3045.3,
             2020.5
+          ]
+        ]
+      }
+    ]
+  },
+  "SCBEC": {
+    "venue": {
+      "code": "SCBEC",
+      "name": "SC Běchovice",
+      "lat": 50.0796994,
+      "lon": 14.6201031,
+      "address": "Richtrova 536, Praha 9",
+      "notes": "Richtrova 536, Praha 9\nV areálu Sportovní centrum Běchovice. \n\r\nUMT 2. generace, osvětlení. \n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!",
+        "lisovky": "forbidden",
+        "ag": "unknown",
+        "summary": "no lisovky"
+      }
+    },
+    "geo": {
+      "x0": -728925.9244398637,
+      "y1": -1045689.9633713324,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -728825.9244398637,
+        -1045789.9633713324
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 50.0,
+        "turf_w_m": 22.7,
+        "turf_area_m2": 1136,
+        "aspect": 2.2,
+        "rectness": 0.82,
+        "border_support": 0.996,
+        "bearing_deg": 117.7,
+        "centre_lat": 50.0797115,
+        "centre_lon": 14.6200378,
+        "rect_px": [
+          [
+            2248.5,
+            2394.4
+          ],
+          [
+            1362.4,
+            1929.3
+          ],
+          [
+            1573.3,
+            1527.3
+          ],
+          [
+            2459.5,
+            1992.5
+          ]
+        ],
+        "kind": "whole_pitch",
+        "edge_nudged": {
+          "W": 10.14
+        },
+        "painted_l_m": 39.85,
+        "painted_w_m": 21.81,
+        "painted_angle": 117.5,
+        "edge_strength": [
+          6.1,
+          6.0,
+          1.1,
+          5.5
+        ],
+        "play_l_m": 39.85,
+        "play_w_m": 21.81,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            2257.1,
+            2379.0
+          ],
+          [
+            1550.1,
+            2011.0
+          ],
+          [
+            1751.4,
+            1624.2
+          ],
+          [
+            2458.4,
+            1992.1
+          ]
+        ]
+      }
+    ]
+  },
+  "SLIVE": {
+    "venue": {
+      "code": "SLIVE",
+      "name": "AFK Slivenec",
+      "lat": 50.0213006,
+      "lon": 14.3564567,
+      "address": "U Sportoviště 54/5, Praha 5",
+      "notes": "U Sportoviště 54/5, Praha 5\nV areálu TJ AFK Slivenec, více na www.afkslivenec.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: nové vytápěné sanitární kontejnery s kabinou a sprchou jsou přímo u hřiště.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -748512.3925028862,
+      "y1": -1049568.008850704,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -748412.3925028862,
+        -1049668.008850704
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 56.3,
+        "turf_w_m": 33.9,
+        "turf_area_m2": 1909,
+        "aspect": 1.66,
+        "rectness": 0.942,
+        "border_support": 1.0,
+        "bearing_deg": 96.2,
+        "centre_lat": 50.0213033,
+        "centre_lon": 14.3564603,
+        "rect_px": [
+          [
+            2282.5,
+            2591.1
+          ],
+          [
+            1608.3,
+            2518.1
+          ],
+          [
+            1729.5,
+            1398.6
+          ],
+          [
+            2403.6,
+            1471.6
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 52.81,
+        "painted_w_m": 28.66,
+        "painted_angle": 95.88,
+        "edge_strength": [
+          4.6,
+          9.1,
+          2.7,
+          3.6
+        ],
+        "play_l_m": 52.81,
+        "play_w_m": 28.66,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1672.0,
+            2457.1
+          ],
+          [
+            1780.1,
+            1406.5
+          ],
+          [
+            2350.2,
+            1465.1
+          ],
+          [
+            2242.1,
+            2515.7
           ]
         ]
       }
@@ -1602,6 +4172,193 @@
       }
     ]
   },
+  "STOD": {
+    "venue": {
+      "code": "STOD",
+      "name": "Sokol Stodůlky",
+      "lat": 50.0512025,
+      "lon": 14.3110753,
+      "address": "Kovářova 545, Praha 5",
+      "notes": "Kovářova 545, Praha 5\nV areálu TJ Sokol Stodůlky, více na www.sokolstodulky.cz.\n\r\nUMT 3. generace, osvětlení. \n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!",
+        "lisovky": "forbidden",
+        "ag": "forbidden",
+        "summary": "turf / indoor only"
+      }
+    },
+    "geo": {
+      "x0": -751275.1926514939,
+      "y1": -1045826.9788009492,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -751175.1926514939,
+        -1045926.9788009492
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 26.7,
+        "turf_w_m": 23.1,
+        "turf_area_m2": 617,
+        "aspect": 1.16,
+        "rectness": 0.86,
+        "border_support": 0.561,
+        "bearing_deg": 171.6,
+        "centre_lat": 50.051162,
+        "centre_lon": 14.3108244,
+        "rect_px": [
+          [
+            1442.1,
+            2337.7
+          ],
+          [
+            1364.1,
+            1809.3
+          ],
+          [
+            1821.1,
+            1741.7
+          ],
+          [
+            1899.1,
+            2270.1
+          ]
+        ],
+        "kind": "whole_pitch",
+        "pitch_src": "rectangle measured by hand (overrides.json)",
+        "painted_l_m": 45.53,
+        "painted_w_m": 26.23,
+        "painted_angle": 171.5,
+        "edge_strength": [
+          7.0,
+          8.0,
+          14.3,
+          15.5
+        ],
+        "play_l_m": 45.53,
+        "play_w_m": 26.23,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1368.7,
+            1814.6
+          ],
+          [
+            2269.2,
+            1680.0
+          ],
+          [
+            2346.8,
+            2198.7
+          ],
+          [
+            1446.2,
+            2333.4
+          ]
+        ]
+      }
+    ]
+  },
+  "TEMPO": {
+    "venue": {
+      "code": "TEMPO",
+      "name": "FC Tempo",
+      "lat": 50.0207742,
+      "lon": 14.4326447,
+      "address": "Ve Lhotce 1045/3, Praha 4",
+      "notes": "Ve Lhotce 1045/3, Praha 4\nV areálu FC Tempo, více na www.fctempo.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -743112.1777037511,
+      "y1": -1050372.2019596621,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -743012.1777037511,
+        -1050472.2019596621
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 45.1,
+        "turf_w_m": 30.2,
+        "turf_area_m2": 1362,
+        "aspect": 1.49,
+        "rectness": 0.792,
+        "border_support": 0.975,
+        "bearing_deg": 155.4,
+        "centre_lat": 50.0207961,
+        "centre_lon": 14.4326421,
+        "rect_px": [
+          [
+            1719.1,
+            2413.6
+          ],
+          [
+            1467.4,
+            1864.0
+          ],
+          [
+            2286.9,
+            1488.8
+          ],
+          [
+            2538.5,
+            2038.4
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 43.19,
+        "painted_w_m": 26.85,
+        "painted_angle": 155.5,
+        "edge_strength": [
+          3.8,
+          6.5,
+          6.1,
+          13.8
+        ],
+        "play_l_m": 43.19,
+        "play_w_m": 26.85,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1496.6,
+            1925.7
+          ],
+          [
+            2282.6,
+            1567.4
+          ],
+          [
+            2505.4,
+            2056.0
+          ],
+          [
+            1719.3,
+            2414.3
+          ]
+        ]
+      }
+    ]
+  },
   "UJEZD": {
     "venue": {
       "code": "UJEZD",
@@ -1685,6 +4442,192 @@
           [
             2149.3,
             2480.1
+          ]
+        ]
+      }
+    ]
+  },
+  "ZABEH": {
+    "venue": {
+      "code": "ZABEH",
+      "name": "Záběhlice",
+      "lat": 50.0538069,
+      "lon": 14.4869769,
+      "address": "Záběhlická 82/3, Praha 10",
+      "notes": "Záběhlická 82/3, Praha 10\nV areálu Bowlingového a relaxačního centra Na Ovčíně, více na www.ovcin.cz .\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: povoleny kopačky turfy, gumotextilní nebo sálové, „lisovky“ i kopačky AG zakázány!\n\r\nPoznámka: nepleťte si s areálem Hamrsport.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, „lisovky“ i kopačky AG zakázány!",
+        "lisovky": "forbidden",
+        "ag": "forbidden",
+        "summary": "turf / indoor only"
+      }
+    },
+    "geo": {
+      "x0": -738757.2618945893,
+      "y1": -1047260.9664496755,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -738657.2618945893,
+        -1047360.9664496755
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 45.1,
+        "turf_w_m": 23.9,
+        "turf_area_m2": 1079,
+        "aspect": 1.88,
+        "rectness": 0.914,
+        "border_support": 0.99,
+        "bearing_deg": 127.7,
+        "centre_lat": 50.0538034,
+        "centre_lon": 14.486979,
+        "rect_px": [
+          [
+            2212.1,
+            2473.3
+          ],
+          [
+            1498.8,
+            1921.7
+          ],
+          [
+            1791.8,
+            1542.9
+          ],
+          [
+            2505.0,
+            2094.6
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 44.0,
+        "painted_w_m": 22.93,
+        "painted_angle": 127.42,
+        "edge_strength": [
+          7.9,
+          7.5,
+          7.8,
+          7.9
+        ],
+        "play_l_m": 44.0,
+        "play_w_m": 22.93,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1512.4,
+            1921.8
+          ],
+          [
+            1791.1,
+            1557.5
+          ],
+          [
+            2490.0,
+            2092.2
+          ],
+          [
+            2211.3,
+            2456.5
+          ]
+        ]
+      }
+    ]
+  },
+  "ZAK": {
+    "venue": {
+      "code": "ZAK",
+      "name": "Zákostelní",
+      "lat": 50.1090622,
+      "lon": 14.5056881,
+      "address": "Novoškolská 696/2, Praha 9",
+      "notes": "Novoškolská 696/2, Praha 9\nV areálu T.J. Sokol Vysočany, více na www.tjsokolvysocany.cz.\n\r\nUMT 3. generace, osvětlení.\n\r\nObuv: kopačky povoleny i s lisovanými kolíky.\n\r\nPoznámka: vchod rovnou z ulice Novoškolská nebo z ulice Zákostelní přes restauraci.\n\r\nZápisy o utkání lze vhodit do schránky na plotě naproti vchodu do šaten.",
+      "surface": "artificial",
+      "footwear": {
+        "text": "Obuv: kopačky povoleny i s lisovanými kolíky.",
+        "lisovky": "allowed",
+        "ag": "unknown",
+        "summary": "lisovky OK"
+      }
+    },
+    "geo": {
+      "x0": -736598.7740300553,
+      "y1": -1041353.2110375562,
+      "res": 0.05,
+      "size": 4000,
+      "source": "ipr",
+      "layer": 284,
+      "capture": "2025",
+      "centre_jtsk": [
+        -736498.7740300553,
+        -1041453.2110375562
+      ]
+    },
+    "candidates": [
+      {
+        "candidate": 1,
+        "turf_l_m": 44.8,
+        "turf_w_m": 31.3,
+        "turf_area_m2": 1404,
+        "aspect": 1.43,
+        "rectness": 0.921,
+        "border_support": 1.0,
+        "bearing_deg": 164.0,
+        "centre_lat": 50.1090638,
+        "centre_lon": 14.5056903,
+        "rect_px": [
+          [
+            1658.9,
+            2421.3
+          ],
+          [
+            1486.3,
+            1819.4
+          ],
+          [
+            2348.4,
+            1572.3
+          ],
+          [
+            2521.0,
+            2174.2
+          ]
+        ],
+        "kind": "whole_pitch",
+        "painted_l_m": 44.69,
+        "painted_w_m": 29.88,
+        "painted_angle": 164.0,
+        "edge_strength": [
+          7.8,
+          6.7,
+          3.8,
+          4.3
+        ],
+        "play_l_m": 44.69,
+        "play_w_m": 29.88,
+        "play_src": "painted lines",
+        "play_rect_px": [
+          [
+            1493.1,
+            1834.2
+          ],
+          [
+            2352.3,
+            1587.9
+          ],
+          [
+            2517.0,
+            2162.4
+          ],
+          [
+            1657.8,
+            2408.7
           ]
         ]
       }

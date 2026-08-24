@@ -62,6 +62,7 @@ table, and shown on the page as a scale comparison.
 | `sections` / `section_index` / `first_end` / `goal_flush` | numbered cross-pitches |
 | `section_gap_m` | widest run-off to allow *between* cross-pitches (0 = they touch) |
 | `section_edges_m` | the section boundaries as measured, when no fit can find them |
+| `pitch_m` | the whole pitch rectangle as measured, when no fit can find *it* |
 | `measure` | measure this code on a default run though we have no fixture there |
 | `edge_nudge_m` | per-edge correction in metres by compass side |
 
@@ -152,6 +153,17 @@ At Štěrboholy the north goal line coincides with a white marking while the
 other three edges are blue; that edge is therefore the one that can be located
 precisely.
 
+**Two grounds are beyond any search, and say so.** Mikulova marks four
+pitches in two columns and two rows on one full-size field: two-dimensional,
+so `sections` cannot describe it. Stodulky's carpet runs 30 m east past the
+pitch and the pitch's own halfway line cuts the turf blob in half, so the
+detector sees a fragment rather than a field to divide. Both carry `pitch_m`,
+the rectangle written down in parent-frame metres — the coordinates the line
+probes and `diagnose.py` print. `fit_painted` still settles the result onto the
+paint, so it is a starting point, not the answer. Four venues in forty-two need
+this or `section_edges_m`; if a fifth does, that is still cheaper than a
+detector that can be talked into finding the wrong thing.
+
 **Prazacka cannot be fitted at all.** Its six cross-pitch side lines are in
 the imagery — 24 m apart in pairs, 5.7 m between pitches — but the parent's own
 goal, penalty and halfway lines are about twice as bright, so a search wide
@@ -179,6 +191,13 @@ is enough to smear a faint blue line flat in a carpet-frame profile, which is
 why `diagnose.py` profiles at the *fitted* angle and `_apply_goals` emits the
 rectangle at it too. Before, the JSON reported the refined angle beside a
 rectangle that was not at it.
+
+Every venue in the PSMF directory is measured, not just the ones we play:
+41 grounds plus our training pitch, 162 of their 165 edges landing within
+0.25 m of a painted line. The three that do not are Hanspaulka's north edge
+(the teal kerb, long-standing and correct as measured) and Astra's two east
+edges, where the surround outshines the court line by 3x — the documented trap,
+not a bad fit. Venues we play no fixture at carry `measure: true`.
 
 `STER1`, `P1` and `P3` are the cross-pitches we have no fixture on. They carry
 `measure: true` so a default run still measures them — the numbers are then

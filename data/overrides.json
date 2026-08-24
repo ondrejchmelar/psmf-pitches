@@ -10,6 +10,36 @@
     "note": "Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.",
     "layer": 284
   },
+  "ASTR1": {
+    "pitch_m": [
+      1.66,
+      21.56,
+      4.44,
+      49.49
+    ],
+    "note": "Court 1 of 2 at Astra: two futsal courts side by side on one carpet, each 19.9 x 45.05 m, sharing the line between them. PSMF marks this ground futsal-only. The halfway line and a centre circle 2.6 m in radius sit at 26.97 m, the exact midpoint, which is what fixes the ends. Numbered from the hall ('c. 1 blize hale'), which the imagery cannot place; both measure the same. diagnose.py reports a stronger line 1.1 m outside the east edge: that is the surround, not the court line, which reads 2-3x here.",
+    "measure": true
+  },
+  "ASTR2": {
+    "pitch_m": [
+      21.56,
+      41.56,
+      4.44,
+      49.49
+    ],
+    "note": "Court 2 of 2 at Astra. See the ASTR1 note on the numbering.",
+    "measure": true
+  },
+  "BECH": {
+    "roi_m": [
+      -28,
+      16,
+      -32,
+      28
+    ],
+    "note": "Single artificial pitch beside the clay tennis courts.",
+    "layer": 284
+  },
   "CESMI": {
     "roi_m": [
       -34,
@@ -23,6 +53,14 @@
       "E": 3.3
     }
   },
+  "CZU": {
+    "note": "Single artificial pitch at the CZU sport centre; found on defaults, all four edges on the paint.",
+    "measure": true
+  },
+  "DEKAN": {
+    "note": "Single artificial pitch at SK Nusle; found on defaults.",
+    "measure": true
+  },
   "HANSP": {
     "roi_m": [
       -28,
@@ -35,6 +73,179 @@
     "fit_out_m": -1.0,
     "fit_in_m": 4.0
   },
+  "HOSTI": {
+    "note": "Single artificial pitch at SK Hostivar. Genuinely a wide one -- 45.8 x 36.9 m, confirmed by a halfway line at the exact midpoint of the long axis -- not a merge of two.",
+    "measure": true
+  },
+  "HRAB1": {
+    "sections": 3,
+    "section_index": 1,
+    "first_end": "N",
+    "section_edges_m": [
+      [
+        11.36,
+        35.16
+      ],
+      [
+        38.51,
+        63.41
+      ],
+      [
+        66.81,
+        90.61
+      ]
+    ],
+    "note": "Pitch 1 of 3 marked across the stadium field at Hrabakova, goals on the parent's touchlines. The parent's own markings (goal lines 6.4/95.7, penalty areas 22.4/79.6, halfway 51.0) are brighter than the cross-pitch lines and chroma sees the latter not at all, so the edges are measured, as at Prazacka. PSMF numbers from the restaurant ('c. 1 prvni zprava'), which the imagery cannot place; taken as running from the north. All three measure within a metre of each other, so the order costs little either way.",
+    "edge_nudge_m": {
+      "E": -2.25
+    },
+    "measure": true
+  },
+  "HRAB2": {
+    "sections": 3,
+    "section_index": 2,
+    "first_end": "N",
+    "section_edges_m": [
+      [
+        11.36,
+        35.16
+      ],
+      [
+        38.51,
+        63.41
+      ],
+      [
+        66.81,
+        90.61
+      ]
+    ],
+    "note": "Pitch 2 of 3 at Hrabakova, the middle one. See the HRAB1 note.",
+    "measure": true,
+    "edge_nudge_m": {
+      "E": -2.25
+    }
+  },
+  "HRAB3": {
+    "sections": 3,
+    "section_index": 3,
+    "first_end": "N",
+    "section_edges_m": [
+      [
+        11.36,
+        35.16
+      ],
+      [
+        38.51,
+        63.41
+      ],
+      [
+        66.81,
+        90.61
+      ]
+    ],
+    "note": "Pitch 3 of 3 at Hrabakova. See the HRAB1 note on the numbering.",
+    "measure": true,
+    "edge_nudge_m": {
+      "E": -2.25
+    }
+  },
+  "KORAB": {
+    "note": "Single artificial pitch. The paint sits 2.5 m inside the carpet on the west side and 4.3 m in on the east, and the carpet edge outshines it, so the search starts inside the turf as at Hanspaulka. The halfway line at 25.26 m confirms the goal lines at 2.56 and 47.96.",
+    "fit_out_m": -1.5,
+    "fit_in_m": 5.0,
+    "measure": true
+  },
+  "LITVI": {
+    "note": "Single artificial pitch at Sportcentrum Prosek; found on defaults.",
+    "measure": true
+  },
+  "MALES": {
+    "note": "Single artificial pitch. The north edge fitted the carpet edge, 5.7 m beyond the goal line; nudged onto the paint. Confirmed by the halfway line at 27.47 m, which is the exact midpoint of 5.52 and 49.42, and by penalty-area lines 5.9 m inside each.",
+    "edge_nudge_m": {
+      "N": 5.73
+    },
+    "measure": true
+  },
+  "METE1": {
+    "roi_m": [
+      -46,
+      46,
+      -32,
+      32
+    ],
+    "pitch_m": [
+      2.44,
+      42.64,
+      12.22,
+      41.42
+    ],
+    "note": "Pitch 1 of 2 marked across the UMT field inside the running track, the western of the two and so the one nearer the kabiny (PSMF: 'c. 1 blize kabinam', which are past the main grass pitch to the west; confirmed by longitude). Each is 40.2 x 29 m -- the goal lines are the parent's touchlines, 40.2 m apart, which falls outside the 42-50 m the goal-line search accepts, so the rectangle is the measured one. The parent's own markings (goal lines 4.2/96.8, penalty areas 20.6/80.7, halfway 50.6) are far brighter than these.",
+    "fit_out_m": 0.8,
+    "fit_in_m": 1.5,
+    "measure": true
+  },
+  "METE2": {
+    "roi_m": [
+      -46,
+      46,
+      -32,
+      32
+    ],
+    "pitch_m": [
+      2.44,
+      42.64,
+      59.42,
+      88.37
+    ],
+    "note": "Pitch 2 of 2 at Meteor, the eastern one, nearer Zenklova street. See the METE1 note. The search band is tightened here because the fit otherwise walked 3.3 m onto a marking inside the goal line.",
+    "measure": true,
+    "fit_out_m": 1.2,
+    "fit_in_m": 1.2
+  },
+  "MIKU1": {
+    "pitch_m": [
+      38.59,
+      62.49,
+      11.85,
+      49.85
+    ],
+    "note": "Pitch 1 of 4 at Mikulova: the east column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "measure": true
+  },
+  "MIKU2": {
+    "pitch_m": [
+      38.59,
+      62.49,
+      63.95,
+      101.9
+    ],
+    "note": "Pitch 2 of 4 at Mikulova: the east column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "measure": true
+  },
+  "MIKU3": {
+    "pitch_m": [
+      5.19,
+      29.14,
+      11.85,
+      49.85
+    ],
+    "note": "Pitch 3 of 4 at Mikulova: the west column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "measure": true
+  },
+  "MIKU4": {
+    "pitch_m": [
+      5.19,
+      29.14,
+      63.95,
+      101.9
+    ],
+    "note": "Pitch 4 of 4 at Mikulova: the west column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each is 23.95 x 38.0 m; the margins and gaps sum to the parent's 101.8 m length exactly, and goal areas sit 5.85 m inside each end. PSMF numbers them from the kabiny ('c. 1 blizsi vpravo'), which the imagery cannot place, so which pair is 1/2 and which 3/4 is a guess -- all four measure the same.",
+    "measure": true
+  },
+  "MOTO1": {
+    "note": "Pitch 1 at Motorlet, the one behind the club's office building (PSMF: 'c. 1 je vpravo za administrativni budovou'); found on defaults. MOTO4 is the small pitch beyond the UMT field.",
+    "measure": true
+  },
   "MOTO4": {
     "roi_m": [
       -34,
@@ -44,43 +255,6 @@
     ],
     "note": "Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here.",
     "layer": 272
-  },
-  "BECH": {
-    "roi_m": [
-      -28,
-      16,
-      -32,
-      28
-    ],
-    "note": "Single artificial pitch beside the clay tennis courts.",
-    "layer": 284
-  },
-  "SANC1": {
-    "roi_m": [
-      -18,
-      28,
-      -34,
-      32
-    ],
-    "note": "Left of the two adjacent pitches; north edge nudged in off a stray marking.",
-    "layer": 284,
-    "edge_nudge_m": {
-      "N": 2.8
-    }
-  },
-  "SANC2": {
-    "roi_m": [
-      18,
-      62,
-      -38,
-      28
-    ],
-    "note": "Right of the two adjacent pitches; west and north edges nudged in off the surround.",
-    "layer": 284,
-    "edge_nudge_m": {
-      "W": 2.35,
-      "N": 3.2
-    }
   },
   "P1": {
     "roi_m": [
@@ -168,6 +342,105 @@
     ],
     "measure": true
   },
+  "PLAM": {
+    "sections": 2,
+    "section_index": 1,
+    "first_end": "N",
+    "section_edges_m": [
+      [
+        3.4,
+        27.3
+      ],
+      [
+        33.4,
+        57.35
+      ]
+    ],
+    "note": "One carpet with two pitches stacked across it, each 44.9 x 23.9 m with a 6.1 m gap; PSMF gives the ground a single code and the two measure the same. Section 1 is the northern. The division lines are white here, invisible to the chroma fit, so the edges are the measured ones.",
+    "measure": true
+  },
+  "PODV1": {
+    "sections": 2,
+    "section_index": 1,
+    "first_end": "W",
+    "section_edges_m": [
+      [
+        0.18,
+        27.93
+      ],
+      [
+        27.93,
+        55.68
+      ]
+    ],
+    "note": "Pitch 1 of 2 at Podvinny mlyn: two pitches side by side on one carpet, each 27.75 m wide, sharing the line between them and a pair of goal lines 45.8 m apart. The division is white, invisible to the chroma fit, so the edges are measured. PSMF numbers from the toilet cabins ('c.1 blize bunkam'), which the imagery cannot place; both measure the same.",
+    "measure": true
+  },
+  "PODV2": {
+    "sections": 2,
+    "section_index": 2,
+    "first_end": "W",
+    "section_edges_m": [
+      [
+        0.18,
+        27.93
+      ],
+      [
+        27.93,
+        55.68
+      ]
+    ],
+    "note": "Pitch 2 of 2 at Podvinny mlyn. See the PODV1 note on the numbering.",
+    "measure": true
+  },
+  "PRKOP": {
+    "note": "Single artificial pitch at FC Predni Kopanina; found on defaults.",
+    "measure": true
+  },
+  "SANC1": {
+    "roi_m": [
+      -18,
+      28,
+      -34,
+      32
+    ],
+    "note": "Left of the two adjacent pitches; north edge nudged in off a stray marking.",
+    "layer": 284,
+    "edge_nudge_m": {
+      "N": 2.8
+    }
+  },
+  "SANC2": {
+    "roi_m": [
+      18,
+      62,
+      -38,
+      28
+    ],
+    "note": "Right of the two adjacent pitches; west and north edges nudged in off the surround.",
+    "layer": 284,
+    "edge_nudge_m": {
+      "W": 2.35,
+      "N": 3.2
+    }
+  },
+  "SCBEC": {
+    "roi_m": [
+      -32,
+      30,
+      -22,
+      16
+    ],
+    "note": "The pitch sits inside a small running track; without an ROI the blob search wandered off to a roof 50 m north-east. The north edge then fitted the carpet edge 10 m beyond the goal line: the real pair is 10.13 and 50.03, confirmed by the halfway line at 30.03 and penalty areas 5.9 m inside each.",
+    "edge_nudge_m": {
+      "W": 10.14
+    },
+    "measure": true
+  },
+  "SLIVE": {
+    "note": "Single artificial pitch at AFK Slivenec; found on defaults.",
+    "measure": true
+  },
   "STER1": {
     "roi_m": [
       -42,
@@ -226,6 +499,26 @@
       "S": 7.59
     }
   },
+  "STOD": {
+    "roi_m": [
+      -36,
+      46,
+      -20,
+      20
+    ],
+    "pitch_m": [
+      0.22,
+      45.77,
+      0.27,
+      26.52
+    ],
+    "note": "The carpet runs 30 m east past the pitch and the pitch's own halfway line cuts the turf blob in two, so the detector sees a fragment -- the western half, goal line to halfway -- rather than a pitch. That fragment does give the angle and the width; the rectangle here extends it east by its own length to the far goal line, and the fit then settles it onto the paint.",
+    "measure": true
+  },
+  "TEMPO": {
+    "note": "Single artificial pitch at FC Tempo; found on defaults.",
+    "measure": true
+  },
   "UJEZD": {
     "roi_m": [
       -18,
@@ -235,5 +528,13 @@
     ],
     "note": "Our training pitch at Ujezd (Sokol, below Petrin). Not a PSMF venue; measured for comparison.",
     "layer": 272
+  },
+  "ZABEH": {
+    "note": "Single artificial pitch at the Ovcin centre; found on defaults.",
+    "measure": true
+  },
+  "ZAK": {
+    "note": "Single artificial pitch at TJ Sokol Vysocany; found on defaults.",
+    "measure": true
   }
 }

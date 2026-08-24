@@ -102,6 +102,10 @@ than buried in tuned thresholds:
   bright kerb sits exactly where the search would otherwise land.
 * `goal_flush` -- which end the marked cross-pitches start from. Peak strength
   alone picks the wrong pair at Sterboholy.
+* `pitch_m` -- the pitch rectangle itself, measured, for the two grounds where
+  no search can find it: Mikulova's four pitches are laid out two-by-two, and
+  Stodulky's turf blob comes back as a fragment because its halfway line cuts
+  the carpet in two.
 * `section_edges_m` -- the cross-pitch boundaries as measured off the imagery,
   for the ground where no fit can find them. At Prazacka the parent's own
   markings are twice as bright as the cross-pitch ones, so any search that can

@@ -568,6 +568,28 @@ def divisions_from_edges(rect, edges_m, res):
             "size": (w, h)}
 
 
+def rect_from_pitch_m(rect, pitch_m, res):
+    """Build a pitch rectangle from measured bounds along the parent's axes.
+
+    The last resort, for the two grounds where no search can find the pitch.
+    Mikulova marks four pitches in two columns and two rows on one full-size
+    field, which is two-dimensional and so beyond `sections`; Stodulky's carpet
+    runs 30 m past the pitch and its halfway line splits the turf blob, leaving
+    a fragment rather than a field to divide. Both are written down instead, as
+    [x_lo, x_hi, y_lo, y_hi] in metres from the parent rectangle's low corner,
+    the coordinates `diagnose.py` and the line probes report. `fit_painted` then
+    still settles the result onto the paint, so these are a starting point, not
+    the final answer.
+    """
+    (cx, cy), (w, h), ang = rect
+    x0, x1, y0, y1 = [m / res for m in pitch_m]
+    lx, ly = cx - w / 2.0, cy - h / 2.0
+    c_rot = np.array([[[lx + (x0 + x1) / 2.0, ly + (y0 + y1) / 2.0]]], np.float32)
+    Minv = cv2.invertAffineTransform(cv2.getRotationMatrix2D((cx, cy), ang, 1.0))
+    c = cv2.transform(c_rot, Minv).reshape(2)
+    return ((float(c[0]), float(c[1])), (x1 - x0, y1 - y0), ang)
+
+
 def find_goal_lines(white, div, res, sep_m=(42.0, 50.0), flush=None):
     """Find the cross-pitch goal lines: a pair of white lines ~45 m apart.
 
@@ -785,6 +807,8 @@ def detect(img, geo, roi_m, cfg):
         "kind": "whole_pitch",
     }
     n = cfg.get("sections")
+    if cfg.get("pitch_m"):
+        n = None                        # an explicit rectangle, not a section
     if n:
         # numbered cross-pitches: the parent's long side splits n ways, each
         # section plays across the parent's width
@@ -797,6 +821,9 @@ def detect(img, geo, roi_m, cfg):
                                      for a, b in cv2.boxPoints(r)] for r in secs]
         target = secs[idx - 1]
         cand["section_order"] = f'section 1 at the {cfg.get("first_end", "W")} end'
+    elif cfg.get("pitch_m"):
+        target = rect_from_pitch_m(best["rect"], cfg["pitch_m"], geo["res"])
+        cand["pitch_src"] = "rectangle measured by hand (overrides.json)"
     else:
         target = best["rect"]
 

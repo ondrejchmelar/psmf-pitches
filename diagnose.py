@@ -51,7 +51,10 @@ def diagnose(code, venues, overrides, meas, res, half):
         print(f"{code}: no fit")
         return
     img, geo = M.fetch_crop(v["lat"], v["lon"], half, res, code, layer=cfg.get("layer"))
-    best, _, _ = M.measure_roi(img, geo, cfg["roi_m"])
+    # same default as measure_pitches.main(): a venue needs no override to be
+    # looked at, which matters when you are working through a backlog of them
+    roi = cfg.get("roi_m", [-half, half, -half, half])
+    best, _, _ = M.measure_roi(img, geo, roi)
     (pcx, pcy), (pw, ph), turf_ang = best["rect"]
     # Profile in the frame of the *paint*, not of the turf carpet. At
     # Sterboholy the markings sit 0.7 deg off the carpet, which is half a metre
