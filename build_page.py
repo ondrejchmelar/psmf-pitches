@@ -18,6 +18,9 @@ from datetime import date
 from pathlib import Path
 
 import cv2
+import numpy as np
+
+import measure_pitches as M
 
 ROOT = Path(__file__).parent
 ms = json.loads((ROOT / "out/measurements.json").read_text("utf-8"))
@@ -64,11 +67,16 @@ for code, m in ms.items():
     v = m.get("venue", {})
     label, cls, text = boots(code)
     l, w = round(c["play_l_m"]), round(c["play_w_m"])
+    # the centre of the pitch we drew, not of the parent field: on a ground with
+    # four of them, that is the difference between finding it and hunting
+    pts = np.array(c["play_rect_px"], np.float32)
+    lon, lat = M.px_to_lonlat((pts[:, 0].mean(), pts[:, 1].mean()), m["geo"])
     V[code] = {
         "code": code, "venue": v.get("name", code), "l": l, "w": w, "area": l * w,
         "exact": f'{c["play_l_m"]} x {c["play_w_m"]}',
         "kind": c.get("kind", ""), "capture": m.get("geo", {}).get("capture", "?"),
         "boots": label, "bootsClass": cls, "bootsText": text,
+        "lat": round(lat, 6), "lon": round(lon, 6),
         "note": (ov.get(code) or {}).get("note", ""),
         "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
     }
@@ -203,6 +211,10 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
   text-transform:uppercase; color:var(--faint); }
 .conf.low { color:var(--away); }
 .meta { margin:2px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.nav { font-size:12.5px; text-decoration:none; border-bottom:1px solid currentColor; }
+.nav:hover { color:var(--ink); }
+.nav span { display:block; border:0; color:var(--faint); font:400 11px/1.4
+  ui-monospace,SFMono-Regular,Menlo,monospace; }
 .empty { color:var(--faint); font-size:14px; }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }
@@ -221,6 +233,25 @@ function bootsTag(v) {
   return v.boots ? `<span class="boots ${v.bootsClass}">${esc(v.boots)}</span>` : '';
 }
 
+// Where a tap on the coordinates should land. Android and iOS hand them to
+// whatever navigation app is installed; a desktop has no such handler, so it
+// gets mapy.com, which is the one people here actually use.
+const ua = navigator.userAgent || '';
+const isAndroid = /Android/i.test(ua);
+const isIOS = /iPad|iPhone|iPod/i.test(ua) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function mapHref(v) {
+  const q = encodeURIComponent(v.venue + ' ' + v.code);
+  if (isAndroid) return `geo:${v.lat},${v.lon}?q=${v.lat},${v.lon}(${q})`;
+  if (isIOS) return `https://maps.apple.com/?ll=${v.lat},${v.lon}&q=${q}`;
+  return `https://mapy.com/zakladni?source=coor&id=${v.lon},${v.lat}` +
+         `&x=${v.lon}&y=${v.lat}&z=18`;
+}
+function mapLink(v) {
+  return `<a class="nav" href="${mapHref(v)}" target="_blank" rel="noopener noreferrer"
+    >Otevřít v mapě<span>${v.lat.toFixed(5)}, ${v.lon.toFixed(5)}</span></a>`;
+}
+
 function card(v, sub) {
   const kind = v.kind.indexOf('section') === 0
     ? `hřiště ${v.kind.split('_')[1]} ze ${v.kind.split('_')[3]}` : 'celé hřiště';
@@ -233,7 +264,7 @@ function card(v, sub) {
       </header>
       <div class="bar"><i style="width:${(100 * v.area / mx).toFixed(1)}%"></i><span>${v.area} m&sup2;</span></div>
       ${sub || ''}
-      <p class="meta">${bootsTag(v)}</p>
+      <p class="meta">${bootsTag(v)}${mapLink(v)}</p>
       <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
     </div></article>`;
 }
