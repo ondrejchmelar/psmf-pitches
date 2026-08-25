@@ -84,7 +84,9 @@ def colours(text):
             piece = piece.strip()
             hexs = next((h for stem, h in COLOUR_STEMS if piece.startswith(stem)), None)
             if hexs:
-                out.append(_shade(hexs, factor) if factor != 1.0 else hexs)
+                h = _shade(hexs, factor) if factor != 1.0 else hexs
+                if h not in out:      # "bílo-zelená, zelená" is two colours, not three
+                    out.append(h)
     return out[:3]
 
 
@@ -288,6 +290,8 @@ h2 .kit i { width:11px; }
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
 tr.warn td { background:color-mix(in srgb, var(--away) 9%, transparent); }
 .pin { display:inline-flex; vertical-align:-3px; margin-left:5px; color:var(--faint); }
+/* leading the venue column, so the pins line up down the table */
+.pin.lead { margin:0 7px 0 0; }
 .pin:hover { color:var(--accent); }
 .empty { color:var(--faint); font-size:14px; }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
@@ -325,10 +329,10 @@ const PIN = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
   '<path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z' +
   'm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>';
 
-function mapLink(v) {
+function mapLink(v, cls) {
   const t = `Otevřít ${esc(v.venue)} v mapě`;
-  return `<a class="pin" href="${mapHref(v)}" target="_blank" rel="noopener noreferrer"
-    title="${t}" aria-label="${t}">${PIN}</a>`;
+  return `<a class="pin${cls ? ' ' + cls : ''}" href="${mapHref(v)}" target="_blank"
+    rel="noopener noreferrer" title="${t}" aria-label="${t}">${PIN}</a>`;
 }
 
 function card(v, sub) {
@@ -393,7 +397,7 @@ function renderTeam(i) {
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td>${esc(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">převlékáme</span>' : ''}</td>
-      <td>${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code>${v ? mapLink(v) : ''}</td>
+      <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
       <td>${v ? bootsTag(v) : ''}</td>
