@@ -516,7 +516,7 @@ function showClear() { clearBtn.hidden = !input.value; }
 function choose(i) {
   input.value = label(D.teams[i]);
   renderTeam(i);
-  setParam(D.teams[i]);
+  setParam(D.teams[i], true);
   closeList();
   showClear();
 }
@@ -524,7 +524,7 @@ function choose(i) {
 clearBtn.addEventListener('click', () => {
   input.value = '';
   renderTeam(null);
-  setParam(null);
+  setParam(null, true);
   closeList();
   showClear();
   input.focus();
@@ -544,7 +544,7 @@ sugg.addEventListener('mousedown', e => {          // before blur
 });
 input.addEventListener('input', () => {
   showClear();
-  if (!input.value.trim()) { renderTeam(null); setParam(null); closeList(); return; }
+  if (!input.value.trim()) { renderTeam(null); setParam(null, true); closeList(); return; }
   openList(input.value);
 });
 input.addEventListener('keydown', e => {
@@ -571,14 +571,31 @@ const lookup = v => {
 };
 
 // The chosen team lives in the URL, so a link shares the view rather than the
-// page. Written with replaceState: nothing here should become a back step.
-function setParam(t) {
+// page, and each change is a history entry so Back returns to the team you were
+// looking at. Only a deliberate pick or a clear gets here -- typing to filter
+// does not touch the URL -- so none of these entries is one you did not ask for.
+function setParam(t, push) {
   try {
     const u = new URL(location.href);
     if (t) u.searchParams.set('team', label(t)); else u.searchParams.delete('team');
-    history.replaceState(null, '', u);
+    if (u.href === location.href) return;
+    if (push) history.pushState(null, '', u); else history.replaceState(null, '', u);
   } catch (e) { /* file:// and the like */ }
 }
+
+function showTeam(i) {
+  input.value = i === null ? '' : label(D.teams[i]);
+  renderTeam(i);
+  closeList();
+  showClear();
+}
+
+// Back and forward move between the teams you looked at.
+window.addEventListener('popstate', () => {
+  let i = null;
+  try { i = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
+  showTeam(i);
+});
 
 renderAll();
 let start = null;
