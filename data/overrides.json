@@ -10,26 +10,6 @@
     "note": "Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.",
     "layer": 284
   },
-  "ASTR1": {
-    "pitch_m": [
-      1.66,
-      41.56,
-      4.44,
-      24.34
-    ],
-    "note": "Court 1 of 2 at Astra, the western and so the one nearer the hall ('c. 1 blize hale'; confirmed by longitude). Two futsal courts side by side, each a regulation 39.9 x 19.9 m with 5.25 m between them. The parent's long axis runs north-south here, so splitting its other axis put the rectangle across both courts, 90 degrees out. diagnose.py reports a stronger line about a metre outside the east edge: that is the surround, not the court line, which reads 2-3x.",
-    "measure": true
-  },
-  "ASTR2": {
-    "pitch_m": [
-      1.66,
-      41.56,
-      29.59,
-      49.49
-    ],
-    "note": "Court 2 of 2 at Astra, the eastern one. See the ASTR1 note on the orientation and on the surround outshining the court line.",
-    "measure": true
-  },
   "BECH": {
     "roi_m": [
       -28,

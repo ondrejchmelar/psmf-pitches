@@ -230,7 +230,12 @@ why `diagnose.py` profiles at the *fitted* angle and `_apply_goals` emits the
 rectangle at it too. Before, the JSON reported the refined angle beside a
 rectangle that was not at it.
 
-Every venue in the PSMF directory is measured, not just the ones we play:
+Astra Zahradní město (`ASTR1`, `ASTR2`) is futsal only, by the venue's own
+note, and no Hanspaulská fixture is played there. It is dropped for the same
+reason as Děkanka hala and Slavia hala: this is a football league.
+
+Every venue in the PSMF directory that the league plays on is measured, not
+just the ones we play:
 41 grounds plus our training pitch, 162 of their 165 edges landing within
 0.25 m of a painted line. The three that do not are Hanspaulka's north edge
 (the teal kerb, long-standing and correct as measured) and Astra's two east
