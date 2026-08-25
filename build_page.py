@@ -396,7 +396,7 @@ function renderTeam(i) {
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td>${esc(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
-        ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">převlékáme</span>' : ''}</td>
+        ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
@@ -431,7 +431,7 @@ function renderTeam(i) {
       <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
       <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
-    ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — převlékáme my.</p>` : ''}
+    ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
     <h2>Hřiště tohoto týmu &middot; od největšího</h2>
