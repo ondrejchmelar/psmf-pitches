@@ -42,12 +42,59 @@ def team_urls(season: str, division: str) -> list[tuple[str, str]]:
     return sorted(set(found))
 
 
+def dress_colours(season: str, division: str) -> dict[str, str]:
+    """Team -> jersey colour, from a division's `dresy` page.
+
+    One table, `Tym | Barva dresu`, in the league's own words: "bila, cerna",
+    "modro-zluta", "tmave modra". Kept as written and parsed for display later,
+    because the wording is the thing a referee reads off the team sheet.
+    """
+    html = S.get(f"{BASE}/souteze/{season}/{division}/dresy/")
+    out = {}
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S | re.I):
+        cells = [S.strip_tags(c) for c in
+                 re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", tr, re.S | re.I)]
+        cells = [c for c in cells if c]
+        if len(cells) >= 2 and cells[0].lower() != "tým":
+            out[S.slug(cells[0])] = cells[1]
+    return out
+
+
+def add_colours(season: str, pause: float) -> None:
+    """Fold jersey colours into an existing data/season.json."""
+    path = DATA / "season.json"
+    data = json.loads(path.read_text("utf-8"))
+    by_div: dict[str, dict] = {}
+    hit = 0
+    for t in data["teams"]:
+        div = t["division"]
+        if div not in by_div:
+            try:
+                by_div[div] = dress_colours(season, div)
+            except Exception as e:                   # noqa: BLE001
+                print(f"  {div}: {e}", file=sys.stderr)
+                by_div[div] = {}
+            time.sleep(pause)
+        c = by_div[div].get(S.slug(t["name"]))
+        if c:
+            t["colours"] = c
+            hit += 1
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), "utf-8")
+    print(f"-> {path}: colours for {hit} of {len(data['teams'])} teams", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", default=SEASON)
     ap.add_argument("--pause", type=float, default=0.4, help="seconds between requests")
     ap.add_argument("--limit", type=int, help="stop after N teams (for a dry run)")
+    ap.add_argument("--colours-only", action="store_true",
+                    help="only refresh jersey colours in an existing season.json")
     args = ap.parse_args()
+
+    if args.colours_only:
+        add_colours(args.season, args.pause)
+        return
 
     divisions = division_slugs(args.season)
     print(f"{args.season}: {len(divisions)} division pages", file=sys.stderr)

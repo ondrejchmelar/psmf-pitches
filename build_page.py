@@ -13,7 +13,7 @@ team in the browser. Two consequences worth knowing before editing:
 * docs/ is what GitHub Pages serves, so the page is written straight there. It
   carries its imagery inline, so index.html on its own is the whole site.
 """
-import base64, json
+import base64, json, re
 from datetime import date
 from pathlib import Path
 
@@ -41,6 +41,51 @@ def jpeg_uri(path, width=IMG_W, q=IMG_Q):
         img = cv2.resize(img, (width, int(h * width / w)), interpolation=cv2.INTER_AREA)
     ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, q])
     return "data:image/jpeg;base64," + base64.b64encode(buf.tobytes()).decode()
+
+
+# ---------------------------------------------------------------- jerseys
+# The league writes jersey colours in Czech words -- "bila, cerna",
+# "modro-zluta", "tmave modra" -- so they have to be turned into something a
+# swatch can show. Stems, because the compound halves are inflected:
+# "modro-bila" is modra + bila.
+COLOUR_STEMS = [
+    ("bíl", "#F2F2F0"), ("čern", "#1D1D1D"), ("modr", "#2062C4"), ("žlut", "#F2C200"),
+    ("červen", "#D32C2C"), ("zelen", "#2E8B3D"), ("oranžov", "#EF7D1A"),
+    ("růžov", "#E75AA0"), ("fialov", "#7B4FB5"), ("šed", "#9096A0"),
+    ("zlat", "#C9A227"), ("rud", "#B01B1B"), ("vínov", "#7B1E3A"), ("bordó", "#7B1E3A"),
+    ("hněd", "#7A5230"), ("tyrkys", "#1FB6B0"), ("limetk", "#A8D420"),
+    ("mentol", "#8FE3C4"), ("losos", "#F08A70"), ("pistáci", "#A7C957"),
+    ("maskáč", "#6B7A4B"),
+]
+
+
+def _shade(hexstr, factor):
+    r, g, b = (int(hexstr[i:i + 2], 16) for i in (1, 3, 5))
+    if factor < 1:                                    # tmavě
+        r, g, b = (int(v * factor) for v in (r, g, b))
+    else:                                             # světle
+        m = factor - 1
+        r, g, b = (int(v + (255 - v) * m) for v in (r, g, b))
+    return f"#{r:02X}{g:02X}{b:02X}"
+
+
+def colours(text):
+    """Czech colour wording -> the hex swatches to draw, in the order written."""
+    out = []
+    for part in re.split(r"[,/]| a ", (text or "").lower()):
+        part = part.strip()
+        if not part:
+            continue
+        factor = 1.0
+        for word, f in (("tmavě ", 0.62), ("tmavo", 0.62), ("světle ", 1.45)):
+            if part.startswith(word):
+                part, factor = part[len(word):], f
+        for piece in part.split("-"):
+            piece = piece.strip()
+            hexs = next((h for stem, h in COLOUR_STEMS if piece.startswith(stem)), None)
+            if hexs:
+                out.append(_shade(hexs, factor) if factor != 1.0 else hexs)
+    return out[:3]
 
 
 def boots(code):
@@ -93,7 +138,8 @@ for t in season.get("teams", []):
     fx = [{"r": f["round"], "d": f["date"], "t": f["time"], "c": f["venue_code"],
            "o": f["opponent"], "h": f["home"]} for f in t["fixtures"]]
     if fx:
-        teams.append({"name": t["name"], "div": t["division"].upper(), "fx": fx})
+        teams.append({"name": t["name"], "div": t["division"].upper(), "fx": fx,
+                      "kit": t.get("colours", ""), "sw": colours(t.get("colours", ""))})
 teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 
 # No team is selected on load. The page is for the league, so it opens on the
@@ -232,6 +278,15 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
   text-transform:uppercase; color:var(--faint); }
 .conf.low { color:var(--away); }
 .meta { margin:2px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.kit { display:inline-flex; vertical-align:-2px; margin-left:6px; border-radius:2px;
+  overflow:hidden; border:1px solid var(--rule); height:13px; }
+.kit i { display:block; width:9px; height:100%; }
+h2 .kit { height:15px; }
+h2 .kit i { width:11px; }
+.clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
+  color:var(--away); border:1px solid currentColor; margin-left:8px; }
+tr.warn td { background:color-mix(in srgb, var(--away) 9%, transparent); }
 .pin { display:inline-flex; vertical-align:-3px; margin-left:5px; color:var(--faint); }
 .pin:hover { color:var(--accent); }
 .empty { color:var(--faint); font-size:14px; }
@@ -293,6 +348,32 @@ function card(v, sub) {
     </div></article>`;
 }
 
+function kit(sw, kitText) {
+  if (!sw || !sw.length) return '';
+  return `<span class="kit" title="${esc(kitText)}">` +
+    sw.map(c => `<i style="background:${c}"></i>`).join('') + '</span>';
+}
+
+// Colours clash when the two first-choice shirts are close enough that a
+// referee would send one side to change. Distance in plain RGB is crude but
+// legible, and the call it makes -- navy against black, red against maroon --
+// is the call people make on the pitch. 120 of a possible 441.
+function rgb(h) {
+  return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+}
+function clashes(a, b) {
+  if (!a || !b || !a.length || !b.length) return false;
+  const [x, y] = [rgb(a[0]), rgb(b[0])];
+  return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]) < 120;
+}
+// Opponents are named, not linked, so match them by name; a name shared across
+// divisions is ambiguous, and an ambiguous kit is worse than none.
+const kitByName = new Map();
+D.teams.forEach(t => {
+  const k = t.name.toLowerCase();
+  kitByName.set(k, kitByName.has(k) ? null : t);
+});
+
 function renderTeam(i) {
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
@@ -300,12 +381,18 @@ function renderTeam(i) {
     t ? 'Všechna hřiště v adresáři · od největšího' : 'Všechna hřiště · od největšího';
   if (!t) { host.innerHTML = ''; return; }
 
+  let warnings = 0;
   const rows = t.fx.map(f => {
     const v = D.venues[f.c];
-    return `<tr>
+    const opp = kitByName.get((f.o || '').toLowerCase());
+    // we change when the colours clash and we are the visiting side
+    const warn = !f.h && opp && clashes(t.sw, opp.sw);
+    if (warn) warnings++;
+    return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
-      <td>${esc(f.o)}</td>
+      <td>${esc(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
+        ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">převlékáme</span>' : ''}</td>
       <td>${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
@@ -335,11 +422,12 @@ function renderTeam(i) {
       <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
     </div>
     <hr class="rule">
-    <h2>${esc(t.name)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
+    <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
     <div class="scroll"><table>
       <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
       <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
+    ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — převlékáme my.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
     <h2>Hřiště tohoto týmu &middot; od největšího</h2>

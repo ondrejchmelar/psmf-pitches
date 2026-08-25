@@ -26,7 +26,16 @@ client-side from one JSON blob because the file is mostly data-URI imagery —
 rendering the cards in Python would repeat each venue's image once per team
 that plays there. `scrape_season.py` is ~720 requests, one per team, because a
 division page carries only a window of the schedule; run it rarely and leave
-the pause in.
+the pause in. `--colours-only` refreshes just the jersey colours, which is one
+request per division rather than per team.
+
+Jersey colours come from each division's `dresy` page, in the league's own
+words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
+build_page.py turns them into swatches by matching stems, since the halves of a
+compound are inflected. A clash is called on the two first-choice shirts alone,
+by RGB distance under 120 of a possible 441: crude, but it makes the calls
+people make on the pitch (navy against black, red against maroon). Only away
+fixtures are flagged, because that is the side that changes.
 
 ## New season, from scratch
 
