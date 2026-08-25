@@ -122,10 +122,8 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
   text-transform:uppercase; color:var(--faint); }
 .conf.low { color:var(--away); }
 .meta { margin:2px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-.nav { font-size:12.5px; text-decoration:none; border-bottom:1px solid currentColor; }
-.nav:hover { color:var(--ink); }
-.nav span { display:block; border:0; color:var(--faint); font:400 11px/1.4
-  ui-monospace,SFMono-Regular,Menlo,monospace; }
+.pin { display:inline-flex; vertical-align:-3px; margin-left:5px; color:var(--faint); }
+.pin:hover { color:var(--accent); }
 .empty { color:var(--faint); font-size:14px; }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }
@@ -180,7 +178,7 @@ vešlo 1.9&times;.</p>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
 zvlášť pro každé hřiště. Rozpisy a souřadnice hřišť z <a href="https://www.psmf.cz/">psmf.cz</a>.
 Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj.
-Vygenerováno 24. 8. 2026.
+Vygenerováno 25. 8. 2026.
 </footer>
 </div>
 
@@ -209,9 +207,14 @@ function mapHref(v) {
   return `https://mapy.com/zakladni?source=coor&id=${v.lon},${v.lat}` +
          `&x=${v.lon}&y=${v.lat}&z=18`;
 }
+const PIN = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
+  '<path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z' +
+  'm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>';
+
 function mapLink(v) {
-  return `<a class="nav" href="${mapHref(v)}" target="_blank" rel="noopener noreferrer"
-    >Otevřít v mapě<span>${v.lat.toFixed(5)}, ${v.lon.toFixed(5)}</span></a>`;
+  const t = `Otevřít ${esc(v.venue)} v mapě`;
+  return `<a class="pin" href="${mapHref(v)}" target="_blank" rel="noopener noreferrer"
+    title="${t}" aria-label="${t}">${PIN}</a>`;
 }
 
 function card(v, sub) {
@@ -221,12 +224,12 @@ function card(v, sub) {
     <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem" loading="lazy"></figure>
     <div class="body">
       <header class="ch">
-        <h3>${esc(v.venue)} <code>${esc(v.code)}</code></h3>
+        <h3>${esc(v.venue)} <code>${esc(v.code)}</code>${mapLink(v)}</h3>
         <p class="d">${v.l} &times; ${v.w} m</p>
       </header>
       <div class="bar"><i style="width:${(100 * v.area / mx).toFixed(1)}%"></i><span>${v.area} m&sup2;</span></div>
       ${sub || ''}
-      <p class="meta">${bootsTag(v)}${mapLink(v)}</p>
+      ${v.boots ? `<p class="meta">${bootsTag(v)}</p>` : ''}
       <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
     </div></article>`;
 }
