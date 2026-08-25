@@ -393,7 +393,7 @@ function renderTeam(i) {
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td>${esc(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">převlékáme</span>' : ''}</td>
-      <td>${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
+      <td>${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code>${v ? mapLink(v) : ''}</td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
       <td>${v ? bootsTag(v) : ''}</td>
