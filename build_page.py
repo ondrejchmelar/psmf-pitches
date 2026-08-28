@@ -318,6 +318,20 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .kit i { display:block; width:9px; height:100%; }
 h2 .kit { height:15px; }
 h2 .kit i { width:11px; }
+.more { font:600 11px/17px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
+  padding:0 7px; cursor:pointer; }
+.more:hover, .more.open { color:var(--ink); border-color:var(--muted); }
+tr.prog td { background:var(--sunk); padding:10px 14px 12px; }
+.programme { list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+.programme li { display:grid; grid-template-columns:auto 1fr auto auto; gap:10px;
+  align-items:baseline; font-size:14px; }
+.programme li.self { color:var(--accent); font-weight:600; }
+.programme b { font:600 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; }
+.programme i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.programme a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
+.programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -421,6 +435,64 @@ D.teams.forEach(t => {
   const k = t.name.toLowerCase();
   kitByName.set(k, kitByName.has(k) ? null : t);
 });
+
+// ---- what else is on at the same ground ------------------------------------
+// Built here rather than shipped: every match is already in the blob twice,
+// once from each side, so the index costs a pass over the fixtures instead of
+// another 400 kB of JSON. Grouping is by venue name, which puts Pražačka 1-3
+// and Mikulova 1-4 together and keeps Běchovice 2 apart from SC Běchovice --
+// same name, one ground; different name, different areál.
+const nameToIdx = new Map();
+D.teams.forEach((t, i) => {
+  const k = t.name.toLowerCase();
+  nameToIdx.set(k, nameToIdx.has(k) ? null : i);
+});
+const minutes = t => {
+  const m = /(\d{1,2}):(\d{2})/.exec(t || '');
+  return m ? +m[1] * 60 + +m[2] : 0;
+};
+const ground = c => (D.venues[c] ? D.venues[c].venue : c);
+
+const programme = new Map();          // "ground|date" -> [match]
+{
+  const seen = new Set();
+  D.teams.forEach(t => t.fx.forEach(f => {
+    const home = f.h ? t.name : f.o, away = f.h ? f.o : t.name;
+    const id = `${f.d}|${f.t}|${f.c}|${home}|${away}`;
+    if (seen.has(id)) return;
+    seen.add(id);
+    const key = `${ground(f.c)}|${f.d}`;
+    if (!programme.has(key)) programme.set(key, []);
+    programme.get(key).push({ tm: f.t, c: f.c, home, away, div: t.div, id });
+  }));
+  programme.forEach(list => list.sort((a, b) => minutes(a.tm) - minutes(b.tm)));
+}
+
+function teamLink(name) {
+  const i = nameToIdx.get((name || '').toLowerCase());
+  return (i === undefined || i === null)
+    ? esc(name) : `<a href="#" class="tlink" data-i="${i}">${esc(name)}</a>`;
+}
+
+function programmeRows(f, t, cols) {
+  const list = programme.get(`${ground(f.c)}|${f.d}`) || [];
+  if (list.length < 2) return { chip: '', row: '' };
+  const mine = `${f.d}|${f.t}|${f.c}|${f.h ? t.name : f.o}|${f.h ? f.o : t.name}`;
+  const items = list.map(mm => {
+    const self = mm.id === mine;
+    return `<li${self ? ' class="self"' : ''}>
+      <b>${esc(mm.tm)}</b>
+      <span>${self ? esc(mm.home) + ' – ' + esc(mm.away)
+                   : teamLink(mm.home) + ' – ' + teamLink(mm.away)}</span>
+      <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></li>`;
+  }).join('');
+  return {
+    chip: `<button type="button" class="more" data-prog="${esc(f.d)}|${esc(f.c)}"
+             title="Další zápasy na tomto hřišti">+${list.length - 1}</button>`,
+    row: `<tr class="prog" hidden data-prog="${esc(f.d)}|${esc(f.c)}"><td colspan="${cols}">
+            <ul class="programme">${items}</ul></td></tr>`,
+  };
+}
 
 // ---- calendar export -------------------------------------------------------
 // Times are written without a zone, on purpose. Every match is in Prague, and a
@@ -535,6 +607,7 @@ function renderTeam(i) {
     // we change when the colours clash and we are the visiting side
     const warn = !f.h && opp && clashes(t.sh, opp.sh);
     if (warn) warnings++;
+    const prog = programmeRows(f, t, 8);
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
@@ -544,7 +617,8 @@ function renderTeam(i) {
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
       <td>${v ? bootsTag(v) : ''}</td>
-    </tr>`;
+      <td class="num">${prog.chip}</td>
+    </tr>${prog.row}`;
   }).join('');
 
   const codes = [];
@@ -575,7 +649,8 @@ function renderTeam(i) {
     </div>
     <div class="scroll"><table>
       <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
-      <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th></tr></thead>
+      <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th>
+      <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
@@ -584,6 +659,24 @@ function renderTeam(i) {
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
+
+  host.addEventListener('click', e => {
+    const more = e.target.closest('.more');
+    if (more) {
+      const row = host.querySelector(
+        `tr.prog[data-prog="${CSS.escape(more.dataset.prog)}"]`);
+      if (row) { row.hidden = !row.hidden; more.classList.toggle('open', !row.hidden); }
+      return;
+    }
+    const link = e.target.closest('.tlink');
+    if (link) {
+      e.preventDefault();
+      const i = Number(link.dataset.i);
+      showTeam(i);
+      setParam(D.teams[i], true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
 }
 
 function renderAll() {
