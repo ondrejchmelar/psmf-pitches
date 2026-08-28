@@ -34,10 +34,17 @@ request per division rather than per team.
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
 build_page.py turns them into swatches by matching stems, since the halves of a
-compound are inflected. A clash is called on the two first-choice shirts alone,
-by RGB distance under 120 of a possible 441: crude, but it makes the calls
-people make on the pitch (navy against black, red against maroon). Only away
-fixtures are flagged, because that is the side that changes.
+compound are inflected. The comma matters: the league writes the shirt
+first and the shorts after it, so "bílá, černá" is a white shirt over black
+shorts, while a hyphen describes one two-tone shirt, "bílo-červená". Only the
+shirt decides a clash — nobody is told apart by their shorts.
+
+A clash is RGB distance under 120 of a possible 441: crude, but it makes the
+calls people make on the pitch (navy against black, red against maroon). A
+two-tone shirt gets a second look — white-red against white-blue-yellow share
+their base but the second colour separates them, so that is not a clash, while
+plain white against white-blue still is, having no second colour to save it.
+Only away fixtures are flagged, because that is the side that changes.
 
 ## New season, from scratch
 

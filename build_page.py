@@ -69,10 +69,17 @@ def _shade(hexstr, factor):
     return f"#{r:02X}{g:02X}{b:02X}"
 
 
-def colours(text):
-    """Czech colour wording -> the hex swatches to draw, in the order written."""
+def colours(text, shirt_only=False):
+    """Czech colour wording -> the hex swatches to draw, in the order written.
+
+    The league writes the shirt first and the shorts after a comma -- "bílá,
+    černá" is a white shirt over black shorts -- while a hyphen describes one
+    two-tone shirt: "bílo-červená". Only the shirt decides whether two sides can
+    be told apart, so `shirt_only` stops at the first comma.
+    """
     out = []
-    for part in re.split(r"[,/]| a ", (text or "").lower()):
+    parts = re.split(r"[,/]| a ", (text or "").lower())
+    for part in (parts[:1] if shirt_only else parts):
         part = part.strip()
         if not part:
             continue
@@ -141,7 +148,9 @@ for t in season.get("teams", []):
            "o": f["opponent"], "h": f["home"]} for f in t["fixtures"]]
     if fx:
         teams.append({"name": t["name"], "div": t["division"].upper(), "fx": fx,
-                      "kit": t.get("colours", ""), "sw": colours(t.get("colours", ""))})
+                      "kit": t.get("colours", ""),
+                      "sw": colours(t.get("colours", "")),               # badge
+                      "sh": colours(t.get("colours", ""), True)})        # shirt
 teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 
 # No team is selected on load. The page is for the league, so it opens on the
@@ -358,17 +367,28 @@ function kit(sw, kitText) {
     sw.map(c => `<i style="background:${c}"></i>`).join('') + '</span>';
 }
 
-// Colours clash when the two first-choice shirts are close enough that a
-// referee would send one side to change. Distance in plain RGB is crude but
-// legible, and the call it makes -- navy against black, red against maroon --
-// is the call people make on the pitch. 120 of a possible 441.
+// Two sides clash when a glance does not separate the shirts. Shorts are left
+// out of it -- they are the part after the comma, and nobody is told apart by
+// their shorts.
+//
+// Distance in plain RGB, under 120 of a possible 441: crude, but it makes the
+// calls people make on the pitch, navy against black and red against maroon.
+// A two-tone shirt gets a second look: white-red against white-blue-yellow
+// share their base, but the second colour separates them at any distance, so
+// that is not a clash. A plain shirt has no second colour to save it, so white
+// against white-blue still is.
 function rgb(h) {
   return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 }
+function apart(p, q) {
+  const [x, y] = [rgb(p), rgb(q)];
+  return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]) >= 120;
+}
 function clashes(a, b) {
   if (!a || !b || !a.length || !b.length) return false;
-  const [x, y] = [rgb(a[0]), rgb(b[0])];
-  return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]) < 120;
+  if (apart(a[0], b[0])) return false;
+  if (a.length > 1 && b.length > 1 && apart(a[1], b[1])) return false;
+  return true;
 }
 // Opponents are named, not linked, so match them by name; a name shared across
 // divisions is ambiguous, and an ambiguous kit is worse than none.
@@ -390,7 +410,7 @@ function renderTeam(i) {
     const v = D.venues[f.c];
     const opp = kitByName.get((f.o || '').toLowerCase());
     // we change when the colours clash and we are the visiting side
-    const warn = !f.h && opp && clashes(t.sw, opp.sw);
+    const warn = !f.h && opp && clashes(t.sh, opp.sh);
     if (warn) warnings++;
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
