@@ -24,6 +24,11 @@ import scrape_psmf as S
 BASE = S.BASE
 DATA = Path(__file__).parent / "data"
 SEASON = "2026-hanspaulska-liga-podzim"
+# The veteran leagues play the same grounds, so they cost only their fixtures.
+# Futsal is left out: it is played indoors, in halls no orthophoto can measure.
+ALSO = ("2026-veteranska-liga-podzim",
+        "2026-superveteranska-liga-podzim",
+        "2026-ultraveteranska-liga-podzim")
 
 
 def division_slugs(season: str) -> list[str]:
@@ -60,22 +65,22 @@ def dress_colours(season: str, division: str) -> dict[str, str]:
     return out
 
 
-def add_colours(season: str, pause: float) -> None:
+def add_colours(pause: float) -> None:
     """Fold jersey colours into an existing data/season.json."""
     path = DATA / "season.json"
     data = json.loads(path.read_text("utf-8"))
-    by_div: dict[str, dict] = {}
+    by_div: dict[tuple[str, str], dict] = {}
     hit = 0
     for t in data["teams"]:
-        div = t["division"]
-        if div not in by_div:
+        key = (t.get("comp", SEASON), t["division"])
+        if key not in by_div:
             try:
-                by_div[div] = dress_colours(season, div)
+                by_div[key] = dress_colours(*key)
             except Exception as e:                   # noqa: BLE001
-                print(f"  {div}: {e}", file=sys.stderr)
-                by_div[div] = {}
+                print(f"  {key}: {e}", file=sys.stderr)
+                by_div[key] = {}
             time.sleep(pause)
-        c = by_div[div].get(S.slug(t["name"]))
+        c = by_div[key].get(S.slug(t["name"]))
         if c:
             t["colours"] = c
             hit += 1
@@ -88,29 +93,34 @@ def main():
     ap.add_argument("--season", default=SEASON)
     ap.add_argument("--pause", type=float, default=0.4, help="seconds between requests")
     ap.add_argument("--limit", type=int, help="stop after N teams (for a dry run)")
+    ap.add_argument("--no-veterans", action="store_true",
+                    help="only the main league, skip the veteran competitions")
     ap.add_argument("--colours-only", action="store_true",
                     help="only refresh jersey colours in an existing season.json")
     args = ap.parse_args()
 
     if args.colours_only:
-        add_colours(args.season, args.pause)
+        add_colours(args.pause)
         return
 
-    divisions = division_slugs(args.season)
-    print(f"{args.season}: {len(divisions)} division pages", file=sys.stderr)
-
-    seen_teams: dict[str, dict] = {}
-    for i, div in enumerate(divisions, 1):
-        try:
-            urls = team_urls(args.season, div)
-        except requests.HTTPError as e:
-            print(f"  {div}: {e}", file=sys.stderr)
-            continue
-        for url, slug in urls:
-            seen_teams.setdefault(slug, {"slug": slug, "url": url, "division": div})
-        print(f"  [{i}/{len(divisions)}] {div}: {len(urls)} teams "
-              f"({len(seen_teams)} total)", file=sys.stderr)
-        time.sleep(args.pause)
+    comps = [args.season] + ([] if args.no_veterans else list(ALSO))
+    seen_teams: dict[tuple[str, str], dict] = {}
+    for comp in comps:
+        divisions = division_slugs(comp)
+        print(f"{comp}: {len(divisions)} division pages", file=sys.stderr)
+        for i, div in enumerate(divisions, 1):
+            try:
+                urls = team_urls(comp, div)
+            except requests.HTTPError as e:
+                print(f"  {div}: {e}", file=sys.stderr)
+                continue
+            for url, slug in urls:
+                seen_teams.setdefault((comp, slug),
+                                      {"slug": slug, "url": url, "division": div,
+                                       "comp": comp})
+            print(f"  [{i}/{len(divisions)}] {div}: {len(urls)} teams "
+                  f"({len(seen_teams)} total)", file=sys.stderr)
+            time.sleep(args.pause)
 
     teams, failed = [], []
     items = list(seen_teams.values())[: args.limit]
@@ -130,9 +140,9 @@ def main():
             print(f"  [{i}/{len(items)}] {name}: {len(fixtures)} fixtures", file=sys.stderr)
         time.sleep(args.pause)
 
-    out = {"season": args.season,
+    out = {"season": args.season, "competitions": comps,
            "source": f"{BASE}/souteze/{args.season}/",
-           "teams": sorted(teams, key=lambda t: S.slug(t["name"]))}
+           "teams": sorted(teams, key=lambda t: (S.slug(t["name"]), t["comp"]))}
     path = DATA / "season.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), "utf-8")
     codes = {f["venue_code"] for t in teams for f in t["fixtures"]}

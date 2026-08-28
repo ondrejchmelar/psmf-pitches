@@ -142,12 +142,27 @@ smallest = min(play.values(), key=lambda x: x["area"])
 largest = max(play.values(), key=lambda x: x["area"])
 
 # ---------------------------------------------------------------------- teams
+# Division names repeat across competitions -- there is a 3-B in three of them --
+# so the label carries the competition. The main league keeps a bare division,
+# which is what people call it and what already-shared links contain.
+COMP_TAG = (("superveteranska", "Super"), ("ultraveteranska", "Ultra"),
+            ("veteranska", "Vet"))
+
+
+def div_label(comp, division):
+    for key, tag in COMP_TAG:
+        if key in (comp or ""):
+            return f"{tag} {division.upper()}"
+    return division.upper()
+
+
 teams = []
 for t in season.get("teams", []):
     fx = [{"r": f["round"], "d": f["date"], "t": f["time"], "c": f["venue_code"],
            "o": f["opponent"], "h": f["home"]} for f in t["fixtures"]]
     if fx:
-        teams.append({"name": t["name"], "div": t["division"].upper(), "fx": fx,
+        teams.append({"name": t["name"],
+                      "div": div_label(t.get("comp"), t["division"]), "fx": fx,
                       "kit": t.get("colours", ""),
                       "sw": colours(t.get("colours", "")),               # badge
                       "sh": colours(t.get("colours", ""), True)})        # shirt
@@ -636,13 +651,14 @@ html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 
 <div class="wrap">
 <div class="top">
-  <p class="eyebrow">PSMF &middot; Hanspaulsk&aacute; liga &middot; {season.get("season", "").replace("-", " ")}</p>
+  <p class="eyebrow">PSMF &middot; Hanspaulsk&aacute;, veter&aacute;nsk&aacute;, super a ultra &middot; podzim 2026</p>
   <button type="button" class="theme" id="theme" aria-live="polite">motiv</button>
 </div>
 <h1>Všechna hřiště v lize, změřená ze vzduchu</h1>
-<p class="lede">Rozměry vyznačených hřišť na všech {len(play)} hřištích z adresáře
-PSMF, proměřené podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel.
-Vyberte tým a uvidíte, na čem letos hraje.</p>
+<p class="lede">Rozměry vyznačených hřišť na všech {len(play)} hřištích, na kterých
+se hraje, proměřené podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na
+pixel. Vyberte tým a uvidíte, na čem letos hraje — Hanspaulská i všechny tři
+veteránské soutěže.</p>
 
 <hr class="rule">
 <div class="pick">

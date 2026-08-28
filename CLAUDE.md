@@ -26,9 +26,17 @@ so no entry is one the reader did not ask for. Our
 training pitch is measured but kept off the page — it is not a PSMF ground. It renders
 client-side from one JSON blob because the file is mostly data-URI imagery —
 rendering the cards in Python would repeat each venue's image once per team
-that plays there. `scrape_season.py` is ~720 requests, one per team, because a
+that plays there. `scrape_season.py` is ~940 requests, one per team, because a
 division page carries only a window of the schedule; run it rarely and leave
-the pause in. `--colours-only` refreshes just the jersey colours, which is one
+the pause in.
+
+It walks four competitions: the Hanspaulská plus the veteran, super-veteran and
+ultra-veteran leagues. They cost only their fixtures — every ground they play on
+was already measured for the main league, all 39 codes of it. Futsal is left
+out, being played in halls no orthophoto can see into. Division names repeat
+across competitions, so a label carries the competition ("Vet 3-B"); the main
+league keeps a bare division, which is what people call it and what
+already-shared `?team=` links contain. `--colours-only` refreshes just the jersey colours, which is one
 request per division rather than per team.
 
 Jersey colours come from each division's `dresy` page, in the league's own
