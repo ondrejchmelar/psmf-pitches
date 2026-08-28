@@ -131,6 +131,7 @@ for code, m in ms.items():
         "kind": c.get("kind", ""), "capture": m.get("geo", {}).get("capture", "?"),
         "boots": label, "bootsClass": cls, "bootsText": text,
         "lat": round(lat, 6), "lon": round(lon, 6),
+        "addr": (venues.get(code, {}) or {}).get("address", ""),
         "note": (ov.get(code) or {}).get("note", ""),
         "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
     }
@@ -252,6 +253,14 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
   border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
   white-space:nowrap; flex:none; }
 .theme:hover { color:var(--ink); border-color:var(--muted); }
+.h2row { display:flex; justify-content:space-between; align-items:center; gap:16px;
+  flex-wrap:wrap; margin-bottom:16px; }
+.h2row h2 { margin:0; }
+.ics { font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
+  white-space:nowrap; flex:none; }
+.ics:hover { color:var(--ink); border-color:var(--muted); }
 .sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
   max-height:320px; overflow-y:auto; background:var(--surface);
   border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
@@ -413,6 +422,105 @@ D.teams.forEach(t => {
   kitByName.set(k, kitByName.has(k) ? null : t);
 });
 
+// ---- calendar export -------------------------------------------------------
+// Times are written without a zone, on purpose. Every match is in Prague, and a
+// floating time means 19:15 stays 19:15 whatever the calendar's own zone is and
+// across the October clock change, which a UTC stamp would get wrong by an hour
+// for half the season.
+const SLOT_MIN = 75;                 // the league's slot: 19:15, 20:30, 21:45...
+
+function icsEscape(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/[;,]/g, m => '\\' + m)
+    .replace(/\r?\n/g, '\\n');
+}
+// RFC 5545 wants lines folded at 75 octets, continued with a leading space.
+function icsFold(line) {
+  // Count octets, not characters: every Czech diacritic is two of them, and
+  // counting characters left a third of the lines over the limit.
+  const enc = new TextEncoder();
+  if (enc.encode(line).length <= 73) return line;
+  const out = [];
+  let cur = '', n = 0;
+  for (const ch of line) {
+    const b = enc.encode(ch).length;
+    if (n + b > 73) { out.push(cur); cur = ''; n = 0; }
+    cur += ch; n += b;
+  }
+  out.push(cur);
+  return out.join('\r\n ');            // a continuation is 1 + 73 octets
+}
+
+// A UID must stay the same across exports, so re-importing updates an event
+// rather than duplicating it -- and must be plain ASCII to survive the trip.
+function asciiId(s) {
+  return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function icsDate(d, t) {
+  // "Čt 1.10.26" + "20:30" -> 20261001T203000
+  const m = /(\d{1,2})\.(\d{1,2})\.(\d{2,4})/.exec(d || '');
+  const hm = /(\d{1,2}):(\d{2})/.exec(t || '');
+  if (!m || !hm) return null;
+  const yr = m[3].length === 2 ? 2000 + +m[3] : +m[3];
+  const p = n => String(n).padStart(2, '0');
+  return { start: new Date(yr, +m[2] - 1, +m[1], +hm[1], +hm[2]),
+           fmt(dt) { return `${dt.getFullYear()}${p(dt.getMonth() + 1)}${p(dt.getDate())}` +
+                            `T${p(dt.getHours())}${p(dt.getMinutes())}00`; } };
+}
+
+function icsFor(t) {
+  const now = new Date();
+  const p = n => String(n).padStart(2, '0');
+  const stamp = `${now.getUTCFullYear()}${p(now.getUTCMonth() + 1)}${p(now.getUTCDate())}` +
+    `T${p(now.getUTCHours())}${p(now.getUTCMinutes())}${p(now.getUTCSeconds())}Z`;
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0',
+    'PRODID:-//psmf-pitches//Rozpis zapasu//CS', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    `X-WR-CALNAME:${icsEscape(t.name + ' — PSMF podzim 2026')}`];
+
+  t.fx.forEach(f => {
+    const when = icsDate(f.d, f.t);
+    if (!when) return;
+    const end = new Date(when.start.getTime() + SLOT_MIN * 60000);
+    const v = D.venues[f.c];
+    const opp = kitByName.get((f.o || '').toLowerCase());
+    const warn = !f.h && opp && clashes(t.sh, opp.sh);
+    const title = f.h ? `${t.name} – ${f.o}` : `${f.o} – ${t.name}`;
+    const desc = [
+      `${f.r}. kolo, ${f.h ? 'doma' : 'venku'}`,
+      v ? `Hřiště ${v.l} × ${v.w} m (${v.area} m²)` : null,
+      v && v.boots ? (v.bootsText || `Obuv: ${v.boots}`) : null,
+      warn ? 'Barvy dresů se kryjí a hrajeme venku — do trik.' : null,
+      opp && opp.kit ? `Dres soupeře: ${opp.kit}` : null,
+      v ? `Mapa: ${mapHref(v)}` : null,
+    ].filter(Boolean).join('\n');
+
+    lines.push('BEGIN:VEVENT',
+      `UID:${asciiId(`${f.r}-${f.c}-${f.d}-${t.name}`)}@psmf-pitches`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART:${when.fmt(when.start)}`,
+      `DTEND:${when.fmt(end)}`,
+      `SUMMARY:${icsEscape(title)}`,
+      `LOCATION:${icsEscape(v ? [v.venue, v.addr].filter(Boolean).join(', ') : f.c)}`,
+      `DESCRIPTION:${icsEscape(desc)}`,
+      'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  return lines.map(icsFold).join('\r\n') + '\r\n';
+}
+
+function downloadIcs(t) {
+  const name = 'psmf-' + t.name.toLowerCase().normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '') + '-podzim-2026.ics';
+  const blob = new Blob([icsFor(t)], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 function renderTeam(i) {
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
@@ -461,7 +569,10 @@ function renderTeam(i) {
       <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
     </div>
     <hr class="rule">
-    <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
+    <div class="h2row">
+      <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
+      <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
+    </div>
     <div class="scroll"><table>
       <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
       <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th></tr></thead>
@@ -471,6 +582,8 @@ function renderTeam(i) {
     <hr class="rule">
     <h2>Hřiště tohoto týmu &middot; od největšího</h2>
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
+  const btn = document.getElementById('ics');
+  if (btn) btn.addEventListener('click', () => downloadIcs(t));
 }
 
 function renderAll() {

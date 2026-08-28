@@ -39,6 +39,14 @@ league keeps a bare division, which is what people call it and what
 already-shared `?team=` links contain. `--colours-only` refreshes just the jersey colours, which is one
 request per division rather than per team.
 
+Each team's fixtures export as an `.ics`, built in the browser from the same
+blob. Times are written floating — no zone — because every match is in Prague
+and 19:15 should stay 19:15 whatever the reader's calendar is set to, including
+across the October clock change. Events carry a stable ASCII UID, so
+re-importing a refreshed file updates the entries instead of duplicating them.
+Lines fold at 75 *octets*, not characters: a Czech diacritic is two of them, and
+counting characters left a third of the lines over the limit.
+
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
 build_page.py turns them into swatches by matching stems, since the halves of a
