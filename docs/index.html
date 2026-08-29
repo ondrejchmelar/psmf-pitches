@@ -113,6 +113,7 @@ tbody tr:hover { background:var(--sunk); }
 /* The pin belongs to the name, not beside it: as its own flex item it was the
    thing that fitted when the name did not, and sat alone on a line above it. */
 .gname { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+.oname { min-width:0; }
 /* On a phone the table is scrolled sideways whatever we do, so width is worth
    more than a tidy single line: the cells fold again and the padding comes
    down, which is the difference between reaching the ground column and not. */
@@ -120,7 +121,10 @@ tbody tr:hover { background:var(--sunk); }
   th { padding:11px 9px; }
   td { padding:10px 9px; }
   .cell { width:auto; }
-  .gname { display:inline; white-space:normal; }
+  /* The cell folds, but never inside a name: "Orange / Predators B" over two
+     ragged lines was the thing that looked broken, not the shirt and the
+     balance sitting on a line of their own underneath it. */
+  .oname, .gname { white-space:nowrap; }
 }
 code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }
@@ -222,6 +226,7 @@ td a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .res.loss { color:var(--away); }
 .res.draw { color:var(--muted); }
 .res.prov { opacity:.65; font-style:italic; }
+.res.pend { color:var(--faint); background:transparent; border:1px dashed var(--rule); }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -366,7 +371,9 @@ function outcome(f) {
 }
 function resultTag(f) {
   const o = outcome(f);
-  if (!o) return '';
+  // An empty slot rather than an empty cell: the column is there all season and
+  // a dash says the score is coming, where nothing at all reads as a mistake.
+  if (!o) return '<span class="res pend" title="Zatím se nehrálo">&ndash;</span>';
   // A provisional score is the one a player phoned in; the referee's may differ.
   return f.of
     ? `<span class="res ${o}">${esc(f.s)}</span>`
@@ -678,9 +685,6 @@ function renderTeam(i) {
   if (!t) { host.innerHTML = ''; return; }
 
   let warnings = 0;
-  // Before the first round there is nothing in the results column but its own
-  // heading, and on a phone that is a tenth of the table's width.
-  const anyScore = t.fx.some(f => f.s);
   const rows = t.fx.map(f => {
     const v = D.venues[f.c];
     const opp = kitByName.get((f.o || '').toLowerCase());
@@ -694,8 +698,9 @@ function renderTeam(i) {
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
-      ${anyScore ? `<td class="num">${resultTag(f)}</td>` : ''}
-      <td><div class="cell">${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
+      <td class="num">${resultTag(f)}</td>
+      <td><div class="cell"><span class="oname">${teamLink(f.o)}</span>${
+        opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</div></td>
       <td><div class="cell"><span class="gname">${v ? mapLink(v, 'lead') : ''}${
         v ? esc(v.venue) : ''}</span><code>${esc(f.c)}</code>${programmeChip(f, t)}</div></td>
@@ -737,7 +742,7 @@ function renderTeam(i) {
       <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
     </div>
     <div class="scroll"><table>
-      <thead><tr><th>K</th><th>Datum</th>${anyScore ? '<th>Výsledek</th>' : ''}
+      <thead><tr><th>K</th><th>Datum</th><th>Výsledek</th>
       <th>Soupeř</th><th>Hřiště</th><th>Rozměr</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}

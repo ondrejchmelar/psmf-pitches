@@ -181,14 +181,16 @@ was wide, which was half of them, and only the landscape ones came out square.
 The fixture table is seven columns, and was nine. Plocha went because the card
 below repeats it; the programme chip moved into the ground cell, where it reads
 as part of the ground rather than a column of its own; and the kick-off sits
-under the date instead of beside it. The results column is left out entirely
-until some fixture has a score — before the first round it is a heading over
-nothing, and on a phone that is a tenth of the width. The opponent and ground
-cells are flex lines rather than inline text: as inline they sat on the baseline
-at four different heights and broke between any two of them. `width:max-content`
-makes the table ask for the width that keeps each on one line; under 640px that
-is dropped and they fold again, which is worth more than tidiness when the
-table is being scrolled sideways anyway.
+under the date instead of beside it. The results column stands all season with a
+dashed empty slot per unplayed match: it was left out until the first score
+arrived, and a column that appears in October reads as a change rather than as
+a promise. The opponent and ground cells are flex lines rather than inline text:
+as inline they sat on the baseline at four different heights and broke between
+any two of them. `width:max-content` makes the table ask for the width that
+keeps each cell on one line; under 640px that is dropped so the badges fold —
+but never the names, because "Orange / Predators B" over two ragged lines was
+what looked broken, not a shirt and a balance on a line of their own
+underneath. The table is ~695px on a phone and scrolls, which it always did.
 
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
