@@ -48,26 +48,25 @@ season = json.loads(season_path.read_text("utf-8")) if season_path.exists() else
 
 IMG_W, IMG_Q = 900, 78        # served as files now, so they can afford to be better
 OUT = ROOT / "docs"
-# Two stamps, because the two change at different rates: the fixtures every day,
-# the photos only when a pitch is re-measured. One stamp would expire every
-# reader's image cache nightly for nothing.
-STAMP = date.today().strftime("%Y%m%d")
-# Content, not mtime: a fresh CI checkout stamps every file with today, which
-# would expire every reader's image cache on each nightly run for nothing.
-IMG_STAMP = hashlib.sha1(
-    (ROOT / "out/measurements.json").read_bytes()).hexdigest()[:8]
+
+
+def digest(data):
+    return hashlib.sha1(data).hexdigest()[:8]
 
 
 def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
     """Write one venue photo into docs/img and return its URL.
 
-    These used to be data: URIs inside the page, which made it one file at the
-    cost of four megabytes before anything could be shown. As separate files the
-    browser fetches them lazily, in parallel, and caches them across visits.
+    The name carries a hash of the file's own contents -- MOTO1.4f2a9c31.jpg --
+    so a re-measured pitch gets a new URL and an unchanged one keeps its old
+    name and stays in the reader's cache. A `?v=` stamp did the same job less
+    well: dated, it expired every photo whenever the date rolled over, and some
+    caches ignore the query string entirely.
     """
-    url = f"img/{code}.jpg?v={IMG_STAMP}"
     if ARGS.no_images:
-        return url if (OUT / "img" / f"{code}.jpg").exists() else ""
+        found = sorted((OUT / "img").glob(f"{code}.*.jpg"))
+        return f"img/{found[0].name}" if found else ""
+
     import cv2                       # only a full rebuild needs opencv
     img = cv2.imread(str(src))
     if img is None:
@@ -75,9 +74,17 @@ def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
     h, w = img.shape[:2]
     if w > width:
         img = cv2.resize(img, (width, int(h * width / w)), interpolation=cv2.INTER_AREA)
+    ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, q])
+    if not ok:
+        return ""
+    data = buf.tobytes()
+    name = f"{code}.{digest(data)}.jpg"
     (OUT / "img").mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(OUT / "img" / f"{code}.jpg"), img, [cv2.IMWRITE_JPEG_QUALITY, q])
-    return url
+    for stale in list((OUT / "img").glob(f"{code}.*.jpg")) + [OUT / "img" / f"{code}.jpg"]:
+        if stale.name != name and stale.exists():
+            stale.unlink()          # includes the old un-hashed name
+    (OUT / "img" / name).write_bytes(data)
+    return f"img/{name}"
 
 
 # ---------------------------------------------------------------- jerseys
@@ -215,9 +222,19 @@ teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 # reader sees. The teams are a megabyte and nobody needs them until they pick
 # one, so they are fetched after the first paint.
 (OUT / "data").mkdir(parents=True, exist_ok=True)
-teams_path = OUT / "data/teams.json"
-teams_path.write_text(json.dumps({"teams": teams}, ensure_ascii=False,
-                                 separators=(",", ":")), "utf-8")
+teams_json = json.dumps({"teams": teams}, ensure_ascii=False,
+                        separators=(",", ":")).encode()
+TEAMS_FILE = f"teams.{digest(teams_json)}.json"
+(OUT / "data" / TEAMS_FILE).write_bytes(teams_json)
+# Keep the previous file as well as the current one. GitHub Pages serves
+# index.html with a short cache, so for a few minutes after a build someone can
+# still be holding the old page -- which asks for the old name. One spare file
+# turns a 404 into a hit; older ones are no use to anybody.
+keep = sorted((OUT / "data").glob("teams.*.json"),
+              key=lambda f: f.stat().st_mtime, reverse=True)[:2]
+for stale in (OUT / "data").glob("teams.*.json"):
+    if stale not in keep:
+        stale.unlink()
 
 blob = json.dumps({"venues": V}, ensure_ascii=False,
                   separators=(",", ":")).replace("<", "\\u003c")
@@ -992,7 +1009,7 @@ function loadTeams() {
   const who = document.querySelector('.pick .who');
   input.disabled = true;
   input.placeholder = 'Načítám týmy…';
-  fetch('data/teams.json?v=' + DATA_STAMP)
+  fetch(TEAMS_URL)
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(data => {
       D.teams = data.teams || [];
@@ -1072,7 +1089,7 @@ Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 </div>
 
 <script type="application/json" id="psmf-data">{blob}</script>
-<script>const DATA_STAMP = "{STAMP}";</script>
+<script>const TEAMS_URL = "data/{TEAMS_FILE}";</script>
 <script>{JS}</script>
 """
 
