@@ -16,6 +16,7 @@ python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 ./.venv/bin/python scrape_psmf.py            # our fixtures + venue directory -> data/
 ./.venv/bin/python scrape_season.py          # every team, all four competitions -> data/season.json
 ./.venv/bin/python scrape_season.py --colours-only   # just the jersey colours
+./.venv/bin/python scrape_season.py --results        # scores for matches already played
 ./.venv/bin/python measure_pitches.py --auto-layer   # measure + annotate -> out/
 ./.venv/bin/python make_table.py             # our season table -> out/table.md
 ./.venv/bin/python build_page.py             # the published site -> docs/

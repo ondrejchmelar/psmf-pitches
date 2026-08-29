@@ -64,6 +64,21 @@ re-importing a refreshed file updates the entries instead of duplicating them.
 Lines fold at 75 *octets*, not characters: a Czech diacritic is two of them, and
 counting characters left a third of the lines over the limit.
 
+Results ride along in the fixture rows: a played match ends its row with the
+score, home:away. `scrape_season.py --results` re-reads only the teams whose
+recent match has no score yet — a team plays once a week, so that is a few
+hundred pages a day rather than all 938. The window is eight days on purpose: a
+match whose result never gets recorded would otherwise keep its two teams in the
+queue for the rest of the season.
+
+`.github/workflows/refresh.yml` runs that twice a day and rebuilds the page.
+It installs `requests` and `pyproj` and nothing else — `build_page.py
+--no-images` reuses the committed photos and imports opencv only when it has to
+write one, which is why measuring stays a local, by-hand job. The image cache
+stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
+would otherwise stamp every photo with today and expire every reader's cache
+nightly for nothing.
+
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
 build_page.py turns them into swatches by matching stems, since the halves of a

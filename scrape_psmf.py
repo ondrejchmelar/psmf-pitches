@@ -140,6 +140,11 @@ def parse_fixtures(html: str) -> tuple[str, list]:
         if tkey not in {slug(o) for o in opp_names}:
             continue  # other teams' matches also listed on this venue/day
         rnd = next((int(c.rstrip(".")) for c in cells if re.fullmatch(r"\d{1,2}\.", c.strip())), None)
+        # A played match ends the row with its score, home:away. Taken from the
+        # end rather than by pattern: "1:10" is indistinguishable from a kick-off
+        # time, and the time always comes first in the row.
+        score = cells[-1].strip() if cells and re.fullmatch(
+            r"\d{1,2}:\d{1,2}", cells[-1].strip()) else ""
         key = (date, time, code_m.group(1))
         if key in seen:
             continue
@@ -152,6 +157,7 @@ def parse_fixtures(html: str) -> tuple[str, list]:
             "opponents": opp_names,
             "opponent": next((o for o in opp_names if slug(o) != tkey), ""),
             "home": bool(opp_names) and slug(opp_names[0]) == tkey,
+            "score": score,
             "raw_cells": cells,
         })
     return team, fixtures

@@ -14,7 +14,7 @@ than once a day.
     ./.venv/bin/python scrape_season.py --season 2026-hanspaulska-liga-podzim
 """
 from __future__ import annotations
-import argparse, json, re, sys, time
+import argparse, datetime, json, re, sys, time
 from pathlib import Path
 
 import requests
@@ -88,6 +88,61 @@ def add_colours(pause: float) -> None:
     print(f"-> {path}: colours for {hit} of {len(data['teams'])} teams", file=sys.stderr)
 
 
+def fixture_date(text):
+    """'Út 16.6.26' -> date, or None."""
+    m = re.search(r"(\d{1,2})\.(\d{1,2})\.(\d{2,4})", text or "")
+    if not m:
+        return None
+    y = int(m.group(3))
+    return datetime.date(2000 + y if y < 100 else y, int(m.group(2)), int(m.group(1)))
+
+
+RESULT_WINDOW = 8        # days back a missing score is still worth asking about
+
+
+def refresh_results(pause: float, today=None, window=RESULT_WINDOW) -> None:
+    """Re-read only the teams that could have a new result.
+
+    A daily refresh does not need all 938 team pages: a team plays once a week,
+    so only those whose recent match has no score yet can have changed.
+
+    The window matters. "Any past fixture without a score" looks right and is
+    not: a match whose result never gets recorded -- postponed, or simply not
+    filled in -- would keep its two teams in the queue for the rest of the
+    season, and by mid-October that is every team, every day. Eight days covers
+    the last round with several retries, then lets it go.
+    """
+    today = today or datetime.date.today()
+    since = today - datetime.timedelta(days=window)
+    path = DATA / "season.json"
+    data = json.loads(path.read_text("utf-8"))
+
+    def stale_fixture(f):
+        d = fixture_date(f["date"])
+        return not f.get("score") and d is not None and since <= d <= today
+
+    stale = [t for t in data["teams"] if any(stale_fixture(f) for f in t["fixtures"])]
+    print(f"{len(stale)} of {len(data['teams'])} teams may have a new result",
+          file=sys.stderr)
+    got = 0
+    for i, t in enumerate(stale, 1):
+        try:
+            _, fixtures = S.parse_fixtures(S.get(BASE + t["url"]))
+        except Exception as e:                       # noqa: BLE001
+            print(f"  {t['slug']}: {e}", file=sys.stderr)
+            continue
+        t["fixtures"] = [{k: f[k] for k in
+                          ("round", "date", "time", "venue_code", "opponent",
+                           "home", "score")} for f in fixtures]
+        got += sum(1 for f in t["fixtures"] if f["score"])
+        if i % 50 == 0 or i == len(stale):
+            print(f"  [{i}/{len(stale)}]", file=sys.stderr)
+        time.sleep(pause)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=1), "utf-8")
+    total = sum(1 for t in data["teams"] for f in t["fixtures"] if f.get("score"))
+    print(f"-> {path}: {total} fixtures now carry a score", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--season", default=SEASON)
@@ -95,12 +150,18 @@ def main():
     ap.add_argument("--limit", type=int, help="stop after N teams (for a dry run)")
     ap.add_argument("--no-veterans", action="store_true",
                     help="only the main league, skip the veteran competitions")
+    ap.add_argument("--results", action="store_true",
+                    help="refresh scores for teams whose matches have been played")
     ap.add_argument("--colours-only", action="store_true",
                     help="only refresh jersey colours in an existing season.json")
     args = ap.parse_args()
 
     if args.colours_only:
         add_colours(args.pause)
+        return
+
+    if args.results:
+        refresh_results(args.pause)
         return
 
     comps = [args.season] + ([] if args.no_veterans else list(ALSO))
@@ -134,7 +195,7 @@ def main():
         teams.append({**t, "name": name,
                       "fixtures": [{k: f[k] for k in
                                     ("round", "date", "time", "venue_code",
-                                     "opponent", "home")}
+                                     "opponent", "home", "score")}
                                    for f in fixtures]})
         if i % 25 == 0 or i == len(items):
             print(f"  [{i}/{len(items)}] {name}: {len(fixtures)} fixtures", file=sys.stderr)

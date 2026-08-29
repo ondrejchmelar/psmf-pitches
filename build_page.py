@@ -17,14 +17,27 @@ team in the browser. Three things worth knowing before editing:
 * A consequence: opening docs/index.html over file:// leaves the picker empty,
   because fetch has no origin. Serve it -- `python3 -m http.server -d docs`.
 """
-import json, re
+import argparse, hashlib, json, re
 from datetime import date
 from pathlib import Path
 
-import cv2
-import numpy as np
+from pyproj import Transformer
 
-import measure_pitches as M
+# Deliberately not importing measure_pitches: it pulls in opencv, and a
+# results-only rebuild (--no-images) has no pictures to make. The one thing
+# needed from it is four lines of arithmetic, repeated here.
+TO_WGS = Transformer.from_crs("EPSG:5514", "EPSG:4326", always_xy=True)
+
+
+def px_to_lonlat(pt, geo):
+    return TO_WGS.transform(geo["x0"] + pt[0] * geo["res"],
+                            geo["y1"] - pt[1] * geo["res"])
+
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--no-images", action="store_true",
+                help="reuse the photos already in docs/img (a results-only rebuild)")
+ARGS = ap.parse_args()
 
 ROOT = Path(__file__).parent
 ms = json.loads((ROOT / "out/measurements.json").read_text("utf-8"))
@@ -35,7 +48,14 @@ season = json.loads(season_path.read_text("utf-8")) if season_path.exists() else
 
 IMG_W, IMG_Q = 900, 78        # served as files now, so they can afford to be better
 OUT = ROOT / "docs"
-STAMP = date.today().strftime("%Y%m%d")   # cache-buster; the files keep their names
+# Two stamps, because the two change at different rates: the fixtures every day,
+# the photos only when a pitch is re-measured. One stamp would expire every
+# reader's image cache nightly for nothing.
+STAMP = date.today().strftime("%Y%m%d")
+# Content, not mtime: a fresh CI checkout stamps every file with today, which
+# would expire every reader's image cache on each nightly run for nothing.
+IMG_STAMP = hashlib.sha1(
+    (ROOT / "out/measurements.json").read_bytes()).hexdigest()[:8]
 
 
 def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
@@ -45,6 +65,10 @@ def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
     cost of four megabytes before anything could be shown. As separate files the
     browser fetches them lazily, in parallel, and caches them across visits.
     """
+    url = f"img/{code}.jpg?v={IMG_STAMP}"
+    if ARGS.no_images:
+        return url if (OUT / "img" / f"{code}.jpg").exists() else ""
+    import cv2                       # only a full rebuild needs opencv
     img = cv2.imread(str(src))
     if img is None:
         return ""
@@ -53,7 +77,7 @@ def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
         img = cv2.resize(img, (width, int(h * width / w)), interpolation=cv2.INTER_AREA)
     (OUT / "img").mkdir(parents=True, exist_ok=True)
     cv2.imwrite(str(OUT / "img" / f"{code}.jpg"), img, [cv2.IMWRITE_JPEG_QUALITY, q])
-    return f"img/{code}.jpg?v={STAMP}"
+    return url
 
 
 # ---------------------------------------------------------------- jerseys
@@ -136,8 +160,9 @@ for code, m in ms.items():
     l, w = round(c["play_l_m"]), round(c["play_w_m"])
     # the centre of the pitch we drew, not of the parent field: on a ground with
     # four of them, that is the difference between finding it and hunting
-    pts = np.array(c["play_rect_px"], np.float32)
-    lon, lat = M.px_to_lonlat((pts[:, 0].mean(), pts[:, 1].mean()), m["geo"])
+    pts = c["play_rect_px"]
+    lon, lat = px_to_lonlat((sum(p[0] for p in pts) / len(pts),
+                             sum(p[1] for p in pts) / len(pts)), m["geo"])
     V[code] = {
         "code": code, "venue": v.get("name", code), "l": l, "w": w, "area": l * w,
         "exact": f'{c["play_l_m"]} x {c["play_w_m"]}',
@@ -173,7 +198,8 @@ def div_label(comp, division):
 teams = []
 for t in season.get("teams", []):
     fx = [{"r": f["round"], "d": f["date"], "t": f["time"], "c": f["venue_code"],
-           "o": f["opponent"], "h": f["home"]} for f in t["fixtures"]]
+           "o": f["opponent"], "h": f["home"], "s": f.get("score", "")}
+          for f in t["fixtures"]]
     if fx:
         teams.append({"name": t["name"],
                       "div": div_label(t.get("comp"), t["division"]), "fx": fx,
@@ -368,6 +394,12 @@ dialog#prog::backdrop { background:rgba(0,0,0,.5); }
 .programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
 td a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
 td a.tlink:hover { color:var(--accent); border-color:currentColor; }
+.res { font:600 12.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; padding:2px 6px; border-radius:2px;
+  background:var(--sunk); color:var(--muted); white-space:nowrap; }
+.res.win { color:var(--home); }
+.res.loss { color:var(--away); }
+.res.draw { color:var(--muted); }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -444,6 +476,20 @@ function card(v, sub) {
     </div></article>`;
 }
 
+// PSMF writes the score home:away, and the row already says which we were, so
+// it is shown as written; the colour carries the outcome.
+function outcome(f) {
+  if (!f.s) return null;
+  const p = f.s.split(':').map(Number);
+  if (p.length !== 2 || p.some(isNaN)) return null;
+  const [us, them] = f.h ? [p[0], p[1]] : [p[1], p[0]];
+  return us > them ? 'win' : us < them ? 'loss' : 'draw';
+}
+function resultTag(f) {
+  const o = outcome(f);
+  return o ? `<span class="res ${o}">${esc(f.s)}</span>` : '';
+}
+
 function kit(sw, kitText) {
   if (!sw || !sw.length) return '';
   return `<span class="kit" title="${esc(kitText)}">` +
@@ -509,7 +555,7 @@ function indexTeams() {
     seen.add(id);
     const k = `${ground(f.c)}|${f.d}`;
     if (!programme.has(k)) programme.set(k, []);
-    programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id });
+    programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id, s: f.s });
   }));
   programme.forEach(list => list.sort((a, b) => minutes(a.tm) - minutes(b.tm)));
 }
@@ -540,7 +586,8 @@ function openProgramme(date, code, mine) {
       <b>${esc(mm.tm)}</b>
       <span class="who">${self ? esc(mm.home) + ' – ' + esc(mm.away)
                                : teamLink(mm.home) + ' – ' + teamLink(mm.away)}</span>
-      <span class="meta2"><i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
+      <span class="meta2">${mm.s ? `<span class="res">${esc(mm.s)}</span>` : ''}
+        <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
   }).join('');
   const dlg = document.getElementById('prog');
   dlg.innerHTML = `<div class="progbox">
@@ -668,6 +715,7 @@ function renderTeam(i) {
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
+      <td class="num">${resultTag(f)}</td>
       <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
@@ -687,6 +735,9 @@ function renderTeam(i) {
     return card(D.venues[c], `<p class="fx">${at}</p>`);
   }).join('');
 
+  let w = 0, d = 0, l = 0;
+  t.fx.forEach(f => { const o = outcome(f); if (o === 'win') w++; else if (o === 'draw') d++; else if (o === 'loss') l++; });
+  const played = w + d + l;
   const areas = codes.map(c => D.venues[c].area);
   const missing = t.fx.filter(f => !D.venues[f.c]).length;
   const ratio = areas.length ? (Math.max(...areas) / Math.min(...areas)).toFixed(1) + '×' : '—';
@@ -694,6 +745,7 @@ function renderTeam(i) {
     <hr class="rule">
     <div class="stats">
       <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
+      ${played ? `<div class="stat"><b>${w}&ndash;${d}&ndash;${l}</b><span>Bilance</span></div>` : ''}
       <div class="stat"><b>${codes.length}</b><span>Různých hřišť</span></div>
       <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Nejmenší</span></div>
       <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
@@ -705,7 +757,7 @@ function renderTeam(i) {
       <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
     </div>
     <div class="scroll"><table>
-      <thead><tr><th>K</th><th>Datum</th><th>Soupeř</th><th>Hřiště</th>
+      <thead><tr><th>K</th><th>Datum</th><th>Výsledek</th><th>Soupeř</th><th>Hřiště</th>
       <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th>
       <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
