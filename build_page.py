@@ -581,7 +581,11 @@ function indexTeams() {
     if (!programme.has(k)) programme.set(k, []);
     programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id, s: f.s, of: f.of });
   }));
-  programme.forEach(list => list.sort((a, b) => minutes(a.tm) - minutes(b.tm)));
+  // Kickoff first, then pitch: at Pražačka three matches start at 19:30 and
+  // without the second key they land in whatever order the team walk produced,
+  // so P3 could sit above P1. Numeric collation keeps MIKU10 after MIKU4.
+  programme.forEach(list => list.sort((a, b) =>
+    minutes(a.tm) - minutes(b.tm) || a.c.localeCompare(b.c, 'cs', { numeric: true })));
 }
 
 function teamLink(name) {
