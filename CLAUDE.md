@@ -155,15 +155,28 @@ index requests and 6,304 team pages, about three hours.
 
 The cards show every photo in one square box. Left alone they run from 1.6:1 to
 0.6:1 — a pitch is as tall as it is aimed — and a row had Aritma three times
-Meteor's height. They are cropped rather than letterboxed, and the crop is
-centred on the measured rectangle, not on the middle of the picture: at
-Hrabákova the pitch we play is the top third of a parent field and centring
-frames the two we do not. `focal()` in build_page.py works out where that
-rectangle sits by repeating the framing `pitch_crop` used — both rectangles plus
-12 m of padding, clipped to the tile — and hands the browser an
-`object-position`. **That 12 m is written down in two places**: change `pad_m`
-in measure_pitches.py and every card silently crops off-centre. Only Aritma
-loses anything to the square, about 3 m off each end.
+Meteor's height. They are cropped, and the crop is centred on the measured
+rectangle rather than the middle of the picture: at Hrabákova the pitch we play
+is the top third of a parent field and centring frames the two we do not.
+`focal()` in build_page.py works out where that rectangle sits by repeating the
+framing `pitch_crop` used — both rectangles plus 12 m of padding, clipped to the
+tile — and hands the browser an `object-position`. **That 12 m is written down in
+two places**: change `pad_m` in measure_pitches.py and every card silently crops
+off-centre.
+
+The whole pitch always survives the crop. `focal()` returns the offset that
+*centres the rectangle in the visible window* — `(c - side/2) / (dim - side)`,
+not the rectangle's position in the picture, which is a different number — and
+clamped, that contains the rectangle whenever it fits at all. Where it does not
+fit, `focal()` returns None and the card falls back to `object-fit: contain`:
+the photo is scaled down inside the square instead of being cut. One ground
+needs that, Aritma, whose pitch is 54.9 m long in a frame 48 m wide; cropping it
+square would take the goals off, and the goals are the point.
+
+`.card figure` carries `min-height:0`, and must. It is a flex item, a flex
+item's automatic minimum size is its content, and the content is the whole
+photo — so `aspect-ratio` was quietly ignored for every picture taller than it
+was wide, which was half of them, and only the landscape ones came out square.
 
 The fixture table is seven columns, and was nine. Plocha went because the card
 below repeats it; the programme chip moved into the ground cell, where it reads

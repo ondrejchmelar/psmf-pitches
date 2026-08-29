@@ -157,13 +157,22 @@ def boots(code):
 
 # --------------------------------------------------------------------- venues
 def focal(cand, geo, cx, cy):
-    """Where the measured pitch sits in its photo, as (x%, y%).
+    """How to fit one photo into the square box the cards use.
 
-    The cards show every photo in the same square box, so the tall ones have to
-    be cropped -- and the middle is the wrong place to crop a cross-pitch, where
-    the rectangle is one third of a parent field and can be at either end. This
-    repeats the framing `pitch_crop` used (both rectangles, 12 m of padding,
-    clipped to the tile) so the browser can be told which point to keep.
+    Returns the `object-position` percentages for a `cover` crop, or None when
+    that crop cannot hold the whole measured rectangle -- Aritma's pitch is
+    54.9 m long in a frame only 48 m wide, so a square of it has to cut the
+    goals off, and the card scales the photo down instead.
+
+    The percentages are not the rectangle's position in the picture: with
+    `cover`, p% aligns the image's p% point with the box's, so what is wanted is
+    the offset that centres the rectangle in the visible window, `(c - L/2) /
+    (dim - L)`. Clamped, that is guaranteed to contain the rectangle whenever it
+    fits at all.
+
+    The framing repeats `pitch_crop`'s -- both rectangles, 12 m of padding,
+    clipped to the tile. Those 12 m live in two files: change `pad_m` there and
+    every card here crops off-centre, quietly.
     """
     pad = 12.0 / geo["res"]
     size = geo.get("size", 4000)
@@ -172,7 +181,16 @@ def focal(cand, geo, cx, cy):
     y0 = max(min(p[1] for p in pts) - pad, 0)
     x1 = min(max(p[0] for p in pts) + pad, size)
     y1 = min(max(p[1] for p in pts) + pad, size)
-    return [round(100 * (cx - x0) / (x1 - x0)), round(100 * (cy - y0) / (y1 - y0))]
+    w, h = x1 - x0, y1 - y0
+    side = min(w, h)                      # what a square box shows of it
+    play = cand["play_rect_px"]
+    if (max(p[0] for p in play) - min(p[0] for p in play) > side
+            or max(p[1] for p in play) - min(p[1] for p in play) > side):
+        return None
+    def pos(c, dim):
+        return 50 if dim <= side else round(
+            100 * min(max((c - side / 2) / (dim - side), 0), 1))
+    return [pos(cx - x0, w), pos(cy - y0, h)]
 
 
 V = {}
@@ -500,8 +518,12 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
    rectangle rather than the middle: at Hrabákova the pitch is the top third of
    a parent field, and centring would frame the two we do not play on. */
 .card figure { margin:0; background:var(--sunk); border-bottom:1px solid var(--rule);
-  aspect-ratio:1/1; }
+  aspect-ratio:1/1; min-height:0; }
 .card img { display:block; width:100%; height:100%; object-fit:cover; }
+/* Aritma's pitch is longer than its photo is wide, so a square of it cannot
+   contain the goals. That one is scaled down to fit rather than cropped: the
+   whole pitch is the thing the card is for. */
+.card img.whole { object-fit:contain; }
 .card .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:9px; }
 .ch { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
 .ch h3 { margin:0; font-size:15.5px; font-weight:640; letter-spacing:-.01em;
@@ -646,7 +668,7 @@ function card(v, sub) {
     ? `hřiště ${v.kind.split('_')[1]} ze ${v.kind.split('_')[3]}` : 'celé hřiště';
   return `<article class="card">
     <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem"
-      loading="lazy"${v.fp ? ` style="object-position:${v.fp[0]}% ${v.fp[1]}%"` : ''}></figure>
+      loading="lazy"${v.fp ? ` style="object-position:${v.fp[0]}% ${v.fp[1]}%"` : ' class="whole"'}></figure>
     <div class="body">
       <header class="ch">
         <h3>${esc(v.venue)} <code>${esc(v.code)}</code>${mapLink(v)}</h3>
