@@ -153,6 +153,30 @@ defaults to a second: this walks thousands of pages of somebody else's small
 site, and there is nowhere to be in a hurry to. The whole league was 3,849
 index requests and 6,304 team pages, about three hours.
 
+The cards show every photo in one square box. Left alone they run from 1.6:1 to
+0.6:1 — a pitch is as tall as it is aimed — and a row had Aritma three times
+Meteor's height. They are cropped rather than letterboxed, and the crop is
+centred on the measured rectangle, not on the middle of the picture: at
+Hrabákova the pitch we play is the top third of a parent field and centring
+frames the two we do not. `focal()` in build_page.py works out where that
+rectangle sits by repeating the framing `pitch_crop` used — both rectangles plus
+12 m of padding, clipped to the tile — and hands the browser an
+`object-position`. **That 12 m is written down in two places**: change `pad_m`
+in measure_pitches.py and every card silently crops off-centre. Only Aritma
+loses anything to the square, about 3 m off each end.
+
+The fixture table is seven columns, and was nine. Plocha went because the card
+below repeats it; the programme chip moved into the ground cell, where it reads
+as part of the ground rather than a column of its own; and the kick-off sits
+under the date instead of beside it. The results column is left out entirely
+until some fixture has a score — before the first round it is a heading over
+nothing, and on a phone that is a tenth of the width. The opponent and ground
+cells are flex lines rather than inline text: as inline they sat on the baseline
+at four different heights and broke between any two of them. `width:max-content`
+makes the table ask for the width that keeps each on one line; under 640px that
+is dropped and they fold again, which is worth more than tidiness when the
+table is being scrolled sideways anyway.
+
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
 build_page.py turns them into swatches by matching stems, since the halves of a

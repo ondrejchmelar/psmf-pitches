@@ -156,6 +156,25 @@ def boots(code):
 
 
 # --------------------------------------------------------------------- venues
+def focal(cand, geo, cx, cy):
+    """Where the measured pitch sits in its photo, as (x%, y%).
+
+    The cards show every photo in the same square box, so the tall ones have to
+    be cropped -- and the middle is the wrong place to crop a cross-pitch, where
+    the rectangle is one third of a parent field and can be at either end. This
+    repeats the framing `pitch_crop` used (both rectangles, 12 m of padding,
+    clipped to the tile) so the browser can be told which point to keep.
+    """
+    pad = 12.0 / geo["res"]
+    size = geo.get("size", 4000)
+    pts = cand["rect_px"] + cand["play_rect_px"]
+    x0 = max(min(p[0] for p in pts) - pad, 0)
+    y0 = max(min(p[1] for p in pts) - pad, 0)
+    x1 = min(max(p[0] for p in pts) + pad, size)
+    y1 = min(max(p[1] for p in pts) + pad, size)
+    return [round(100 * (cx - x0) / (x1 - x0)), round(100 * (cy - y0) / (y1 - y0))]
+
+
 V = {}
 for code, m in ms.items():
     if code.startswith("_"):
@@ -169,8 +188,8 @@ for code, m in ms.items():
     # the centre of the pitch we drew, not of the parent field: on a ground with
     # four of them, that is the difference between finding it and hunting
     pts = c["play_rect_px"]
-    lon, lat = px_to_lonlat((sum(p[0] for p in pts) / len(pts),
-                             sum(p[1] for p in pts) / len(pts)), m["geo"])
+    cx, cy = (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+    lon, lat = px_to_lonlat((cx, cy), m["geo"])
     V[code] = {
         "code": code, "venue": v.get("name", code), "l": l, "w": w, "area": l * w,
         "exact": f'{c["play_l_m"]} x {c["play_w_m"]}',
@@ -180,6 +199,7 @@ for code, m in ms.items():
         "addr": (venues.get(code, {}) or {}).get("address", ""),
         "note": (ov.get(code) or {}).get("note", ""),
         "img": write_jpeg(ROOT / f"out/{code}_pitch1.png", code),
+        "fp": focal(c, m["geo"], cx, cy),
     }
     if v.get("training"):
         V.pop(code)          # measured for our own comparison, not a PSMF ground
@@ -434,26 +454,54 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
 .sugg button span { color:var(--faint); font-size:13px; margin-left:6px; }
 .sugg .none { padding:8px 10px; color:var(--faint); font-size:14px; }
 .scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
-table { border-collapse:collapse; width:100%; min-width:720px; font-size:14.5px; }
+table { border-collapse:collapse; width:100%; min-width:580px; font-size:14.5px; }
 th { text-align:left; font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
   padding:13px 14px; border-bottom:1px solid var(--rule); white-space:nowrap; }
-td { padding:11px 14px; border-bottom:1px solid var(--rule); vertical-align:baseline; }
+td { padding:11px 12px; border-bottom:1px solid var(--rule); vertical-align:middle; }
 tbody tr:last-child td { border-bottom:0; }
 tbody tr:hover { background:var(--sunk); }
 .num, .dim { font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
 .dim { text-align:left; font-weight:600; }
 .date { white-space:nowrap; }
-.date .t { color:var(--faint); margin-left:7px; font-size:13px; }
+/* The kick-off under the date rather than beside it: two short lines instead of
+   one long one, and the column stops being the widest thing in the table. */
+.date .t { display:block; color:var(--faint); font-size:13px; margin-top:2px; }
+/* max-content so the table asks for the width that keeps each cell on one
+   line, max-width so it still folds rather than overflow when the screen is a
+   phone and the column cannot have it. */
+.cell { display:flex; align-items:center; flex-wrap:wrap; gap:4px 8px;
+  width:max-content; max-width:100%; }
+.cell .kit, .cell .clash, .cell .h2h, .cell .more, .cell .pin.lead { margin:0; }
+/* The pin belongs to the name, not beside it: as its own flex item it was the
+   thing that fitted when the name did not, and sat alone on a line above it. */
+.gname { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+/* On a phone the table is scrolled sideways whatever we do, so width is worth
+   more than a tidy single line: the cells fold again and the padding comes
+   down, which is the difference between reaching the ground column and not. */
+@media (max-width:640px) {
+  th { padding:11px 9px; }
+  td { padding:10px 9px; }
+  .cell { width:auto; }
+  .gname { display:inline; white-space:normal; }
+}
 code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }
-.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  align-items:start; }
+/* Stretch, not start: with the photos all one shape the only thing left making
+   a row ragged is how much text a card carries, and a card is happier with a
+   little space under its last line than the row is with a step in it. */
+.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
 .card { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
   overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; }
-.card figure { margin:0; background:var(--sunk); border-bottom:1px solid var(--rule); }
-.card img { display:block; width:100%; height:auto; }
+/* One box for every photo. Left to themselves they run from 1.6:1 to 0.6:1 --
+   a pitch is as tall as it is aimed -- and a row of cards had Aritma at three
+   times Meteor's height. Cropped rather than letterboxed, around the measured
+   rectangle rather than the middle: at Hrabákova the pitch is the top third of
+   a parent field, and centring would frame the two we do not play on. */
+.card figure { margin:0; background:var(--sunk); border-bottom:1px solid var(--rule);
+  aspect-ratio:1/1; }
+.card img { display:block; width:100%; height:100%; object-fit:cover; }
 .card .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:9px; }
 .ch { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
 .ch h3 { margin:0; font-size:15.5px; font-weight:640; letter-spacing:-.01em; }
@@ -595,7 +643,8 @@ function card(v, sub) {
   const kind = v.kind.indexOf('section') === 0
     ? `hřiště ${v.kind.split('_')[1]} ze ${v.kind.split('_')[3]}` : 'celé hřiště';
   return `<article class="card">
-    <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem" loading="lazy"></figure>
+    <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem"
+      loading="lazy"${v.fp ? ` style="object-position:${v.fp[0]}% ${v.fp[1]}%"` : ''}></figure>
     <div class="body">
       <header class="ch">
         <h3>${esc(v.venue)} <code>${esc(v.code)}</code>${mapLink(v)}</h3>
@@ -931,24 +980,29 @@ function renderTeam(i) {
   if (!t) { host.innerHTML = ''; return; }
 
   let warnings = 0;
+  // Before the first round there is nothing in the results column but its own
+  // heading, and on a phone that is a tenth of the table's width.
+  const anyScore = t.fx.some(f => f.s);
   const rows = t.fx.map(f => {
     const v = D.venues[f.c];
     const opp = kitByName.get((f.o || '').toLowerCase());
     // we change when the colours clash and we are the visiting side
     const warn = !f.h && opp && clashes(t.sh, opp.sh);
     if (warn) warnings++;
-    const chip = programmeChip(f, t);
+    // Both of these are a row of small things -- name, shirt, balance, warning;
+    // pin, ground, code, programme -- and laid out as inline text they sat on
+    // the baseline at four different heights and wrapped between any two of
+    // them. A flex line keeps them on one centre and breaks only where it must.
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
-      <td class="num">${resultTag(f)}</td>
-      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
-        ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
-      <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
+      ${anyScore ? `<td class="num">${resultTag(f)}</td>` : ''}
+      <td><div class="cell">${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
+        ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</div></td>
+      <td><div class="cell"><span class="gname">${v ? mapLink(v, 'lead') : ''}${
+        v ? esc(v.venue) : ''}</span><code>${esc(f.c)}</code>${programmeChip(f, t)}</div></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
-      <td class="num">${v ? v.area : ''}</td>
       <td>${v ? bootsTag(v) : ''}</td>
-      <td class="num">${chip}</td>
     </tr>`;
   }).join('');
 
@@ -985,9 +1039,8 @@ function renderTeam(i) {
       <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
     </div>
     <div class="scroll"><table>
-      <thead><tr><th>K</th><th>Datum</th><th>Výsledek</th><th>Soupeř</th><th>Hřiště</th>
-      <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th>
-      <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
+      <thead><tr><th>K</th><th>Datum</th>${anyScore ? '<th>Výsledek</th>' : ''}
+      <th>Soupeř</th><th>Hřiště</th><th>Rozměr</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
     ${met ? `<p class="nt">S ${met} z nich se tento tým už potkal — číslo u jména je vzájemná bilance z minulých sezon, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
@@ -1252,7 +1305,8 @@ if (window.requestAnimationFrame) {
 
 hist_dir = f'"data/{HIST_DIR}"' if HIST_DIR else "null"
 
-html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
+html = f"""<meta charset="utf-8">
+<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>{CSS}</style>
 <script>{EARLY_JS}</script>
