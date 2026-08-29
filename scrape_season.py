@@ -124,7 +124,13 @@ def refresh_results(pause: float, today=None, window=RESULT_WINDOW,
         d = fixture_date(f["date"])
         if d is None or not (since <= d <= today):
             return False
-        return not f.get("score") if missing_only else True
+        if missing_only:
+            return not f.get("score")
+        # Anything not yet marked official is worth asking about again: no score,
+        # a provisional one, or markup this does not recognise. Once psmf.cz
+        # marks a result official the match drops out and the pass gets cheaper
+        # on its own -- and until it does, this is just "re-read the window".
+        return not f.get("official")
 
     stale = [t for t in data["teams"] if any(stale_fixture(f) for f in t["fixtures"])]
     print(f"{len(stale)} of {len(data['teams'])} teams may have a new result",
@@ -140,21 +146,22 @@ def refresh_results(pause: float, today=None, window=RESULT_WINDOW,
                   for f in t["fixtures"]}
         t["fixtures"] = [{k: f[k] for k in
                           ("round", "date", "time", "venue_code", "opponent",
-                           "home", "score")} for f in fixtures]
+                           "home", "score", "official")} for f in fixtures]
         for f in t["fixtures"]:
             was = before.get((f["date"], f["venue_code"], f["opponent"]), "")
             if f["score"] and f["score"] != was:
                 got += 1
                 if was:
-                    print(f"  {t['name']}: {f['opponent']} {was} -> {f['score']}",
-                          file=sys.stderr)
+                    print(f"  {t['name']}: {f['opponent']} {was} -> {f['score']}"
+                          f"{' (oficiální)' if f['official'] else ''}", file=sys.stderr)
         if i % 50 == 0 or i == len(stale):
             print(f"  [{i}/{len(stale)}]", file=sys.stderr)
         time.sleep(pause)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), "utf-8")
     total = sum(1 for t in data["teams"] for f in t["fixtures"] if f.get("score"))
-    print(f"-> {path}: {got} scores new or changed; {total} fixtures carry one",
-          file=sys.stderr)
+    final = sum(1 for t in data["teams"] for f in t["fixtures"] if f.get("official"))
+    print(f"-> {path}: {got} scores new or changed; {total} carry one, "
+          f"{final} of them official", file=sys.stderr)
 
 
 def main():
@@ -214,7 +221,7 @@ def main():
         teams.append({**t, "name": name,
                       "fixtures": [{k: f[k] for k in
                                     ("round", "date", "time", "venue_code",
-                                     "opponent", "home", "score")}
+                                     "opponent", "home", "score", "official")}
                                    for f in fixtures]})
         if i % 25 == 0 or i == len(items):
             print(f"  [{i}/{len(items)}] {name}: {len(fixtures)} fixtures", file=sys.stderr)

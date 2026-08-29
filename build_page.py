@@ -198,7 +198,8 @@ def div_label(comp, division):
 teams = []
 for t in season.get("teams", []):
     fx = [{"r": f["round"], "d": f["date"], "t": f["time"], "c": f["venue_code"],
-           "o": f["opponent"], "h": f["home"], "s": f.get("score", "")}
+           "o": f["opponent"], "h": f["home"], "s": f.get("score", ""),
+           "of": bool(f.get("official"))}
           for f in t["fixtures"]]
     if fx:
         teams.append({"name": t["name"],
@@ -400,6 +401,7 @@ td a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .res.win { color:var(--home); }
 .res.loss { color:var(--away); }
 .res.draw { color:var(--muted); }
+.res.prov { opacity:.65; font-style:italic; }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -487,7 +489,11 @@ function outcome(f) {
 }
 function resultTag(f) {
   const o = outcome(f);
-  return o ? `<span class="res ${o}">${esc(f.s)}</span>` : '';
+  if (!o) return '';
+  // A provisional score is the one a player phoned in; the referee's may differ.
+  return f.of
+    ? `<span class="res ${o}">${esc(f.s)}</span>`
+    : `<span class="res ${o} prov" title="Předběžný výsledek, ještě není oficiální">${esc(f.s)}*</span>`;
 }
 
 function kit(sw, kitText) {
@@ -555,7 +561,7 @@ function indexTeams() {
     seen.add(id);
     const k = `${ground(f.c)}|${f.d}`;
     if (!programme.has(k)) programme.set(k, []);
-    programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id, s: f.s });
+    programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id, s: f.s, of: f.of });
   }));
   programme.forEach(list => list.sort((a, b) => minutes(a.tm) - minutes(b.tm)));
 }
@@ -586,7 +592,8 @@ function openProgramme(date, code, mine) {
       <b>${esc(mm.tm)}</b>
       <span class="who">${self ? esc(mm.home) + ' – ' + esc(mm.away)
                                : teamLink(mm.home) + ' – ' + teamLink(mm.away)}</span>
-      <span class="meta2">${mm.s ? `<span class="res">${esc(mm.s)}</span>` : ''}
+      <span class="meta2">${mm.s ? `<span class="res${mm.of ? '' : ' prov'}"${mm.of ? ''
+        : ' title="Předběžný výsledek"'}>${esc(mm.s)}${mm.of ? '' : '*'}</span>` : ''}
         <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
   }).join('');
   const dlg = document.getElementById('prog');
@@ -735,6 +742,7 @@ function renderTeam(i) {
     return card(D.venues[c], `<p class="fx">${at}</p>`);
   }).join('');
 
+  const prov = t.fx.filter(f => f.s && !f.of).length;
   let w = 0, d = 0, l = 0;
   t.fx.forEach(f => { const o = outcome(f); if (o === 'win') w++; else if (o === 'draw') d++; else if (o === 'loss') l++; });
   const played = w + d + l;
@@ -761,6 +769,7 @@ function renderTeam(i) {
       <th>Rozměr</th><th>Plocha m&sup2;</th><th>Obuv</th>
       <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
+    ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">

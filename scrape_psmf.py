@@ -145,6 +145,15 @@ def parse_fixtures(html: str) -> tuple[str, list]:
         # time, and the time always comes first in the row.
         score = cells[-1].strip() if cells and re.fullmatch(
             r"\d{1,2}:\d{1,2}", cells[-1].strip()) else ""
+        # psmf.cz shows a score twice: first the provisional one a player phones
+        # in, greyed out, then the referee's official result, which is not always
+        # the same number. The site marks the official one `is-result` and greys
+        # the provisional with `is-gray`. Unknown markup counts as not-official,
+        # so a refresh keeps asking rather than trusting a number too early.
+        raw_cells = re.findall(r"<t[dh]([^>]*)>(.*?)</t[dh]>", row, re.S | re.I)
+        cls = next((a for a, body in reversed(raw_cells)
+                    if re.search(r"\d{1,2}:\d{1,2}", strip_tags(body))), "")
+        official = bool(score) and "is-result" in cls and "is-gray" not in cls
         key = (date, time, code_m.group(1))
         if key in seen:
             continue
@@ -158,6 +167,7 @@ def parse_fixtures(html: str) -> tuple[str, list]:
             "opponent": next((o for o in opp_names if slug(o) != tkey), ""),
             "home": bool(opp_names) and slug(opp_names[0]) == tkey,
             "score": score,
+            "official": official,
             "raw_cells": cells,
         })
     return team, fixtures

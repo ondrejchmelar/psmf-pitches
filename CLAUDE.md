@@ -65,11 +65,24 @@ Lines fold at 75 *octets*, not characters: a Czech diacritic is two of them, and
 counting characters left a third of the lines over the limit.
 
 Results ride along in the fixture rows: a played match ends its row with the
-score, home:away. `scrape_season.py --results` re-reads only the teams whose
-recent match has no score yet — a team plays once a week, so that is a few
-hundred pages a day rather than all 938. The window is eight days on purpose: a
-match whose result never gets recorded would otherwise keep its two teams in the
-queue for the rest of the season.
+score, home:away. A score is written twice — first a provisional one a player
+phones in, then the referee's official result, which is not always the same
+number. psmf.cz greys the provisional (`is-gray`) and marks the official
+`is-result`, so `parse_fixtures` reads the score cell's classes and sets
+`official`. Anything it does not recognise counts as *not* official, which
+matters: if that detection is ever wrong, the refresh keeps asking instead of
+trusting a number too early, and the behaviour degrades to what it did before.
+
+`scrape_season.py --results` re-reads, within a ten-day window, every team with
+a match not yet marked official. That is ~900 teams while nothing is marked and
+~300 once results start being confirmed — it gets cheaper on its own.
+`--missing-only` is the cheap pass for teams with no score at all. The window is
+what stops it growing: a result that never gets recorded would otherwise keep
+its two teams in the queue for the rest of the season.
+
+The provisional/official split was verified only in the direction that could be:
+every score in the finished spring season reads as official. No provisional
+result existed anywhere on the site to test against.
 
 `.github/workflows/refresh.yml` runs that twice a day and rebuilds the page.
 It installs `requests` and `pyproj` and nothing else — `build_page.py
