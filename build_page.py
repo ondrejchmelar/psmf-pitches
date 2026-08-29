@@ -322,16 +322,30 @@ h2 .kit i { width:11px; }
   background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
   padding:0 7px; cursor:pointer; }
 .more:hover, .more.open { color:var(--ink); border-color:var(--muted); }
-tr.prog td { background:var(--sunk); padding:10px 14px 12px; }
-.programme { list-style:none; margin:0; padding:0; display:grid; gap:4px; }
-.programme li { display:grid; grid-template-columns:auto 1fr auto auto; gap:10px;
-  align-items:baseline; font-size:14px; }
+dialog#prog { border:0; padding:0; background:none; max-width:min(560px, 94vw); width:100%; }
+dialog#prog::backdrop { background:rgba(0,0,0,.5); }
+.progbox { background:var(--surface); color:var(--ink); border:1px solid var(--rule);
+  border-radius:4px; box-shadow:var(--shadow); padding:18px 20px 20px; }
+.progbox header { display:flex; justify-content:space-between; align-items:baseline;
+  gap:12px; margin-bottom:14px; }
+.progbox h3 { margin:0; font-size:15px; font-weight:640; }
+.progbox .x { border:0; background:none; color:var(--faint); font:400 24px/1 system-ui,sans-serif;
+  cursor:pointer; padding:0 2px; }
+.progbox .x:hover { color:var(--ink); }
+.programme { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.programme li { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline;
+  font-size:14.5px; padding-bottom:9px; border-bottom:1px solid var(--rule); }
+.programme li:last-child { border-bottom:0; padding-bottom:0; }
 .programme li.self { color:var(--accent); font-weight:600; }
-.programme b { font:600 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+.programme .who { flex:1 1 220px; min-width:0; }
+.programme .meta2 { display:flex; gap:8px; align-items:baseline; margin-left:auto; }
+.programme b { font:600 13.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; }
 .programme i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
 .programme a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
 .programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
+td a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
+td a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -474,24 +488,35 @@ function teamLink(name) {
     ? esc(name) : `<a href="#" class="tlink" data-i="${i}">${esc(name)}</a>`;
 }
 
-function programmeRows(f, t, cols) {
+// A dialog rather than a row inside the table: the table carries a 720px
+// minimum and scrolls sideways on a phone, and a nested row inherits that, so
+// the programme ended up needing a horizontal scroll of its own. The dialog is
+// free of the table and can wrap.
+function programmeChip(f, t) {
   const list = programme.get(`${ground(f.c)}|${f.d}`) || [];
-  if (list.length < 2) return { chip: '', row: '' };
+  if (list.length < 2) return '';
   const mine = `${f.d}|${f.t}|${f.c}|${f.h ? t.name : f.o}|${f.h ? f.o : t.name}`;
+  return `<button type="button" class="more" data-date="${esc(f.d)}" data-code="${esc(f.c)}"
+    data-mine="${esc(mine)}" title="Co se ještě hraje na tomto hřišti">+${list.length - 1}</button>`;
+}
+
+function openProgramme(date, code, mine) {
+  const list = programme.get(`${ground(code)}|${date}`) || [];
   const items = list.map(mm => {
     const self = mm.id === mine;
     return `<li${self ? ' class="self"' : ''}>
       <b>${esc(mm.tm)}</b>
-      <span>${self ? esc(mm.home) + ' – ' + esc(mm.away)
-                   : teamLink(mm.home) + ' – ' + teamLink(mm.away)}</span>
-      <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></li>`;
+      <span class="who">${self ? esc(mm.home) + ' – ' + esc(mm.away)
+                               : teamLink(mm.home) + ' – ' + teamLink(mm.away)}</span>
+      <span class="meta2"><i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
   }).join('');
-  return {
-    chip: `<button type="button" class="more" data-prog="${esc(f.d)}|${esc(f.c)}"
-             title="Další zápasy na tomto hřišti">+${list.length - 1}</button>`,
-    row: `<tr class="prog" hidden data-prog="${esc(f.d)}|${esc(f.c)}"><td colspan="${cols}">
-            <ul class="programme">${items}</ul></td></tr>`,
-  };
+  const dlg = document.getElementById('prog');
+  dlg.innerHTML = `<div class="progbox">
+      <header><h3>${esc(ground(code))} &middot; ${esc(date)}</h3>
+        <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
+      <ul class="programme">${items}</ul>
+    </div>`;
+  if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
 }
 
 // ---- calendar export -------------------------------------------------------
@@ -607,18 +632,18 @@ function renderTeam(i) {
     // we change when the colours clash and we are the visiting side
     const warn = !f.h && opp && clashes(t.sh, opp.sh);
     if (warn) warnings++;
-    const prog = programmeRows(f, t, 8);
+    const chip = programmeChip(f, t);
     return `<tr${warn ? ' class="warn"' : ''}>
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
-      <td>${esc(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
+      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
       <td class="num">${v ? v.area : ''}</td>
       <td>${v ? bootsTag(v) : ''}</td>
-      <td class="num">${prog.chip}</td>
-    </tr>${prog.row}`;
+      <td class="num">${chip}</td>
+    </tr>`;
   }).join('');
 
   const codes = [];
@@ -663,9 +688,7 @@ function renderTeam(i) {
   host.addEventListener('click', e => {
     const more = e.target.closest('.more');
     if (more) {
-      const row = host.querySelector(
-        `tr.prog[data-prog="${CSS.escape(more.dataset.prog)}"]`);
-      if (row) { row.hidden = !row.hidden; more.classList.toggle('open', !row.hidden); }
+      openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
       return;
     }
     const link = e.target.closest('.tlink');
@@ -842,6 +865,23 @@ window.addEventListener('popstate', () => {
   showTeam(i);
 });
 
+// Close the dialog on the X, on a click outside the panel, or on Escape (which
+// <dialog> handles by itself). Team links inside it jump and close.
+const dlg = document.getElementById('prog');
+dlg.addEventListener('click', e => {
+  const link = e.target.closest('.tlink');
+  if (link) {
+    e.preventDefault();
+    const i = Number(link.dataset.i);
+    dlg.close();
+    showTeam(i);
+    setParam(D.teams[i], true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  if (e.target.closest('.x') || !e.target.closest('.progbox')) dlg.close();
+});
+
 renderAll();
 let start = null;
 try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
@@ -884,6 +924,7 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 <code>out/measurements.json</code> v repozitáři.</p></noscript>
 
 <div id="team"></div>
+<dialog id="prog" aria-label="Program na hřišti"></dialog>
 
 <hr class="rule">
 <h2 id="all-head">Všechna hřiště &middot; od největšího</h2>

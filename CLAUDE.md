@@ -39,13 +39,15 @@ league keeps a bare division, which is what people call it and what
 already-shared `?team=` links contain. `--colours-only` refreshes just the jersey colours, which is one
 request per division rather than per team.
 
-Every fixture row can open the day's programme at that ground — what is played
+Every fixture row can open the day's programme at that ground, in a dialog — what is played
 before and after, on the neighbouring pitches too. The index is built in the
 browser rather than shipped: every match is already in the blob twice, once from
 each side, so it costs a pass over the fixtures instead of another 400 kB.
 Grouping is by venue *name*, which puts Pražačka 1-3 and Mikulova 1-4 together
-and keeps Běchovice 2 apart from SC Běchovice. Teams in the list are links, so a
-friend's fixtures are one click away.
+and keeps Běchovice 2 apart from SC Běchovice. Teams in the list are links, as are opponents in the
+fixture table itself, so a friend's fixtures are one click away. The dialog is
+not a row inside the table on purpose: the table carries a 720px minimum and
+scrolls sideways on a phone, and a nested row inherited that.
 
 Each team's fixtures export as an `.ics`, built in the browser from the same
 blob. Times are written floating — no zone — because every match is in Prague
