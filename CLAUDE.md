@@ -9,6 +9,7 @@ hard way and several "obvious" fixes here are wrong.
 ```
 scrape_psmf.py      our fixtures + venue directory -> data/fixtures.json, data/venues.json
 scrape_season.py    every team's fixtures          -> data/season.json
+scrape_history.py   our own past seasons           -> data/history.json
 data/extra_venues.json  venues not on the fixture list (our training pitch)
 measure_pitches.py  segment turf, fit the lines    -> out/measurements.json, out/*.png
 diagnose.py         how far is each edge off?      -> out/diag_*.png
@@ -17,11 +18,12 @@ build_page.py       the published site             -> docs/ (html, img, data)
 data/overrides.json the per-venue human input      (the important file)
 ```
 
-The page is served in three pieces: index.html is the shell plus the venue
-records (60 kB), docs/img holds the photos, and docs/data/teams.json the
-fixtures, fetched after the pitches are on screen. It was one self-contained
-file until that meant 4.6 MB before the first pitch appeared. Both name
-themselves after a hash of their own contents — `MOTO1.cae3f104.jpg`,
+The page is served in four pieces: index.html is the shell plus the venue
+records (60 kB), docs/img holds the photos, docs/data/teams.json the fixtures,
+fetched after the pitches are on screen, and docs/data/history.json our own past
+matches (77 kB), fetched beside them. It was one self-contained
+file until that meant 4.6 MB before the first pitch appeared. Each names
+itself after a hash of its own contents — `MOTO1.cae3f104.jpg`,
 `teams.b37b70e8.json` — so a URL changes when and only when its content does; a
 dated `?v=` expired everything on a date roll and nothing on a same-day
 re-measure, and some caches drop query strings anyway. The previous teams file
@@ -97,6 +99,30 @@ write one, which is why measuring stays a local, by-hand job. The image cache
 stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
 would otherwise stamp every photo with today and expire every reader's cache
 nightly for nothing.
+
+`scrape_history.py` is our own back catalogue: 331 matches over 32 seasons, back
+to podzim 2010. psmf.cz keeps the whole archive but links a team to none of its
+earlier selves — the `<` arrow on a team page reaches at most one season back and
+often not that, ours skipping over podzim 2025, which we certainly played. So a
+team is found the only way the site allows, by walking a season's division pages
+until its slug turns up. `find_team` starts from the division we were in last
+season and works outwards, which usually costs a handful of pages instead of
+sixty-eight; the answer is cached in `data/history_index.json`, and past seasons
+never change. Four consecutive seasons without us ends the walk — a team can sit
+one out, and jaro 2021 did not exist at all.
+
+The payload is the referee's own paragraph about each match, under `Detaily
+utkání` on a finished season's team page: 301 of the 331 have one, and nothing
+else on the site records it. The half-time score is there too. Both are written
+home:away, which flips meaning every other line in a one-team history, so the
+page turns them round to ours:theirs and says `doma`/`venku` beside them.
+
+On the page, the fixture row of a team we have met before carries its balance —
+`0–1–3` against Tohle není hokej? — and opens the meetings in the same dialog the
+programme uses. It shows for one team only, the one `history.json` is about; for
+the other 937 the whole feature is a `t.sl !== H.slug` and nothing renders.
+`--seasons 1` re-reads just the season being played and merges it into what is
+already there, which is one request and what the daily job runs.
 
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in

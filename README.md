@@ -17,6 +17,7 @@ python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 ./.venv/bin/python scrape_season.py          # every team, all four competitions -> data/season.json
 ./.venv/bin/python scrape_season.py --colours-only   # just the jersey colours
 ./.venv/bin/python scrape_season.py --results        # scores for matches already played
+./.venv/bin/python scrape_history.py         # our own past seasons -> data/history.json
 ./.venv/bin/python measure_pitches.py --auto-layer   # measure + annotate -> out/
 ./.venv/bin/python make_table.py             # our season table -> out/table.md
 ./.venv/bin/python build_page.py             # the published site -> docs/
@@ -24,6 +25,15 @@ python3 -m http.server -d docs               # preview it (file:// will not do)
 ```
 
 `scrape_psmf.py` takes an optional team URL; it defaults to our 7-G team page.
+
+`scrape_history.py` is the slow one and is meant to be run once. psmf.cz keeps
+every season back to 2007 but links a team to none of its earlier selves, so
+finding it means walking a season's division pages until its slug turns up —
+which it does start from the division the team was in last time, so the usual
+cost is a handful of pages rather than sixty-eight. What it is after is the
+referee's write-up: every played match has a paragraph describing it, and it
+exists nowhere else. Afterwards `--seasons 1` re-reads only the season being
+played and merges it in, which is one request.
 
 ## How the measurement works
 

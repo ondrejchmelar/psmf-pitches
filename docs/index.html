@@ -160,6 +160,22 @@ dialog#prog::backdrop { background:rgba(0,0,0,.5); }
 .programme b { font:600 13.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; }
 .programme i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.h2h { font:600 11px/17px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
+  padding:0 7px; margin-left:8px; cursor:pointer; white-space:nowrap; }
+.h2h:hover { color:var(--ink); border-color:var(--muted); }
+.hsum { margin:-6px 0 14px; font-size:13px; color:var(--faint); }
+.hist { list-style:none; margin:0; padding:0; display:grid; gap:14px;
+  max-height:min(62vh, 640px); overflow-y:auto; }
+.hist li { padding-bottom:12px; border-bottom:1px solid var(--rule); }
+.hist li:last-child { border-bottom:0; padding-bottom:0; }
+.hline { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; font-size:14.5px; }
+.hist .who { flex:1 1 140px; min-width:0; }
+.hist .hf { font:400 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--faint); }
+.hist .meta2 { display:flex; gap:8px; align-items:baseline; margin-left:auto; }
+.hist i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.hist .rep { margin:6px 0 0; font-size:13.5px; line-height:1.5; color:var(--muted); }
+.hist .ref { margin:3px 0 0; font-size:12px; color:var(--faint); }
 .programme a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
 .programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
 td a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
@@ -249,7 +265,8 @@ Vygenerováno 29. 8. 2026.
 </div>
 
 <script type="application/json" id="psmf-data">{"venues":{"ARIT":{"code":"ARIT","venue":"Aritma","l":55,"w":24,"area":1320,"exact":"54.9 x 23.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.09788,"lon":14.337529,"addr":"Nad Lávkou 672/5, Praha 6","note":"Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.","img":"img/ARIT.823f9083.jpg"},"BECH":{"code":"BECH","venue":"Běchovice 2","l":44,"w":24,"area":1056,"exact":"43.9 x 23.91","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.075448,"lon":14.598036,"addr":"Na Korunce 580, Praha 9","note":"Single artificial pitch beside the clay tennis courts.","img":"img/BECH.d6415786.jpg"},"CESMI":{"code":"CESMI","venue":"Čechie Smíchov","l":45,"w":22,"area":990,"exact":"44.8 x 21.91","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.074826,"lon":14.365401,"addr":"Smrčinská 3346/5, Praha 5","note":"Single artificial pitch north of the natural-grass field. East edge nudged in: the automatic fit ran past the touchline onto the surround.","img":"img/CESMI.74f72355.jpg"},"CZU":{"code":"CZU","venue":"Sportcentrum ČZU","l":44,"w":24,"area":1056,"exact":"44.28 x 24.38","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.129712,"lon":14.378538,"addr":"Kamýcká 1275, Praha 6","note":"Single artificial pitch at the CZU sport centre; found on defaults, all four edges on the paint.","img":"img/CZU.f45505b6.jpg"},"DEKAN":{"code":"DEKAN","venue":"Děkanka","l":40,"w":23,"area":920,"exact":"40.39 x 23.11","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ i kopačky AG zakázány!","lat":50.053066,"lon":14.42984,"addr":"Děkanská vinice I 987/5, Praha 4","note":"Single artificial pitch at SK Nusle. The west edge ran 3.5 m past the goal line onto a carpet line; the real goal lines are confirmed by the halfway line at their midpoint and penalty areas 5.7 m inside each.","img":"img/DEKAN.7de07b01.jpg"},"HANSP":{"code":"HANSP","venue":"Hanspaulka","l":44,"w":21,"area":924,"exact":"44.26 x 21.31","kind":"whole_pitch","capture":"2024 leaf-off","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.105273,"lon":14.377884,"addr":"Na Hanspaulce 166/2, Praha 6","note":"Single artificial pitch among the tennis courts. Pinned to the 2024 leaf-off capture: in summer flights a tree shadow swallows the east end. The search band starts 1 m inside the carpet because the bright teal kerb sits exactly where the touchline search would otherwise land.","img":"img/HANSP.e6b36a96.jpg"},"HOSTI":{"code":"HOSTI","venue":"SK Hostivař","l":44,"w":29,"area":1276,"exact":"43.85 x 28.98","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.052564,"lon":14.520818,"addr":"Švehlova 1362/36, Praha 10","note":"Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. The south touchline is the awkward one. Three candidates sit within 4 m of each other -- the carpet edge (bright), a line 2.78 m inside it (3x), and the paint at 4.08 m, worn down to 1.2x background. It is the last of those, confirmed from the ground; the brighter two are the carpet and an older marking, and no automatic score will prefer the right one here.","img":"img/HOSTI.cd8c8506.jpg"},"HRAB1":{"code":"HRAB1","venue":"Hrabákova","l":45,"w":24,"area":1080,"exact":"44.89 x 23.8","kind":"section_1_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029824,"lon":14.481772,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 1 of 3 marked across the stadium field at Hrabakova, goals on the parent's touchlines. The parent's own markings (goal lines 6.4/95.7, penalty areas 22.4/79.6, halfway 51.0) are brighter than the cross-pitch lines and chroma sees the latter not at all, so the edges are measured, as at Prazacka. PSMF numbers from the restaurant ('c. 1 prvni zprava'), which the imagery cannot place; taken as running from the north. All three measure within a metre of each other, so the order costs little either way.","img":"img/HRAB1.e05aa26f.jpg"},"HRAB2":{"code":"HRAB2","venue":"Hrabákova","l":45,"w":25,"area":1125,"exact":"44.89 x 24.9","kind":"section_2_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029579,"lon":14.481843,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 2 of 3 at Hrabakova, the middle one. See the HRAB1 note.","img":"img/HRAB2.fed24c9c.jpg"},"HRAB3":{"code":"HRAB3","venue":"Hrabákova","l":45,"w":24,"area":1080,"exact":"44.89 x 23.8","kind":"section_3_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029334,"lon":14.481913,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 3 of 3 at Hrabakova. See the HRAB1 note on the numbering.","img":"img/HRAB3.d24510cd.jpg"},"KORAB":{"code":"KORAB","venue":"SC Koráb","l":46,"w":25,"area":1150,"exact":"45.58 x 24.99","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.113225,"lon":14.46595,"addr":"Krejčího 2261/2a, Praha 8","note":"Single artificial pitch. The paint sits 2.5 m inside the carpet on the west side and 4.3 m in on the east, and the carpet edge outshines it, so the search starts inside the turf as at Hanspaulka. The halfway line at 25.26 m confirms the goal lines at 2.56 and 47.96.","img":"img/KORAB.58bc84cb.jpg"},"LITVI":{"code":"LITVI","venue":"Litvínovská","l":44,"w":22,"area":968,"exact":"43.63 x 21.89","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.12024,"lon":14.4876,"addr":"Litvínovská 500/5, Praha 9","note":"Single artificial pitch at Sportcentrum Prosek; found on defaults.","img":"img/LITVI.2f916f68.jpg"},"MALES":{"code":"MALES","venue":"AFK Malešice","l":44,"w":22,"area":968,"exact":"43.86 x 21.91","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.08527,"lon":14.514805,"addr":"Heldova 555/1, Praha 10","note":"Single artificial pitch. The north edge fitted the carpet edge, 5.7 m beyond the goal line, and the west edge another carpet line 2.95 m out; both nudged onto the paint. Confirmed by the halfway line at 27.47 m, the exact midpoint of the goal lines, and penalty areas 5.9 m inside each.","img":"img/MALES.90ba6f24.jpg"},"METE1":{"code":"METE1","venue":"Meteor 8","l":40,"w":28,"area":1120,"exact":"40.2 x 27.87","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109419,"lon":14.469691,"addr":"U Meteoru 29/3, Praha 8","note":"Pitch 1 of 2 marked across the UMT field inside the running track, the western of the two and so the one nearer the kabiny (PSMF: 'c. 1 blize kabinam', which are past the main grass pitch to the west; confirmed by longitude). Each is 40.2 x 29 m -- the goal lines are the parent's touchlines, 40.2 m apart, which falls outside the 42-50 m the goal-line search accepts, so the rectangle is the measured one. The parent's own markings (goal lines 4.2/96.8, penalty areas 20.6/80.7, halfway 50.6) are far brighter than these.","img":"img/METE1.438f4e09.jpg"},"METE2":{"code":"METE2","venue":"Meteor 8","l":40,"w":28,"area":1120,"exact":"40.23 x 27.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109457,"lon":14.470359,"addr":"U Meteoru 29/3, Praha 8","note":"Pitch 2 of 2 at Meteor, the eastern one, nearer Zenklova street. See the METE1 note. The search band is tightened here because the fit otherwise walked 3.3 m onto a marking inside the goal line.","img":"img/METE2.014198cf.jpg"},"MIKU1":{"code":"MIKU1","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.89 x 23.9","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.030012,"lon":14.510843,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 1 of 4 at Mikulova: the east column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU1.fe7a7e06.jpg"},"MIKU2":{"code":"MIKU2","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.88 x 23.91","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.02996,"lon":14.510384,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 2 of 4 at Mikulova: the west column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU2.b72462f5.jpg"},"MIKU3":{"code":"MIKU3","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.91 x 23.9","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029499,"lon":14.510981,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 3 of 4 at Mikulova: the east column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU3.b86e7752.jpg"},"MIKU4":{"code":"MIKU4","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.9 x 23.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029447,"lon":14.510522,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 4 of 4 at Mikulova: the west column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU4.a7d6c70d.jpg"},"MOTO1":{"code":"MOTO1","venue":"Motorlet","l":50,"w":31,"area":1550,"exact":"49.8 x 30.83","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.051424,"lon":14.361776,"addr":"Butovická 592/35, Praha 5","note":"Pitch 1 at Motorlet, the one behind the club's office building (PSMF: 'c. 1 je vpravo za administrativni budovou'); found on defaults. MOTO4 is the small pitch beyond the UMT field.","img":"img/MOTO1.cae3f104.jpg"},"MOTO4":{"code":"MOTO4","venue":"Motorlet","l":50,"w":31,"area":1550,"exact":"49.62 x 30.79","kind":"whole_pitch","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.050293,"lon":14.360081,"addr":"Butovická 592/35, Praha 5","note":"Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here.","img":"img/MOTO4.9a4688f8.jpg"},"P1":{"code":"P1","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 23.95","kind":"section_1_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.093081,"lon":14.475182,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 1 of 3 at Prazacka: the eastern third, nearest the kabiny (PSMF: 'c. 1 nejblize kabinam'). Which end that is cannot be read off the imagery -- confirmed by hand, hence first_end E. Same parent and same measured edges as P2. We have no fixture here; measured so the number is ready if we are drawn on it.","img":"img/P1.ffdb7aff.jpg"},"P2":{"code":"P2","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 23.9","kind":"section_2_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.092926,"lon":14.474843,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam', which is the east end). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge. Middle third, so unaffected by which end the numbering starts from.","img":"img/P2.486aac2d.jpg"},"P3":{"code":"P3","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 24.0","kind":"section_3_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.092771,"lon":14.474506,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 3 of 3 at Prazacka, the western third and so the one furthest from the kabiny. See the P1 note on which end is which.","img":"img/P3.bd3ec55f.jpg"},"PLAM":{"code":"PLAM","venue":"Plamínkové","l":45,"w":24,"area":1080,"exact":"44.88 x 24.12","kind":"section_1_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.053067,"lon":14.435159,"addr":"Plamínkové 1593/2, Praha 4","note":"One carpet with two pitches stacked across it, each 44.9 x 23.9 m with a 6.1 m gap; PSMF gives the ground a single code and the two measure the same. Section 1 is the northern. The division lines are white here, invisible to the chroma fit, so the edges are the measured ones.","img":"img/PLAM.b13a14ea.jpg"},"PODV1":{"code":"PODV1","venue":"Podvinný mlýn","l":46,"w":22,"area":1012,"exact":"45.87 x 21.95","kind":"section_1_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109342,"lon":14.491987,"addr":"Kovanecká, Praha 9","note":"Pitch 1 of 2 at Podvinny mlyn: two pitches side by side on one carpet, each 22 m wide, with goal lines 45.8 m apart. Their side lines are ORANGE, not white -- they barely lift luminance and are lost in chroma, but stand out in b* (yellow). The white lines further out are the carpet's own, which is what the fit first took. PSMF numbers from the toilet cabins ('c.1 blize bunkam'), which the imagery cannot place; both measure the same.","img":"img/PODV1.9e66ae67.jpg"},"PODV2":{"code":"PODV2","venue":"Podvinný mlýn","l":46,"w":22,"area":1012,"exact":"45.89 x 21.9","kind":"section_2_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109571,"lon":14.491991,"addr":"Kovanecká, Praha 9","note":"Pitch 2 of 2 at Podvinny mlyn. See the PODV1 note: the side lines are orange, not the white ones further out.","img":"img/PODV2.ba9a2498.jpg"},"PRKOP":{"code":"PRKOP","venue":"Přední Kopanina","l":43,"w":23,"area":989,"exact":"43.48 x 22.68","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.114951,"lon":14.295543,"addr":"Ke Goniu 123, Praha 6","note":"Single artificial pitch at FC Predni Kopanina; found on defaults.","img":"img/PRKOP.17073e32.jpg"},"SANC1":{"code":"SANC1","venue":"SC Měcholupy","l":45,"w":24,"area":1080,"exact":"45.18 x 24.07","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.038704,"lon":14.548819,"addr":"Turínská 1483/3, Praha 10","note":"Left of the two adjacent pitches; north edge nudged in off a stray marking.","img":"img/SANC1.f03b7570.jpg"},"SANC2":{"code":"SANC2","venue":"SC Měcholupy","l":45,"w":25,"area":1125,"exact":"45.1 x 25.16","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.038831,"lon":14.549214,"addr":"Turínská 1483/3, Praha 10","note":"Right of the two adjacent pitches; west and north edges nudged in off the surround.","img":"img/SANC2.3e4cdf95.jpg"},"SCBEC":{"code":"SCBEC","venue":"SC Běchovice","l":40,"w":22,"area":880,"exact":"39.85 x 21.81","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.079699,"lon":14.620106,"addr":"Richtrova 536, Praha 9","note":"The pitch sits inside a small running track; without an ROI the blob search wandered off to a roof 50 m north-east. The north edge then fitted the carpet edge 10 m beyond the goal line: the real pair is 10.13 and 50.03, confirmed by the halfway line at 30.03 and penalty areas 5.9 m inside each.","img":"img/SCBEC.ad6bc013.jpg"},"SLIVE":{"code":"SLIVE","venue":"AFK Slivenec","l":50,"w":29,"area":1450,"exact":"49.81 x 28.66","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.021305,"lon":14.356461,"addr":"U Sportoviště 54/5, Praha 5","note":"Single artificial pitch at AFK Slivenec. The north edge fitted 3 m beyond the goal line; the pair that works is confirmed by the halfway line at their midpoint.","img":"img/SLIVE.8fdab746.jpg"},"STER1":{"code":"STER1","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.08 x 24.07","kind":"section_1_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070761,"lon":14.553346,"addr":"U Školy 430, Praha 10","note":"Pitch 1 of 3 at Sterboholy -- the third nearest the hall, which is the west end and is visible in the imagery, so unlike Prazacka the numbering here is not ambiguous. No fixture of ours this season. The gap fit finds its side lines unaided; only the goal-line nudges are its own.","img":"img/STER1.215a0fc4.jpg"},"STER2":{"code":"STER2","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.14 x 23.75","kind":"section_2_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070859,"lon":14.553701,"addr":"U Školy 430, Praha 10","note":"Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue. The three pitches do not touch: ~3.8 m of spare turf sits between them, so each has its own pair of blue side lines and section_gap_m lets the fit find them.","img":"img/STER2.37b757a0.jpg"},"STER3":{"code":"STER3","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.2 x 23.79","kind":"section_3_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070958,"lon":14.554055,"addr":"U Školy 430, Praha 10","note":"Pitch 3 of 3 on the same parent field as STER2, easternmost. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking. Same ~3.8 m gap to its neighbour, hence section_gap_m.","img":"img/STER3.dd0f81b0.jpg"},"STOD":{"code":"STOD","venue":"Sokol Stodůlky","l":46,"w":26,"area":1196,"exact":"45.53 x 26.23","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.051191,"lon":14.310978,"addr":"Kovářova 545, Praha 5","note":"The carpet runs 30 m east past the pitch and the pitch's own halfway line cuts the turf blob in two, so the detector sees a fragment -- the western half, goal line to halfway -- rather than a pitch. That fragment does give the angle and the width; the rectangle here extends it east by its own length to the far goal line, and the fit then settles it onto the paint.","img":"img/STOD.75649efa.jpg"},"TEMPO":{"code":"TEMPO","venue":"FC Tempo","l":43,"w":26,"area":1118,"exact":"43.19 x 25.95","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.020775,"lon":14.432648,"addr":"Ve Lhotce 1045/3, Praha 4","note":"Single artificial pitch at FC Tempo. The north edge sat 0.9 m outside its line, on a fainter marking; the real one reads 10x. The corners are under leaf cover, so go by the line rather than the turf edge.","img":"img/TEMPO.a0268da8.jpg"},"ZABEH":{"code":"ZABEH","venue":"Záběhlice","l":44,"w":23,"area":1012,"exact":"44.0 x 22.93","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, „lisovky“ i kopačky AG zakázány!","lat":50.053804,"lon":14.486978,"addr":"Záběhlická 82/3, Praha 10","note":"Single artificial pitch at the Ovcin centre; found on defaults.","img":"img/ZABEH.143cfaeb.jpg"},"ZAK":{"code":"ZAK","venue":"Zákostelní","l":45,"w":30,"area":1350,"exact":"44.69 x 29.88","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109063,"lon":14.505691,"addr":"Novoškolská 696/2, Praha 9","note":"Single artificial pitch at TJ Sokol Vysocany; found on defaults.","img":"img/ZAK.cef09870.jpg"}}}</script>
-<script>const TEAMS_URL = "data/teams.b37b70e8.json";</script>
+<script>const TEAMS_URL = "data/teams.c8ea3141.json";
+const HISTORY_URL = "data/history.3dc2fae2.json";</script>
 <script>
 const D = JSON.parse(document.getElementById('psmf-data').textContent);
 D.teams = [];
@@ -425,10 +442,85 @@ function openProgramme(date, code, mine) {
         <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
   }).join('');
   const dlg = document.getElementById('prog');
+  dlg.setAttribute('aria-label', 'Program na hřišti');
   dlg.innerHTML = `<div class="progbox">
       <header><h3>${esc(ground(code))} &middot; ${esc(date)}</h3>
         <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
       <ul class="programme">${items}</ul>
+    </div>`;
+  if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+}
+
+// ---- what happened last time -----------------------------------------------
+// One team's back catalogue, scraped season by season out of the archive: the
+// score, and the paragraph the referee wrote afterwards. It is fetched
+// alongside the fixtures and only ever describes the team that was scraped, so
+// everything below is a no-op for the other nine hundred.
+let H = null;
+const h2h = new Map();                // opponent slug -> past meetings, newest first
+
+function indexHistory() {
+  (H.m || []).forEach(m => {
+    if (!h2h.has(m.os)) h2h.set(m.os, []);
+    h2h.get(m.os).push(m);
+  });
+  h2h.forEach(list => list.sort((a, b) => (b.d || '').localeCompare(a.d || '')));
+}
+
+// The score as psmf.cz writes it is home:away. In a history read from one
+// team's side that flips meaning every other line, so it is turned round to
+// ours:theirs and the venue column says which side we were.
+const ourWay = m => (m.h ? m.s : m.s.split(':').reverse().join(':'));
+
+function tally(list) {
+  const t = { w: 0, d: 0, l: 0, gf: 0, ga: 0 };
+  list.forEach(m => {
+    const p = ourWay(m).split(':').map(Number);
+    t.gf += p[0]; t.ga += p[1];
+    if (m.r === 'W') t.w++; else if (m.r === 'L') t.l++; else t.d++;
+  });
+  return t;
+}
+
+// "2026-06-16" -> "16. 6. 2026"
+const dmy = d => {
+  const p = /(\d{4})-(\d{2})-(\d{2})/.exec(d || '');
+  return p ? `${+p[3]}. ${+p[2]}. ${p[1]}` : (d || '');
+};
+
+function h2hChip(f, t) {
+  if (!H || t.sl !== H.slug) return '';
+  const opp = kitByName.get((f.o || '').toLowerCase());
+  const list = (opp && opp.sl && h2h.get(opp.sl)) || [];
+  if (!list.length) return '';
+  const r = tally(list);
+  return `<button type="button" class="h2h" data-slug="${esc(opp.sl)}"
+    title="Vzájemné zápasy — výhry, remízy, prohry">${r.w}\u2013${r.d}\u2013${r.l}</button>`;
+}
+
+function openHistory(slug) {
+  const list = h2h.get(slug) || [];
+  if (!list.length) return;
+  const r = tally(list);
+  const items = list.map(m => {
+    const cls = m.r === 'W' ? 'win' : m.r === 'L' ? 'loss' : 'draw';
+    const half = m.hf ? (m.h ? m.hf : m.hf.split(':').reverse().join(':')) : '';
+    return `<li>
+      <div class="hline"><span class="res ${cls}">${esc(ourWay(m))}</span>
+        ${half ? `<span class="hf">(${esc(half)})</span>` : ''}
+        <span class="who">${m.h ? 'doma' : 'venku'} &middot; ${esc(m.l)}</span>
+        <span class="meta2"><i>${esc(dmy(m.d))}</i><code>${esc(m.v)}</code></span></div>
+      ${m.w ? `<p class="rep">${esc(m.w)}</p>` : ''}
+      ${m.ref ? `<p class="ref">${esc(m.ref)}</p>` : ''}</li>`;
+  }).join('');
+  const dlg = document.getElementById('prog');
+  dlg.setAttribute('aria-label', 'Vzájemné zápasy');
+  dlg.innerHTML = `<div class="progbox">
+      <header><h3>${esc(H.team)} &ndash; ${esc(list[0].o)}</h3>
+        <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
+      <p class="hsum">${list.length}&times; &middot; ${r.w}&ndash;${r.d}&ndash;${r.l}
+        &middot; skóre ${r.gf}:${r.ga} &middot; naše skóre vždy první</p>
+      <ul class="hist">${items}</ul>
     </div>`;
   if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
 }
@@ -532,7 +624,10 @@ function downloadIcs(t) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+let shown = null;                     // what renderTeam last drew
+
 function renderTeam(i) {
+  shown = i;
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
   document.getElementById('all-head').textContent =
@@ -551,7 +646,7 @@ function renderTeam(i) {
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td class="num">${resultTag(f)}</td>
-      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
+      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f, t)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
@@ -571,6 +666,7 @@ function renderTeam(i) {
   }).join('');
 
   const prov = t.fx.filter(f => f.s && !f.of).length;
+  const met = new Set(t.fx.filter(f => h2hChip(f, t)).map(f => f.o)).size;
   let w = 0, d = 0, l = 0;
   t.fx.forEach(f => { const o = outcome(f); if (o === 'win') w++; else if (o === 'draw') d++; else if (o === 'loss') l++; });
   const played = w + d + l;
@@ -598,6 +694,7 @@ function renderTeam(i) {
       <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
+    ${met ? `<p class="nt">S ${met} soupeři už jsme se potkali — číslo u jména je vzájemná bilance, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
@@ -605,23 +702,29 @@ function renderTeam(i) {
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
-
-  host.addEventListener('click', e => {
-    const more = e.target.closest('.more');
-    if (more) {
-      openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
-      return;
-    }
-    const link = e.target.closest('.tlink');
-    if (link) {
-      e.preventDefault();
-      const i = Number(link.dataset.i);
-      showTeam(i);
-      setParam(D.teams[i], true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
 }
+
+// Bound once, to the container rather than to what is in it: renderTeam runs
+// again on every pick, and a listener added there would stack up a copy per
+// team looked at -- and then open the dialog twice, which throws the second
+// time. #team is in the page from the start, so this can sit outside.
+document.getElementById('team').addEventListener('click', e => {
+  const more = e.target.closest('.more');
+  if (more) {
+    openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
+    return;
+  }
+  const past = e.target.closest('.h2h');
+  if (past) { openHistory(past.dataset.slug); return; }
+  const link = e.target.closest('.tlink');
+  if (link) {
+    e.preventDefault();
+    const i = Number(link.dataset.i);
+    showTeam(i);
+    setParam(D.teams[i], true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
 
 function renderAll() {
   document.getElementById('all').innerHTML = Object.values(D.venues)
@@ -842,6 +945,23 @@ function loadTeams() {
       if (who) who.textContent = 'Rozpisy se nenačetly — zkuste obnovit stránku.';
       console.error('teams.json:', err);
     });
+  loadHistory();
+}
+
+// Alongside the fixtures rather than after them: it is one team's matches, a
+// fraction of the size, and neither waits on the other. If it arrives after a
+// team is already drawn, that team is drawn again -- only the one team it is
+// about gains anything, and only the little balance chips change.
+function loadHistory() {
+  if (!HISTORY_URL) return;
+  fetch(HISTORY_URL)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      H = data;
+      indexHistory();
+      if (shown !== null && D.teams[shown] && D.teams[shown].sl === H.slug) renderTeam(shown);
+    })
+    .catch(err => console.error('history.json:', err));
 }
 
 if (window.requestAnimationFrame) {

@@ -210,7 +210,7 @@ for t in season.get("teams", []):
            "of": bool(f.get("official"))}
           for f in t["fixtures"]]
     if fx:
-        teams.append({"name": t["name"],
+        teams.append({"name": t["name"], "sl": t.get("slug", ""),
                       "div": div_label(t.get("comp"), t["division"]), "fx": fx,
                       "kit": t.get("colours", ""),
                       "sw": colours(t.get("colours", "")),               # badge
@@ -223,19 +223,47 @@ teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 # reader sees. The teams are a megabyte and nobody needs them until they pick
 # one, so they are fetched after the first paint.
 (OUT / "data").mkdir(parents=True, exist_ok=True)
-teams_json = json.dumps({"teams": teams}, ensure_ascii=False,
-                        separators=(",", ":")).encode()
-TEAMS_FILE = f"teams.{digest(teams_json)}.json"
-(OUT / "data" / TEAMS_FILE).write_bytes(teams_json)
-# Keep the previous file as well as the current one. GitHub Pages serves
-# index.html with a short cache, so for a few minutes after a build someone can
-# still be holding the old page -- which asks for the old name. One spare file
-# turns a 404 into a hit; older ones are no use to anybody.
-keep = sorted((OUT / "data").glob("teams.*.json"),
-              key=lambda f: f.stat().st_mtime, reverse=True)[:2]
-for stale in (OUT / "data").glob("teams.*.json"):
-    if stale not in keep:
-        stale.unlink()
+
+
+def publish(stem, payload):
+    """Write docs/data/<stem>.<hash>.json and return its filename.
+
+    Keeps the previous file as well as the current one. GitHub Pages serves
+    index.html with a short cache, so for a few minutes after a build someone
+    can still be holding the old page -- which asks for the old name. One spare
+    file turns a 404 into a hit; older ones are no use to anybody.
+    """
+    data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
+    name = f"{stem}.{digest(data)}.json"
+    (OUT / "data" / name).write_bytes(data)
+    keep = sorted((OUT / "data").glob(f"{stem}.*.json"),
+                  key=lambda f: f.stat().st_mtime, reverse=True)[:2]
+    for stale in (OUT / "data").glob(f"{stem}.*.json"):
+        if stale not in keep:
+            stale.unlink()
+    return name
+
+
+TEAMS_FILE = publish("teams", {"teams": teams})
+
+# -------------------------------------------------------------------- history
+# Our own back catalogue, when scrape_history.py has been run: every past match
+# and, for most of them, the paragraph the referee wrote about it. It is one
+# team's worth of matches rather than the league's, and nothing on the page
+# needs it until that team is picked, so it travels in its own file.
+HISTORY_FILE = ""
+hist_src = ROOT / "data/history.json"
+if hist_src.exists():
+    hist = json.loads(hist_src.read_text("utf-8"))
+    HISTORY_FILE = publish("history", {
+        "slug": hist["slug"], "team": hist["team"],
+        # Only played matches: a fixture with no score says nothing about a
+        # meeting that has not happened. Keys are short because the write-ups
+        # are the payload and everything else is repeated 200 times.
+        "m": [{"d": m["date"], "l": m["label"], "v": m["venue"], "o": m["opponent"],
+               "os": m["opp_slug"], "h": m["home"], "s": m["score"], "hf": m["half"],
+               "r": m.get("res", ""), "ref": m["referee"], "w": m["report"]}
+              for m in hist["matches"] if m.get("score")]})
 
 blob = json.dumps({"venues": V}, ensure_ascii=False,
                   separators=(",", ":")).replace("<", "\\u003c")
@@ -409,6 +437,22 @@ dialog#prog::backdrop { background:rgba(0,0,0,.5); }
 .programme b { font:600 13.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; }
 .programme i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.h2h { font:600 11px/17px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
+  padding:0 7px; margin-left:8px; cursor:pointer; white-space:nowrap; }
+.h2h:hover { color:var(--ink); border-color:var(--muted); }
+.hsum { margin:-6px 0 14px; font-size:13px; color:var(--faint); }
+.hist { list-style:none; margin:0; padding:0; display:grid; gap:14px;
+  max-height:min(62vh, 640px); overflow-y:auto; }
+.hist li { padding-bottom:12px; border-bottom:1px solid var(--rule); }
+.hist li:last-child { border-bottom:0; padding-bottom:0; }
+.hline { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; font-size:14.5px; }
+.hist .who { flex:1 1 140px; min-width:0; }
+.hist .hf { font:400 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--faint); }
+.hist .meta2 { display:flex; gap:8px; align-items:baseline; margin-left:auto; }
+.hist i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.hist .rep { margin:6px 0 0; font-size:13.5px; line-height:1.5; color:var(--muted); }
+.hist .ref { margin:3px 0 0; font-size:12px; color:var(--faint); }
 .programme a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
 .programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
 td a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
@@ -619,10 +663,85 @@ function openProgramme(date, code, mine) {
         <i>${esc(mm.div)}</i><code>${esc(mm.c)}</code></span></li>`;
   }).join('');
   const dlg = document.getElementById('prog');
+  dlg.setAttribute('aria-label', 'Program na hřišti');
   dlg.innerHTML = `<div class="progbox">
       <header><h3>${esc(ground(code))} &middot; ${esc(date)}</h3>
         <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
       <ul class="programme">${items}</ul>
+    </div>`;
+  if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+}
+
+// ---- what happened last time -----------------------------------------------
+// One team's back catalogue, scraped season by season out of the archive: the
+// score, and the paragraph the referee wrote afterwards. It is fetched
+// alongside the fixtures and only ever describes the team that was scraped, so
+// everything below is a no-op for the other nine hundred.
+let H = null;
+const h2h = new Map();                // opponent slug -> past meetings, newest first
+
+function indexHistory() {
+  (H.m || []).forEach(m => {
+    if (!h2h.has(m.os)) h2h.set(m.os, []);
+    h2h.get(m.os).push(m);
+  });
+  h2h.forEach(list => list.sort((a, b) => (b.d || '').localeCompare(a.d || '')));
+}
+
+// The score as psmf.cz writes it is home:away. In a history read from one
+// team's side that flips meaning every other line, so it is turned round to
+// ours:theirs and the venue column says which side we were.
+const ourWay = m => (m.h ? m.s : m.s.split(':').reverse().join(':'));
+
+function tally(list) {
+  const t = { w: 0, d: 0, l: 0, gf: 0, ga: 0 };
+  list.forEach(m => {
+    const p = ourWay(m).split(':').map(Number);
+    t.gf += p[0]; t.ga += p[1];
+    if (m.r === 'W') t.w++; else if (m.r === 'L') t.l++; else t.d++;
+  });
+  return t;
+}
+
+// "2026-06-16" -> "16. 6. 2026"
+const dmy = d => {
+  const p = /(\d{4})-(\d{2})-(\d{2})/.exec(d || '');
+  return p ? `${+p[3]}. ${+p[2]}. ${p[1]}` : (d || '');
+};
+
+function h2hChip(f, t) {
+  if (!H || t.sl !== H.slug) return '';
+  const opp = kitByName.get((f.o || '').toLowerCase());
+  const list = (opp && opp.sl && h2h.get(opp.sl)) || [];
+  if (!list.length) return '';
+  const r = tally(list);
+  return `<button type="button" class="h2h" data-slug="${esc(opp.sl)}"
+    title="Vzájemné zápasy — výhry, remízy, prohry">${r.w}\u2013${r.d}\u2013${r.l}</button>`;
+}
+
+function openHistory(slug) {
+  const list = h2h.get(slug) || [];
+  if (!list.length) return;
+  const r = tally(list);
+  const items = list.map(m => {
+    const cls = m.r === 'W' ? 'win' : m.r === 'L' ? 'loss' : 'draw';
+    const half = m.hf ? (m.h ? m.hf : m.hf.split(':').reverse().join(':')) : '';
+    return `<li>
+      <div class="hline"><span class="res ${cls}">${esc(ourWay(m))}</span>
+        ${half ? `<span class="hf">(${esc(half)})</span>` : ''}
+        <span class="who">${m.h ? 'doma' : 'venku'} &middot; ${esc(m.l)}</span>
+        <span class="meta2"><i>${esc(dmy(m.d))}</i><code>${esc(m.v)}</code></span></div>
+      ${m.w ? `<p class="rep">${esc(m.w)}</p>` : ''}
+      ${m.ref ? `<p class="ref">${esc(m.ref)}</p>` : ''}</li>`;
+  }).join('');
+  const dlg = document.getElementById('prog');
+  dlg.setAttribute('aria-label', 'Vzájemné zápasy');
+  dlg.innerHTML = `<div class="progbox">
+      <header><h3>${esc(H.team)} &ndash; ${esc(list[0].o)}</h3>
+        <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
+      <p class="hsum">${list.length}&times; &middot; ${r.w}&ndash;${r.d}&ndash;${r.l}
+        &middot; skóre ${r.gf}:${r.ga} &middot; naše skóre vždy první</p>
+      <ul class="hist">${items}</ul>
     </div>`;
   if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
 }
@@ -726,7 +845,10 @@ function downloadIcs(t) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+let shown = null;                     // what renderTeam last drew
+
 function renderTeam(i) {
+  shown = i;
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
   document.getElementById('all-head').textContent =
@@ -745,7 +867,7 @@ function renderTeam(i) {
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td class="num">${resultTag(f)}</td>
-      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${warn
+      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f, t)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
@@ -765,6 +887,7 @@ function renderTeam(i) {
   }).join('');
 
   const prov = t.fx.filter(f => f.s && !f.of).length;
+  const met = new Set(t.fx.filter(f => h2hChip(f, t)).map(f => f.o)).size;
   let w = 0, d = 0, l = 0;
   t.fx.forEach(f => { const o = outcome(f); if (o === 'win') w++; else if (o === 'draw') d++; else if (o === 'loss') l++; });
   const played = w + d + l;
@@ -792,6 +915,7 @@ function renderTeam(i) {
       <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
+    ${met ? `<p class="nt">S ${met} soupeři už jsme se potkali — číslo u jména je vzájemná bilance, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
@@ -799,23 +923,29 @@ function renderTeam(i) {
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
-
-  host.addEventListener('click', e => {
-    const more = e.target.closest('.more');
-    if (more) {
-      openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
-      return;
-    }
-    const link = e.target.closest('.tlink');
-    if (link) {
-      e.preventDefault();
-      const i = Number(link.dataset.i);
-      showTeam(i);
-      setParam(D.teams[i], true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  });
 }
+
+// Bound once, to the container rather than to what is in it: renderTeam runs
+// again on every pick, and a listener added there would stack up a copy per
+// team looked at -- and then open the dialog twice, which throws the second
+// time. #team is in the page from the start, so this can sit outside.
+document.getElementById('team').addEventListener('click', e => {
+  const more = e.target.closest('.more');
+  if (more) {
+    openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
+    return;
+  }
+  const past = e.target.closest('.h2h');
+  if (past) { openHistory(past.dataset.slug); return; }
+  const link = e.target.closest('.tlink');
+  if (link) {
+    e.preventDefault();
+    const i = Number(link.dataset.i);
+    showTeam(i);
+    setParam(D.teams[i], true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
 
 function renderAll() {
   document.getElementById('all').innerHTML = Object.values(D.venues)
@@ -1036,6 +1166,23 @@ function loadTeams() {
       if (who) who.textContent = 'Rozpisy se nenačetly — zkuste obnovit stránku.';
       console.error('teams.json:', err);
     });
+  loadHistory();
+}
+
+// Alongside the fixtures rather than after them: it is one team's matches, a
+// fraction of the size, and neither waits on the other. If it arrives after a
+// team is already drawn, that team is drawn again -- only the one team it is
+// about gains anything, and only the little balance chips change.
+function loadHistory() {
+  if (!HISTORY_URL) return;
+  fetch(HISTORY_URL)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      H = data;
+      indexHistory();
+      if (shown !== null && D.teams[shown] && D.teams[shown].sl === H.slug) renderTeam(shown);
+    })
+    .catch(err => console.error('history.json:', err));
 }
 
 if (window.requestAnimationFrame) {
@@ -1044,6 +1191,8 @@ if (window.requestAnimationFrame) {
   boot();
 }
 """
+
+history_url = f'"data/{HISTORY_FILE}"' if HISTORY_FILE else "null"
 
 html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1098,7 +1247,8 @@ Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 </div>
 
 <script type="application/json" id="psmf-data">{blob}</script>
-<script>const TEAMS_URL = "data/{TEAMS_FILE}";</script>
+<script>const TEAMS_URL = "data/{TEAMS_FILE}";
+const HISTORY_URL = {history_url};</script>
 <script>{JS}</script>
 """
 
