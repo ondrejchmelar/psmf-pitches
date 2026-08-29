@@ -13,7 +13,7 @@ team in the browser. Two consequences worth knowing before editing:
 * docs/ is what GitHub Pages serves, so the page is written straight there. It
   carries its imagery inline, so index.html on its own is the whole site.
 """
-import base64, json, re
+import json, re
 from datetime import date
 from pathlib import Path
 
@@ -29,18 +29,27 @@ venues = json.loads((ROOT / "data/venues.json").read_text("utf-8"))
 season_path = ROOT / "data/season.json"
 season = json.loads(season_path.read_text("utf-8")) if season_path.exists() else {"teams": []}
 
-IMG_W, IMG_Q = 720, 72        # 40-odd venues ride in this file; keep each light
+IMG_W, IMG_Q = 900, 78        # served as files now, so they can afford to be better
+OUT = ROOT / "docs"
+STAMP = date.today().strftime("%Y%m%d")   # cache-buster; the files keep their names
 
 
-def jpeg_uri(path, width=IMG_W, q=IMG_Q):
-    img = cv2.imread(str(path))
+def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
+    """Write one venue photo into docs/img and return its URL.
+
+    These used to be data: URIs inside the page, which made it one file at the
+    cost of four megabytes before anything could be shown. As separate files the
+    browser fetches them lazily, in parallel, and caches them across visits.
+    """
+    img = cv2.imread(str(src))
     if img is None:
         return ""
     h, w = img.shape[:2]
     if w > width:
         img = cv2.resize(img, (width, int(h * width / w)), interpolation=cv2.INTER_AREA)
-    ok, buf = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, q])
-    return "data:image/jpeg;base64," + base64.b64encode(buf.tobytes()).decode()
+    (OUT / "img").mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(str(OUT / "img" / f"{code}.jpg"), img, [cv2.IMWRITE_JPEG_QUALITY, q])
+    return f"img/{code}.jpg?v={STAMP}"
 
 
 # ---------------------------------------------------------------- jerseys
@@ -133,7 +142,7 @@ for code, m in ms.items():
         "lat": round(lat, 6), "lon": round(lon, 6),
         "addr": (venues.get(code, {}) or {}).get("address", ""),
         "note": (ov.get(code) or {}).get("note", ""),
-        "img": jpeg_uri(ROOT / f"out/{code}_pitch1.png"),
+        "img": write_jpeg(ROOT / f"out/{code}_pitch1.png", code),
     }
     if v.get("training"):
         V.pop(code)          # measured for our own comparison, not a PSMF ground
@@ -171,8 +180,16 @@ teams.sort(key=lambda t: (t["name"].lower(), t["div"]))
 
 # No team is selected on load. The page is for the league, so it opens on the
 # whole directory rather than on whoever built it.
-blob = json.dumps({"venues": V, "teams": teams},
-                  ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+# Venues stay in the page: 39 short records, and the grid is the first thing a
+# reader sees. The teams are a megabyte and nobody needs them until they pick
+# one, so they are fetched after the first paint.
+(OUT / "data").mkdir(parents=True, exist_ok=True)
+teams_path = OUT / "data/teams.json"
+teams_path.write_text(json.dumps({"teams": teams}, ensure_ascii=False,
+                                 separators=(",", ":")), "utf-8")
+
+blob = json.dumps({"venues": V}, ensure_ascii=False,
+                  separators=(",", ":")).replace("<", "\\u003c")
 
 # Applied before the page paints, so a stored choice does not arrive as a flash
 # of the other theme. Kept apart from the main script, which runs at the end.
@@ -238,6 +255,7 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
 .pick input { flex:1 1 260px; min-width:0; font:inherit; font-size:16px; padding:9px 12px;
   color:var(--ink); background:var(--ground); border:1px solid var(--rule); border-radius:3px; }
 .pick input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+.pick input:disabled { opacity:.6; cursor:progress; }
 .pick .who { font-size:13px; color:var(--faint); }
 .combo { position:relative; flex:1 1 260px; min-width:0; }
 .combo input { width:100%; padding-right:38px; }
@@ -372,6 +390,7 @@ a:focus-visible, tr:focus-visible { outline:2px solid var(--accent); outline-off
 
 JS = r"""
 const D = JSON.parse(document.getElementById('psmf-data').textContent);
+D.teams = [];
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g,
   c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const mx = Math.max(...Object.values(D.venues).map(v => v.area));
@@ -453,10 +472,6 @@ function clashes(a, b) {
 // Opponents are named, not linked, so match them by name; a name shared across
 // divisions is ambiguous, and an ambiguous kit is worse than none.
 const kitByName = new Map();
-D.teams.forEach(t => {
-  const k = t.name.toLowerCase();
-  kitByName.set(k, kitByName.has(k) ? null : t);
-});
 
 // ---- what else is on at the same ground ------------------------------------
 // Built here rather than shipped: every match is already in the blob twice,
@@ -465,10 +480,6 @@ D.teams.forEach(t => {
 // and Mikulova 1-4 together and keeps Běchovice 2 apart from SC Běchovice --
 // same name, one ground; different name, different areál.
 const nameToIdx = new Map();
-D.teams.forEach((t, i) => {
-  const k = t.name.toLowerCase();
-  nameToIdx.set(k, nameToIdx.has(k) ? null : i);
-});
 const minutes = t => {
   const m = /(\d{1,2}):(\d{2})/.exec(t || '');
   return m ? +m[1] * 60 + +m[2] : 0;
@@ -476,16 +487,25 @@ const minutes = t => {
 const ground = c => (D.venues[c] ? D.venues[c].venue : c);
 
 const programme = new Map();          // "ground|date" -> [match]
-{
+
+// Everything derived from the team list, built once it has arrived. The page
+// renders its pitches before this runs.
+function indexTeams() {
+  keys = D.teams.map(t => fold(label(t)));
+  D.teams.forEach((t, i) => {
+    const lower = t.name.toLowerCase();
+    nameToIdx.set(lower, nameToIdx.has(lower) ? null : i);
+    kitByName.set(lower, kitByName.has(lower) ? null : t);
+  });
   const seen = new Set();
   D.teams.forEach(t => t.fx.forEach(f => {
     const home = f.h ? t.name : f.o, away = f.h ? f.o : t.name;
     const id = `${f.d}|${f.t}|${f.c}|${home}|${away}`;
     if (seen.has(id)) return;
     seen.add(id);
-    const key = `${ground(f.c)}|${f.d}`;
-    if (!programme.has(key)) programme.set(key, []);
-    programme.get(key).push({ tm: f.t, c: f.c, home, away, div: t.div, id });
+    const k = `${ground(f.c)}|${f.d}`;
+    if (!programme.has(k)) programme.set(k, []);
+    programme.get(k).push({ tm: f.t, c: f.c, home, away, div: t.div, id });
   }));
   programme.forEach(list => list.sort((a, b) => minutes(a.tm) - minutes(b.tm)));
 }
@@ -752,7 +772,7 @@ const clearBtn = document.getElementById('clear');
 const label = t => `${t.name} (${t.div})`;
 // Fold case and diacritics: nobody types Pražačka with the háček when hunting.
 const fold = s => String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-const keys = D.teams.map(t => fold(label(t)));
+let keys = [];
 
 // A datalist looked like the obvious control and is not: Chrome and Edge
 // suppress it whenever the input carries autocomplete="off", and with 720
@@ -894,14 +914,37 @@ dlg.addEventListener('click', e => {
 // moment, and the script runs last, so without yielding first the browser never
 // paints the spinner it is about to replace. Two frames guarantees one paint.
 function boot() {
-  renderAll();
-  let start = null;
-  try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
-  if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
-  else renderTeam(null);
-  showClear();
+  renderAll();                       // the pitches: they are already in the page
   const load = document.getElementById('loading');
   if (load) load.hidden = true;
+  loadTeams();
+}
+
+// The fixtures are a megabyte and nobody needs them until a team is picked, so
+// they arrive after the pitches are on screen. Until then the picker says so
+// rather than sitting there looking broken.
+function loadTeams() {
+  const who = document.querySelector('.pick .who');
+  input.disabled = true;
+  input.placeholder = 'Načítám týmy…';
+  fetch('data/teams.json?v=' + DATA_STAMP)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(data => {
+      D.teams = data.teams || [];
+      indexTeams();
+      input.disabled = false;
+      input.placeholder = 'Začněte psát název týmu…';
+      if (who) who.textContent = `${D.teams.length} týmů · odkaz na vybraný tým lze sdílet`;
+      let start = null;
+      try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
+      if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
+      showClear();
+    })
+    .catch(err => {
+      input.placeholder = 'Rozpisy se nepodařilo načíst';
+      if (who) who.textContent = 'Rozpisy se nenačetly — zkuste obnovit stránku.';
+      console.error('teams.json:', err);
+    });
 }
 
 if (window.requestAnimationFrame) {
@@ -938,7 +981,7 @@ veteránské soutěže.</p>
             aria-label="Vymazat výběr týmu" title="Vymazat">&times;</button>
     <div class="sugg" id="sugg" role="listbox" hidden></div>
   </div>
-  <span class="who">{len(teams)} týmů &middot; odkaz na vybraný tým lze sdílet</span>
+  <span class="who">načítám rozpisy&hellip;</span>
 </div>
 <noscript><p class="lede" style="margin-top:18px">Výběr týmu probíhá v prohlížeči,
 takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
@@ -964,6 +1007,7 @@ Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 </div>
 
 <script type="application/json" id="psmf-data">{blob}</script>
+<script>const DATA_STAMP = "{STAMP}";</script>
 <script>{JS}</script>
 """
 
