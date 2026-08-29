@@ -172,6 +172,14 @@ tr.warn td { background:color-mix(in srgb, var(--away) 9%, transparent); }
 .pin.lead { margin:0 7px 0 0; }
 .pin:hover { color:var(--accent); }
 .empty { color:var(--faint); font-size:14px; }
+.loading { display:flex; align-items:center; gap:12px; color:var(--faint); font-size:15px;
+  padding:28px 0; }
+.loading[hidden] { display:none; }
+.sp { width:18px; height:18px; flex:none; border-radius:50%;
+  border:2px solid var(--rule); border-top-color:var(--accent);
+  animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .sp { animation-duration:2.4s; } }
 footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
   font-size:12.5px; color:var(--faint); }
 a { color:var(--accent); }
@@ -222,6 +230,7 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 SC Běchovice, by se do největšího (Motorlet)
 vešlo 1.8&times;.</p>
 <div class="grid" id="all"></div>
+<p class="loading" id="loading"><span class="sp" aria-hidden="true"></span>Načítám hřiště&hellip;</p>
 
 <footer>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
@@ -752,10 +761,23 @@ dlg.addEventListener('click', e => {
   if (e.target.closest('.x') || !e.target.closest('.progbox')) dlg.close();
 });
 
-renderAll();
-let start = null;
-try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
-if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
-else renderTeam(null);
-showClear();
+// Parsing four megabytes of JSON and laying out thirty-nine cards takes a
+// moment, and the script runs last, so without yielding first the browser never
+// paints the spinner it is about to replace. Two frames guarantees one paint.
+function boot() {
+  renderAll();
+  let start = null;
+  try { start = lookup(new URLSearchParams(location.search).get('team') || ''); } catch (e) { }
+  if (start !== null) { input.value = label(D.teams[start]); renderTeam(start); }
+  else renderTeam(null);
+  showClear();
+  const load = document.getElementById('loading');
+  if (load) load.hidden = true;
+}
+
+if (window.requestAnimationFrame) {
+  requestAnimationFrame(() => requestAnimationFrame(boot));
+} else {
+  boot();
+}
 </script>
