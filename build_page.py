@@ -902,6 +902,10 @@ function choose(i) {
   setParam(D.teams[i], true);
   closeList();
   showClear();
+  // The tap that picks a team is a mousedown we preventDefault, so focus never
+  // leaves the input and the phone keyboard stays up over the fixtures the tap
+  // just asked for. Nothing more is being typed, so let it go.
+  input.blur();
 }
 
 clearBtn.addEventListener('click', () => {
