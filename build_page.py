@@ -504,7 +504,9 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .card img { display:block; width:100%; height:100%; object-fit:cover; }
 .card .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:9px; }
 .ch { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
-.ch h3 { margin:0; font-size:15.5px; font-weight:640; letter-spacing:-.01em; }
+.ch h3 { margin:0; font-size:15.5px; font-weight:640; letter-spacing:-.01em;
+  display:flex; align-items:center; gap:7px; }
+.ch h3 .pin { margin:0; }
 .ch .d { margin:0; font:600 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; color:var(--accent); white-space:nowrap; }
 .bar { position:relative; height:20px; background:var(--sunk); border-radius:2px;
