@@ -1,13 +1,17 @@
 name: Denní obnova výsledků
 
-# Results appear on psmf.cz through the evening and night after each round, so
-# this runs in the early morning Prague time and again in the afternoon for the
-# matches that get filled in late. It only rebuilds the page; the pitches are
-# measured by hand and their photos are committed.
+# A score is not written once. It appears a couple of days after the match,
+# unofficially, from a player -- and is then replaced by the referee's official
+# result, which is not always the same number. So the morning run re-reads every
+# team with a match in the last ten days whether it has a score or not, and the
+# afternoon run does the cheap pass: only the teams still missing one.
+#
+# It only rebuilds the page. Pitches are measured by hand and their photos are
+# committed, so nothing here needs opencv.
 on:
   schedule:
-    - cron: "20 4 * * *"      # 06:20 Prague in summer, 05:20 in winter
-    - cron: "20 13 * * *"     # and once in the afternoon
+    - cron: "20 4 * * *"      # 06:20 Prague in summer, 05:20 in winter: full pass
+    - cron: "20 13 * * *"     # mid-afternoon: only what is still missing
   workflow_dispatch:          # and on demand, from the Actions tab
 
 concurrency:
@@ -34,8 +38,15 @@ jobs:
       - name: Install
         run: pip install --quiet requests pyproj
 
+      # The afternoon run only chases matches with no score at all -- a few
+      # hundred pages instead of nine hundred.
       - name: Fetch results
-        run: python scrape_season.py --results --pause 0.4
+        run: |
+          if [ "${{ github.event.schedule }}" = "20 13 * * *" ]; then
+            python scrape_season.py --results --missing-only --pause 0.4
+          else
+            python scrape_season.py --results --pause 0.4
+          fi
 
       - name: Rebuild the page
         run: python build_page.py --no-images

@@ -97,20 +97,23 @@ def fixture_date(text):
     return datetime.date(2000 + y if y < 100 else y, int(m.group(2)), int(m.group(1)))
 
 
-RESULT_WINDOW = 8        # days back a missing score is still worth asking about
+RESULT_WINDOW = 10       # days a played match is still worth asking about
 
 
-def refresh_results(pause: float, today=None, window=RESULT_WINDOW) -> None:
-    """Re-read only the teams that could have a new result.
+def refresh_results(pause: float, today=None, window=RESULT_WINDOW,
+                    missing_only=False) -> None:
+    """Re-read the teams whose recent matches may have changed.
 
-    A daily refresh does not need all 938 team pages: a team plays once a week,
-    so only those whose recent match has no score yet can have changed.
+    A score does not appear once and stay put. It arrives a couple of days after
+    the match, unofficially, from a player -- and is then replaced by the
+    referee's official result, which is not always the same number. So a match
+    is worth re-reading for a while *after* it already has a score, not only
+    while it is missing one. `missing_only` does the cheap pass instead, for
+    teams with no score at all yet.
 
-    The window matters. "Any past fixture without a score" looks right and is
-    not: a match whose result never gets recorded -- postponed, or simply not
-    filled in -- would keep its two teams in the queue for the rest of the
-    season, and by mid-October that is every team, every day. Eight days covers
-    the last round with several retries, then lets it go.
+    The window is what stops this growing: without it, one result that never
+    gets recorded would keep its two teams in the queue for the rest of the
+    season, and by mid-October that is every team, every day, forever.
     """
     today = today or datetime.date.today()
     since = today - datetime.timedelta(days=window)
@@ -119,7 +122,9 @@ def refresh_results(pause: float, today=None, window=RESULT_WINDOW) -> None:
 
     def stale_fixture(f):
         d = fixture_date(f["date"])
-        return not f.get("score") and d is not None and since <= d <= today
+        if d is None or not (since <= d <= today):
+            return False
+        return not f.get("score") if missing_only else True
 
     stale = [t for t in data["teams"] if any(stale_fixture(f) for f in t["fixtures"])]
     print(f"{len(stale)} of {len(data['teams'])} teams may have a new result",
@@ -131,16 +136,25 @@ def refresh_results(pause: float, today=None, window=RESULT_WINDOW) -> None:
         except Exception as e:                       # noqa: BLE001
             print(f"  {t['slug']}: {e}", file=sys.stderr)
             continue
+        before = {(f["date"], f["venue_code"], f["opponent"]): f.get("score", "")
+                  for f in t["fixtures"]}
         t["fixtures"] = [{k: f[k] for k in
                           ("round", "date", "time", "venue_code", "opponent",
                            "home", "score")} for f in fixtures]
-        got += sum(1 for f in t["fixtures"] if f["score"])
+        for f in t["fixtures"]:
+            was = before.get((f["date"], f["venue_code"], f["opponent"]), "")
+            if f["score"] and f["score"] != was:
+                got += 1
+                if was:
+                    print(f"  {t['name']}: {f['opponent']} {was} -> {f['score']}",
+                          file=sys.stderr)
         if i % 50 == 0 or i == len(stale):
             print(f"  [{i}/{len(stale)}]", file=sys.stderr)
         time.sleep(pause)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1), "utf-8")
     total = sum(1 for t in data["teams"] for f in t["fixtures"] if f.get("score"))
-    print(f"-> {path}: {total} fixtures now carry a score", file=sys.stderr)
+    print(f"-> {path}: {got} scores new or changed; {total} fixtures carry one",
+          file=sys.stderr)
 
 
 def main():
@@ -152,6 +166,10 @@ def main():
                     help="only the main league, skip the veteran competitions")
     ap.add_argument("--results", action="store_true",
                     help="refresh scores for teams whose matches have been played")
+    ap.add_argument("--window", type=int, default=RESULT_WINDOW,
+                    help="days back a played match is still re-read")
+    ap.add_argument("--missing-only", action="store_true",
+                    help="only teams with no score yet (the cheap pass)")
     ap.add_argument("--colours-only", action="store_true",
                     help="only refresh jersey colours in an existing season.json")
     args = ap.parse_args()
@@ -161,7 +179,8 @@ def main():
         return
 
     if args.results:
-        refresh_results(args.pause)
+        refresh_results(args.pause, window=args.window,
+                        missing_only=args.missing_only)
         return
 
     comps = [args.season] + ([] if args.no_veterans else list(ALSO))
