@@ -13,9 +13,16 @@ data/extra_venues.json  venues not on the fixture list (our training pitch)
 measure_pitches.py  segment turf, fit the lines    -> out/measurements.json, out/*.png
 diagnose.py         how far is each edge off?      -> out/diag_*.png
 make_table.py       our season table               -> out/table.md, out/table.json
-build_page.py       self-contained HTML report     -> docs/index.html
+build_page.py       the published site             -> docs/ (html, img, data)
 data/overrides.json the per-venue human input      (the important file)
 ```
+
+The page is served in three pieces: index.html is the shell plus the venue
+records (60 kB), docs/img holds the photos, and docs/data/teams.json the
+fixtures, fetched after the pitches are on screen. It was one self-contained
+file until that meant 4.6 MB before the first pitch appeared. `?v=` stamps both,
+because the names never change. Opening index.html over file:// leaves the
+picker empty — serve it instead.
 
 The page is for the whole league, not just us, and it is in Czech: every venue
 in the directory, every team's fixtures, and the team picked in the browser.

@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
-"""Build the self-contained HTML report -> docs/index.html.
+"""Build the published report -> docs/ (index.html, img/, data/).
 
 The page used to be our eleven fixtures, rendered server-side. It now carries
 every venue in the PSMF directory and every team's fixture list, and picks the
-team in the browser. Two consequences worth knowing before editing:
+team in the browser. Three things worth knowing before editing:
 
-* Everything renders client-side, from one JSON blob. Rendering the cards here
-  instead would repeat each venue's data-URI image wherever it appears -- once
-  in the league grid, again for every team that plays there -- and this file is
-  mostly image bytes. In the blob each image is one string, used as often as
-  needed.
-* docs/ is what GitHub Pages serves, so the page is written straight there. It
-  carries its imagery inline, so index.html on its own is the whole site.
+* Everything renders client-side. Rendering the cards here instead would repeat
+  each venue's markup wherever it appears -- once in the league grid, again for
+  every team that plays there.
+* The page is split three ways. index.html is the shell plus the 39 venue
+  records, about 60 kB; the photos are files under docs/img, fetched lazily by
+  the browser and cached between visits; the fixtures are docs/data/teams.json,
+  926 kB, fetched once the pitches are on screen. It was one self-contained file
+  until that meant 4.6 MB before anything could be shown. Both the images and
+  the JSON carry a `?v=` build stamp, since their names never change.
+* A consequence: opening docs/index.html over file:// leaves the picker empty,
+  because fetch has no origin. Serve it -- `python3 -m http.server -d docs`.
 """
 import json, re
 from datetime import date

@@ -5,9 +5,9 @@ from Prague orthophoto imagery.
 
 The report is published at <https://ondrejchmelar.github.io/psmf-pitches/>:
 every ground in the PSMF directory, and a team picker that shows any team's
-fixtures with the size of each pitch they play on. GitHub Pages serves
-`docs/index.html`, which `build_page.py` writes as one self-contained file —
-imagery included, so that file on its own is the whole site.
+fixtures with the size of each pitch they play on. GitHub Pages serves what
+`build_page.py` writes into `docs/`: a 60 kB `index.html`, the venue photos as
+files, and the fixtures as JSON fetched once the page is on screen.
 
 ## Usage
 
@@ -18,7 +18,8 @@ python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 ./.venv/bin/python scrape_season.py --colours-only   # just the jersey colours
 ./.venv/bin/python measure_pitches.py --auto-layer   # measure + annotate -> out/
 ./.venv/bin/python make_table.py             # our season table -> out/table.md
-./.venv/bin/python build_page.py             # the published page -> docs/index.html
+./.venv/bin/python build_page.py             # the published site -> docs/
+python3 -m http.server -d docs               # preview it (file:// will not do)
 ```
 
 `scrape_psmf.py` takes an optional team URL; it defaults to our 7-G team page.
