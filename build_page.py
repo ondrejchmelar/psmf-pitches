@@ -10,10 +10,11 @@ team in the browser. Three things worth knowing before editing:
   every team that plays there.
 * The page is split three ways. index.html is the shell plus the 39 venue
   records, about 60 kB; the photos are files under docs/img, fetched lazily by
-  the browser and cached between visits; the fixtures are docs/data/teams.json,
-  926 kB, fetched once the pitches are on screen. It was one self-contained file
-  until that meant 4.6 MB before anything could be shown. Both the images and
-  the JSON carry a `?v=` build stamp, since their names never change.
+  the browser and cached between visits; the fixtures are docs/data/teams.*.json,
+  about a megabyte, fetched once the pitches are on screen. It was one
+  self-contained file until that meant 4.6 MB before anything could be shown.
+  Both name themselves after a hash of their contents, so a URL changes exactly
+  when its content does.
 * A consequence: opening docs/index.html over file:// leaves the picker empty,
   because fetch has no origin. Serve it -- `python3 -m http.server -d docs`.
 """

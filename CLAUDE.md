@@ -20,8 +20,14 @@ data/overrides.json the per-venue human input      (the important file)
 The page is served in three pieces: index.html is the shell plus the venue
 records (60 kB), docs/img holds the photos, and docs/data/teams.json the
 fixtures, fetched after the pitches are on screen. It was one self-contained
-file until that meant 4.6 MB before the first pitch appeared. `?v=` stamps both,
-because the names never change. Opening index.html over file:// leaves the
+file until that meant 4.6 MB before the first pitch appeared. Both name
+themselves after a hash of their own contents — `MOTO1.cae3f104.jpg`,
+`teams.b37b70e8.json` — so a URL changes when and only when its content does; a
+dated `?v=` expired everything on a date roll and nothing on a same-day
+re-measure, and some caches drop query strings anyway. The previous teams file
+is kept alongside the current one, because for a few minutes after a build a
+reader can still hold an index.html that asks for it.
+Opening index.html over file:// leaves the
 picker empty — serve it instead.
 
 The page is for the whole league, not just us, and it is in Czech: every venue
