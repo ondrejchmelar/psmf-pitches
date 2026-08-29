@@ -1,81 +1,102 @@
 #!/usr/bin/env python3
-"""Our own back catalogue: every past match, with the referee's write-up.
+"""Every team's back catalogue, with the referee's write-up for each match.
 
-psmf.cz keeps the whole archive back to 2007, but nothing in it links a team
-to its earlier selves. The `<` arrow on a team page points only at the season
-immediately before, and only sometimes -- ours skips over podzim 2025, which we
-certainly played. So a team is found the only way the site allows: by walking a
-season's division pages until its slug turns up.
+psmf.cz keeps the whole archive back to 2007 but links a team to none of its
+earlier selves: the `<` arrow on a team page reaches one season back at best,
+and often not that -- ours skips straight over podzim 2025, which we certainly
+played. Nothing on the site answers "where was this team in 2015?" either. So
+the first pass builds that answer: for every season, walk its division pages and
+write down which division each slug was in (data/archive/<season>.json). That is
+about 3,700 requests once, after which finding any team in any season is free.
 
-That is 68 requests per season done blindly, which is why `find_team` starts
-from the division we were in last season and works outwards. Teams move by a
-division or two, so the hit usually comes within a handful of requests. The
-answer is cached in data/history_index.json; past seasons never change.
+The second pass reads team pages. A played match there carries more than a
+score: under `Detaily utkani` it has the half-time score, the referee's name,
+and a paragraph he wrote about the game, which exists nowhere else on the site.
+One file per team, recording which seasons it has been given, so an interrupted
+run resumes where it stopped and a wider one tops it up.
 
-A played match carries more than a score. Under `Detaily utkani` each one has
-the half-time score, the referee's name, and a paragraph of his own describing
-the game -- which is the interesting part, and exists nowhere else.
+Reading every team's whole past is 15,000 pages for the main league alone, and
+all the page ever shows is what happened the last time these two met. So by
+default only the seasons that can hold such a match are read -- the index above
+already says which those are, before any request -- and `--full` reads the lot
+for a team worth the pages.
 
-    ./.venv/bin/python scrape_history.py             # our team, all the way back
-    ./.venv/bin/python scrape_history.py --seasons 1 # only this one, merged in
-    ./.venv/bin/python scrape_history.py --slug tohle-neni-hokej
+A team is searched only within its own competition -- the veteran leagues keep
+their own archives -- and four seasons in a row without it ends its walk. Teams
+do sit one out, and jaro 2021 did not happen at all.
+
+    ./.venv/bin/python scrape_history.py --all             # everyone
+    ./.venv/bin/python scrape_history.py --slug zde-je-misto --full
+    ./.venv/bin/python scrape_history.py --all --seasons 2  # re-read the season just ended
 """
 from __future__ import annotations
 import argparse, datetime, json, re, sys, time
 from pathlib import Path
 
 import scrape_psmf as S
+import scrape_season as SS
 
 BASE = S.BASE
 DATA = Path(__file__).parent / "data"
-INDEX = DATA / "history_index.json"
-SLUG = "zde-je-misto"
-START = "2026-hanspaulska-liga-podzim"
-START_DIV = "7-g"
-# Seasons a team can be missing from before we accept it did not exist yet.
-# Teams do sit one out, so a single gap is not the end of the history.
+ARCHIVE = DATA / "archive"        # <season>.json: slug -> where it played
+HIST = DATA / "hist"              # <family>/<slug>.json: one team's past
+FAMILIES = ("hanspaulska-liga", "veteranska-liga",
+            "superveteranska-liga", "ultraveteranska-liga")
+# Seasons a team can be missing from before we accept it was not there yet.
 GAP = 4
 
 
-def seasons() -> list[str]:
-    """Every Hanspaulska season on the site, newest first."""
-    html = S.get(f"{BASE}/souteze/")
-    found = set(re.findall(r'href="/souteze/(\d{4}-hanspaulska-liga-(?:jaro|podzim))/"', html))
-    return sorted(found, key=lambda s: (int(s[:4]), s.endswith("podzim")), reverse=True)
+def family_of(comp: str) -> str:
+    """'2026-superveteranska-liga-podzim' -> 'superveteranska-liga'."""
+    return comp.split("-", 1)[1].rsplit("-", 1)[0]
 
 
 def label(season: str) -> str:
     return f"{season.rsplit('-', 1)[1]} {season[:4]}"
 
 
-def div_key(d: str) -> tuple[int, int]:
-    """'7-g' -> (7, 6). Bare group headers ('7') sort as their own level."""
-    m = re.match(r"(\d+)(?:-([a-z]))?$", d)
-    if not m:
-        return (99, 0)
-    return (int(m.group(1)), ord(m.group(2)) - ord("a") if m.group(2) else -1)
+def newest_first(seasons):
+    return sorted(seasons, key=lambda s: (int(s[:4]), s.endswith("podzim")),
+                  reverse=True)
 
 
-def find_team(season: str, slug: str, near: str, pause: float) -> dict | None:
-    """The team's page in this season, or None. Searches outwards from `near`."""
-    import scrape_season as SS
-    divs = [d for d in SS.division_slugs(season) if re.match(r"\d+-[a-z]$", d)]
+def all_seasons() -> dict[str, list[str]]:
+    """Every season on the site, by competition, newest first."""
+    html = S.get(f"{BASE}/souteze/")
+    out: dict[str, list[str]] = {f: [] for f in FAMILIES}
+    for s in set(re.findall(r'href="/souteze/(\d{4}-[a-z]+-liga-(?:jaro|podzim))/"', html)):
+        if family_of(s) in out:
+            out[family_of(s)].append(s)
+    return {f: newest_first(v) for f, v in out.items()}
+
+
+def season_index(season: str, pause: float) -> dict:
+    """slug -> division for one season, cached.
+
+    Only the division: a team page is always
+    /souteze/<season>/<division>/tymy/<slug>/, so storing the URL would repeat
+    the season and the slug on every one of 700 lines, 39 times a competition.
+
+    The bare group headers ('1', '7') list no teams of their own; they cost a
+    request each and are skipped by team_urls anyway.
+    """
+    path = ARCHIVE / f"{season}.json"
+    if path.exists():
+        return json.loads(path.read_text("utf-8"))
+    teams: dict[str, str] = {}
+    divs = SS.division_slugs(season)
     time.sleep(pause)
-    lvl, let = div_key(near)
-    divs.sort(key=lambda d: (abs(div_key(d)[0] - lvl), abs(div_key(d)[1] - let)))
-    for i, d in enumerate(divs, 1):
+    for d in divs:
         try:
-            urls = SS.team_urls(season, d)
+            for _url, slug in SS.team_urls(season, d):
+                teams[slug] = d
         except Exception as e:                       # noqa: BLE001
-            print(f"    {d}: {e}", file=sys.stderr)
-            continue
+            print(f"    {season}/{d}: {e}", file=sys.stderr)
         time.sleep(pause)
-        for url, s in urls:
-            if s == slug:
-                print(f"  {label(season):14s} {d:5s} (after {i} division pages)", file=sys.stderr)
-                return {"division": d, "url": url}
-    print(f"  {label(season):14s} not found in {len(divs)} divisions", file=sys.stderr)
-    return None
+    ARCHIVE.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(teams, ensure_ascii=False, indent=1), "utf-8")
+    print(f"  {season}: {len(divs)} divisions, {len(teams)} teams", file=sys.stderr)
+    return teams
 
 
 def parse_date(text: str) -> str | None:
@@ -148,81 +169,170 @@ def parse_season(html: str, slug: str) -> list[dict]:
     return out
 
 
+def seasons_played(slug: str, seasons: list[str], index: dict) -> list[str]:
+    """The seasons a team appears in, newest first, stopping at a real gap.
+
+    Once it has been absent for GAP seasons running it had simply not been
+    founded yet, and without that the walk reaches 2007 for everybody.
+    """
+    played = [s for s in seasons if slug in index[s]]
+    if not played:
+        return []
+    keep, missed = [], 0
+    for s in seasons[seasons.index(played[0]):]:
+        if slug in index[s]:
+            keep.append(s)
+            missed = 0
+        else:
+            missed += 1
+            if missed >= GAP:
+                break
+    return keep
+
+
+def worth_reading(slug: str, keep: list[str], index: dict,
+                  opponents: list[str], current: str) -> list[str]:
+    """Of those, the seasons that can hold a match against this year's opponents.
+
+    Reading every team's whole past is 15,000 pages for the main league alone,
+    and all the page ever shows is what happened the last time these two met. A
+    season in which none of this year's opponents was in the same division
+    cannot contain one of those matches, and the index already knows -- for
+    free, before any request. It cuts the walk to a third.
+
+    The season being played is left out as well: those are fixtures, not
+    history, and half of them have not happened. `--seasons 1` folds them in
+    once it is over.
+    """
+    return [s for s in keep if s != current
+            and any(index[s].get(o) and index[s][o] == index[s][slug]
+                    for o in opponents)]
+
+
+def team_history(family: str, slug: str, read: list[str], played: list[str],
+                 index: dict, pause: float, force=frozenset()) -> dict:
+    """Read `read` seasons of one team and merge them into its file.
+
+    The file records which seasons it has actually been given and whether that
+    is all of them, so a later, wider run tops it up instead of starting over.
+    Seasons already in it are skipped unless named in `force` -- which is what
+    re-reading the season being played amounts to, its scores and the referees'
+    write-ups still arriving weeks after the match.
+    """
+    path = HIST / family / f"{slug}.json"
+    have = json.loads(path.read_text("utf-8")) if path.exists() else {}
+    done = set(have.get("seasons", []))
+    need = [s for s in read if s not in done or s in force]
+    if not need:
+        return have
+
+    name, matches = have.get("team", ""), []
+    for season in need:
+        try:
+            html = S.get(f"{BASE}/souteze/{season}/{index[season][slug]}/tymy/{slug}/")
+        except Exception as e:                        # noqa: BLE001
+            print(f"    {slug} {season}: {e}", file=sys.stderr)
+            continue
+        time.sleep(pause)
+        title = re.search(r'class="component__title">(.*?)</h1>', html, re.S)
+        if title:
+            name = name or S.strip_tags(title.group(1))
+        for m in parse_season(html, slug):
+            m.update(season=season, label=label(season),
+                     division=index[season][slug])
+            matches.append(m)
+
+    fresh = set(need)
+    matches += [m for m in have.get("matches", []) if m["season"] not in fresh]
+    matches.sort(key=lambda m: m["date"] or "", reverse=True)
+    seasons = [s for s in played if s in done | fresh]
+    out = {"slug": slug, "team": name, "family": family, "seasons": seasons,
+           "complete": set(seasons) >= set(played), "matches": matches}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, ensure_ascii=False, indent=1), "utf-8")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--slug", default=SLUG)
-    ap.add_argument("--from-season", default=START)
-    ap.add_argument("--division", default=START_DIV, help="where the team is now")
-    ap.add_argument("--gap", type=int, default=GAP)
+    ap.add_argument("--all", action="store_true", help="every team in data/season.json")
+    ap.add_argument("--slug", help="one team (with --family if it is a veteran side)")
+    ap.add_argument("--family", default="hanspaulska-liga", choices=FAMILIES)
+    ap.add_argument("--full", action="store_true",
+                    help="every season a team played, not only the ones that can "
+                         "hold a match against this year's opponents")
+    # The N newest seasons on the site, re-read whether the files already hold
+    # them or not: a finished season's scores and write-ups keep arriving for
+    # weeks. Two, not one, once the new draw is up -- it is then the newest.
     ap.add_argument("--seasons", type=int, default=0,
-                    help="only the N newest seasons, merged into the existing file")
-    ap.add_argument("--pause", type=float, default=0.35)
-    ap.add_argument("--out", default="history.json")
+                    help="also re-read the N newest seasons of the competition")
+    # A second between requests, and each one takes about that again to come
+    # back. This walks thousands of pages of somebody else's small site; there
+    # is nowhere to be in a hurry to.
+    ap.add_argument("--pause", type=float, default=1.0,
+                    help="seconds between requests")
+    ap.add_argument("--index-only", action="store_true",
+                    help="build the season indexes and stop")
     args = ap.parse_args()
 
-    index = json.loads(INDEX.read_text("utf-8")) if INDEX.exists() else {}
-    known = index.setdefault(args.slug, {})
-    known.setdefault(args.from_season, {"division": args.division,
-                                        "url": f"/souteze/{args.from_season}/{args.division}"
-                                               f"/tymy/{args.slug}/"})
+    if not (args.all or args.slug or args.index_only):
+        ap.error("give --all, --slug or --index-only")
 
-    all_seasons = seasons()
-    start = all_seasons.index(args.from_season)
-    near, missed, found = args.division, 0, []
-    for season in all_seasons[start:]:
-        hit = known.get(season)
-        if hit is None:
-            hit = find_team(season, args.slug, near, args.pause)
-            known[season] = hit
-            INDEX.write_text(json.dumps(index, ensure_ascii=False, indent=1), "utf-8")
-        if not hit:
-            missed += 1
-            if missed >= args.gap:
-                print(f"  stopping: {missed} seasons in a row without them", file=sys.stderr)
-                break
+    season = json.loads((DATA / "season.json").read_text("utf-8"))
+    # Opponents are named in a fixture, not linked. Within one competition the
+    # names are unique, so that is enough to turn them back into slugs.
+    by_name = {(family_of(t.get("comp", "")), t["name"]): t["slug"]
+               for t in season["teams"]}
+    wanted: dict[str, list[dict]] = {f: [] for f in FAMILIES}
+    for t in season["teams"]:
+        f = family_of(t.get("comp", ""))
+        if f not in wanted:
             continue
-        missed = 0
-        near = hit["division"]
-        found.append((season, hit))
-        if args.seasons and len(found) >= args.seasons:
-            break
+        if args.slug and not (t["slug"] == args.slug and f == args.family):
+            continue
+        if not (args.all or args.slug):
+            continue
+        opps = [by_name.get((f, x["opponent"])) for x in t["fixtures"]]
+        wanted[f].append({"slug": t["slug"], "name": t["name"], "comp": t["comp"],
+                          "opps": [o for o in opps if o]})
 
-    team, matches = "", []
-    for season, hit in found:
-        html = S.get(BASE + hit["url"])
-        time.sleep(args.pause)
-        title = re.search(r'class="component__title">(.*?)</h1>', html, re.S)
-        team = team or S.strip_tags(title.group(1))
-        got = parse_season(html, args.slug)
-        for m in got:
-            m.update(season=season, label=label(season), division=hit["division"])
-        played = sum(1 for m in got if m.get("score"))
-        reports = sum(1 for m in got if m.get("report"))
-        print(f"  {label(season):14s} {hit['division']:5s} {len(got):2d} zápasů, "
-              f"{played} se skóre, {reports} s popisem", file=sys.stderr)
-        matches += got
+    by_family = all_seasons()
+    families = FAMILIES if args.index_only or args.all else (args.family,)
 
-    # A partial run keeps what it did not look at. Past seasons do not change,
-    # so the daily job re-reads only the current one -- where a score can still
-    # arrive, and the referee's write-up usually does a few days after that.
-    path = DATA / args.out
-    seasons_out = [{"season": s, "label": label(s), **h} for s, h in found]
-    if args.seasons and path.exists():
-        old_data = json.loads(path.read_text("utf-8"))
-        fresh = {s for s, _ in found}
-        matches += [m for m in old_data.get("matches", []) if m["season"] not in fresh]
-        seasons_out += [s for s in old_data.get("seasons", []) if s["season"] not in fresh]
-        seasons_out.sort(key=lambda s: (int(s["season"][:4]),
-                                        s["season"].endswith("podzim")), reverse=True)
-        team = team or old_data.get("team", "")
+    # First pass: where everybody played, every season. Cached, so this is the
+    # only part that costs anything on a second run.
+    index: dict[str, dict] = {}
+    for f in families:
+        print(f"{f}: {len(by_family[f])} seasons", file=sys.stderr)
+        for s in by_family[f]:
+            index[s] = season_index(s, args.pause)
+    if args.index_only:
+        return
 
-    matches.sort(key=lambda m: m["date"] or "", reverse=True)
-    out = {"team": team, "slug": args.slug,
-           "seasons": seasons_out, "matches": matches}
-    path.write_text(json.dumps(out, ensure_ascii=False, indent=1), "utf-8")
-    print(f"\n-> {path}  {path.stat().st_size/1e3:.0f} kB\n"
-          f"   {team}: {len(matches)} matches over {len(seasons_out)} seasons, "
-          f"{sum(1 for m in matches if m.get('report'))} with a write-up", file=sys.stderr)
+    # Second pass: one page per team per season worth reading.
+    total = sum(len(v) for v in wanted.values())
+    done = pages = 0
+    for f in FAMILIES:
+        for t in wanted[f]:
+            played = seasons_played(t["slug"], by_family[f], index)
+            read = played if args.full else worth_reading(
+                t["slug"], played, index, t["opps"], t["comp"])
+            force = by_family[f][:args.seasons] if args.seasons else []
+            read = [s for s in played if s in set(read) | set(force)]
+            h = team_history(f, t["slug"], read, played, index, args.pause,
+                             force=set(force))
+            done += 1
+            pages += len(read)
+            if done % 25 == 0 or done == total:
+                print(f"  [{done}/{total}] {t['name']}: "
+                      f"{len(h.get('matches', []))} matches over "
+                      f"{len(h.get('seasons', []))} of {len(played)} seasons",
+                      file=sys.stderr)
+
+    files = sorted(HIST.rglob("*.json"))
+    matches = sum(len(json.loads(p.read_text("utf-8"))["matches"]) for p in files)
+    print(f"\n-> {HIST}: {len(files)} teams, {matches} matches, "
+          f"{sum(p.stat().st_size for p in files)/1e6:.1f} MB", file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ hard way and several "obvious" fixes here are wrong.
 ```
 scrape_psmf.py      our fixtures + venue directory -> data/fixtures.json, data/venues.json
 scrape_season.py    every team's fixtures          -> data/season.json
-scrape_history.py   our own past seasons           -> data/history.json
+scrape_history.py   every team's past seasons      -> data/archive/, data/hist/
 data/extra_venues.json  venues not on the fixture list (our training pitch)
 measure_pitches.py  segment turf, fit the lines    -> out/measurements.json, out/*.png
 diagnose.py         how far is each edge off?      -> out/diag_*.png
@@ -20,15 +20,16 @@ data/overrides.json the per-venue human input      (the important file)
 
 The page is served in four pieces: index.html is the shell plus the venue
 records (60 kB), docs/img holds the photos, docs/data/teams.json the fixtures,
-fetched after the pitches are on screen, and docs/data/history.json our own past
-matches (77 kB), fetched beside them. It was one self-contained
+fetched after the pitches are on screen, and docs/data/h-<hash>/ a small file per
+team of past meetings, fetched only when one is asked for. It was one self-contained
 file until that meant 4.6 MB before the first pitch appeared. Each names
 itself after a hash of its own contents — `MOTO1.cae3f104.jpg`,
 `teams.b37b70e8.json` — so a URL changes when and only when its content does; a
 dated `?v=` expired everything on a date roll and nothing on a same-day
 re-measure, and some caches drop query strings anyway. The previous teams file
-is kept alongside the current one, because for a few minutes after a build a
-reader can still hold an index.html that asks for it.
+is kept alongside the current one — as is the previous history directory —
+because for a few minutes after a build a reader can still hold an index.html
+that asks for it.
 Opening index.html over file:// leaves the
 picker empty — serve it instead.
 
@@ -100,29 +101,57 @@ stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
 would otherwise stamp every photo with today and expire every reader's cache
 nightly for nothing.
 
-`scrape_history.py` is our own back catalogue: 331 matches over 32 seasons, back
-to podzim 2010. psmf.cz keeps the whole archive but links a team to none of its
-earlier selves — the `<` arrow on a team page reaches at most one season back and
-often not that, ours skipping over podzim 2025, which we certainly played. So a
-team is found the only way the site allows, by walking a season's division pages
-until its slug turns up. `find_team` starts from the division we were in last
-season and works outwards, which usually costs a handful of pages instead of
-sixty-eight; the answer is cached in `data/history_index.json`, and past seasons
-never change. Four consecutive seasons without us ends the walk — a team can sit
-one out, and jaro 2021 did not exist at all.
+`scrape_history.py` is the back catalogue: every team's past matches, with the
+paragraph the referee wrote about each. psmf.cz keeps the whole archive back to
+2007 but links a team to none of its earlier selves — the `<` arrow on a team
+page reaches one season back at best, and often not that; ours skips straight
+over podzim 2025, which we certainly played. Nothing on the site answers "where
+was this team in 2015?" either.
 
-The payload is the referee's own paragraph about each match, under `Detaily
-utkání` on a finished season's team page: 301 of the 331 have one, and nothing
-else on the site records it. The half-time score is there too. Both are written
+So the first pass builds that answer: for every season of all four competitions,
+walk its division pages and write down which division each slug was in, into
+`data/archive/<season>.json`. That is 3,849 requests once and 2.5 MB, after
+which finding any team in any season is free.
+
+The second pass reads team pages, one file per team under `data/hist`. It does
+not read every season a team played: that is 15,600 pages for the main league
+alone, and all the page ever shows is what happened the last time these two met.
+A season in which none of this year's opponents was in the same division cannot
+hold such a match, and the index above says which those are before a single
+request — that cuts the walk to about a third. Each file records the seasons it
+has actually been given and whether that is all of them (`seasons`, `complete`),
+so an interrupted run resumes where it stopped, a re-run costs nothing, and
+`--full` tops one team up to its whole past later. Ours was read that way: 9
+seasons under the filter, then 331 matches over all 32 with `--full`.
+
+A team is searched only within its own competition: the veteran leagues keep
+their own archives, and a side that moved between them reads as two teams, which
+is what the league's own slugs say. Four seasons in a row without it ends its
+walk — teams do sit one out, and jaro 2021 did not happen at all.
+
+The payload is the referee's write-up, under `Detaily utkání` on a finished
+season's team page; the half-time score is there too. Both are written
 home:away, which flips meaning every other line in a one-team history, so the
 page turns them round to ours:theirs and says `doma`/`venku` beside them.
 
-On the page, the fixture row of a team we have met before carries its balance —
-`0–1–3` against Tohle není hokej? — and opens the meetings in the same dialog the
-programme uses. It shows for one team only, the one `history.json` is about; for
-the other 937 the whole feature is a `t.sl !== H.slug` and nothing renders.
-`--seasons 1` re-reads just the season being played and merges it into what is
-already there, which is one request and what the daily job runs.
+Two pieces of that reach the browser, and the split is the point. The balance
+itself — `0–1–3` against Tohle není hokej? — is three numbers hung on the
+fixture in teams.json, so the chips are in the table the moment it is drawn. The
+matches behind them are a file per team under `docs/data/h-<hash>/`, fetched
+only when a chip is opened and kept for the session: the league's write-ups are
+29 MB and nobody reads more than the team they picked. Only the pairs that
+actually meet this season are shipped, which turns that into 2.4 MB over 819
+files — 2.9 kB each. 4,305 of the 10,214 fixtures have a balance to show.
+
+The season being played is excluded when the balance is counted. Its own
+fixtures are in the history file too, and without that they would come back as a
+previous meeting on their own row.
+
+This is not in the daily job. A head-to-head only changes when a season ends,
+which is why it is in the new-season runbook below and nowhere else. The pause
+defaults to a second: this walks thousands of pages of somebody else's small
+site, and there is nowhere to be in a hurry to. The whole league was 3,849
+index requests and 6,304 team pages, about three hours.
 
 Jersey colours come from each division's `dresy` page, in the league's own
 words — "bílá, černá", "modro-žlutá", "tmavě modrá". `colours()` in
@@ -154,6 +183,45 @@ venue and day, which is easy to miss.
 
 Venue codes carry over between seasons, so an existing entry in
 `data/overrides.json` usually still applies. Only genuinely new codes need work.
+
+### The history, once the new draw is out
+
+```bash
+./.venv/bin/python scrape_season.py                     # the new season first
+./.venv/bin/python scrape_history.py --all --seasons 2  # the season just ended
+./.venv/bin/python scrape_history.py --all              # then the new pairings
+./.venv/bin/python build_page.py --no-images
+```
+
+In that order, and both `--all` runs are needed.
+
+`--seasons N` forces a re-read of the N newest seasons *on the site*, whether or
+not the files already have them, because a finished season's scores and
+write-ups keep arriving for weeks after its last match. Two, not one: once the
+new draw is up it is the newest season, so the one that just ended is second.
+Nothing else in the tool re-reads a season it already holds.
+
+The plain `--all` then reads whatever the *new* draw has made relevant. The
+filter is "was one of this team's opponents that season in its division", so a
+new fixture list asks about seasons no previous run had any reason to fetch.
+Everything already on disk is skipped, so this is far cheaper than the first
+time.
+
+Three things make it cheap and none of them should be undone lightly:
+
+* `data/archive/` is committed. Rebuilding it is ~3,900 requests for something
+  that cannot change — a finished season's divisions are fixed. Only the new
+  season's own index has to be built, which happens on its own.
+* `data/hist/` is committed: 822 files, 66,000 matches, 29 MB. Deleting it means
+  another three hours of somebody else's bandwidth.
+* Teams are matched by psmf.cz's own slug. A club that renames itself gets a new
+  slug and reads as a new team with no history — the site does the same, so
+  there is nothing better available. Watch for it if a rivalry you expect comes
+  up empty.
+
+New teams in the league simply have no file; they get no chips, which is
+correct. `build_page.py` warns about nothing here — a missing file is the normal
+case for a side in its first season.
 
 ## Adding a venue
 

@@ -48,12 +48,6 @@ jobs:
             python scrape_season.py --results --pause 0.4
           fi
 
-      # Our own back catalogue only needs the season being played: the older
-      # ones are finished and cannot change. The division is already cached in
-      # data/history_index.json, so this is one page, not a walk.
-      - name: Refresh our history
-        run: python scrape_history.py --seasons 1 --pause 0.4
-
       - name: Rebuild the page
         run: python build_page.py --no-images
 
@@ -61,7 +55,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/season.json data/history.json data/history_index.json docs/
+          git add data/season.json docs/
           if git diff --cached --quiet; then
             echo "no new results"
             exit 0

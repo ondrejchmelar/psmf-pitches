@@ -18,7 +18,7 @@ team in the browser. Three things worth knowing before editing:
 * A consequence: opening docs/index.html over file:// leaves the picker empty,
   because fetch has no origin. Serve it -- `python3 -m http.server -d docs`.
 """
-import argparse, hashlib, json, re
+import argparse, hashlib, json, re, shutil, sys
 from datetime import date
 from pathlib import Path
 
@@ -244,26 +244,94 @@ def publish(stem, payload):
     return name
 
 
-TEAMS_FILE = publish("teams", {"teams": teams})
 
 # -------------------------------------------------------------------- history
-# Our own back catalogue, when scrape_history.py has been run: every past match
-# and, for most of them, the paragraph the referee wrote about it. It is one
-# team's worth of matches rather than the league's, and nothing on the page
-# needs it until that team is picked, so it travels in its own file.
-HISTORY_FILE = ""
-hist_src = ROOT / "data/history.json"
-if hist_src.exists():
-    hist = json.loads(hist_src.read_text("utf-8"))
-    HISTORY_FILE = publish("history", {
-        "slug": hist["slug"], "team": hist["team"],
-        # Only played matches: a fixture with no score says nothing about a
-        # meeting that has not happened. Keys are short because the write-ups
-        # are the payload and everything else is repeated 200 times.
-        "m": [{"d": m["date"], "l": m["label"], "v": m["venue"], "o": m["opponent"],
-               "os": m["opp_slug"], "h": m["home"], "s": m["score"], "hf": m["half"],
-               "r": m.get("res", ""), "ref": m["referee"], "w": m["report"]}
-              for m in hist["matches"] if m.get("score")]})
+# What happened last time these two met, from data/hist -- one file per team,
+# every season it has played, with the referee's write-up for each match.
+#
+# Two pieces go to the browser. The balance itself (3 numbers) rides in the
+# fixture, so the chips are there the moment the table is: they are what a
+# reader looks at. The matches behind them are a file per team, fetched only
+# when a chip is opened, because the whole league's write-ups are 30 MB and
+# nobody reads more than one team's.
+HIST_SRC = ROOT / "data/hist"
+HIST_DIR = ""
+
+
+def family_of(comp):
+    """'2026-superveteranska-liga-podzim' -> 'superveteranska-liga'."""
+    return comp.split("-", 1)[1].rsplit("-", 1)[0] if comp else ""
+
+
+if HIST_SRC.exists():
+    # Opponents are named in a fixture, not linked, so the name is what keys
+    # everything below. Within one competition they are unique -- checked here
+    # rather than assumed, because a collision would silently attach one team's
+    # history to another's row.
+    by_name = {}
+    for t in season.get("teams", []):
+        key = (family_of(t.get("comp")), t["name"])
+        assert key not in by_name, f"two teams named {key}"
+        by_name[key] = t["slug"]
+
+    # `teams` is sorted by name and drops anyone with no fixtures, so it cannot
+    # be walked alongside season["teams"]; the slug is what joins them.
+    rec_by_slug = {r["sl"]: r for r in teams if r["sl"]}
+    files, met = {}, 0
+    for t in season.get("teams", []):
+        rec = rec_by_slug.get(t["slug"])
+        if rec is None:
+            continue
+        fam = family_of(t.get("comp"))
+        src = HIST_SRC / fam / f"{t['slug']}.json"
+        if not src.exists():
+            continue
+        past = {}
+        for m in json.loads(src.read_text("utf-8"))["matches"]:
+            # The season being played is not history: its own fixtures would
+            # otherwise come back as a previous meeting on their own row.
+            if m.get("score") and m["season"] != t.get("comp"):
+                past.setdefault(m["opp_slug"], []).append(m)
+        out = {}
+        for fx, f in zip(t["fixtures"], rec["fx"]):
+            ms = past.get(by_name.get((fam, fx["opponent"]), ""), [])
+            if not ms:
+                continue
+            w = sum(1 for m in ms if m["res"] == "W")
+            d = sum(1 for m in ms if m["res"] == "D")
+            f["hh"] = [w, d, len(ms) - w - d]
+            out[fx["opponent"]] = [
+                {"d": m["date"], "l": m["label"], "v": m["venue"], "h": m["home"],
+                 "s": m["score"], "hf": m["half"], "r": m["res"],
+                 "ref": m["referee"], "w": m["report"]} for m in ms]
+        if out:
+            files[t["slug"]] = json.dumps({"t": t["name"], "o": out},
+                                          ensure_ascii=False,
+                                          separators=(",", ":")).encode()
+            met += len(out)
+
+    if files:
+        # The directory is named after everything in it, for the same reason the
+        # other files are: the page asks for a URL that changes when and only
+        # when its contents do. The previous one stays for the reader still
+        # holding the previous index.html.
+        HIST_DIR = "h-" + digest(b"".join(files[k] for k in sorted(files)))
+        room = OUT / "data" / HIST_DIR
+        room.mkdir(parents=True, exist_ok=True)
+        for slug, payload in files.items():
+            (room / f"{slug}.json").write_bytes(payload)
+        keep = sorted((OUT / "data").glob("h-*"),
+                      key=lambda p: p.stat().st_mtime, reverse=True)[:2]
+        for stale in (OUT / "data").glob("h-*"):
+            if stale not in keep and stale.is_dir():
+                shutil.rmtree(stale)
+        print(f"   {len(files)} teams carry a head-to-head, {met} pairings, "
+              f"{sum(len(v) for v in files.values())/1e6:.1f} MB", file=sys.stderr)
+
+
+# Written last: the history pass above hangs a balance on the fixtures that
+# have one, and that has to be in the file the browser fetches.
+TEAMS_FILE = publish("teams", {"teams": teams})
 
 blob = json.dumps({"venues": V}, ensure_ascii=False,
                   separators=(",", ":")).replace("<", "\\u003c")
@@ -673,30 +741,29 @@ function openProgramme(date, code, mine) {
 }
 
 // ---- what happened last time -----------------------------------------------
-// One team's back catalogue, scraped season by season out of the archive: the
-// score, and the paragraph the referee wrote afterwards. It is fetched
-// alongside the fixtures and only ever describes the team that was scraped, so
-// everything below is a no-op for the other nine hundred.
-let H = null;
-const h2h = new Map();                // opponent slug -> past meetings, newest first
+// The balance itself rides in the fixture, so the chips are drawn with the
+// table. The matches behind them are a file per team, fetched the first time
+// one is opened: the league's write-ups run to 30 MB and nobody reads more
+// than the team they picked.
+const histCache = new Map();          // team slug -> promise of its meetings
 
-function indexHistory() {
-  (H.m || []).forEach(m => {
-    if (!h2h.has(m.os)) h2h.set(m.os, []);
-    h2h.get(m.os).push(m);
-  });
-  h2h.forEach(list => list.sort((a, b) => (b.d || '').localeCompare(a.d || '')));
+function histFor(t) {
+  if (!histCache.has(t.sl)) {
+    histCache.set(t.sl, fetch(`${HIST_DIR}/${t.sl}.json`)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }));
+  }
+  return histCache.get(t.sl);
 }
 
 // The score as psmf.cz writes it is home:away. In a history read from one
 // team's side that flips meaning every other line, so it is turned round to
-// ours:theirs and the venue column says which side we were.
-const ourWay = m => (m.h ? m.s : m.s.split(':').reverse().join(':'));
+// ours:theirs and the row says which side we were.
+const ourWay = s => s.split(':').reverse().join(':');
 
 function tally(list) {
   const t = { w: 0, d: 0, l: 0, gf: 0, ga: 0 };
   list.forEach(m => {
-    const p = ourWay(m).split(':').map(Number);
+    const p = (m.h ? m.s : ourWay(m.s)).split(':').map(Number);
     t.gf += p[0]; t.ga += p[1];
     if (m.r === 'W') t.w++; else if (m.r === 'L') t.l++; else t.d++;
   });
@@ -709,41 +776,49 @@ const dmy = d => {
   return p ? `${+p[3]}. ${+p[2]}. ${p[1]}` : (d || '');
 };
 
-function h2hChip(f, t) {
-  if (!H || t.sl !== H.slug) return '';
-  const opp = kitByName.get((f.o || '').toLowerCase());
-  const list = (opp && opp.sl && h2h.get(opp.sl)) || [];
-  if (!list.length) return '';
-  const r = tally(list);
-  return `<button type="button" class="h2h" data-slug="${esc(opp.sl)}"
-    title="Vzájemné zápasy — výhry, remízy, prohry">${r.w}\u2013${r.d}\u2013${r.l}</button>`;
+function h2hChip(f) {
+  if (!HIST_DIR || !f.hh) return '';
+  return `<button type="button" class="h2h" data-opp="${esc(f.o)}"
+    title="Vzájemné zápasy — výhry, remízy, prohry">${f.hh[0]}\u2013${f.hh[1]}\u2013${f.hh[2]}</button>`;
 }
 
-function openHistory(slug) {
-  const list = h2h.get(slug) || [];
-  if (!list.length) return;
-  const r = tally(list);
-  const items = list.map(m => {
-    const cls = m.r === 'W' ? 'win' : m.r === 'L' ? 'loss' : 'draw';
-    const half = m.hf ? (m.h ? m.hf : m.hf.split(':').reverse().join(':')) : '';
-    return `<li>
-      <div class="hline"><span class="res ${cls}">${esc(ourWay(m))}</span>
-        ${half ? `<span class="hf">(${esc(half)})</span>` : ''}
-        <span class="who">${m.h ? 'doma' : 'venku'} &middot; ${esc(m.l)}</span>
-        <span class="meta2"><i>${esc(dmy(m.d))}</i><code>${esc(m.v)}</code></span></div>
-      ${m.w ? `<p class="rep">${esc(m.w)}</p>` : ''}
-      ${m.ref ? `<p class="ref">${esc(m.ref)}</p>` : ''}</li>`;
-  }).join('');
-  const dlg = document.getElementById('prog');
-  dlg.setAttribute('aria-label', 'Vzájemné zápasy');
-  dlg.innerHTML = `<div class="progbox">
-      <header><h3>${esc(H.team)} &ndash; ${esc(list[0].o)}</h3>
+function histBox(title, inner) {
+  return `<div class="progbox">
+      <header><h3>${title}</h3>
         <button type="button" class="x" value="cancel" aria-label="Zavřít">&times;</button></header>
-      <p class="hsum">${list.length}&times; &middot; ${r.w}&ndash;${r.d}&ndash;${r.l}
-        &middot; skóre ${r.gf}:${r.ga} &middot; naše skóre vždy první</p>
-      <ul class="hist">${items}</ul>
+      ${inner}
     </div>`;
+}
+
+function openHistory(t, name) {
+  const dlg = document.getElementById('prog');
+  const title = `${esc(t.name)} &ndash; ${esc(name)}`;
+  dlg.setAttribute('aria-label', 'Vzájemné zápasy');
+  dlg.innerHTML = histBox(title,
+    '<p class="loading"><span class="sp" aria-hidden="true"></span>Načítám zápasy&hellip;</p>');
   if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+  histFor(t).then(data => {
+    const list = (data.o || {})[name] || [];
+    const r = tally(list);
+    const items = list.map(m => {
+      const cls = m.r === 'W' ? 'win' : m.r === 'L' ? 'loss' : 'draw';
+      const half = m.hf ? (m.h ? m.hf : ourWay(m.hf)) : '';
+      return `<li>
+        <div class="hline"><span class="res ${cls}">${esc(m.h ? m.s : ourWay(m.s))}</span>
+          ${half ? `<span class="hf">(${esc(half)})</span>` : ''}
+          <span class="who">${m.h ? 'doma' : 'venku'} &middot; ${esc(m.l)}</span>
+          <span class="meta2"><i>${esc(dmy(m.d))}</i><code>${esc(m.v)}</code></span></div>
+        ${m.w ? `<p class="rep">${esc(m.w)}</p>` : ''}
+        ${m.ref ? `<p class="ref">${esc(m.ref)}</p>` : ''}</li>`;
+    }).join('');
+    dlg.innerHTML = histBox(title,
+      `<p class="hsum">${list.length}&times; &middot; ${r.w}&ndash;${r.d}&ndash;${r.l}
+         &middot; skóre ${r.gf}:${r.ga} &middot; skóre je vždy z pohledu ${esc(t.name)}</p>
+       <ul class="hist">${items}</ul>`);
+  }).catch(err => {
+    console.error('history:', err);
+    dlg.innerHTML = histBox(title, '<p class="empty">Vzájemné zápasy se nepodařilo načíst.</p>');
+  });
 }
 
 // ---- calendar export -------------------------------------------------------
@@ -867,7 +942,7 @@ function renderTeam(i) {
       <td class="num">${f.r}</td>
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td class="num">${resultTag(f)}</td>
-      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f, t)}${warn
+      <td>${teamLink(f.o)}${opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</td>
       <td>${v ? mapLink(v, 'lead') : ''}${v ? esc(v.venue) : ''} <code>${esc(f.c)}</code></td>
       <td class="dim">${v ? v.l + ' &times; ' + v.w : '<span class="conf">nezměřeno</span>'}</td>
@@ -887,7 +962,7 @@ function renderTeam(i) {
   }).join('');
 
   const prov = t.fx.filter(f => f.s && !f.of).length;
-  const met = new Set(t.fx.filter(f => h2hChip(f, t)).map(f => f.o)).size;
+  const met = new Set(t.fx.filter(f => f.hh).map(f => f.o)).size;
   let w = 0, d = 0, l = 0;
   t.fx.forEach(f => { const o = outcome(f); if (o === 'win') w++; else if (o === 'draw') d++; else if (o === 'loss') l++; });
   const played = w + d + l;
@@ -915,7 +990,7 @@ function renderTeam(i) {
       <th title="Další zápasy na tomtéž hřišti">Program</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
-    ${met ? `<p class="nt">S ${met} soupeři už jsme se potkali — číslo u jména je vzájemná bilance, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
+    ${met ? `<p class="nt">S ${met} z nich se tento tým už potkal — číslo u jména je vzájemná bilance z minulých sezon, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
@@ -936,7 +1011,7 @@ document.getElementById('team').addEventListener('click', e => {
     return;
   }
   const past = e.target.closest('.h2h');
-  if (past) { openHistory(past.dataset.slug); return; }
+  if (past && shown !== null) { openHistory(D.teams[shown], past.dataset.opp); return; }
   const link = e.target.closest('.tlink');
   if (link) {
     e.preventDefault();
@@ -1166,23 +1241,6 @@ function loadTeams() {
       if (who) who.textContent = 'Rozpisy se nenačetly — zkuste obnovit stránku.';
       console.error('teams.json:', err);
     });
-  loadHistory();
-}
-
-// Alongside the fixtures rather than after them: it is one team's matches, a
-// fraction of the size, and neither waits on the other. If it arrives after a
-// team is already drawn, that team is drawn again -- only the one team it is
-// about gains anything, and only the little balance chips change.
-function loadHistory() {
-  if (!HISTORY_URL) return;
-  fetch(HISTORY_URL)
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(data => {
-      H = data;
-      indexHistory();
-      if (shown !== null && D.teams[shown] && D.teams[shown].sl === H.slug) renderTeam(shown);
-    })
-    .catch(err => console.error('history.json:', err));
 }
 
 if (window.requestAnimationFrame) {
@@ -1192,7 +1250,7 @@ if (window.requestAnimationFrame) {
 }
 """
 
-history_url = f'"data/{HISTORY_FILE}"' if HISTORY_FILE else "null"
+hist_dir = f'"data/{HIST_DIR}"' if HIST_DIR else "null"
 
 html = f"""<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1248,7 +1306,7 @@ Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 
 <script type="application/json" id="psmf-data">{blob}</script>
 <script>const TEAMS_URL = "data/{TEAMS_FILE}";
-const HISTORY_URL = {history_url};</script>
+const HIST_DIR = {hist_dir};</script>
 <script>{JS}</script>
 """
 
