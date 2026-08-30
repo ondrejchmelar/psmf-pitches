@@ -36,9 +36,11 @@ picker empty — serve it instead.
 The page is for the whole league, not just us, and it is in Czech: every venue
 in the directory, every team's fixtures, and the team picked in the browser.
 The choice goes into the URL (`?team=`) so a link shares the view, and each
-change is a history entry so Back returns to the team you were looking at.
-Only a deliberate pick or a clear touches the URL — typing to filter does not —
-so no entry is one the reader did not ask for. Our
+pick is a history entry so Back returns to the team you were looking at.
+Clearing replaces rather than pushes: it undoes a choice instead of making one,
+and as an entry of its own it made Back land on the empty page you had just
+left. Typing to filter does not touch the URL at all, so no entry is one the
+reader did not ask for. Our
 training pitch is measured but kept off the page — it is not a PSMF ground. It renders
 client-side from one JSON blob because the file is mostly data-URI imagery —
 rendering the cards in Python would repeat each venue's image once per team

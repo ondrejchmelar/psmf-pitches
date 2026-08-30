@@ -1064,7 +1064,10 @@ function choose(i) {
 clearBtn.addEventListener('click', () => {
   input.value = '';
   renderTeam(null);
-  setParam(null, true);
+  // Replaced, not pushed: clearing is undoing a choice, not making one, and
+  // pushing it means Back lands on the empty page you just left rather than on
+  // the team you were reading before it.
+  setParam(null, false);
   closeList();
   showClear();
   input.focus();
@@ -1084,7 +1087,7 @@ sugg.addEventListener('mousedown', e => {          // before blur
 });
 input.addEventListener('input', () => {
   showClear();
-  if (!input.value.trim()) { renderTeam(null); setParam(null, true); closeList(); return; }
+  if (!input.value.trim()) { renderTeam(null); setParam(null, false); closeList(); return; }
   openList(input.value);
 });
 input.addEventListener('keydown', e => {
@@ -1111,9 +1114,10 @@ const lookup = v => {
 };
 
 // The chosen team lives in the URL, so a link shares the view rather than the
-// page, and each change is a history entry so Back returns to the team you were
-// looking at. Only a deliberate pick or a clear gets here -- typing to filter
-// does not touch the URL -- so none of these entries is one you did not ask for.
+// page, and picking one is a history entry so Back returns to the team you were
+// looking at. Clearing replaces instead: it undoes a choice rather than making
+// one, and as an entry of its own it made Back go to the empty page you had just
+// left. Typing to filter does not touch the URL at all.
 function setParam(t, push) {
   try {
     const u = new URL(location.href);
