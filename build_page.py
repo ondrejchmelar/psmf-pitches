@@ -1142,7 +1142,7 @@ function seasonText(c) {
   const where = `${seasonName(code)} · ${div.toUpperCase()}`;
   return place
     ? `${where} · ${place}. z ${of} · ${pz} zápasů · ${w}\u2013${dr}\u2013${l} · ${score} · ${pts} b.`
-    : `${where} · zatím bez tabulky`;
+    : `${where} · ${code === NOW_SEASON ? 'zatím bez tabulky' : 'bez tabulky'}`;
 }
 
 // The line is the league, season by season, 1 at the top; the dots are where
@@ -1190,7 +1190,10 @@ function careerLine(cr) {
       <span><i style="background:var(--home)"></i>do třetího místa</span>
       <span><i style="background:var(--away)"></i>poslední</span>
       <span><i style="background:var(--muted)"></i>jinde</span></p>
-    <p class="nt">Svisle liga, 1. nahoře. Každý bod je sezona &mdash; najeďte na něj nebo na něj klepněte.</p>`;
+    <p class="nt">Svisle liga, 1. nahoře. Každý bod je sezona &mdash; najeďte na něj nebo
+      na něj klepněte.${cr.some(c => !c[2] && c[0] !== NOW_SEASON)
+      ? ' Za jaro 2020 PSMF žádné tabulky nezveřejnil a ten ročník se nepostupovalo ani nesestupovalo.'
+      : ''}</p>`;
 }
 
 function squadBlock(sq, name) {

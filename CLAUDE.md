@@ -130,6 +130,15 @@ carries the pointer and the text; `<title>` stays on it as well, for anything
 that only does tooltips. The readout starts on the last season actually played,
 not the newest, which for most of a season is a row of noughts.
 
+There are two ways a dot can be hollow and they read differently. The current
+season has no table yet — "zatím bez tabulky". **Jaro 2020 has none at all**, in
+any competition: 720 rows across 60 divisions, every one of them nought, and
+`type=actual` is empty too, so this is psmf.cz's own gap, not the scrape's. The
+matches were played — our team has all eleven with scores — but no standing was
+ever published, and nobody moved: 686 of 709 teams were in the same league that
+autumn, against 284 who moved a year earlier. So that one says "bez tabulky",
+and the note under the chart says why.
+
 Do not call that paragraph `.pick`. That class is the team picker's box, and the
 readout quietly inherited its border and background until it was `.crpick`.
 
