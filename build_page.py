@@ -1173,16 +1173,10 @@ function renderTeam(i) {
   const areas = codes.map(c => D.venues[c].area);
   const missing = t.fx.filter(f => !D.venues[f.c]).length;
   const ratio = areas.length ? (Math.max(...areas) / Math.min(...areas)).toFixed(1) + '×' : '—';
+  // The fixtures first. The numbers above them are about the grounds, so they
+  // belong with the grounds -- and they were the first thing a reader saw after
+  // picking a team, which is not what anybody picked a team for.
   host.innerHTML = `
-    <hr class="rule">
-    <div class="stats">
-      <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
-      ${played ? `<div class="stat"><b>${w}&ndash;${d}&ndash;${l}</b><span>Bilance</span></div>` : ''}
-      <div class="stat"><b>${codes.length}</b><span>Různých hřišť</span></div>
-      <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Nejmenší</span></div>
-      <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
-      <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
-    </div>
     <hr class="rule">
     <div class="h2row">
       <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
@@ -1198,6 +1192,14 @@ function renderTeam(i) {
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
     <hr class="rule">
+    <div class="stats">
+      <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
+      ${played ? `<div class="stat"><b>${w}&ndash;${d}&ndash;${l}</b><span>Bilance</span></div>` : ''}
+      <div class="stat"><b>${codes.length}</b><span>Různých hřišť</span></div>
+      <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Nejmenší</span></div>
+      <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
+      <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
+    </div>
     <h2>Hřiště tohoto týmu &middot; od největšího</h2>
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
