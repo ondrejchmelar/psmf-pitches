@@ -299,20 +299,21 @@ def placings(slug, comp):
 
 
 def line(slug, comp):
-    """Every season as [code, league, place, out of], oldest first.
+    """Every season, oldest first: where they played and how it finished.
 
-    Place is 0 where no table has been read or none was played: the line is
-    drawn from the league, which is always known, and the dots are filled in
-    from the place, which is not.
+    [code, division, place, out of, played, W, D, L, "gf:ga", points], with the
+    place 0 where no table has been read or none was played. The chart's line is
+    drawn from the division, which is always known; the dots and the readout
+    come from the rest, which is not.
     """
     out = []
     for season, div in reversed(career(slug, comp)):
-        place = size = 0
+        rec = [season_code(season), div, 0, 0]
         for row in standings.get(season, {}).get(div, []):
             if row[1] == slug and int(row[2]) > 0:
-                place, size = row[0], len(standings[season][div])
-        out.append([season_code(season), int(re.match(r"(\d+)", div).group(1)),
-                    place, size])
+                rec = [season_code(season), div, row[0],
+                       len(standings[season][div])] + row[2:]
+        out.append(rec)
     return out
 
 
@@ -747,6 +748,10 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
   margin:0 0 2px; }
 .legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
+/* Not .pick -- that is the team picker's box, and this inherited its border. */
+.crpick { margin:2px 0 10px; font:600 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; color:var(--ink); min-height:20px; }
+.career .hit { cursor:pointer; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
   white-space:nowrap; }
@@ -1128,12 +1133,24 @@ function histBox(title, inner) {
 // referee's man of the match. It arrives in the same file as the head-to-heads
 // and is drawn once it does, so the fixtures are never waiting on it.
 // ---- where a team has been ---------------------------------------------------
+// "7-g" -> 7, and "Vet 3-B" would do the same: the tag carries no digits.
+const level = d => +/(\d+)/.exec(d)[1];
+
+// One season as the readout under the chart. Everything the division table had.
+function seasonText(c) {
+  const [code, div, place, of, pz, w, dr, l, score, pts] = c;
+  const where = `${seasonName(code)} · ${div.toUpperCase()}`;
+  return place
+    ? `${where} · ${place}. z ${of} · ${pz} zápasů · ${w}\u2013${dr}\u2013${l} · ${score} · ${pts} b.`
+    : `${where} · zatím bez tabulky`;
+}
+
 // The line is the league, season by season, 1 at the top; the dots are where
 // they finished in it. The league is always known -- it is in data/archive --
 // so the line is unbroken even where no table was read and the dot is hollow.
 function careerLine(cr) {
   const W = 660, H = 190, L = 26, T = 14, B = 26;
-  const lvls = cr.map(c => c[1]);
+  const lvls = cr.map(c => level(c[1]));
   const lo = Math.min(...lvls), hi = Math.max(...lvls), span = hi - lo;
   const x = i => L + i * (W - L - 8) / Math.max(1, cr.length - 1);
   const y = l => span ? T + (l - lo) * (H - T - B) / span : (T + H - B) / 2;
@@ -1143,18 +1160,20 @@ function careerLine(cr) {
       stroke="var(--rule)"/><text x="4" y="${(y(l) + 4).toFixed(1)}" font-size="11"
       fill="var(--faint)" class="mono">${l}.</text>`);
   }
-  const path = cr.map((c, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(c[1]).toFixed(1)}`).join(' ');
+  const path = cr.map((c, i) =>
+    `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(level(c[1])).toFixed(1)}`).join(' ');
   const dots = cr.map((c, i) => {
-    const [code, lvl, place, of] = c;
-    const tip = `${seasonName(code)} · ${lvl}. liga${place ? ` · ${place}. z ${of}` : ''}`;
-    if (!place) {
-      return `<circle cx="${x(i).toFixed(1)}" cy="${y(lvl).toFixed(1)}" r="3"
-        fill="var(--surface)" stroke="var(--muted)" stroke-width="1.5"><title>${esc(tip)}</title></circle>`;
-    }
-    const col = place === 1 ? 'var(--accent)' : place <= 3 ? 'var(--home)'
+    const lvl = level(c[1]), place = c[2], of = c[3];
+    const col = !place ? '' : place === 1 ? 'var(--accent)' : place <= 3 ? 'var(--home)'
       : place === of ? 'var(--away)' : 'var(--muted)';
-    return `<circle cx="${x(i).toFixed(1)}" cy="${y(lvl).toFixed(1)}" r="4.5"
-      fill="${col}"><title>${esc(tip)}</title></circle>`;
+    const cx = x(i).toFixed(1), cy = y(lvl).toFixed(1), t = esc(seasonText(c));
+    // A second, invisible circle carries the pointer: a 4.5px dot is nothing to
+    // aim at with a thumb, and the readout has to work by tap as well as hover.
+    return `<circle cx="${cx}" cy="${cy}" r="${place ? 4.5 : 3}"
+        fill="${place ? col : 'var(--surface)'}"${place ? '' :
+        ' stroke="var(--muted)" stroke-width="1.5"'}></circle>
+      <circle class="hit" cx="${cx}" cy="${cy}" r="13" fill="transparent"
+        data-t="${t}"><title>${t}</title></circle>`;
   }).join('');
   // Six or so year labels, evenly spaced, whatever the length of the career.
   const step = Math.max(1, Math.ceil(cr.length / 7));
@@ -1165,11 +1184,13 @@ function careerLine(cr) {
       aria-label="Ligová úroveň a umístění po sezonách">${grid.join('')}
       <path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5" opacity=".55"/>
       ${dots}${ticks}</svg>
+    <p class="crpick" id="crpick">${esc(seasonText(
+      [...cr].reverse().find(c => c[2]) || cr[cr.length - 1]))}</p>
     <p class="legend"><span><i style="background:var(--accent)"></i>vyhráli skupinu</span>
       <span><i style="background:var(--home)"></i>do třetího místa</span>
       <span><i style="background:var(--away)"></i>poslední</span>
       <span><i style="background:var(--muted)"></i>jinde</span></p>
-    <p class="nt">Svisle liga, 1. nahoře. Každý bod je sezona; po najetí ukáže umístění.</p>`;
+    <p class="nt">Svisle liga, 1. nahoře. Každý bod je sezona &mdash; najeďte na něj nebo na něj klepněte.</p>`;
 }
 
 function squadBlock(sq, name) {
@@ -1432,7 +1453,16 @@ function renderTeam(i) {
 // again on every pick, and a listener added there would stack up a copy per
 // team looked at -- and then open the dialog twice, which throws the second
 // time. #team is in the page from the start, so this can sit outside.
+const crShow = e => {
+  const hit = e.target.closest ? e.target.closest('.hit') : null;
+  const box = document.getElementById('crpick');
+  if (hit && box) box.textContent = hit.dataset.t;
+};
+document.getElementById('team').addEventListener('mouseover', crShow);
+document.getElementById('team').addEventListener('touchstart', crShow, { passive: true });
+
 document.getElementById('team').addEventListener('click', e => {
+  if (e.target.closest && e.target.closest('.hit')) { crShow(e); return; }
   const more = e.target.closest('.more');
   if (more) {
     openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);

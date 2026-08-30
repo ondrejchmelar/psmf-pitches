@@ -123,6 +123,16 @@ file. The line comes from `data/archive`, which is complete, so it is unbroken
 even where a dot is hollow because no table was played (jaro 2020) or none has
 been yet.
 
+Every dot carries its whole row — group, place, played, W-D-L, score, points —
+in a readout under the chart, on hover and on tap. A 4.5px dot is nothing to aim
+at with a thumb, so each one has a second invisible circle of r=13 over it that
+carries the pointer and the text; `<title>` stays on it as well, for anything
+that only does tooltips. The readout starts on the last season actually played,
+not the newest, which for most of a season is a row of noughts.
+
+Do not call that paragraph `.pick`. That class is the team picker's box, and the
+readout quietly inherited its border and background until it was `.crpick`.
+
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads
