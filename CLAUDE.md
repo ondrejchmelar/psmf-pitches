@@ -101,6 +101,28 @@ stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
 would otherwise stamp every photo with today and expire every reader's cache
 nightly for nothing.
 
+`scrape_tables.py` reads the final standing of every division of every season
+into `data/tables`: 144 seasons, 36,426 finishing places, 3.2 MB, for 3,228
+requests. A team page never carries a table — where a side finished and on how
+many points is only on the division page, behind `?cmd=tables&…&type=final`,
+which answers with the whole group at once. Twelve teams a request is what makes
+it affordable; the same coverage from team pages would be twelve times the walk.
+`league` is the number in the division slug and `group_id` its letter's
+position, but `competition` and `season` are internal ids that are not
+derivable — veteran spring 2026 is season=10, super-veteran the same spring
+season=21 — so each season is probed once and the ids read off the link the
+division page would have called itself.
+
+That gives every team a placing per season, and the career paragraph a real
+top and bottom: **the league first, the place within it second**, because
+fourth in the 6th is a better season than third in the 7th and ranking on the
+place alone said otherwise. Titles get their own clause when there are any. The
+card under the fixtures draws the whole thing as a line — league down the y
+axis, one dot a season, coloured by how it ended — from `cr` in the per-team
+file. The line comes from `data/archive`, which is complete, so it is unbroken
+even where a dot is hollow because no table was played (jaro 2020) or none has
+been yet.
+
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads
@@ -133,7 +155,40 @@ league they have reached and when they were last there, and whether this season
 is a step up or down. It costs no requests; the archive was built for finding
 teams in the first place.
 
-Two things it is careful about. A team already present in the oldest archived
+The wording stays descriptive on purpose — "letos o ligu níž než loni", never
+"sestoupil", and never a count of places. How many go up is not a rule anybody
+published; it is whatever balances the books that season, and it changes with
+the level (Hanspaulská, per group, seasons since 2017):
+
+| liga | nahoru (medián, rozsah) | dolů |
+| --- | --- | --- |
+| 2. | 1 (1–1) | 2 (1–3) |
+| 4. | 2 (2–3) | 3 (0–3) |
+| 6. | 3 (1–4) | 3 (0–3) |
+| 7. | 4 (2–5) | 3 (0–3) |
+| 8. | 4 (2–6) | — |
+
+Going down is close to a rule: of 2,573 relegations, 2,556 are from the bottom
+three places. Going up is not — 1,286 from 1st, 1,085 from 2nd, 787 from 3rd,
+382 from 4th and 66 from 5th. So a fourth place going up is ordinary in the 7th
+league and impossible in the 2nd, which is why nothing on the page claims a
+promotion or names a number of places.
+
+The top of the pyramid is fixed — 1 group, then 2, 4, 6, 9, 12, 12 — so the
+flows up there are tightly constrained. The bottom is the shock absorber: the
+8th league carries 13 or 14 groups depending on the season, takes almost every
+new team (20 of 34 entrants in one transition) and loses the most to teams
+folding. Podzim 2025 to jaro 2026 it sent 54 up and took 32 down, plus 20 new
+against 10 gone — net twelve teams short, which is exactly the group it lost,
+14 down to 13. That is why the 8th promotes four a group and the 2nd promotes
+one: not depth, but who has room.
+
+A handful of moves are neither: 95 of 33,883 jump two levels or more, and the
+extremes — 2-A to 8-L in one step — are a side re-entering at the bottom, or a
+slug two different clubs have held. That last one is worth remembering, because
+the career model assumes one slug is one team.
+
+Two more things it is careful about. A team already present in the oldest archived
 season has been here longer than can be said, so it reads "od jara 2007 nebo
 dřív" rather than naming a start it does not know. And the season cited beside a
 league is the *most recent* one at that level, so it says "naposledy" — without

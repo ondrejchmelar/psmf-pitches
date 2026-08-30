@@ -248,6 +248,11 @@ for f in seen_seasons:
 
 CAREER_GAP = 4          # seasons out before we call it a different team, as in the scraper
 
+# Where everyone finished, division by division, from scrape_tables.py. The team
+# pages never carry a table; this is the only record of a placing.
+TABLES = ROOT / "data/tables"
+standings = {p.stem: json.loads(p.read_text("utf-8")) for p in TABLES.glob("*.json")}
+
 
 def season_code(s):
     """'2010-hanspaulska-liga-podzim' -> 'p2010'. Three characters saved 45 kB."""
@@ -278,6 +283,39 @@ def hi_now(c):
     return int(m.group(1)) if m else 0
 
 
+def placings(slug, comp):
+    """[season code, league, place, out of] for every season with a table.
+
+    A season not yet played has a table too -- everyone on nought -- so a place
+    only counts once somebody has kicked a ball.
+    """
+    out = []
+    for season, div in career(slug, comp):
+        for row in standings.get(season, {}).get(div, []):
+            if row[1] == slug and int(row[2]) > 0:
+                out.append([season_code(season), int(re.match(r"(\d+)", div).group(1)),
+                            row[0], len(standings[season][div])])
+    return out
+
+
+def line(slug, comp):
+    """Every season as [code, league, place, out of], oldest first.
+
+    Place is 0 where no table has been read or none was played: the line is
+    drawn from the league, which is always known, and the dots are filled in
+    from the place, which is not.
+    """
+    out = []
+    for season, div in reversed(career(slug, comp)):
+        place = size = 0
+        for row in standings.get(season, {}).get(div, []):
+            if row[1] == slug and int(row[2]) > 0:
+                place, size = row[0], len(standings[season][div])
+        out.append([season_code(season), int(re.match(r"(\d+)", div).group(1)),
+                    place, size])
+    return out
+
+
 def bio(slug, comp):
     """What can be said about a team without asking psmf.cz anything."""
     c = career(slug, comp)
@@ -292,14 +330,28 @@ def bio(slug, comp):
     if not lvl:
         return None
     hi, lo = min(lvl), max(lvl)
-    out = {"n": len(c), "od": season_code(c[-1][0]),
-           "hi": [hi, season_code(lvl[hi])]}
+    out = {"n": len(c), "od": season_code(c[-1][0])}
     if len(c) > 1:
         was = re.match(r"(\d+)", c[1][1])
         if was and int(was.group(1)) != hi_now(c):
             out["pv"] = int(was.group(1))
-    if lo != hi:
-        out["lo"] = [lo, season_code(lvl[lo])]
+    # How high they got, judged by the league first and the place within it
+    # second: fourth in the 6th is a better season than third in the 7th, and
+    # ranking on the place alone said otherwise. Where no table has been read
+    # the sentence falls back to naming the league and nothing else.
+    got = placings(slug, comp)
+    if got:
+        best = min(got, key=lambda g: (g[1], g[2]))
+        worst = max(got, key=lambda g: (g[1], g[2]))
+        out["top"] = best[1:] + best[:1]
+        out["bot"] = worst[1:] + worst[:1]
+        won = [g for g in got if g[2] == 1]
+        if won:
+            out["won"] = [len(won), won[0][0]]
+    else:
+        out["hi"] = [hi, season_code(lvl[hi])]
+        if lo != hi:
+            out["lo"] = [lo, season_code(lvl[lo])]
     # The archive starts in 2007. A team already in it then has been here longer
     # than we can say, and "since 2007" would be a guess. Both of these are
     # written only when true: false is twelve bytes nine hundred times over.
@@ -471,8 +523,11 @@ if HIST_SRC.exists():
                 {"d": m["date"], "l": m["label"], "v": m["venue"], "h": m["home"],
                  "s": m["score"], "hf": m["half"], "r": m["res"],
                  "ref": m["referee"], "w": m["report"]} for m in ms]
-        if out or sq:
+        cr = line(t["slug"], t.get("comp", ""))
+        if out or sq or len(cr) > 1:
             body = {"t": t["name"], "o": out}
+            if len(cr) > 1:
+                body["cr"] = cr
             if sq:
                 # It rides in the same file as the head-to-heads, fetched on the
                 # same request, because a team that has one usually has both --
@@ -687,6 +742,11 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .nt { margin:2px 0 0; font-size:12px; line-height:1.45; color:var(--faint); }
 .bio { margin:-6px 0 16px; font-size:13.5px; line-height:1.55; color:var(--muted);
   max-width:78ch; }
+.career { width:100%; height:auto; display:block; margin:8px 0 4px; }
+.career .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+.legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
+  margin:0 0 2px; }
+.legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
   white-space:nowrap; }
@@ -1024,7 +1084,17 @@ function bioLine(t) {
   // The season cited is the most recent one at that level, so it has to say so
   // -- "6. liga (podzim 2025)" reads as the only time they were there.
   const when = c => c === NOW_SEASON ? 'letos' : 'naposledy ' + seasonName(c);
-  if (b.n > 1) {
+  // League first, place second: fourth in the 6th is a better season than third
+  // in the 7th, and the league is named so nobody has to take that on trust.
+  const fin = g => `${g[1]}. z ${g[2]} v ${g[0]}. lize (${seasonName(g[3])})`;
+  if (b.top) {
+    said.push(b.top[3] === b.bot[3] ? `Skončil ${fin(b.top)}.`
+      : `Nejvýš skončil ${fin(b.top)}, nejníž ${fin(b.bot)}.`);
+    if (b.won) {
+      said.push(b.won[0] === 1 ? `Skupinu vyhrál jednou (${seasonName(b.won[1])}).`
+        : `Skupinu vyhrál ${b.won[0]}&times;, naposledy ${seasonName(b.won[1])}.`);
+    }
+  } else if (b.n > 1) {
     said.push(b.lo
       ? `Nejvýš ${b.hi[0]}. liga (${when(b.hi[1])}), nejníž ${b.lo[0]}. liga (${when(b.lo[1])}).`
       : `Celou dobu v ${b.hi[0]}. lize.`);
@@ -1057,6 +1127,51 @@ function histBox(title, inner) {
 // Only for teams scraped with --detail: the line-ups, the scorers and the
 // referee's man of the match. It arrives in the same file as the head-to-heads
 // and is drawn once it does, so the fixtures are never waiting on it.
+// ---- where a team has been ---------------------------------------------------
+// The line is the league, season by season, 1 at the top; the dots are where
+// they finished in it. The league is always known -- it is in data/archive --
+// so the line is unbroken even where no table was read and the dot is hollow.
+function careerLine(cr) {
+  const W = 660, H = 190, L = 26, T = 14, B = 26;
+  const lvls = cr.map(c => c[1]);
+  const lo = Math.min(...lvls), hi = Math.max(...lvls), span = hi - lo;
+  const x = i => L + i * (W - L - 8) / Math.max(1, cr.length - 1);
+  const y = l => span ? T + (l - lo) * (H - T - B) / span : (T + H - B) / 2;
+  const grid = [];
+  for (let l = lo; l <= hi; l++) {
+    grid.push(`<line x1="${L}" y1="${y(l).toFixed(1)}" x2="${W - 4}" y2="${y(l).toFixed(1)}"
+      stroke="var(--rule)"/><text x="4" y="${(y(l) + 4).toFixed(1)}" font-size="11"
+      fill="var(--faint)" class="mono">${l}.</text>`);
+  }
+  const path = cr.map((c, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(c[1]).toFixed(1)}`).join(' ');
+  const dots = cr.map((c, i) => {
+    const [code, lvl, place, of] = c;
+    const tip = `${seasonName(code)} · ${lvl}. liga${place ? ` · ${place}. z ${of}` : ''}`;
+    if (!place) {
+      return `<circle cx="${x(i).toFixed(1)}" cy="${y(lvl).toFixed(1)}" r="3"
+        fill="var(--surface)" stroke="var(--muted)" stroke-width="1.5"><title>${esc(tip)}</title></circle>`;
+    }
+    const col = place === 1 ? 'var(--accent)' : place <= 3 ? 'var(--home)'
+      : place === of ? 'var(--away)' : 'var(--muted)';
+    return `<circle cx="${x(i).toFixed(1)}" cy="${y(lvl).toFixed(1)}" r="4.5"
+      fill="${col}"><title>${esc(tip)}</title></circle>`;
+  }).join('');
+  // Six or so year labels, evenly spaced, whatever the length of the career.
+  const step = Math.max(1, Math.ceil(cr.length / 7));
+  const ticks = cr.map((c, i) => i % step ? '' :
+    `<text x="${x(i).toFixed(1)}" y="${H - 6}" font-size="10.5" fill="var(--faint)"
+      text-anchor="middle" class="mono">${c[0].slice(1)}</text>`).join('');
+  return `<svg class="career" viewBox="0 0 ${W} ${H}" role="img"
+      aria-label="Ligová úroveň a umístění po sezonách">${grid.join('')}
+      <path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5" opacity=".55"/>
+      ${dots}${ticks}</svg>
+    <p class="legend"><span><i style="background:var(--accent)"></i>vyhráli skupinu</span>
+      <span><i style="background:var(--home)"></i>do třetího místa</span>
+      <span><i style="background:var(--away)"></i>poslední</span>
+      <span><i style="background:var(--muted)"></i>jinde</span></p>
+    <p class="nt">Svisle liga, 1. nahoře. Každý bod je sezona; po najetí ukáže umístění.</p>`;
+}
+
 function squadBlock(sq, name) {
   // Captaincy is a tag rather than a column: it is one or two people for years
   // at a time, and a column of blanks says less than a word beside a name.
@@ -1068,9 +1183,7 @@ function squadBlock(sq, name) {
     <td class="dim">${esc(from === to ? from : from + ' – ' + to)}</td></tr>`).join('');
   const ex = (x, what) =>
     `<div class="stat"><b>${esc(x.s)}</b><span>${what} &middot; ${esc(x.o)}, ${esc(x.l)}</span></div>`;
-  return `<hr class="rule">
-    <h2>${esc(name)} &middot; co je zapsáno</h2>
-    <div class="stats">
+  return `<div class="stats">
       <div class="stat"><b>${sq.n}</b><span>Odehraných zápasů</span></div>
       <div class="stat"><b class="long">${sq.w}&ndash;${sq.d}&ndash;${sq.l}</b><span>Bilance</span></div>
       <div class="stat"><b>${sq.gf}:${sq.ga}</b><span>Skóre</span></div>
@@ -1286,7 +1399,7 @@ function renderTeam(i) {
     ${met ? `<p class="nt">S ${met} z nich se tento tým už potkal — číslo u jména je vzájemná bilance z minulých sezon, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
-    <div id="squad"></div>
+    <div id="past"></div>
     <hr class="rule">
     <div class="stats">
       <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
@@ -1301,11 +1414,17 @@ function renderTeam(i) {
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
 
-  if (t.sq) {
-    const box = document.getElementById('squad');
-    histFor(t)
-      .then(data => { if (shown === i && data.sq) box.innerHTML = squadBlock(data.sq, t.name); })
-      .catch(err => console.error('squad:', err));
+  // The career line and the squad live in the same fetched file, so they are
+  // drawn together, after the fixtures are already on screen.
+  if (t.sq || t.bio) {
+    const box = document.getElementById('past');
+    histFor(t).then(data => {
+      if (shown !== i || (!data.cr && !data.sq)) return;
+      box.innerHTML = `<hr class="rule"><h2>${esc(t.name)} &middot; ${
+        data.sq ? 'co je zapsáno' : 'kudy prošel ligou'}</h2>`
+        + (data.cr ? careerLine(data.cr) : '')
+        + (data.sq ? squadBlock(data.sq, t.name) : '');
+    }).catch(err => console.error('career:', err));
   }
 }
 
