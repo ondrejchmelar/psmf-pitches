@@ -125,10 +125,11 @@ tbody tr:hover { background:var(--sunk); }
      ragged lines was the thing that looked broken, not the shirt and the
      balance sitting on a line of their own underneath it. */
   .oname, .gname { white-space:nowrap; }
-  /* The ground breaks that way for most rows anyway, so it breaks that way for
-     all of them: pin and name, then the code and what else is on. A column
-     that folds only sometimes reads as worse than one that always does. */
-  .ground .gname { flex:1 0 100%; }
+  /* Both cells break the same way every row: the name, then the badges under
+     it. Most rows fold there anyway -- only the short names fit beside their
+     shirt -- and a column that folds only sometimes reads worse than one that
+     always does. */
+  .oname, .ground .gname { flex:1 0 100%; }
 }
 code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
   background:var(--sunk); padding:2px 5px; border-radius:2px; }

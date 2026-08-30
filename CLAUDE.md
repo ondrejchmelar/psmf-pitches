@@ -190,9 +190,9 @@ any two of them. `width:max-content` makes the table ask for the width that
 keeps each cell on one line; under 640px that is dropped so the badges fold —
 but never the names, because "Orange / Predators B" over two ragged lines was
 what looked broken, not a shirt and a balance on a line of their own
-underneath. The ground cell folds there whether it needs to or not — pin and
-name, then the code and the programme chip — because most rows fold anyway and
-a column that folds only sometimes looks worse than one that always does. The
+underneath. Both cells fold there whether they need to or not — the
+name, then the badges under it — because most rows fold anyway and a column
+that folds only sometimes looks worse than one that always does. The
 table is ~695px on a phone and scrolls, which it always did.
 
 Jersey colours come from each division's `dresy` page, in the league's own
