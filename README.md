@@ -3,11 +3,14 @@
 Measures the pitch we play on at every venue in our PSMF fixture list, straight
 from Prague orthophoto imagery.
 
-The report is published at <https://ondrejchmelar.github.io/psmf-pitches/>:
-every ground in the PSMF directory, and a team picker that shows any team's
-fixtures with the size of each pitch they play on. GitHub Pages serves what
-`build_page.py` writes into `docs/`: a 60 kB `index.html`, the venue photos as
-files, and the fixtures as JSON fetched once the page is on screen.
+The report is published at <https://ondrejchmelar.github.io/psmf-pitches/>, and
+has outgrown its name: pick a team and you get its whole season — when and where
+it plays, how big that pitch is and what boots it allows, whether the shirts
+clash, what else is on at the ground that day, and how the last meeting with
+each opponent went, with the paragraph the referee wrote about it. GitHub Pages
+serves what `build_page.py` writes into `docs/`: a 70 kB `index.html`, the venue
+photos as files, the fixtures as JSON fetched once the page is on screen, and a
+small head-to-head file per team fetched only when one is opened.
 
 ## Usage
 

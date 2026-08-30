@@ -1340,8 +1340,9 @@ if (window.requestAnimationFrame) {
 hist_dir = f'"data/{HIST_DIR}"' if HIST_DIR else "null"
 
 html = f"""<meta charset="utf-8">
-<title>Rozměry hřišť &mdash; PSMF Hanspaulsk&aacute; liga</title>
+<title>Rozpis, hřiště a vzájemné zápasy — PSMF</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Vyberte tým a uvidíte celou sezonu: kdy a kde hraje, jak velké to hřiště je, v čem se na něm smí hrát, jestli se kryjí dresy a jak to dopadlo, když jste se se soupeřem potkali naposledy. Hanspaulská i všechny tři veteránské soutěže.">
 <style>{CSS}</style>
 <script>{EARLY_JS}</script>
 
@@ -1350,10 +1351,11 @@ html = f"""<meta charset="utf-8">
   <p class="eyebrow">PSMF &middot; Hanspaulsk&aacute;, veter&aacute;nsk&aacute;, super a ultra &middot; podzim 2026</p>
   <button type="button" class="theme" id="theme" aria-live="polite">motiv</button>
 </div>
-<h1>Všechna hřiště v lize, změřená ze vzduchu</h1>
-<p class="lede">Rozměry vyznačených hřišť na všech {len(play)} hřištích, na kterých
-se hraje, proměřené podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na
-pixel. Vyberte tým a uvidíte, na čem letos hraje — Hanspaulská i všechny tři
+<h1>Celá sezona vašeho týmu na jedné stránce</h1>
+<p class="lede">Vyberte tým a uvidíte jeho rozpis: kdy a kde se hraje, jak velké
+to hřiště je a v čem se na něm smí hrát, jestli se kryjí dresy, co se tam hraje
+před vámi a po vás — a jak to dopadlo, když jste se se soupeřem potkali
+naposledy, i s tím, co k zápasu napsal rozhodčí. Hanspaulská a všechny tři
 veteránské soutěže.</p>
 
 <hr class="rule">
@@ -1378,7 +1380,8 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 
 <hr class="rule">
 <h2 id="all-head">Všechna hřiště &middot; od největšího</h2>
-<p class="lede" style="margin-bottom:18px">{len(play)} hřišť. Nejmenší z nich,
+<p class="lede" style="margin-bottom:18px">{len(play)} hřišť, každé proměřené
+podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel. Nejmenší z nich,
 {smallest["venue"]}, by se do největšího ({largest["venue"]})
 vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 <div class="grid" id="all"></div>
