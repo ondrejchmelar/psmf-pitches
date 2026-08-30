@@ -108,7 +108,11 @@ whatever it is given, since the files already on disk do not have it, and only
 our own team has been scraped that way — 32 seasons, 465 kB. `squad()` in
 build_page.py turns it into the block under the fixtures: the career record, the
 biggest win and heaviest defeat, and every player who has ever been named in a
-line-up with their appearances, goals and man-of-the-match marks. Twenty-one
+line-up with their appearances, goals and man-of-the-match marks. Keeping goal is a count, not a
+label: three men have kept 254 of the 301 between them, but outfield players
+stand in often enough that "brankář" beside a name would be wrong. The captain
+is a tag rather than a column, because it is one or two people for years at a
+time and a column of blanks says less than a word beside a name. Twenty-one
 people over sixteen years, and it exists nowhere else — psmf.cz has no career
 page for anybody, and a season's line-ups are only on that season's page.
 

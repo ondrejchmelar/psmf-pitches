@@ -392,7 +392,7 @@ def squad(matches, comp):
     if len(played) < 5:
         return None
     w = d = l = gf = ga = 0
-    app, goals, best, cap = {}, {}, {}, {}
+    app, goals, best, cap, gk = {}, {}, {}, {}, {}
     first, last = {}, {}
     for m in sorted(played, key=lambda m: m["date"] or ""):
         f, a = m["gf"], m["ga"]
@@ -406,6 +406,9 @@ def squad(matches, comp):
             app[n] = app.get(n, 0) + 1
             best[n] = best.get(n, 0) + bool(pl.get("best"))
             cap[n] = cap.get(n, 0) + bool(pl.get("cap"))
+            # The name before the dash is the keeper. Outfield players stand in
+            # often enough that this is a count, not a label on a person.
+            gk[n] = gk.get(n, 0) + bool(pl.get("gk"))
             first.setdefault(n, m["label"])
             last[n] = m["label"]
         for g in m.get("goals", []):
@@ -418,8 +421,9 @@ def squad(matches, comp):
     return {
         "n": len(played), "w": w, "d": d, "l": l, "gf": gf, "ga": ga,
         "big": extreme(max), "bad": extreme(min),
-        # name, matches, goals, man of the match, first season, last season
-        "p": [[n, app[n], goals.get(n, 0), best[n], first[n], last[n]]
+        # name, matches, goals, man of the match, in goal, as captain,
+        # first season, last season
+        "p": [[n, app[n], goals.get(n, 0), best[n], gk[n], cap[n], first[n], last[n]]
               for n in sorted(app, key=lambda n: (-app[n], -goals.get(n, 0)))],
     }
 
@@ -750,6 +754,9 @@ td a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .res.draw { color:var(--muted); }
 .res.prov { opacity:.65; font-style:italic; }
 .res.pend { color:var(--faint); background:transparent; border:1px dashed var(--rule); }
+.role { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
+  color:var(--faint); border:1px solid var(--rule); }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -1051,9 +1058,13 @@ function histBox(title, inner) {
 // referee's man of the match. It arrives in the same file as the head-to-heads
 // and is drawn once it does, so the fixtures are never waiting on it.
 function squadBlock(sq, name) {
-  const rows = sq.p.map(([n, ap, g, b, from, to]) => `<tr>
-    <td><div class="cell"><span class="oname">${esc(n)}</span></div></td>
+  // Captaincy is a tag rather than a column: it is one or two people for years
+  // at a time, and a column of blanks says less than a word beside a name.
+  const rows = sq.p.map(([n, ap, g, b, gk, cap, from, to]) => `<tr>
+    <td><div class="cell"><span class="oname">${esc(n)}</span>${
+      cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${b || ''}</td>
+    <td class="num">${gk || ''}</td>
     <td class="dim">${esc(from === to ? from : from + ' – ' + to)}</td></tr>`).join('');
   const ex = (x, what) =>
     `<div class="stat"><b>${esc(x.s)}</b><span>${what} &middot; ${esc(x.o)}, ${esc(x.l)}</span></div>`;
@@ -1070,6 +1081,7 @@ function squadBlock(sq, name) {
     <div class="scroll"><table>
       <thead><tr><th>Hráč</th><th>Zápasů</th><th>Gólů</th>
       <th title="kolikrát ho rozhodčí označil za nejlepšího hráče zápasu">Hvězda</th>
+      <th title="zápasy, ve kterých chytal">V bráně</th>
       <th>Sezony</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
 }
