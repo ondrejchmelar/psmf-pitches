@@ -108,7 +108,7 @@ def parse_date(text: str) -> str | None:
                          int(m.group(2)), int(m.group(1))).isoformat()
 
 
-def match_details(html: str) -> dict[str, dict]:
+def match_details(html: str, detail: bool = False) -> dict[str, dict]:
     """gameid -> half-time score, referee, and the referee's write-up.
 
     Only the part of the page below the `gameResults` anchor: the results table
@@ -127,13 +127,66 @@ def match_details(html: str) -> dict[str, dict]:
                 report, referee = S.strip_tags(tds[0]), S.strip_tags(tds[1])
         out[gid] = {"half": half.group(1) if half else "",
                     "report": report, "referee": referee}
+        if detail:
+            out[gid].update(teamsheet(body))
     return out
 
 
-def parse_season(html: str, slug: str) -> list[dict]:
+def people(cell: str) -> list[dict]:
+    """A lineup cell -> the names in it, with who kept goal and who was marked.
+
+    The keeper is the name before the dash; psmf.cz marks the captain and the
+    referee's man of the match with their own classes.
+    """
+    out = []
+    parts = re.split(r"&ndash;|&#8211;|–", cell, 1)
+    for i, chunk in enumerate(parts):
+        for m in re.finditer(r'(?:<span class="([^"]+)">)?\s*([^,<]+?)\s*'
+                             r'(?:</span>)?\s*(?:,|$)', chunk):
+            name = S.strip_tags(m.group(2)).strip(" ,")
+            if not name:
+                continue
+            cls = m.group(1) or ""
+            out.append({"n": name, "gk": i == 0 and len(parts) > 1,
+                        "cap": "captain" in cls, "best": "best" in cls})
+    return out
+
+
+def scorers(cell: str) -> list[dict]:
+    """'42., 46. Martin Kubiče' -> one player, two minutes."""
+    out = []
+    for line in re.split(r"<br\s*/?>", cell):
+        m = re.match(r"((?:\d+\.\s*,?\s*)+)(.+)", S.strip_tags(line))
+        if m:
+            out.append({"m": [int(x) for x in re.findall(r"\d+", m.group(1))],
+                        "n": m.group(2).strip()})
+    return out
+
+
+def teamsheet(body: str) -> dict:
+    """The rest of a match block: who played, who scored, who was booked."""
+    rec = {}
+    line = re.search(r"has-smaller-text.*?<tr>(.*?)</tr>\s*<tr>(.*?)</tr>", body, re.S)
+    if line:
+        sides = [t for t in (S.strip_tags(x) for x in
+                             re.findall(r"<th[^>]*>(.*?)</th>", line.group(1), re.S)) if t]
+        tds = re.findall(r"<td[^>]*>(.*?)</td>", line.group(2), re.S)
+        if len(sides) == 2 and len(tds) >= 3:
+            rec["line"] = {sides[0]: people(tds[0]), sides[1]: people(tds[2])}
+    gt = re.search(r"Góly.*?</tr>\s*<tr>(.*?)</tr>", body, re.S)
+    if gt:
+        tds = re.findall(r"<td[^>]*>(.*?)</td>", gt.group(1), re.S)
+        if len(tds) >= 5:
+            rec["g"] = [scorers(tds[0]), scorers(tds[3])]
+            rec["c"] = [[S.strip_tags(x) for x in re.split(r"<br\s*/?>", tds[i])
+                         if S.strip_tags(x)] for i in (1, 4)]
+    return rec
+
+
+def parse_season(html: str, slug: str, detail: bool = False) -> list[dict]:
     """One team page -> its matches, details folded in."""
     head = html.split('name="gameResults"')[0]
-    det = match_details(html)
+    det = match_details(html, detail)
     out, seen = [], set()
     for row in re.findall(r"<tr[^>]*>(.*?)</tr>", head, re.S | re.I):
         code = re.search(r'href="/hriste/#([A-Z0-9]+)"', row)
@@ -160,6 +213,13 @@ def parse_season(html: str, slug: str) -> list[dict]:
              "opponent": opp[1], "opp_slug": opp[0], "home": home,
              "score": score, "half": d.get("half", ""),
              "referee": d.get("referee", ""), "report": d.get("report", "")}
+        if detail and d.get("line"):
+            # Our side of the sheet only: the opponent's is on their own page,
+            # and keeping both would store every match twice over.
+            us = sides[0][1] if home else sides[1][1]
+            m["line"] = d["line"].get(us, [])
+            m["goals"] = (d.get("g") or [[], []])[0 if home else 1]
+            m["cards"] = (d.get("c") or [[], []])[0 if home else 1]
         if score:
             h, a = (int(x) for x in score.split(":"))
             # The score is always written home:away; ours is whichever side we were.
@@ -210,7 +270,8 @@ def worth_reading(slug: str, keep: list[str], index: dict,
 
 
 def team_history(family: str, slug: str, read: list[str], played: list[str],
-                 index: dict, pause: float, force=frozenset()) -> dict:
+                 index: dict, pause: float, force=frozenset(),
+                 detail: bool = False) -> dict:
     """Read `read` seasons of one team and merge them into its file.
 
     The file records which seasons it has actually been given and whether that
@@ -237,7 +298,7 @@ def team_history(family: str, slug: str, read: list[str], played: list[str],
         title = re.search(r'class="component__title">(.*?)</h1>', html, re.S)
         if title:
             name = name or S.strip_tags(title.group(1))
-        for m in parse_season(html, slug):
+        for m in parse_season(html, slug, detail):
             m.update(season=season, label=label(season),
                      division=index[season][slug])
             matches.append(m)
@@ -248,6 +309,8 @@ def team_history(family: str, slug: str, read: list[str], played: list[str],
     seasons = [s for s in played if s in done | fresh]
     out = {"slug": slug, "team": name, "family": family, "seasons": seasons,
            "complete": set(seasons) >= set(played), "matches": matches}
+    if detail or have.get("detail"):
+        out["detail"] = True
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), "utf-8")
     return out
@@ -258,6 +321,9 @@ def main():
     ap.add_argument("--all", action="store_true", help="every team in data/season.json")
     ap.add_argument("--slug", help="one team (with --family if it is a veteran side)")
     ap.add_argument("--family", default="hanspaulska-liga", choices=FAMILIES)
+    ap.add_argument("--detail", action="store_true",
+                    help="also keep the line-ups, scorers and cards; re-reads what "
+                         "it is given, since the existing files do not have them")
     ap.add_argument("--full", action="store_true",
                     help="every season a team played, not only the ones that can "
                          "hold a match against this year's opponents")
@@ -320,7 +386,8 @@ def main():
             force = by_family[f][:args.seasons] if args.seasons else []
             read = [s for s in played if s in set(read) | set(force)]
             h = team_history(f, t["slug"], read, played, index, args.pause,
-                             force=set(force))
+                             force=set(force) | (set(read) if args.detail else set()),
+                             detail=args.detail)
             done += 1
             pages += len(read)
             if done % 25 == 0 or done == total:

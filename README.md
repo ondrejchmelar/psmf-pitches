@@ -22,6 +22,7 @@ python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
 ./.venv/bin/python scrape_season.py --results        # scores for matches already played
 ./.venv/bin/python scrape_history.py --all   # every team's past seasons -> data/hist/
 ./.venv/bin/python scrape_history.py --all --seasons 2   # re-read the season just ended
+./.venv/bin/python scrape_history.py --slug <team> --full --detail  # + line-ups and scorers
 ./.venv/bin/python measure_pitches.py --auto-layer   # measure + annotate -> out/
 ./.venv/bin/python make_table.py             # our season table -> out/table.md
 ./.venv/bin/python build_page.py             # the published site -> docs/

@@ -101,6 +101,24 @@ stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
 would otherwise stamp every photo with today and expire every reader's cache
 nightly for nothing.
 
+`scrape_history.py --detail` keeps the rest of a match block as well: who
+played, who kept goal, who wore the armband, who scored and in which minute,
+who was booked, and who the referee marked as the best on the pitch. It re-reads
+whatever it is given, since the files already on disk do not have it, and only
+our own team has been scraped that way — 32 seasons, 465 kB. `squad()` in
+build_page.py turns it into the block under the fixtures: the career record, the
+biggest win and heaviest defeat, and every player who has ever been named in a
+line-up with their appearances, goals and man-of-the-match marks. Twenty-one
+people over sixteen years, and it exists nowhere else — psmf.cz has no career
+page for anybody, and a season's line-ups are only on that season's page.
+
+It rides in the same per-team file as the head-to-heads and is drawn when that
+arrives, so the fixtures never wait for it; `sq: 1` on the team record is what
+says to ask. Going league-wide would mean the full crawl (15,600 pages) and
+`data/hist` at perhaps 90 MB — and it would publish appearance and scoring
+tallies for every amateur in the league, which is a different thing from a
+single match report even though every number in it is already public.
+
 psmf.cz keeps no description of a team — no founding date, no history, nothing
 on its page but the season you are looking at, and the one club link it offers
 points at `mujtym.psmf.cz`, which no longer resolves. The one biography the

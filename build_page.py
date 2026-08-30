@@ -380,6 +380,50 @@ HIST_SRC = ROOT / "data/hist"
 HIST_DIR = ""
 
 
+def squad(matches, comp):
+    """Sixteen years of a team in one block, when the line-ups were kept.
+
+    `scrape_history.py --detail` keeps who played, who scored and who the
+    referee called the best on the day. That is the only place any of it exists
+    once a season's page rolls over -- psmf.cz has no career page for anybody.
+    Only teams scraped that way get this; for the rest it is simply absent.
+    """
+    played = [m for m in matches if m.get("score") and m.get("line") is not None]
+    if len(played) < 5:
+        return None
+    w = d = l = gf = ga = 0
+    app, goals, best, cap = {}, {}, {}, {}
+    first, last = {}, {}
+    for m in sorted(played, key=lambda m: m["date"] or ""):
+        f, a = m["gf"], m["ga"]
+        gf += f
+        ga += a
+        w += f > a
+        d += f == a
+        l += f < a
+        for pl in m["line"]:
+            n = pl["n"]
+            app[n] = app.get(n, 0) + 1
+            best[n] = best.get(n, 0) + bool(pl.get("best"))
+            cap[n] = cap.get(n, 0) + bool(pl.get("cap"))
+            first.setdefault(n, m["label"])
+            last[n] = m["label"]
+        for g in m.get("goals", []):
+            goals[g["n"]] = goals.get(g["n"], 0) + len(g["m"])
+
+    def extreme(pick):
+        m = pick(played, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
+        return {"s": f'{m["gf"]}:{m["ga"]}', "o": m["opponent"], "l": m["label"]}
+
+    return {
+        "n": len(played), "w": w, "d": d, "l": l, "gf": gf, "ga": ga,
+        "big": extreme(max), "bad": extreme(min),
+        # name, matches, goals, man of the match, first season, last season
+        "p": [[n, app[n], goals.get(n, 0), best[n], first[n], last[n]]
+              for n in sorted(app, key=lambda n: (-app[n], -goals.get(n, 0)))],
+    }
+
+
 if HIST_SRC.exists():
     # Opponents are named in a fixture, not linked, so the name is what keys
     # everything below. Within one competition they are unique -- checked here
@@ -403,8 +447,10 @@ if HIST_SRC.exists():
         src = HIST_SRC / fam / f"{t['slug']}.json"
         if not src.exists():
             continue
+        hist = json.loads(src.read_text("utf-8"))
+        sq = squad(hist["matches"], t.get("comp")) if hist.get("detail") else None
         past = {}
-        for m in json.loads(src.read_text("utf-8"))["matches"]:
+        for m in hist["matches"]:
             # The season being played is not history: its own fixtures would
             # otherwise come back as a previous meeting on their own row.
             if m.get("score") and m["season"] != t.get("comp"):
@@ -421,9 +467,15 @@ if HIST_SRC.exists():
                 {"d": m["date"], "l": m["label"], "v": m["venue"], "h": m["home"],
                  "s": m["score"], "hf": m["half"], "r": m["res"],
                  "ref": m["referee"], "w": m["report"]} for m in ms]
-        if out:
-            files[t["slug"]] = json.dumps({"t": t["name"], "o": out},
-                                          ensure_ascii=False,
+        if out or sq:
+            body = {"t": t["name"], "o": out}
+            if sq:
+                # It rides in the same file as the head-to-heads, fetched on the
+                # same request, because a team that has one usually has both --
+                # and one file per team is already the shape that scales.
+                body["sq"] = sq
+                rec["sq"] = 1
+            files[t["slug"]] = json.dumps(body, ensure_ascii=False,
                                           separators=(",", ":")).encode()
             met += len(out)
 
@@ -503,8 +555,11 @@ h1 { font-size:clamp(30px,5vw,46px); line-height:1.06; letter-spacing:-.022em;
 .rule { height:1px; background:var(--rule); margin:34px 0 28px; border:0; }
 .stats { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-bottom:8px; }
 .stat { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:16px 18px; }
+/* A balance is one number, not three: "112-28-161" broken across two lines
+   reads as two different figures. It shrinks to fit instead. */
 .stat b { display:block; font:600 26px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-variant-numeric:tabular-nums; letter-spacing:-.02em; }
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em; white-space:nowrap; }
+.stat b.long { font-size:clamp(17px, 4.4vw, 22px); }
 .stat span { display:block; margin-top:6px; font-size:12px; letter-spacing:.08em;
   text-transform:uppercase; color:var(--faint); }
 h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
@@ -991,6 +1046,34 @@ function histBox(title, inner) {
     </div>`;
 }
 
+// ---- sixteen years in one block ---------------------------------------------
+// Only for teams scraped with --detail: the line-ups, the scorers and the
+// referee's man of the match. It arrives in the same file as the head-to-heads
+// and is drawn once it does, so the fixtures are never waiting on it.
+function squadBlock(sq, name) {
+  const rows = sq.p.map(([n, ap, g, b, from, to]) => `<tr>
+    <td><div class="cell"><span class="oname">${esc(n)}</span></div></td>
+    <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${b || ''}</td>
+    <td class="dim">${esc(from === to ? from : from + ' – ' + to)}</td></tr>`).join('');
+  const ex = (x, what) =>
+    `<div class="stat"><b>${esc(x.s)}</b><span>${what} &middot; ${esc(x.o)}, ${esc(x.l)}</span></div>`;
+  return `<hr class="rule">
+    <h2>${esc(name)} &middot; co je zapsáno</h2>
+    <div class="stats">
+      <div class="stat"><b>${sq.n}</b><span>Odehraných zápasů</span></div>
+      <div class="stat"><b class="long">${sq.w}&ndash;${sq.d}&ndash;${sq.l}</b><span>Bilance</span></div>
+      <div class="stat"><b>${sq.gf}:${sq.ga}</b><span>Skóre</span></div>
+      ${ex(sq.big, 'Nejvyšší výhra')}${ex(sq.bad, 'Nejvyšší prohra')}
+    </div>
+    <p class="bio">${sq.p.length} hráčů v sestavách, které rozhodčí zapsali.
+      Hvězda je zápas, ve kterém rozhodčí označil hráče za nejlepšího na hřišti.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Hráč</th><th>Zápasů</th><th>Gólů</th>
+      <th title="kolikrát ho rozhodčí označil za nejlepšího hráče zápasu">Hvězda</th>
+      <th>Sezony</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>`;
+}
+
 function openHistory(t, name) {
   const dlg = document.getElementById('prog');
   const title = `${esc(t.name)} &ndash; ${esc(name)}`;
@@ -1191,10 +1274,11 @@ function renderTeam(i) {
     ${met ? `<p class="nt">S ${met} z nich se tento tým už potkal — číslo u jména je vzájemná bilance z minulých sezon, po kliknutí se rozbalí výsledky a co k nim napsal rozhodčí.</p>` : ''}
     ${warnings ? `<p class="nt">${warnings}&times; se barvy dresů kryjí se soupeřem a hrajeme venku — jdeme do trik.</p>` : ''}
     ${missing ? `<p class="nt">${missing}&times; se hraje na hřišti bez měření — hala, nebo kód, který adresář PSMF nevede.</p>` : ''}
+    <div id="squad"></div>
     <hr class="rule">
     <div class="stats">
       <div class="stat"><b>${t.fx.length}</b><span>Zápasů</span></div>
-      ${played ? `<div class="stat"><b>${w}&ndash;${d}&ndash;${l}</b><span>Bilance</span></div>` : ''}
+      ${played ? `<div class="stat"><b class="long">${w}&ndash;${d}&ndash;${l}</b><span>Bilance</span></div>` : ''}
       <div class="stat"><b>${codes.length}</b><span>Různých hřišť</span></div>
       <div class="stat"><b>${areas.length ? Math.min(...areas) + ' m²' : '—'}</b><span>Nejmenší</span></div>
       <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
@@ -1204,6 +1288,13 @@ function renderTeam(i) {
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
+
+  if (t.sq) {
+    const box = document.getElementById('squad');
+    histFor(t)
+      .then(data => { if (shown === i && data.sq) box.innerHTML = squadBlock(data.sq, t.name); })
+      .catch(err => console.error('squad:', err));
+  }
 }
 
 // Bound once, to the container rather than to what is in it: renderTeam runs
