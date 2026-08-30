@@ -101,6 +101,22 @@ stamp is a hash of `out/measurements.json`, not its mtime: a fresh CI checkout
 would otherwise stamp every photo with today and expire every reader's cache
 nightly for nothing.
 
+psmf.cz keeps no description of a team — no founding date, no history, nothing
+on its page but the season you are looking at, and the one club link it offers
+points at `mujtym.psmf.cz`, which no longer resolves. The one biography the
+league does keep is `data/archive`: which division every slug was in, every
+season back to 2007. `bio()` in build_page.py turns that into the paragraph
+under each team's heading — how long they have been here, the highest and lowest
+league they have reached and when they were last there, and whether this season
+is a step up or down. It costs no requests; the archive was built for finding
+teams in the first place.
+
+Two things it is careful about. A team already present in the oldest archived
+season has been here longer than can be said, so it reads "od jara 2007 nebo
+dřív" rather than naming a start it does not know. And the season cited beside a
+league is the *most recent* one at that level, so it says "naposledy" — without
+that, "6. liga (podzim 2025)" reads as the only time they were ever there.
+
 `scrape_history.py` is the back catalogue: every team's past matches, with the
 paragraph the referee wrote about each. psmf.cz keeps the whole archive back to
 2007 but links a team to none of its earlier selves — the `<` arrow on a team

@@ -226,6 +226,90 @@ play = V
 smallest = min(play.values(), key=lambda x: x["area"])
 largest = max(play.values(), key=lambda x: x["area"])
 
+def family_of(comp):
+    """'2026-superveteranska-liga-podzim' -> 'superveteranska-liga'."""
+    return comp.split("-", 1)[1].rsplit("-", 1)[0] if comp else ""
+
+
+# -------------------------------------------------------------------- careers
+# psmf.cz keeps no description of a team: no founding date, no history, nothing
+# on the page but the season you are looking at. The one biography the league
+# does keep is data/archive -- which division every slug was in, every season --
+# so the page writes the paragraph out of that. It costs no requests: the
+# archive was built for finding teams in the first place.
+ARCHIVE = ROOT / "data/archive"
+seen_seasons: dict[str, list[str]] = {}
+where: dict[str, dict] = {}
+for src in sorted(ARCHIVE.glob("*.json")):
+    where[src.stem] = json.loads(src.read_text("utf-8"))
+    seen_seasons.setdefault(family_of(src.stem), []).append(src.stem)
+for f in seen_seasons:
+    seen_seasons[f].sort(key=lambda x: (int(x[:4]), x.endswith("podzim")), reverse=True)
+
+CAREER_GAP = 4          # seasons out before we call it a different team, as in the scraper
+
+
+def season_code(s):
+    """'2010-hanspaulska-liga-podzim' -> 'p2010'. Three characters saved 45 kB."""
+    return ("p" if s.endswith("podzim") else "j") + s[:4]
+
+
+def career(slug, comp):
+    """Every season this team appears in, newest first, stopping at a real gap."""
+    order = seen_seasons.get(family_of(comp), [])
+    present = [x for x in order if slug in where[x]]
+    if not present:
+        return []
+    out, missed = [], 0
+    for x in order[order.index(present[0]):]:
+        if slug in where[x]:
+            out.append((x, where[x][slug]))
+            missed = 0
+        else:
+            missed += 1
+            if missed >= CAREER_GAP:
+                break
+    return out
+
+
+def hi_now(c):
+    """The level of the season being played."""
+    m = re.match(r"(\d+)", c[0][1])
+    return int(m.group(1)) if m else 0
+
+
+def bio(slug, comp):
+    """What can be said about a team without asking psmf.cz anything."""
+    c = career(slug, comp)
+    if not c:
+        return None
+    order = seen_seasons[family_of(comp)]
+    lvl = {}
+    for x, div in c:
+        m = re.match(r"(\d+)", div)
+        if m:
+            lvl.setdefault(int(m.group(1)), x)      # newest season at that level
+    if not lvl:
+        return None
+    hi, lo = min(lvl), max(lvl)
+    out = {"n": len(c), "od": season_code(c[-1][0]),
+           "hi": [hi, season_code(lvl[hi])]}
+    if len(c) > 1:
+        was = re.match(r"(\d+)", c[1][1])
+        if was and int(was.group(1)) != hi_now(c):
+            out["pv"] = int(was.group(1))
+    if lo != hi:
+        out["lo"] = [lo, season_code(lvl[lo])]
+    # The archive starts in 2007. A team already in it then has been here longer
+    # than we can say, and "since 2007" would be a guess. Both of these are
+    # written only when true: false is twelve bytes nine hundred times over.
+    if c[-1][0] == order[-1]:
+        out["cap"] = 1
+    if order.index(c[-1][0]) - order.index(c[0][0]) + 1 != len(c):
+        out["gap"] = 1
+    return out
+
+
 # ---------------------------------------------------------------------- teams
 # Division names repeat across competitions -- there is a 3-B in three of them --
 # so the label carries the competition. The main league keeps a bare division,
@@ -250,6 +334,7 @@ for t in season.get("teams", []):
     if fx:
         teams.append({"name": t["name"], "sl": t.get("slug", ""),
                       "div": div_label(t.get("comp"), t["division"]), "fx": fx,
+                      "bio": bio(t.get("slug", ""), t.get("comp", "")),
                       "kit": t.get("colours", ""),
                       "sw": colours(t.get("colours", "")),               # badge
                       "sh": colours(t.get("colours", ""), True)})        # shirt
@@ -282,7 +367,6 @@ def publish(stem, payload):
     return name
 
 
-
 # -------------------------------------------------------------------- history
 # What happened last time these two met, from data/hist -- one file per team,
 # every season it has played, with the referee's write-up for each match.
@@ -294,11 +378,6 @@ def publish(stem, payload):
 # nobody reads more than one team's.
 HIST_SRC = ROOT / "data/hist"
 HIST_DIR = ""
-
-
-def family_of(comp):
-    """'2026-superveteranska-liga-podzim' -> 'superveteranska-liga'."""
-    return comp.split("-", 1)[1].rsplit("-", 1)[0] if comp else ""
 
 
 if HIST_SRC.exists():
@@ -547,6 +626,8 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
   font-variant-numeric:tabular-nums; color:var(--ink); }
 .fx { margin:4px 0 0; font-size:12.5px; color:var(--muted); }
 .nt { margin:2px 0 0; font-size:12px; line-height:1.45; color:var(--faint); }
+.bio { margin:-6px 0 16px; font-size:13.5px; line-height:1.55; color:var(--muted);
+  max-width:78ch; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
   white-space:nowrap; }
@@ -861,6 +942,41 @@ const dmy = d => {
   return p ? `${+p[3]}. ${+p[2]}. ${p[1]}` : (d || '');
 };
 
+// ---- the only biography the league keeps ------------------------------------
+// psmf.cz has no description of a team: no founding date, no history, nothing
+// on its page but the season you are looking at. What the league does record is
+// which division everyone was in, every season back to 2007, and that is enough
+// to say how long a team has been here and how far it has travelled.
+const SEASON = { p: 'podzim', j: 'jaro' };
+const seasonName = c => `${SEASON[c[0]]} ${c.slice(1)}`;
+const seasonFrom = c => `${c[0] === 'p' ? 'podzimu' : 'jara'} ${c.slice(1)}`;
+// 1 ligu, 2-4 ligy, 5+ lig -- and "o ligu" rather than "o 1 ligu".
+const leagues = n => n === 1 ? 'o ligu' : `o ${n} ${n < 5 ? 'ligy' : 'lig'}`;
+
+function bioLine(t) {
+  const b = t.bio;
+  if (!b) return '';
+  const said = [b.n === 1 ? 'V soutěži je letos poprvé.'
+    : `Hraje ${b.cap ? 'od jara 2007 nebo dřív' : 'od ' + seasonFrom(b.od)}${
+        b.gap ? ', s přestávkou' : ''}, letos ${b.n}. sezonu.`];
+  // The season cited is the most recent one at that level, so it has to say so
+  // -- "6. liga (podzim 2025)" reads as the only time they were there.
+  const when = c => c === NOW_SEASON ? 'letos' : 'naposledy ' + seasonName(c);
+  if (b.n > 1) {
+    said.push(b.lo
+      ? `Nejvýš ${b.hi[0]}. liga (${when(b.hi[1])}), nejníž ${b.lo[0]}. liga (${when(b.lo[1])}).`
+      : `Celou dobu v ${b.hi[0]}. lize.`);
+  }
+  if (b.pv) {
+    // "7-G", "Vet 3-B", "Ultra 1-A" -- the tag carries no digits, so the first
+    // number in the label is always the league.
+    const m = /(\d+)/.exec(t.div);
+    const d = m ? b.pv - +m[1] : 0;
+    if (d) said.push(`Letos ${leagues(Math.abs(d))} ${d > 0 ? 'výš' : 'níž'} než loni.`);
+  }
+  return `<p class="bio">${said.join(' ')}</p>`;
+}
+
 function h2hChip(f) {
   if (!HIST_DIR || !f.hh) return '';
   return `<button type="button" class="h2h" data-opp="${esc(f.o)}"
@@ -1072,6 +1188,7 @@ function renderTeam(i) {
       <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
       <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
     </div>
+    ${bioLine(t)}
     <div class="scroll"><table>
       <thead><tr><th>K</th><th>Datum</th><th>Výsledek</th>
       <th>Soupeř</th><th>Hřiště</th><th>Rozměr</th><th>Obuv</th></tr></thead>
@@ -1338,6 +1455,9 @@ if (window.requestAnimationFrame) {
 """
 
 hist_dir = f'"data/{HIST_DIR}"' if HIST_DIR else "null"
+# Which season the page is about, so a career can say "letos" instead of
+# naming it. Every competition rolls over together, so one is enough.
+now_season = season_code(seen_seasons["hanspaulska-liga"][0])
 
 html = f"""<meta charset="utf-8">
 <title>Rozpis, hřiště a vzájemné zápasy — PSMF</title>
@@ -1397,7 +1517,8 @@ Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 
 <script type="application/json" id="psmf-data">{blob}</script>
 <script>const TEAMS_URL = "data/{TEAMS_FILE}";
-const HIST_DIR = {hist_dir};</script>
+const HIST_DIR = {hist_dir};
+const NOW_SEASON = "{now_season}";</script>
 <script>{JS}</script>
 """
 
