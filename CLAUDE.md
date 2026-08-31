@@ -138,11 +138,15 @@ place beside every dot would have been unreadable. Wide and scrollable keeps
 them the size they are on a desktop, and matches what the tables already do.
 
 Every dot carries its whole row — group, place, played, W-D-L, score, points —
-in a readout under the chart, on hover and on tap. A 4.5px dot is nothing to aim
-at with a thumb, so each one has a second invisible circle of r=13 over it that
-carries the pointer and the text; `<title>` stays on it as well, for anything
-that only does tooltips. The readout starts on the last season actually played,
-not the newest, which for most of a season is a row of noughts.
+in a tooltip that follows it, on hover and on tap. It was a line under the
+chart, which on a phone is behind the finger that asked for it. Above the dot by
+default, under it where there is no room (the top league), and clamped to *what
+is on screen* rather than to the drawing: the chart is wider than a phone and
+scrolls, so pinning the tooltip inside the drawing put it off to the right along
+with the far end of the career. On narrow screens it folds onto two lines. A
+4.5px dot is nothing to aim at with a thumb, so each has a second invisible
+circle of r=13 over it carrying the pointer and the text; `<title>` stays on it
+too, for anything that only does tooltips.
 
 There are two ways a dot can be hollow and they read differently. The current
 season has no table yet — "zatím bez tabulky". **Jaro 2020 has none at all**, in
@@ -153,8 +157,13 @@ ever published, and nobody moved: 686 of 709 teams were in the same league that
 autumn, against 284 who moved a year earlier. So that one says "bez tabulky",
 and the note under the chart says why.
 
-Do not call that paragraph `.pick`. That class is the team picker's box, and the
-readout quietly inherited its border and background until it was `.crpick`.
+`.crwrap` needs its own `min-width`, matching the chart's. As a plain block it
+takes the scroll container's width — 394px on a phone while the drawing inside
+overflows to 620 — and the tooltip is then clamped against the wrong edge.
+
+The tooltip was briefly a paragraph called `.pick`, which is the team picker's
+box, and it quietly inherited that border and background. Names in this file's
+CSS are one flat namespace; check before adding one.
 
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
