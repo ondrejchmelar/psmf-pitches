@@ -752,6 +752,11 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .crpick { margin:2px 0 10px; font:600 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
   font-variant-numeric:tabular-nums; color:var(--ink); min-height:20px; }
 .career .hit { cursor:pointer; }
+/* Only inside the career block. Three dense things stacked -- chart, cards,
+   squad -- and at the spacing the rest of the page uses they read as one wall.
+   Scoped to #past so the team's own summary cards keep their own rhythm. */
+#past .stats { margin:32px 0 10px; }
+#past .bio { margin:26px 0 12px; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
   white-space:nowrap; }
