@@ -743,7 +743,12 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .nt { margin:2px 0 0; font-size:12px; line-height:1.45; color:var(--faint); }
 .bio { margin:-6px 0 16px; font-size:13.5px; line-height:1.55; color:var(--muted);
   max-width:78ch; }
-.career { width:100%; height:auto; display:block; margin:8px 0 4px; }
+/* Wide rather than shrunk: at 430px the whole thing scaled to about 0.6, the
+   labels with it, and there is now a place beside every dot to keep legible. It
+   scrolls sideways as the tables do -- but without their frame, which would box
+   in a drawing that already has its own edges. */
+.crscroll { overflow-x:auto; }
+.career { width:100%; min-width:620px; height:auto; display:block; margin:8px 0 4px; }
 .career .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
 /* Painted into the chart, not beside it: stroked in the page's own background
    so a label crossing the line is still readable and the line is not cut.
@@ -752,7 +757,7 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
    set larger to come out the same. */
 .career .lab { font-size:11px; paint-order:stroke; stroke:var(--ground);
   stroke-width:3px; stroke-linejoin:round; }
-@media (max-width:640px) { .career .lab { font-size:18px; stroke-width:4px; } }
+.career .pl { font-size:9.5px; fill:var(--muted); }
 .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
   margin:0 0 2px; }
 .legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
@@ -1162,15 +1167,15 @@ function seasonText(c) {
 // they finished in it. The league is always known -- it is in data/archive --
 // so the line is unbroken even where no table was read and the dot is hollow.
 function careerLine(cr) {
-  const W = 660, H = 186, L = 24, T = 18, B = 26;
+  const W = 660, H = 186, L = 62, T = 18, B = 26;
   const lvls = cr.map(c => level(c[1]));
   const lo = Math.min(...lvls), hi = Math.max(...lvls), span = hi - lo;
   const x = i => L + i * (W - L - 8) / Math.max(1, cr.length - 1);
   const y = l => span ? T + (l - lo) * (H - T - B) / span : (T + H - B) / 2;
   const grid = [];
   for (let l = lo; l <= hi; l++) {
-    grid.push(`<line x1="0" y1="${y(l).toFixed(1)}" x2="${W}" y2="${y(l).toFixed(1)}"
-      stroke="var(--rule)"/><text x="0" y="${(y(l) - 7).toFixed(1)}"
+    grid.push(`<line x1="${L - 8}" y1="${y(l).toFixed(1)}" x2="${W}" y2="${y(l).toFixed(1)}"
+      stroke="var(--rule)"/><text x="${L - 14}" y="${(y(l) + 4).toFixed(1)}" text-anchor="end"
       fill="var(--faint)" class="mono lab">${l}. liga</text>`);
   }
   const path = cr.map((c, i) =>
@@ -1185,6 +1190,8 @@ function careerLine(cr) {
     return `<circle cx="${cx}" cy="${cy}" r="${place ? 4.5 : 3}"
         fill="${place ? col : 'var(--surface)'}"${place ? '' :
         ' stroke="var(--muted)" stroke-width="1.5"'}></circle>
+      ${place ? `<text x="${cx}" y="${(+cy - 10).toFixed(1)}" text-anchor="middle"
+        class="mono lab pl">${place}.</text>` : ''}
       <circle class="hit" cx="${cx}" cy="${cy}" r="13" fill="transparent"
         data-t="${t}"><title>${t}</title></circle>`;
   }).join('');
@@ -1196,10 +1203,10 @@ function careerLine(cr) {
   const ticks = cr.map((c, i) => i % step ? '' :
     `<text x="${x(i).toFixed(1)}" y="${H - 4}" fill="var(--faint)"
       text-anchor="middle" class="mono lab">${c[0].slice(1)}</text>`).join('');
-  return `<svg class="career" viewBox="0 0 ${W} ${H}" role="img"
+  return `<div class="crscroll"><svg class="career" viewBox="0 0 ${W} ${H}" role="img"
       aria-label="Ligová úroveň a umístění po sezonách">${grid.join('')}${ticks}
       <path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5" opacity=".55"/>
-      ${dots}</svg>
+      ${dots}</svg></div>
     <p class="crpick" id="crpick">${esc(seasonText(
       [...cr].reverse().find(c => c[2]) || cr[cr.length - 1]))}</p>
     <p class="legend"><span><i style="background:var(--accent)"></i>vyhráli skupinu</span>

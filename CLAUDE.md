@@ -125,12 +125,17 @@ file. The line comes from `data/archive`, which is complete, so it is unbroken
 even where a dot is hollow because no table was played (jaro 2020) or none has
 been yet.
 
-The axis labels sit on the chart rather than in a strip beside it — "6. liga"
-above its gridline, the years along the floor — stroked in `var(--ground)` with
+Each dot carries its place above it, so the chart reads without touching it;
+the years run along the floor and the leagues down the left, inside the drawing
+rather than in strips around it. All of it is stroked in `var(--ground)` with
 `paint-order:stroke`, so a label the line runs through stays readable and the
-line is not cut. Their size is in user units, which the viewBox scales with
-everything else: at 430px the chart renders at about 0.6, so under 640px the
-labels are set to 18px to come out the same size they do on a desktop.
+line is not cut.
+
+The chart does not shrink to fit a phone, it scrolls — `.crscroll`, which is
+`.scroll` without the frame, since a drawing has its own edges. SVG text is in
+user units, so a viewBox scaled to 0.6 takes the labels down with it and a
+place beside every dot would have been unreadable. Wide and scrollable keeps
+them the size they are on a desktop, and matches what the tables already do.
 
 Every dot carries its whole row — group, place, played, W-D-L, score, points —
 in a readout under the chart, on hover and on tap. A 4.5px dot is nothing to aim
