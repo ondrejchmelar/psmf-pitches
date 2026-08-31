@@ -757,13 +757,24 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
    set larger to come out the same. */
 .career .lab { font-size:11px; paint-order:stroke; stroke:var(--ground);
   stroke-width:3px; stroke-linejoin:round; }
-.career .pl { font-size:9.5px; fill:var(--muted); }
+.career .pl { font-size:8px; fill:var(--muted); stroke-width:2.5px; }
 .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
   margin:0 0 2px; }
 .legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
-/* Not .pick -- that is the team picker's box, and this inherited its border. */
-.crpick { margin:2px 0 10px; font:600 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-variant-numeric:tabular-nums; color:var(--ink); min-height:20px; }
+/* Same width as the drawing it holds, not the scroll box it sits in: without
+   the min-width it takes the container's 394px on a phone while the chart
+   overflows to 620, and the tooltip gets clamped to the wrong edge. */
+.crwrap { position:relative; min-width:620px; }
+.crtip { position:absolute; z-index:2; pointer-events:none; white-space:nowrap;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule);
+  border-radius:3px; box-shadow:var(--shadow); padding:5px 9px;
+  font:600 12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; }
+.crtip[hidden] { display:none; }
+/* On a phone the row is nearly as wide as the screen, so let it fold. */
+@media (max-width:640px) {
+  .crtip { white-space:normal; max-width:min(300px, 82vw); }
+}
 .career .hit { cursor:pointer; }
 /* Only inside the career block. Three dense things stacked -- chart, cards,
    squad -- and at the spacing the rest of the page uses they read as one wall.
@@ -1203,12 +1214,12 @@ function careerLine(cr) {
   const ticks = cr.map((c, i) => i % step ? '' :
     `<text x="${x(i).toFixed(1)}" y="${H - 4}" fill="var(--faint)"
       text-anchor="middle" class="mono lab">${c[0].slice(1)}</text>`).join('');
-  return `<div class="crscroll"><svg class="career" viewBox="0 0 ${W} ${H}" role="img"
-      aria-label="Ligová úroveň a umístění po sezonách">${grid.join('')}${ticks}
-      <path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5" opacity=".55"/>
-      ${dots}</svg></div>
-    <p class="crpick" id="crpick">${esc(seasonText(
-      [...cr].reverse().find(c => c[2]) || cr[cr.length - 1]))}</p>
+  return `<div class="crscroll"><div class="crwrap" id="crwrap">
+      <svg class="career" viewBox="0 0 ${W} ${H}" role="img"
+        aria-label="Ligová úroveň a umístění po sezonách">${grid.join('')}${ticks}
+        <path d="${path}" fill="none" stroke="var(--muted)" stroke-width="1.5" opacity=".55"/>
+        ${dots}</svg>
+      <span class="crtip" id="crtip" hidden></span></div></div>
     <p class="legend"><span><i style="background:var(--accent)"></i>vyhráli skupinu</span>
       <span><i style="background:var(--home)"></i>do třetího místa</span>
       <span><i style="background:var(--away)"></i>poslední</span>
@@ -1478,16 +1489,36 @@ function renderTeam(i) {
 // again on every pick, and a listener added there would stack up a copy per
 // team looked at -- and then open the dialog twice, which throws the second
 // time. #team is in the page from the start, so this can sit outside.
+// The season's row follows the dot instead of sitting under the chart, where on
+// a phone it is behind the finger that asked for it. Above the dot by default,
+// under it when there is no room, and clamped so an end-of-career dot does not
+// push it off the side.
 const crShow = e => {
   const hit = e.target.closest ? e.target.closest('.hit') : null;
-  const box = document.getElementById('crpick');
-  if (hit && box) box.textContent = hit.dataset.t;
+  const tip = document.getElementById('crtip');
+  const wrap = document.getElementById('crwrap');
+  if (!tip || !wrap) return;
+  if (!hit) { tip.hidden = true; return; }
+  tip.textContent = hit.dataset.t;
+  tip.hidden = false;
+  const r = hit.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+  // Clamp to what is on screen, not to the drawing: the chart is wider than the
+  // phone and scrolls, so the far end of it is off to the right and a tooltip
+  // pinned inside the drawing would be too.
+  const box = wrap.parentNode;
+  const lo = box.scrollLeft + 2, hi = box.scrollLeft + box.clientWidth - tip.offsetWidth - 2;
+  const left = Math.max(lo, Math.min(r.left + r.width / 2 - w.left - tip.offsetWidth / 2,
+                                     Math.max(lo, hi)));
+  const above = r.top - w.top - tip.offsetHeight - 4;
+  tip.style.left = left + 'px';
+  tip.style.top = (above < 2 ? r.bottom - w.top + 4 : above) + 'px';
 };
 document.getElementById('team').addEventListener('mouseover', crShow);
 document.getElementById('team').addEventListener('touchstart', crShow, { passive: true });
 
 document.getElementById('team').addEventListener('click', e => {
   if (e.target.closest && e.target.closest('.hit')) { crShow(e); return; }
+  crShow({ target: document.body });
   const more = e.target.closest('.more');
   if (more) {
     openProgramme(more.dataset.date, more.dataset.code, more.dataset.mine);
