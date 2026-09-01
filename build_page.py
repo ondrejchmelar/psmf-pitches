@@ -1416,7 +1416,6 @@ function renderTeam(i) {
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td class="num">${resultTag(f)}</td>
       <td><div class="cell"><span class="oname">${teamLink(f.o)}</span>${
-        f.h ? '' : '<span class="role" title="Hraje se na jejich hřišti">venku</span>'}${
         opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</div></td>
       <td><div class="cell ground"><span class="gname">${v ? mapLink(v, 'lead') : ''}${
@@ -1455,7 +1454,7 @@ function renderTeam(i) {
     ${bioLine(t)}
     <div class="scroll"><table>
       <thead><tr><th>K</th><th>Datum</th>
-      <th title="Naše góly první, ať se hraje doma nebo venku">Výsledek</th>
+      <th title="Góly vybraného týmu první, ať se hraje doma nebo venku">Výsledek</th>
       <th>Soupeř</th><th>Hřiště</th><th>Rozměr</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}
