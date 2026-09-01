@@ -1,4 +1,7 @@
 {
-  "_": "Anyone who asks not to appear. Names are matched exactly as psmf.cz writes them; build_page.py drops them from every squad table and from the counts beside them. The match itself stays -- it is the league's record, not ours -- but the person is not named.",
-  "players": []
+  "_": "Anyone who asks not to appear. Names are matched exactly as psmf.cz writes them and teams by their psmf slug; build_page.py drops them at build time, from every squad table and from the counts beside them. The matches stay -- they are the league's record, not ours -- but nobody is named.",
+  "players": [],
+  "teams": [
+    "yellow-dildos-b"
+  ]
 }

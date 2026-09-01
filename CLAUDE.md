@@ -173,8 +173,10 @@ The footer carries a privacy note, because the page publishes amateurs' names.
 It says who runs it, that it is non-commercial, which teams are named and in
 what terms, that there is no analytics and nothing leaves the page, and how to
 be taken off. **`data/opt-out.json` is what makes that last part true**: names
-in it are dropped from every squad table and from the counts beside them at
-build time, so a refresh cannot bring somebody back. The match itself stays —
+in `players`, and whole sides in `teams`, are dropped at build time from every
+squad table and from the counts beside them, so a refresh cannot bring anybody
+back. Yellow Dildos B are in it — their line-ups are still on disk and their
+head-to-heads still work, but nobody from that side is named. The match itself stays —
 that is the league's record, not ours — only the name goes. Tested by putting a
 name in and watching the team's 301 matches stay 301 while the squad went from
 21 people to 20.
@@ -189,8 +191,9 @@ but silence is not permission, and asking them remains worth doing.
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads
 whatever it is given, since the files already on disk do not have it. Three
-teams have been scraped that way so far — Zde je místo (32 seasons), Yellow
-Dildos A (29) and B (28); ask for another with `--slug <team> --full --detail`. `squad()` in
+teams have been scraped that way — Zde je místo (32 seasons), Yellow Dildos A
+(29) and B (28), of which B is opted out of being named; ask for another with
+`--slug <team> --full --detail`. `squad()` in
 build_page.py keeps it **per season** rather than added up, and the browser adds
 whichever range is asked for: a career total is a poor answer to "who plays
 now" when a team is on its fourth generation. Two selects, from and to, opening on the

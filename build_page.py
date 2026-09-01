@@ -437,10 +437,12 @@ with_squad = []                           # the teams whose players are named
 # Anyone who has asked not to be named. The page publishes amateurs' names, so
 # it has to be able to stop: this is the mechanism behind that promise, and it
 # runs at build time so a refresh cannot bring somebody back.
-OPT_OUT = set()
+OPT_OUT, OPT_OUT_TEAMS = set(), set()
 _opt = ROOT / "data/opt-out.json"
 if _opt.exists():
-    OPT_OUT = set(json.loads(_opt.read_text("utf-8")).get("players", []))
+    _o = json.loads(_opt.read_text("utf-8"))
+    OPT_OUT = set(_o.get("players", []))
+    OPT_OUT_TEAMS = set(_o.get("teams", []))
 
 
 def squad(matches, comp):
@@ -524,7 +526,8 @@ if HIST_SRC.exists():
         if not src.exists():
             continue
         hist = json.loads(src.read_text("utf-8"))
-        sq = squad(hist["matches"], t.get("comp")) if hist.get("detail") else None
+        sq = (squad(hist["matches"], t.get("comp"))
+              if hist.get("detail") and t["slug"] not in OPT_OUT_TEAMS else None)
         past = {}
         for m in hist["matches"]:
             # The season being played is not history: its own fixtures would
@@ -2005,24 +2008,22 @@ vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
 zvlášť pro každé hřiště. Rozpisy, výsledky, sestavy i komentáře rozhodčích jsou
 z&nbsp;<a href="https://www.psmf.cz/">psmf.cz</a>, oficiálního webu Pražského svazu malého
-fotbalu — tam patří dík a tam se dá všechno ověřit.
-Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj.
+fotbalu. Bez něj by tahle stránka nebyla a&nbsp;tam se dá všechno ověřit.
 Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
 
 <p class="priv"><b>Jména hráčů a osobní údaje.</b> Tuhle stránku dělá jeden hráč
 Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazují jen
 u&nbsp;{len(with_squad)} týmů ({", ".join(sorted(with_squad))}) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
 <a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
-a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává
-a&nbsp;nic se odsud neposílá dál. Stránka nemá analytiku ani reklamu; do prohlížeče si
-ukládá jedinou věc, a&nbsp;to vybraný motiv.</p>
+a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
+nic se odsud neposílá dál a&nbsp;stránka nemá analytiku ani reklamu.</p>
 
 <p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
 stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
-sem</a>, nebo komukoliv z&nbsp;týmu, který vás zná. Zápas samotný zůstane, protože to je
-záznam soutěže, ale vaše jméno u&nbsp;něj ne. Totéž platí pro opravy: když je něco špatně,
-je to nejspíš špatně už v&nbsp;podkladech a&nbsp;stojí za to napsat i&nbsp;na
-<a href="https://www.psmf.cz/">psmf.cz</a>.</p>
+sem</a>. Zápas zůstane, protože to je záznam soutěže, ale vaše jméno u&nbsp;něj ne.
+Platí to i&nbsp;pro celý tým. Když je něco špatně, napište taky — a&nbsp;nejspíš
+i&nbsp;na <a href="https://www.psmf.cz/">psmf.cz</a>, protože chyba bývá už
+v&nbsp;podkladech.</p>
 </footer>
 </div>
 
