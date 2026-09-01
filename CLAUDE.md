@@ -169,6 +169,22 @@ The tooltip was briefly a paragraph called `.pick`, which is the team picker's
 box, and it quietly inherited that border and background. Names in this file's
 CSS are one flat namespace; check before adding one.
 
+The footer carries a privacy note, because the page publishes amateurs' names.
+It says who runs it, that it is non-commercial, which teams are named and in
+what terms, that there is no analytics and nothing leaves the page, and how to
+be taken off. **`data/opt-out.json` is what makes that last part true**: names
+in it are dropped from every squad table and from the counts beside them at
+build time, so a refresh cannot bring somebody back. The match itself stays —
+that is the league's record, not ours — only the name goes. Tested by putting a
+name in and watching the team's 301 matches stay 301 while the squad went from
+21 people to 20.
+
+psmf.cz is credited in the same footer as the source of the fixtures, results,
+line-ups and referee write-ups, and linked from the privacy note as the place to
+get an underlying error fixed. There is no terms-of-use page on psmf.cz and
+`robots.txt` disallows only `/cms/`, so nothing here is against a stated rule —
+but silence is not permission, and asking them remains worth doing.
+
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads

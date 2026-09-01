@@ -431,6 +431,16 @@ def publish(stem, payload):
 # nobody reads more than one team's.
 HIST_SRC = ROOT / "data/hist"
 HIST_DIR = ""
+with_squad = []                           # the teams whose players are named
+
+
+# Anyone who has asked not to be named. The page publishes amateurs' names, so
+# it has to be able to stop: this is the mechanism behind that promise, and it
+# runs at build time so a refresh cannot bring somebody back.
+OPT_OUT = set()
+_opt = ROOT / "data/opt-out.json"
+if _opt.exists():
+    OPT_OUT = set(json.loads(_opt.read_text("utf-8")).get("players", []))
 
 
 def squad(matches, comp):
@@ -463,6 +473,8 @@ def squad(matches, comp):
         if c not in worst or f - a < worst[c][0] - worst[c][1]:
             worst[c] = here
         for pl in m["line"]:
+            if pl["n"] in OPT_OUT:
+                continue
             i = names.setdefault(pl["n"], len(names))
             row = rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])
             row[1] += 1
@@ -472,6 +484,8 @@ def squad(matches, comp):
             row[4] += bool(pl.get("gk"))
             row[5] += bool(pl.get("cap"))
         for g in m.get("goals", []):
+            if g["n"] in OPT_OUT:
+                continue
             i = names.setdefault(g["n"], len(names))
             rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])[2] += len(g["m"])
 
@@ -540,6 +554,7 @@ if HIST_SRC.exists():
                 # and one file per team is already the shape that scales.
                 body["sq"] = sq
                 rec["sq"] = 1
+                with_squad.append(t["name"])
             files[t["slug"]] = json.dumps(body, ensure_ascii=False,
                                           separators=(",", ":")).encode()
             met += len(out)
@@ -766,6 +781,8 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
   margin:0 0 2px; }
 .legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
+.priv { margin:14px 0 0; max-width:78ch; }
+.priv b { color:var(--muted); font-weight:640; }
 /* Same width as the drawing it holds, not the scroll box it sits in: without
    the min-width it takes the container's 394px on a phone while the chart
    overflows to 620, and the tooltip gets clamped to the wrong edge. */
@@ -1986,9 +2003,26 @@ vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 
 <footer>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
-zvlášť pro každé hřiště. Rozpisy a souřadnice hřišť z <a href="https://www.psmf.cz/">psmf.cz</a>.
+zvlášť pro každé hřiště. Rozpisy, výsledky, sestavy i komentáře rozhodčích jsou
+z&nbsp;<a href="https://www.psmf.cz/">psmf.cz</a>, oficiálního webu Pražského svazu malého
+fotbalu — tam patří dík a tam se dá všechno ověřit.
 Každý obdélník je proložení skutečných čar a lze ho porovnat s fotkou vedle něj.
 Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
+
+<p class="priv"><b>Jména hráčů a osobní údaje.</b> Tuhle stránku dělá jeden hráč
+Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazují jen
+u&nbsp;{len(with_squad)} týmů ({", ".join(sorted(with_squad))}) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
+<a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
+a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává
+a&nbsp;nic se odsud neposílá dál. Stránka nemá analytiku ani reklamu; do prohlížeče si
+ukládá jedinou věc, a&nbsp;to vybraný motiv.</p>
+
+<p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
+stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
+sem</a>, nebo komukoliv z&nbsp;týmu, který vás zná. Zápas samotný zůstane, protože to je
+záznam soutěže, ale vaše jméno u&nbsp;něj ne. Totéž platí pro opravy: když je něco špatně,
+je to nejspíš špatně už v&nbsp;podkladech a&nbsp;stojí za to napsat i&nbsp;na
+<a href="https://www.psmf.cz/">psmf.cz</a>.</p>
 </footer>
 </div>
 
