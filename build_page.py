@@ -445,6 +445,7 @@ def squad(matches, comp):
     if len(played) < 5:
         return None
     names: dict[str, int] = {}
+    lead = [0, 0, 0]                      # line-ups, of them captain, of them scored
     rows: dict[tuple, list] = {}          # (season, player) -> counts
     rec: dict[str, list] = {}             # season -> n, W, D, L, gf, ga
     best: dict[str, list] = {}            # season -> the win with the widest margin
@@ -462,6 +463,11 @@ def squad(matches, comp):
             best[c] = here
         if c not in worst or f - a < worst[c][0] - worst[c][1]:
             worst[c] = here
+        first = m["line"][0] if m["line"] else None
+        if first and first.get("gk"):
+            lead[0] += 1
+            lead[1] += bool(first.get("cap"))
+            lead[2] += any(g["n"] == first["n"] for g in m.get("goals", []))
         for pl in m["line"]:
             i = names.setdefault(pl["n"], len(names))
             row = rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])
@@ -478,7 +484,15 @@ def squad(matches, comp):
     by: dict[str, list] = {}
     for (c, _), row in sorted(rows.items()):
         by.setdefault(c, []).append(row)
+    # psmf.cz puts one name before the dash and the rest alphabetically after it.
+    # For most teams that name is the keeper -- ours scores in 1% of his matches
+    # and wears the armband in 1%. Yellow Dildos A put their captain there
+    # instead: 61% captain, 17% scoring, which is nobody's goalkeeper. The
+    # convention is whoever fills the sheet in, so the column is only offered
+    # where the numbers say it means what it claims.
+    keeper = bool(lead[0]) and lead[1] * 4 < lead[0] and lead[2] * 10 < lead[0]
     return {
+        "gk": 1 if keeper else 0,
         "nm": [n for n, _ in sorted(names.items(), key=lambda kv: kv[1])],
         # season -> [[player, matches, goals, man of the match, in goal, captain]]
         "by": by, "rc": rec, "bg": best, "bd": worst,
@@ -785,7 +799,8 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
    squad -- and at the spacing the rest of the page uses they read as one wall.
    Scoped to #past so the team's own summary cards keep their own rhythm. */
 #past .stats { margin:32px 0 10px; }
-.sqpick { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font:600 11px/1
+.sqpick { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px;
+  font:600 11px/1
   ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.12em;
   text-transform:uppercase; color:var(--faint); }
 .sqpick select { font:inherit; letter-spacing:0; text-transform:none; font-size:13px;
@@ -1276,13 +1291,14 @@ function squadSum(sq, codes) {
   return t;
 }
 
-function squadBlock(sq, name, codes) {
+function squadBlock(sq, name, from, to) {
+  const codes = squadCodes(sq, from, to);
   const t = squadSum(sq, codes);
   const rows = t.p.map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
     <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
       cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
-    <td class="num">${gk || ''}</td>
+    ${sq.gk ? `<td class="num">${gk || ''}</td>` : ''}
     <td class="dim">${esc(from === to ? seasonName(from)
       : seasonName(from) + ' – ' + seasonName(to))}</td></tr>`).join('');
   const ex = (x, what) => x
@@ -1297,10 +1313,11 @@ function squadBlock(sq, name, codes) {
     <p class="bio">${t.p.length} hráčů v sestavách, které rozhodčí zapsali.${
       t.og ? ` Dalších ${t.og} gólů si dali soupeři sami.` : ''}
       Hvězda je zápas, ve kterém rozhodčí označil hráče za nejlepšího na hřišti.</p>
+    ${squadPicker(sq, from, to)}
     <div class="scroll"><table>
       <thead><tr><th>Hráč</th><th>Zápasů</th><th>Gólů</th>
       <th title="kolikrát ho rozhodčí označil za nejlepšího hráče zápasu">Hvězda</th>
-      <th title="zápasy, ve kterých chytal">V bráně</th>
+      ${sq.gk ? '<th title="zápasy, ve kterých chytal">V bráně</th>' : ''}
       <th>Sezony</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
 }
@@ -1308,13 +1325,13 @@ function squadBlock(sq, name, codes) {
 // The filter is a range of seasons, from one to another, because the useful
 // questions are "kdo hraje teď" and "jak to bylo tehdy" and neither is a single
 // season. It opens on the whole history, which is the same answer as before.
-function squadPicker(sq) {
+function squadPicker(sq, from, to) {
   const opts = sel => [...sq.ss].reverse().map(c =>
     `<option value="${c}"${c === sel ? ' selected' : ''}>${esc(seasonName(c))}</option>`).join('');
   return `<span class="sqpick">Sezony
-    <select id="sqfrom" aria-label="od sezony">${opts(sq.ss[0])}</select>
+    <select id="sqfrom" aria-label="od sezony">${opts(from)}</select>
     <i>&ndash;</i>
-    <select id="sqto" aria-label="do sezony">${opts(sq.ss[sq.ss.length - 1])}</select></span>`;
+    <select id="sqto" aria-label="do sezony">${opts(to)}</select></span>`;
 }
 
 function squadCodes(sq, from, to) {
@@ -1555,23 +1572,23 @@ function renderTeam(i) {
     const box = document.getElementById('past');
     histFor(t).then(data => {
       if (shown !== i || (!data.cr && !data.sq)) return;
-      const head = `<hr class="rule"><div class="h2row"><h2>${esc(t.name)} &middot; ${
-        data.sq ? 'co je zapsáno' : 'kudy prošel ligou'}</h2>${
-        data.sq ? squadPicker(data.sq) : ''}</div>`;
+      const head = `<hr class="rule"><h2>${esc(t.name)} &middot; ${
+        data.sq ? 'co je zapsáno' : 'kudy prošel ligou'}</h2>`;
       box.innerHTML = head + (data.cr ? careerLine(data.cr) : '')
         + (data.sq ? '<div id="sqbox"></div>' : '');
       if (!data.sq) return;
-      const from = document.getElementById('sqfrom'), to = document.getElementById('sqto');
-      // Redraw only the numbers and the table: re-rendering the chart would
-      // throw away the tooltip and scroll it back to the start.
+      // Redraw only the numbers, the picker and the table: re-rendering the
+      // chart would throw away the tooltip and scroll it back to the start. The
+      // range lives here rather than in the DOM, because the selects are part
+      // of what gets redrawn.
+      let from = data.sq.ss[0], to = data.sq.ss[data.sq.ss.length - 1];
       const apply = () => {
-        const codes = squadCodes(data.sq, from.value, to.value);
-        document.getElementById('sqbox').innerHTML =
-          squadBlock(data.sq, t.name, codes);
-        markRange(codes);
+        document.getElementById('sqbox').innerHTML = squadBlock(data.sq, t.name, from, to);
+        markRange(squadCodes(data.sq, from, to));
+        const f = document.getElementById('sqfrom'), o = document.getElementById('sqto');
+        f.addEventListener('change', () => { from = f.value; apply(); });
+        o.addEventListener('change', () => { to = o.value; apply(); });
       };
-      from.addEventListener('change', apply);
-      to.addEventListener('change', apply);
       apply();
     }).catch(err => console.error('career:', err));
   }

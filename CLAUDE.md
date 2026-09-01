@@ -177,9 +177,11 @@ teams have been scraped that way so far — Zde je místo (32 seasons), Yellow
 Dildos A (29) and B (28); ask for another with `--slug <team> --full --detail`. `squad()` in
 build_page.py keeps it **per season** rather than added up, and the browser adds
 whichever range is asked for: a career total is a poor answer to "who plays
-now" when a team is on its fourth generation. Two selects, from and to, opening
-on the whole history; the chart dims the seasons outside the range, so the two
-halves of the block read as one thing. Out of it come the record, the biggest
+now" when a team is on its fourth generation. Two selects, from and to, opening on the
+whole history and sitting directly above the table they filter; the chart dims
+the seasons outside the range, so the two halves of the block read as one thing.
+The range lives in a closure rather than in the DOM, because the selects are
+inside what gets redrawn. Out of it come the record, the biggest
 win and heaviest defeat, and every player named in a line-up with their
 appearances, goals and man-of-the-match marks.
 
@@ -188,7 +190,14 @@ anywhere. Anyone with no appearance at all is that rather than a squad member,
 so they are kept out of the table — but the goals happened, and the intro line
 says how many. Keeping goal is a count, not a
 label: three men have kept 254 of the 301 between them, but outfield players
-stand in often enough that "brankář" beside a name would be wrong. The captain
+stand in often enough that "brankář" beside a name would be wrong. **And the
+column is not offered to every team.** psmf.cz puts one name before the dash and
+the rest alphabetically after it; for most teams that is the keeper — ours
+scores in 1% of his matches and wears the armband in 1%, Yellow Dildos B 4% and
+4%. Yellow Dildos A put their captain there: 61% captain, 17% scoring, which is
+nobody's goalkeeper. The convention is whoever fills the sheet in, so `squad()`
+measures it and sets `gk` only where the numbers say the column means what it
+claims. The captain
 is a tag rather than a column, because it is one or two people for years at a
 time and a column of blanks says less than a word beside a name. Twenty-one
 people over sixteen years for us, sixty-seven for Yellow Dildos A, and it exists
