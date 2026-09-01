@@ -205,9 +205,12 @@ Mareš, 161 line-ups in goal and 88 goals — against 1% and 1% for ours. That
 looks like a team writing its captain in the keeper's slot, and the column was
 gated on a heuristic because of it. The team confirmed he keeps goal: he is
 captain *and* keeper, and in this league the keeper plays out. The convention
-holds everywhere; the outlier was a real goalkeeper who scores. The captain
-is a tag rather than a column, because it is one or two people for years at a
-time and a column of blanks says less than a word beside a name. Twenty-one
+holds everywhere; the outlier was a real goalkeeper who scores. Keeper and captain are
+tags rather than columns, because each is one or two people for years at a time
+and a column of blanks says less than a word beside a name. Half a player's
+matches in goal earns `gólman`, a fifth of them with the armband earns
+`kapitán`, and both carry a five-match floor so a stand-in does not qualify
+inside a narrow season range. Daniel Mareš wears both. Twenty-one
 people over sixteen years for us, sixty-seven for Yellow Dildos A, and it exists
 nowhere else — psmf.cz has no career
 page for anybody, and a season's line-ups are only on that season's page.

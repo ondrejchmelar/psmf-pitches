@@ -1308,8 +1308,13 @@ function squadBlock(sq, name, from, to, by, dir) {
     `<th${title ? ` title="${title}"` : ''}><button type="button" class="sortby"
       data-k="${k}"${by === k ? ' aria-sort="1"' : ''}>${label}${
       by === k ? (dir < 0 ? ' &darr;' : ' &uarr;') : ''}</button></th>`;
+  // Keeping goal and the armband are tags rather than columns: each is one or
+  // two people for years at a time, and a column of blanks says less than a
+  // word beside a name. Half a player's matches in goal makes him the keeper;
+  // the five-match floor keeps a stand-in out of a narrow season range.
   const rows = squadSort(sq, t.p, by, dir).map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
     <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
+      gk >= 5 && gk * 2 >= ap ? '<span class="role">gólman</span>' : ''}${
       cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
     <td class="num">${gk || ''}</td>
