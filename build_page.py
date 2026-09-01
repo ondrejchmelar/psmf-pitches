@@ -942,10 +942,14 @@ function resultTag(f) {
   // An empty slot rather than an empty cell: the column is there all season and
   // a dash says the score is coming, where nothing at all reads as a mistake.
   if (!o) return '<span class="res pend" title="Zatím se nehrálo">&ndash;</span>';
+  // Turned round to this team's goals first. psmf.cz writes every score
+  // home:away, so an away win came out as "1:7" coloured as a win, which reads
+  // as a thrashing until you work out which end of it is yours.
+  const sc = f.h ? f.s : ourWay(f.s);
   // A provisional score is the one a player phoned in; the referee's may differ.
   return f.of
-    ? `<span class="res ${o}">${esc(f.s)}</span>`
-    : `<span class="res ${o} prov" title="Předběžný výsledek, ještě není oficiální">${esc(f.s)}*</span>`;
+    ? `<span class="res ${o}">${esc(sc)}</span>`
+    : `<span class="res ${o} prov" title="Předběžný výsledek, ještě není oficiální">${esc(sc)}*</span>`;
 }
 
 function kit(sw, kitText) {
@@ -1412,6 +1416,7 @@ function renderTeam(i) {
       <td class="date">${esc(f.d)}<span class="t">${esc(f.t)}</span></td>
       <td class="num">${resultTag(f)}</td>
       <td><div class="cell"><span class="oname">${teamLink(f.o)}</span>${
+        f.h ? '' : '<span class="role" title="Hraje se na jejich hřišti">venku</span>'}${
         opp ? kit(opp.sw, opp.kit) : ''}${h2hChip(f)}${warn
         ? '<span class="clash" title="Barvy se kryjí a hrajeme venku">do trik</span>' : ''}</div></td>
       <td><div class="cell ground"><span class="gname">${v ? mapLink(v, 'lead') : ''}${
@@ -1449,7 +1454,8 @@ function renderTeam(i) {
     </div>
     ${bioLine(t)}
     <div class="scroll"><table>
-      <thead><tr><th>K</th><th>Datum</th><th>Výsledek</th>
+      <thead><tr><th>K</th><th>Datum</th>
+      <th title="Naše góly první, ať se hraje doma nebo venku">Výsledek</th>
       <th>Soupeř</th><th>Hřiště</th><th>Rozměr</th><th>Obuv</th></tr></thead>
       <tbody>${rows}</tbody></table></div>
     ${prov ? `<p class="nt">${prov}&times; je výsledek označený hvězdičkou předběžný — hlásí ho hráč a rozhodčí ho ještě může opravit.</p>` : ''}

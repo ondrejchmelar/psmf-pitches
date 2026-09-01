@@ -75,8 +75,12 @@ re-importing a refreshed file updates the entries instead of duplicating them.
 Lines fold at 75 *octets*, not characters: a Czech diacritic is two of them, and
 counting characters left a third of the lines over the limit.
 
-Results ride along in the fixture rows: a played match ends its row with the
-score, home:away. A score is written twice — first a provisional one a player
+Results ride along in the fixture rows, turned round so the team's own goals
+come first: psmf.cz writes every score home:away, so an away win arrived as
+"1:7" coloured green, which reads as a hiding until you work out which end is
+yours. Away fixtures carry a `venku` tag beside the opponent, because a
+normalised score needs to say which side it is normalised to. In the source it
+is still home:away. A score is written twice — first a provisional one a player
 phones in, then the referee's official result, which is not always the same
 number. psmf.cz greys the provisional (`is-gray`) and marks the official
 `is-result`, so `parse_fixtures` reads the score cell's classes and sets
