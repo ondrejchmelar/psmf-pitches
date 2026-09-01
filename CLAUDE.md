@@ -172,8 +172,9 @@ CSS are one flat namespace; check before adding one.
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads
-whatever it is given, since the files already on disk do not have it, and only
-our own team has been scraped that way — 32 seasons, 465 kB. `squad()` in
+whatever it is given, since the files already on disk do not have it. Three
+teams have been scraped that way so far — Zde je místo (32 seasons), Yellow
+Dildos A (29) and B (28); ask for another with `--slug <team> --full --detail`. `squad()` in
 build_page.py turns it into the block under the fixtures: the career record, the
 biggest win and heaviest defeat, and every player who has ever been named in a
 line-up with their appearances, goals and man-of-the-match marks. Keeping goal is a count, not a
@@ -181,7 +182,8 @@ label: three men have kept 254 of the 301 between them, but outfield players
 stand in often enough that "brankář" beside a name would be wrong. The captain
 is a tag rather than a column, because it is one or two people for years at a
 time and a column of blanks says less than a word beside a name. Twenty-one
-people over sixteen years, and it exists nowhere else — psmf.cz has no career
+people over sixteen years for us, sixty-seven for Yellow Dildos A, and it exists
+nowhere else — psmf.cz has no career
 page for anybody, and a season's line-ups are only on that season's page.
 
 It rides in the same per-team file as the head-to-heads and is drawn when that
