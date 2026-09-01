@@ -220,6 +220,9 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
 .sortby { font:inherit; color:inherit; letter-spacing:inherit; text-transform:inherit;
   background:none; border:0; padding:0; cursor:pointer; white-space:nowrap; }
 .sortby:hover { color:var(--ink); }
+.span { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;
+  white-space:nowrap; border-bottom:1px solid transparent; }
+.span:hover { color:var(--accent); border-bottom-color:currentColor; }
 .sortby[aria-sort] { color:var(--ink); }
 #past .bio { margin:26px 0 12px; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -292,6 +295,10 @@ td a.tlink:hover { color:var(--accent); border-color:currentColor; }
 .role { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--faint); border:1px solid var(--rule); }
+.glove { color:var(--muted); flex:none; }
+.capt { display:inline-flex; align-items:center; justify-content:center; flex:none;
+  width:16px; height:16px; border-radius:50%; border:1px solid currentColor;
+  color:var(--faint); font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; }
 .clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
   color:var(--away); border:1px solid currentColor; margin-left:8px; }
@@ -733,6 +740,15 @@ function careerLine(cr) {
       : ''}</p>`;
 }
 
+// A goalkeeper's glove: three fingers, a palm and a thumb. Drawn rather than
+// written because the word was as wide as some of the names it followed.
+const GLOVE = `<svg class="glove" viewBox="0 0 24 24" width="16" height="16"
+    role="img" aria-label="gólman"><title>gólman</title>
+    <path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+      stroke-linejoin="round" d="M8.2 11V6.2a1.5 1.5 0 0 1 3 0V10m0-.6V4.4a1.5 1.5 0 0
+      1 3 0V10m0-2.9a1.5 1.5 0 0 1 3 0V14c0 3.1-2.1 5.4-4.9 5.4S8.2 17.1 8.2 14v-2.4
+      L6.4 9.8a1.4 1.4 0 0 0-2 2l2.6 3.1"/></svg>`;
+
 // A career total is a poor answer to "who plays now" when a team is on its
 // fourth generation, so the block adds up whichever seasons are asked for. The
 // data arrives per season; everything below is the sum of a slice of it.
@@ -790,18 +806,19 @@ function squadBlock(sq, name, from, to, by, dir) {
     `<th${title ? ` title="${title}"` : ''}><button type="button" class="sortby"
       data-k="${k}"${by === k ? ' aria-sort="1"' : ''}>${label}${
       by === k ? (dir < 0 ? ' &darr;' : ' &uarr;') : ''}</button></th>`;
-  // Keeping goal and the armband are tags rather than columns: each is one or
+  // Keeping goal and the armband are marks rather than columns: each is one or
   // two people for years at a time, and a column of blanks says less than a
-  // word beside a name. Half a player's matches in goal makes him the keeper;
+  // glove beside a name. Half a player's matches in goal makes him the keeper;
   // the five-match floor keeps a stand-in out of a narrow season range.
   const rows = squadSort(sq, t.p, by, dir).map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
     <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
-      gk >= 5 && gk * 2 >= ap ? '<span class="role">gólman</span>' : ''}${
-      cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
+      gk >= 5 && gk * 2 >= ap ? GLOVE : ''}${
+      cap >= 5 && cap * 5 >= ap ? '<span class="capt" title="kapitán">C</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
     <td class="num">${gk || ''}</td>
-    <td class="dim">${esc(from === to ? seasonName(from)
-      : seasonName(from) + ' – ' + seasonName(to))}</td></tr>`).join('');
+    <td class="dim"><button type="button" class="span" data-a="${from}" data-b="${to}"
+      title="Zúžit na sezony tohoto hráče">${esc(from === to ? seasonName(from)
+      : seasonName(from) + ' – ' + seasonName(to))}</button></td></tr>`).join('');
   const ex = (x, what) => x
     ? `<div class="stat"><b>${x[0]}:${x[1]}</b><span>${what} &middot; ${esc(x[2])},
         ${esc(seasonName(x[3]))}</span></div>` : '';
@@ -1091,6 +1108,13 @@ function renderTeam(i) {
         const f = document.getElementById('sqfrom'), o = document.getElementById('sqto');
         f.addEventListener('change', () => { from = f.value; apply(); });
         o.addEventListener('change', () => { to = o.value; apply(); });
+        // A player's first and last season are the range you want when you are
+        // looking at him, so the cell that names them sets it.
+        document.querySelectorAll('#sqbox .span').forEach(b => {
+          b.addEventListener('click', () => {
+            from = b.dataset.a; to = b.dataset.b; apply();
+          });
+        });
         document.querySelectorAll('#sqbox .sortby').forEach(b => {
           b.addEventListener('click', () => {
             // Same column again turns it round; a new one starts the way that

@@ -208,9 +208,13 @@ captain *and* keeper, and in this league the keeper plays out. The convention
 holds everywhere; the outlier was a real goalkeeper who scores. Keeper and captain are
 tags rather than columns, because each is one or two people for years at a time
 and a column of blanks says less than a word beside a name. Half a player's
-matches in goal earns `gólman`, a fifth of them with the armband earns
-`kapitán`, and both carry a five-match floor so a stand-in does not qualify
-inside a narrow season range. Daniel Mareš wears both. Twenty-one
+matches in goal earns a glove, a fifth of them with the armband earns a C, and
+both carry a five-match floor so a stand-in does not qualify inside a narrow
+season range. Daniel Mareš wears both. They are drawn rather than written
+because the words were as wide as some of the names they followed.
+
+The seasons cell is a button: it sets the range to that player's own first and
+last, which is what you want the moment you are looking at him. Twenty-one
 people over sixteen years for us, sixty-seven for Yellow Dildos A, and it exists
 nowhere else — psmf.cz has no career
 page for anybody, and a season's line-ups are only on that season's page.
