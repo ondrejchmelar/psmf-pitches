@@ -445,7 +445,6 @@ def squad(matches, comp):
     if len(played) < 5:
         return None
     names: dict[str, int] = {}
-    lead = [0, 0, 0]                      # line-ups, of them captain, of them scored
     rows: dict[tuple, list] = {}          # (season, player) -> counts
     rec: dict[str, list] = {}             # season -> n, W, D, L, gf, ga
     best: dict[str, list] = {}            # season -> the win with the widest margin
@@ -463,11 +462,6 @@ def squad(matches, comp):
             best[c] = here
         if c not in worst or f - a < worst[c][0] - worst[c][1]:
             worst[c] = here
-        first = m["line"][0] if m["line"] else None
-        if first and first.get("gk"):
-            lead[0] += 1
-            lead[1] += bool(first.get("cap"))
-            lead[2] += any(g["n"] == first["n"] for g in m.get("goals", []))
         for pl in m["line"]:
             i = names.setdefault(pl["n"], len(names))
             row = rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])
@@ -484,15 +478,7 @@ def squad(matches, comp):
     by: dict[str, list] = {}
     for (c, _), row in sorted(rows.items()):
         by.setdefault(c, []).append(row)
-    # psmf.cz puts one name before the dash and the rest alphabetically after it.
-    # For most teams that name is the keeper -- ours scores in 1% of his matches
-    # and wears the armband in 1%. Yellow Dildos A put their captain there
-    # instead: 61% captain, 17% scoring, which is nobody's goalkeeper. The
-    # convention is whoever fills the sheet in, so the column is only offered
-    # where the numbers say it means what it claims.
-    keeper = bool(lead[0]) and lead[1] * 4 < lead[0] and lead[2] * 10 < lead[0]
     return {
-        "gk": 1 if keeper else 0,
         "nm": [n for n, _ in sorted(names.items(), key=lambda kv: kv[1])],
         # season -> [[player, matches, goals, man of the match, in goal, captain]]
         "by": by, "rc": rec, "bg": best, "bd": worst,
@@ -1326,7 +1312,7 @@ function squadBlock(sq, name, from, to, by, dir) {
     <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
       cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
-    ${sq.gk ? `<td class="num">${gk || ''}</td>` : ''}
+    <td class="num">${gk || ''}</td>
     <td class="dim">${esc(from === to ? seasonName(from)
       : seasonName(from) + ' – ' + seasonName(to))}</td></tr>`).join('');
   const ex = (x, what) => x
@@ -1345,7 +1331,7 @@ function squadBlock(sq, name, from, to, by, dir) {
     <div class="scroll"><table>
       <thead><tr>${head('nm', 'Hráč')}${head('ap', 'Zápasů')}${head('g', 'Gólů')}
       ${head('st', 'Hvězda', 'kolikrát ho rozhodčí označil za nejlepšího hráče zápasu')}
-      ${sq.gk ? head('gk', 'V bráně', 'zápasy, ve kterých chytal') : ''}
+      ${head('gk', 'V bráně', 'zápasy, ve kterých chytal')}
       ${head('ss', 'Sezony')}</tr></thead>
       <tbody>${rows}</tbody></table></div>`;
 }

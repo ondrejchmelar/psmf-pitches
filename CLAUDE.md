@@ -196,14 +196,16 @@ anywhere. Anyone with no appearance at all is that rather than a squad member,
 so they are kept out of the table — but the goals happened, and the intro line
 says how many. Keeping goal is a count, not a
 label: three men have kept 254 of the 301 between them, but outfield players
-stand in often enough that "brankář" beside a name would be wrong. **And the
-column is not offered to every team.** psmf.cz puts one name before the dash and
-the rest alphabetically after it; for most teams that is the keeper — ours
-scores in 1% of his matches and wears the armband in 1%, Yellow Dildos B 4% and
-4%. Yellow Dildos A put their captain there: 61% captain, 17% scoring, which is
-nobody's goalkeeper. The convention is whoever fills the sheet in, so `squad()`
-measures it and sets `gk` only where the numbers say the column means what it
-claims. The captain
+stand in often enough that "brankář" beside a name would be wrong. psmf.cz puts one name before the dash
+and the rest alphabetically after it, and that name is the keeper.
+
+**This was once "fixed" and should not be again.** Yellow Dildos A's first name
+is their captain 61% of the time and scored in 17% of their matches — Daniel
+Mareš, 161 line-ups in goal and 88 goals — against 1% and 1% for ours. That
+looks like a team writing its captain in the keeper's slot, and the column was
+gated on a heuristic because of it. The team confirmed he keeps goal: he is
+captain *and* keeper, and in this league the keeper plays out. The convention
+holds everywhere; the outlier was a real goalkeeper who scores. The captain
 is a tag rather than a column, because it is one or two people for years at a
 time and a column of blanks says less than a word beside a name. Twenty-one
 people over sixteen years for us, sixty-seven for Yellow Dildos A, and it exists
