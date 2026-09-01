@@ -217,6 +217,10 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
   border-radius:3px; padding:5px 8px; }
 .sqpick i { font-style:normal; color:var(--faint); }
 .career .out { opacity:.22; }
+.sortby { font:inherit; color:inherit; letter-spacing:inherit; text-transform:inherit;
+  background:none; border:0; padding:0; cursor:pointer; white-space:nowrap; }
+.sortby:hover { color:var(--ink); }
+.sortby[aria-sort] { color:var(--ink); }
 #past .bio { margin:26px 0 12px; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
@@ -759,10 +763,34 @@ function squadSum(sq, codes) {
   return t;
 }
 
-function squadBlock(sq, name, from, to) {
+// Which column the table is sorted by, and which way. Names read forwards,
+// everything else backwards: nobody opens a squad list wanting the fewest
+// appearances first.
+const SORTKEY = { nm: 0, ap: 1, g: 2, st: 3, gk: 4, ss: 6 };
+const seasonKey = c => c.slice(1) + (c[0] === 'p' ? '1' : '0');
+
+function squadSort(sq, rows, by, dir) {
+  const k = SORTKEY[by];
+  // By surname: psmf.cz writes "Jméno Příjmení", and a squad list read by first
+  // name is a list nobody scans.
+  const surname = n => n.slice(n.lastIndexOf(' ') + 1) + ' ' + n;
+  const val = r => by === 'nm' ? surname(sq.nm[r[0]]) : by === 'ss' ? seasonKey(r[6]) : r[k];
+  return [...rows].sort((a, b) => {
+    const x = val(a), y = val(b);
+    const c = typeof x === 'string' ? x.localeCompare(y, 'cs') : x - y;
+    // Appearances break every tie, so equal counts do not come out shuffled.
+    return (c || a[1] - b[1]) * dir;
+  });
+}
+
+function squadBlock(sq, name, from, to, by, dir) {
   const codes = squadCodes(sq, from, to);
   const t = squadSum(sq, codes);
-  const rows = t.p.map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
+  const head = (k, label, title) =>
+    `<th${title ? ` title="${title}"` : ''}><button type="button" class="sortby"
+      data-k="${k}"${by === k ? ' aria-sort="1"' : ''}>${label}${
+      by === k ? (dir < 0 ? ' &darr;' : ' &uarr;') : ''}</button></th>`;
+  const rows = squadSort(sq, t.p, by, dir).map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
     <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
       cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
     <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
@@ -783,10 +811,10 @@ function squadBlock(sq, name, from, to) {
       Hvězda je zápas, ve kterém rozhodčí označil hráče za nejlepšího na hřišti.</p>
     ${squadPicker(sq, from, to)}
     <div class="scroll"><table>
-      <thead><tr><th>Hráč</th><th>Zápasů</th><th>Gólů</th>
-      <th title="kolikrát ho rozhodčí označil za nejlepšího hráče zápasu">Hvězda</th>
-      ${sq.gk ? '<th title="zápasy, ve kterých chytal">V bráně</th>' : ''}
-      <th>Sezony</th></tr></thead>
+      <thead><tr>${head('nm', 'Hráč')}${head('ap', 'Zápasů')}${head('g', 'Gólů')}
+      ${head('st', 'Hvězda', 'kolikrát ho rozhodčí označil za nejlepšího hráče zápasu')}
+      ${sq.gk ? head('gk', 'V bráně', 'zápasy, ve kterých chytal') : ''}
+      ${head('ss', 'Sezony')}</tr></thead>
       <tbody>${rows}</tbody></table></div>`;
 }
 
@@ -1050,12 +1078,23 @@ function renderTeam(i) {
       // range lives here rather than in the DOM, because the selects are part
       // of what gets redrawn.
       let from = data.sq.ss[0], to = data.sq.ss[data.sq.ss.length - 1];
+      let by = 'ap', dir = -1;
       const apply = () => {
-        document.getElementById('sqbox').innerHTML = squadBlock(data.sq, t.name, from, to);
+        document.getElementById('sqbox').innerHTML =
+          squadBlock(data.sq, t.name, from, to, by, dir);
         markRange(squadCodes(data.sq, from, to));
         const f = document.getElementById('sqfrom'), o = document.getElementById('sqto');
         f.addEventListener('change', () => { from = f.value; apply(); });
         o.addEventListener('change', () => { to = o.value; apply(); });
+        document.querySelectorAll('#sqbox .sortby').forEach(b => {
+          b.addEventListener('click', () => {
+            // Same column again turns it round; a new one starts the way that
+            // column is worth reading -- names up, counts down.
+            if (b.dataset.k === by) dir = -dir;
+            else { by = b.dataset.k; dir = by === 'nm' ? 1 : -1; }
+            apply();
+          });
+        });
       };
       apply();
     }).catch(err => console.error('career:', err));

@@ -180,8 +180,14 @@ whichever range is asked for: a career total is a poor answer to "who plays
 now" when a team is on its fourth generation. Two selects, from and to, opening on the
 whole history and sitting directly above the table they filter; the chart dims
 the seasons outside the range, so the two halves of the block read as one thing.
-The range lives in a closure rather than in the DOM, because the selects are
-inside what gets redrawn. Out of it come the record, the biggest
+The range and the sort live in a closure rather than in the DOM, because the
+selects and the headings are inside what gets redrawn.
+
+Every column sorts. A new column starts the way that column is worth reading —
+names up, counts down — and clicking it again turns it round; appearances break
+every tie so equal counts do not come out shuffled. Names sort by surname, since
+psmf.cz writes "Jméno Příjmení" and a squad list ordered by first name is one
+nobody scans. Out of it come the record, the biggest
 win and heaviest defeat, and every player named in a line-up with their
 appearances, goals and man-of-the-match marks.
 
