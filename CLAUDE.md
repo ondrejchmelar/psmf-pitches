@@ -175,9 +175,18 @@ who was booked, and who the referee marked as the best on the pitch. It re-reads
 whatever it is given, since the files already on disk do not have it. Three
 teams have been scraped that way so far — Zde je místo (32 seasons), Yellow
 Dildos A (29) and B (28); ask for another with `--slug <team> --full --detail`. `squad()` in
-build_page.py turns it into the block under the fixtures: the career record, the
-biggest win and heaviest defeat, and every player who has ever been named in a
-line-up with their appearances, goals and man-of-the-match marks. Keeping goal is a count, not a
+build_page.py keeps it **per season** rather than added up, and the browser adds
+whichever range is asked for: a career total is a poor answer to "who plays
+now" when a team is on its fourth generation. Two selects, from and to, opening
+on the whole history; the chart dims the seasons outside the range, so the two
+halves of the block read as one thing. Out of it come the record, the biggest
+win and heaviest defeat, and every player named in a line-up with their
+appearances, goals and man-of-the-match marks.
+
+psmf.cz books an own goal to a player called `OG`, who appears on no team sheet
+anywhere. Anyone with no appearance at all is that rather than a squad member,
+so they are kept out of the table — but the goals happened, and the intro line
+says how many. Keeping goal is a count, not a
 label: three men have kept 254 of the 301 between them, but outfield players
 stand in often enough that "brankář" beside a name would be wrong. The captain
 is a tag rather than a column, because it is one or two people for years at a

@@ -434,50 +434,55 @@ HIST_DIR = ""
 
 
 def squad(matches, comp):
-    """Sixteen years of a team in one block, when the line-ups were kept.
+    """Sixteen years of a team, season by season, when the line-ups were kept.
 
-    `scrape_history.py --detail` keeps who played, who scored and who the
-    referee called the best on the day. That is the only place any of it exists
-    once a season's page rolls over -- psmf.cz has no career page for anybody.
-    Only teams scraped that way get this; for the rest it is simply absent.
+    Kept per season rather than added up, so the page can be asked for a range:
+    a career total is a poor answer to "who plays now" when the team is on its
+    fourth generation. The browser does the adding, which means one shape of
+    data serves every filter.
     """
     played = [m for m in matches if m.get("score") and m.get("line") is not None]
     if len(played) < 5:
         return None
-    w = d = l = gf = ga = 0
-    app, goals, best, cap, gk = {}, {}, {}, {}, {}
-    first, last = {}, {}
+    names: dict[str, int] = {}
+    rows: dict[tuple, list] = {}          # (season, player) -> counts
+    rec: dict[str, list] = {}             # season -> n, W, D, L, gf, ga
+    best: dict[str, list] = {}            # season -> the win with the widest margin
+    worst: dict[str, list] = {}
     for m in sorted(played, key=lambda m: m["date"] or ""):
+        c = season_code(m["season"])
         f, a = m["gf"], m["ga"]
-        gf += f
-        ga += a
-        w += f > a
-        d += f == a
-        l += f < a
+        r = rec.setdefault(c, [0, 0, 0, 0, 0, 0])
+        r[0] += 1
+        r[1 if f > a else 2 if f == a else 3] += 1
+        r[4] += f
+        r[5] += a
+        here = [f, a, m["opponent"]]
+        if c not in best or f - a > best[c][0] - best[c][1]:
+            best[c] = here
+        if c not in worst or f - a < worst[c][0] - worst[c][1]:
+            worst[c] = here
         for pl in m["line"]:
-            n = pl["n"]
-            app[n] = app.get(n, 0) + 1
-            best[n] = best.get(n, 0) + bool(pl.get("best"))
-            cap[n] = cap.get(n, 0) + bool(pl.get("cap"))
+            i = names.setdefault(pl["n"], len(names))
+            row = rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])
+            row[1] += 1
+            row[3] += bool(pl.get("best"))
             # The name before the dash is the keeper. Outfield players stand in
             # often enough that this is a count, not a label on a person.
-            gk[n] = gk.get(n, 0) + bool(pl.get("gk"))
-            first.setdefault(n, m["label"])
-            last[n] = m["label"]
+            row[4] += bool(pl.get("gk"))
+            row[5] += bool(pl.get("cap"))
         for g in m.get("goals", []):
-            goals[g["n"]] = goals.get(g["n"], 0) + len(g["m"])
+            i = names.setdefault(g["n"], len(names))
+            rows.setdefault((c, i), [i, 0, 0, 0, 0, 0])[2] += len(g["m"])
 
-    def extreme(pick):
-        m = pick(played, key=lambda m: (m["gf"] - m["ga"], m["gf"]))
-        return {"s": f'{m["gf"]}:{m["ga"]}', "o": m["opponent"], "l": m["label"]}
-
+    by: dict[str, list] = {}
+    for (c, _), row in sorted(rows.items()):
+        by.setdefault(c, []).append(row)
     return {
-        "n": len(played), "w": w, "d": d, "l": l, "gf": gf, "ga": ga,
-        "big": extreme(max), "bad": extreme(min),
-        # name, matches, goals, man of the match, in goal, as captain,
-        # first season, last season
-        "p": [[n, app[n], goals.get(n, 0), best[n], gk[n], cap[n], first[n], last[n]]
-              for n in sorted(app, key=lambda n: (-app[n], -goals.get(n, 0)))],
+        "nm": [n for n, _ in sorted(names.items(), key=lambda kv: kv[1])],
+        # season -> [[player, matches, goals, man of the match, in goal, captain]]
+        "by": by, "rc": rec, "bg": best, "bd": worst,
+        "ss": sorted(rec, key=lambda c: (c[1:], c[0] == "p")),
     }
 
 
@@ -780,6 +785,14 @@ code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(
    squad -- and at the spacing the rest of the page uses they read as one wall.
    Scoped to #past so the team's own summary cards keep their own rhythm. */
 #past .stats { margin:32px 0 10px; }
+.sqpick { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font:600 11px/1
+  ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--faint); }
+.sqpick select { font:inherit; letter-spacing:0; text-transform:none; font-size:13px;
+  color:var(--ink); background:var(--surface); border:1px solid var(--rule);
+  border-radius:3px; padding:5px 8px; }
+.sqpick i { font-style:normal; color:var(--faint); }
+.career .out { opacity:.22; }
 #past .bio { margin:26px 0 12px; }
 .boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
   letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
@@ -1202,11 +1215,11 @@ function careerLine(cr) {
     const cx = x(i).toFixed(1), cy = y(lvl).toFixed(1), t = esc(seasonText(c));
     // A second, invisible circle carries the pointer: a 4.5px dot is nothing to
     // aim at with a thumb, and the readout has to work by tap as well as hover.
-    return `<circle cx="${cx}" cy="${cy}" r="${place ? 4.5 : 3}"
+    return `<circle class="dot" data-s="${c[0]}" cx="${cx}" cy="${cy}" r="${place ? 4.5 : 3}"
         fill="${place ? col : 'var(--surface)'}"${place ? '' :
         ' stroke="var(--muted)" stroke-width="1.5"'}></circle>
       ${place ? `<text x="${cx}" y="${(+cy - 10).toFixed(1)}" text-anchor="middle"
-        class="mono lab pl">${place}.</text>` : ''}
+        class="mono lab pl" data-s="${c[0]}">${place}.</text>` : ''}
       <circle class="hit" cx="${cx}" cy="${cy}" r="13" fill="transparent"
         data-t="${t}"><title>${t}</title></circle>`;
   }).join('');
@@ -1233,24 +1246,56 @@ function careerLine(cr) {
       : ''}</p>`;
 }
 
-function squadBlock(sq, name) {
-  // Captaincy is a tag rather than a column: it is one or two people for years
-  // at a time, and a column of blanks says less than a word beside a name.
-  const rows = sq.p.map(([n, ap, g, b, gk, cap, from, to]) => `<tr>
-    <td><div class="cell"><span class="oname">${esc(n)}</span>${
+// A career total is a poor answer to "who plays now" when a team is on its
+// fourth generation, so the block adds up whichever seasons are asked for. The
+// data arrives per season; everything below is the sum of a slice of it.
+function squadSum(sq, codes) {
+  const t = { n: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, big: null, bad: null };
+  const app = new Map();
+  codes.forEach(c => {
+    const r = sq.rc[c];
+    if (!r) return;
+    t.n += r[0]; t.w += r[1]; t.d += r[2]; t.l += r[3]; t.gf += r[4]; t.ga += r[5];
+    const better = (a, b) => !a || b[0] - b[1] > a[0] - a[1];
+    if (better(t.big, sq.bg[c])) t.big = sq.bg[c].concat(c);
+    if (!t.bad || sq.bd[c][0] - sq.bd[c][1] < t.bad[0] - t.bad[1]) t.bad = sq.bd[c].concat(c);
+    (sq.by[c] || []).forEach(([i, ap, g, best, gk, cap]) => {
+      const p = app.get(i) || [i, 0, 0, 0, 0, 0, null, null];
+      p[1] += ap; p[2] += g; p[3] += best; p[4] += gk; p[5] += cap;
+      p[6] = p[6] || c;                    // first of the chosen seasons
+      p[7] = c;                            // and the last
+      app.set(i, p);
+    });
+  });
+  // psmf.cz books an own goal to a player called OG, who is on no team sheet
+  // anywhere. Anyone with no appearance at all is that, not a squad member --
+  // but the goals still happened, so they are counted and said out loud.
+  t.og = 0;
+  t.p = [...app.values()].filter(p => p[1] || !(t.og += p[2]))
+    .sort((a, b) => b[1] - a[1] || b[2] - a[2]);
+  return t;
+}
+
+function squadBlock(sq, name, codes) {
+  const t = squadSum(sq, codes);
+  const rows = t.p.map(([i, ap, g, best, gk, cap, from, to]) => `<tr>
+    <td><div class="cell"><span class="oname">${esc(sq.nm[i])}</span>${
       cap >= 5 && cap * 5 >= ap ? '<span class="role">kapitán</span>' : ''}</div></td>
-    <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${b || ''}</td>
+    <td class="num">${ap}</td><td class="num">${g || ''}</td><td class="num">${best || ''}</td>
     <td class="num">${gk || ''}</td>
-    <td class="dim">${esc(from === to ? from : from + ' – ' + to)}</td></tr>`).join('');
-  const ex = (x, what) =>
-    `<div class="stat"><b>${esc(x.s)}</b><span>${what} &middot; ${esc(x.o)}, ${esc(x.l)}</span></div>`;
+    <td class="dim">${esc(from === to ? seasonName(from)
+      : seasonName(from) + ' – ' + seasonName(to))}</td></tr>`).join('');
+  const ex = (x, what) => x
+    ? `<div class="stat"><b>${x[0]}:${x[1]}</b><span>${what} &middot; ${esc(x[2])},
+        ${esc(seasonName(x[3]))}</span></div>` : '';
   return `<div class="stats">
-      <div class="stat"><b>${sq.n}</b><span>Odehraných zápasů</span></div>
-      <div class="stat"><b class="long">${sq.w}&ndash;${sq.d}&ndash;${sq.l}</b><span>Bilance</span></div>
-      <div class="stat"><b>${sq.gf}:${sq.ga}</b><span>Skóre</span></div>
-      ${ex(sq.big, 'Nejvyšší výhra')}${ex(sq.bad, 'Nejvyšší prohra')}
+      <div class="stat"><b>${t.n}</b><span>Odehraných zápasů</span></div>
+      <div class="stat"><b class="long">${t.w}&ndash;${t.d}&ndash;${t.l}</b><span>Bilance</span></div>
+      <div class="stat"><b>${t.gf}:${t.ga}</b><span>Skóre</span></div>
+      ${ex(t.big, 'Nejvyšší výhra')}${ex(t.bad, 'Nejvyšší prohra')}
     </div>
-    <p class="bio">${sq.p.length} hráčů v sestavách, které rozhodčí zapsali.
+    <p class="bio">${t.p.length} hráčů v sestavách, které rozhodčí zapsali.${
+      t.og ? ` Dalších ${t.og} gólů si dali soupeři sami.` : ''}
       Hvězda je zápas, ve kterém rozhodčí označil hráče za nejlepšího na hřišti.</p>
     <div class="scroll"><table>
       <thead><tr><th>Hráč</th><th>Zápasů</th><th>Gólů</th>
@@ -1258,6 +1303,34 @@ function squadBlock(sq, name) {
       <th title="zápasy, ve kterých chytal">V bráně</th>
       <th>Sezony</th></tr></thead>
       <tbody>${rows}</tbody></table></div>`;
+}
+
+// The filter is a range of seasons, from one to another, because the useful
+// questions are "kdo hraje teď" and "jak to bylo tehdy" and neither is a single
+// season. It opens on the whole history, which is the same answer as before.
+function squadPicker(sq) {
+  const opts = sel => [...sq.ss].reverse().map(c =>
+    `<option value="${c}"${c === sel ? ' selected' : ''}>${esc(seasonName(c))}</option>`).join('');
+  return `<span class="sqpick">Sezony
+    <select id="sqfrom" aria-label="od sezony">${opts(sq.ss[0])}</select>
+    <i>&ndash;</i>
+    <select id="sqto" aria-label="do sezony">${opts(sq.ss[sq.ss.length - 1])}</select></span>`;
+}
+
+function squadCodes(sq, from, to) {
+  const a = sq.ss.indexOf(from), b = sq.ss.indexOf(to);
+  // A season we do not know is the whole history, not an empty table -- and
+  // either end may be the later one, so the pair is sorted rather than trusted.
+  if (a < 0 || b < 0) return sq.ss;
+  return sq.ss.slice(Math.min(a, b), Math.max(a, b) + 1);
+}
+
+// The chart says which seasons are being counted, so the two read as one thing.
+function markRange(codes) {
+  const want = new Set(codes);
+  document.querySelectorAll('.career .dot, .career .pl').forEach(el => {
+    el.classList.toggle('out', !want.has(el.dataset.s));
+  });
 }
 
 function openHistory(t, name) {
@@ -1482,10 +1555,24 @@ function renderTeam(i) {
     const box = document.getElementById('past');
     histFor(t).then(data => {
       if (shown !== i || (!data.cr && !data.sq)) return;
-      box.innerHTML = `<hr class="rule"><h2>${esc(t.name)} &middot; ${
-        data.sq ? 'co je zapsáno' : 'kudy prošel ligou'}</h2>`
-        + (data.cr ? careerLine(data.cr) : '')
-        + (data.sq ? squadBlock(data.sq, t.name) : '');
+      const head = `<hr class="rule"><div class="h2row"><h2>${esc(t.name)} &middot; ${
+        data.sq ? 'co je zapsáno' : 'kudy prošel ligou'}</h2>${
+        data.sq ? squadPicker(data.sq) : ''}</div>`;
+      box.innerHTML = head + (data.cr ? careerLine(data.cr) : '')
+        + (data.sq ? '<div id="sqbox"></div>' : '');
+      if (!data.sq) return;
+      const from = document.getElementById('sqfrom'), to = document.getElementById('sqto');
+      // Redraw only the numbers and the table: re-rendering the chart would
+      // throw away the tooltip and scroll it back to the start.
+      const apply = () => {
+        const codes = squadCodes(data.sq, from.value, to.value);
+        document.getElementById('sqbox').innerHTML =
+          squadBlock(data.sq, t.name, codes);
+        markRange(codes);
+      };
+      from.addEventListener('change', apply);
+      to.addEventListener('change', apply);
+      apply();
     }).catch(err => console.error('career:', err));
   }
 }
