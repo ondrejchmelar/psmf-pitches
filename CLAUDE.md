@@ -190,10 +190,10 @@ but silence is not permission, and asking them remains worth doing.
 `scrape_history.py --detail` keeps the rest of a match block as well: who
 played, who kept goal, who wore the armband, who scored and in which minute,
 who was booked, and who the referee marked as the best on the pitch. It re-reads
-whatever it is given, since the files already on disk do not have it. Three
-teams have been scraped that way — Zde je místo (32 seasons), Yellow Dildos A
-(29) and B (28), of which B is opted out of being named; ask for another with
-`--slug <team> --full --detail`. `squad()` in
+whatever it is given, since the files already on disk do not have it. Four teams
+have been scraped that way — Zde je místo (32 seasons), Yellow Dildos A (29),
+Yellow Dildos B (28) and Yamato Day 22 (9), of which B is opted out of being
+named; ask for another with `--slug <team> --full --detail`. `squad()` in
 build_page.py keeps it **per season** rather than added up, and the browser adds
 whichever range is asked for: a career total is a poor answer to "who plays
 now" when a team is on its fourth generation. Two selects, from and to, opening on the

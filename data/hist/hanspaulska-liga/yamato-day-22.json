@@ -179,6 +179,93 @@
    "half": "0:4",
    "referee": "David Kocman, Šimon Pospíchal",
    "report": "Jasná výhra hostů.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      2,
+      37,
+      50
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      10,
+      22,
+      23
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      58
+     ],
+     "n": "David Šiktanc"
+    }
+   ],
+   "cards": [],
    "gf": 7,
    "ga": 1,
    "res": "W",
@@ -196,6 +283,90 @@
    "half": "1:0",
    "referee": "Michal Košťál",
    "report": "Do utkání vstoupili lépe domácí, kdy se dostali do brzkého vedení. Poté se hra vyrovnala a šance střídala šanci, ale gól hosté vstřelit nedokázali a když domácí v předposlední minutě vstřelili druhý gól, bylo o vítězi rozhodnuto.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      5,
+      59
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 0,
    "res": "W",
@@ -213,6 +384,75 @@
    "half": "0:1",
    "referee": "Martin Dvořák, Václav Procházka",
    "report": "Hosté využili přesilovku k otočení výsledku a náskok si pak pohlídali.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      3,
+      50
+     ],
+     "n": "Marek Hančič"
+    },
+    {
+     "m": [
+      48
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      57
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [
+    "34. Jan Kolařík",
+    "49. Lukáš Černoch"
+   ],
    "gf": 4,
    "ga": 2,
    "res": "W",
@@ -230,6 +470,73 @@
    "half": "0:0",
    "referee": "Jaroslav Havran",
    "report": "Pohodové utkání. Hosté hráli celý zápas v oslabení, své šance neproměnili ani po vyloučení domácího hráče a Yamato v závěru výhru potvrdilo.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      31
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      42
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      57
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [
+    "40. Ronald K. Howqvist"
+   ],
    "gf": 3,
    "ga": 1,
    "res": "W",
@@ -247,6 +554,58 @@
    "half": "0:0",
    "referee": "Petr Havel",
    "report": "Družstevník byl fotbalovější a kombinací se tlačil dopředu. Ale hráči Yamato se ukázali jako zkušení hanspaulští harcovníci, dlouho pečlivou obranou odolávali a hrozili dlouhými nákopy. Až po poločase je opustilo štěstí, když inkasovali gól hlavou. Pak je opustily síly, Družstevník nasázel další góly a zaslouženě vyhrál.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 5,
    "res": "L",
@@ -264,6 +623,59 @@
    "half": "0:2",
    "referee": "Roman Vobořil, Jiří Novák",
    "report": "Herně vyrovnaný zápas, hosté však byli lepší v koncovce.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      35
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 4,
    "res": "L",
@@ -281,6 +693,68 @@
    "half": "1:2",
    "referee": "Ivan Filo, Josef Klail",
    "report": "Šťastnější tým vyhrál. Utkání bylo kontumováno ve prospěch Yamato Day pro start hráče v trestu v týmu Joga Bolíto.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      21,
+      46
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      28
+     ],
+     "n": "Tomáš Bím"
+    }
+   ],
+   "cards": [
+    "38. Ronald K. Howqvist"
+   ],
    "gf": 6,
    "ga": 0,
    "res": "W",
@@ -298,6 +772,79 @@
    "half": "1:3",
    "referee": "Jiří Smetana",
    "report": "Oběma týmům je vlastní ofenzíva a tomu odpovídá výsledek.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      20
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      41,
+      55
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      44,
+      49
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 5,
    "ga": 8,
    "res": "L",
@@ -315,6 +862,75 @@
    "half": "1:2",
    "referee": "Erik Vardanyan",
    "report": "Zápas proběhl v pohodě, oba týmy hrály dobře. Zasloužená remíza.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      14
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      27
+     ],
+     "n": "Martin Horyna"
+    }
+   ],
+   "cards": [
+    "25. Jan Kolařík",
+    "46. Jan Kolařík",
+    "46. Jan Kolařík"
+   ],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -332,6 +948,69 @@
    "half": "3:1",
    "referee": "Filip Černý",
    "report": "Hosté se snažili, z penalty snížili na 2:3, pak ale otevřeli hru a dostali další dva góly.",
+   "line": [
+    {
+     "n": "Jan Kolařík",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      2,
+      5,
+      47,
+      59,
+      60
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      9
+     ],
+     "n": "David Gabriel"
+    }
+   ],
+   "cards": [],
    "gf": 6,
    "ga": 3,
    "res": "W",
@@ -349,6 +1028,89 @@
    "half": "0:2",
    "referee": "Yevhen Myroniak",
    "report": "V prvním poločase hráli lépe hosté, ve druhé domácí přidali a zápas srovnali.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      50
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      53
+     ],
+     "n": "Jan Kolařík"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -366,6 +1128,66 @@
    "half": "0:2",
    "referee": "Marek Prosický",
    "report": "Vyrovnané utkání se zaslouženou remízou.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      18,
+      28
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -383,6 +1205,74 @@
    "half": "1:1",
    "referee": "Michal Košťál",
    "report": "Pohledné utkání vyhráli hosté.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      29,
+      50
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [
+    "47. Marek Hančič"
+   ],
    "gf": 2,
    "ga": 5,
    "res": "L",
@@ -400,6 +1290,71 @@
    "half": "1:1",
    "referee": "Milan Husák, Ivan Bytsenko",
    "report": "Po remízovém poločase Intertoto zabralo a zvítězilo.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      21
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 3,
    "res": "L",
@@ -417,6 +1372,71 @@
    "half": "0:0",
    "referee": "Michal Košťál",
    "report": "Pohledné, útočné utkání. Hosté byli aktivnější, ale domácí dobře bránili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      33
+     ],
+     "n": "Marek Hančič"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -434,6 +1454,81 @@
    "half": "0:3",
    "referee": "František Novotný",
    "report": "Yamato v závěru první půle doslova sestřelilo soupeře, zasloužené vítězství.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      20
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      23,
+      28,
+      45
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      52
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [
+    "22. Ronald K. Howqvist"
+   ],
    "gf": 5,
    "ga": 0,
    "res": "W",
@@ -451,6 +1546,72 @@
    "half": "1:1",
    "referee": "Václav Dreksler, Petr Jeník",
    "report": "Vyrovnané utkání, remíza je spravedlivá. Domácí se o bod málem připravili vlastní neukázněností, ale desetiminutové oslabení zvládli ubránit.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      22,
+      36,
+      46
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [
+    "44. Ronald K. Howqvist",
+    "48. Jan Kolařík",
+    "48. Jan Kolařík",
+    "48. Jan Kolařík"
+   ],
    "gf": 3,
    "ga": 3,
    "res": "D",
@@ -468,6 +1629,73 @@
    "half": "3:1",
    "referee": "Ondřej Mlynařík",
    "report": "Zasloužené vítězství domácích, kteří po celý zápas dominovali.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      17
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      31,
+      56,
+      57
+     ],
+     "n": "Jan Kolařík"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 7,
    "res": "L",
@@ -485,6 +1713,65 @@
    "half": "1:0",
    "referee": "Jan Gregorec",
    "report": "Zápas v rychlém tempu, šance na obou stranách. V první půli náhodný gól po výkopu od brankáře a teči. Hosté tlačili, vypracovali si i více šancí, ale skórovat nedokázali.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      7
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 0,
    "res": "W",
@@ -502,6 +1789,78 @@
    "half": "3:2",
    "referee": "Jan Kehár",
    "report": "Hosté byli lepším týmem a zaslouženě vyhráli.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      2
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      4,
+      14
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 6,
    "res": "L",
@@ -519,6 +1878,68 @@
    "half": "4:1",
    "referee": "Tomáš Andrle",
    "report": "Fotbalovější domácí si v prvním poločase vytvořili tříbrankový náskok. Až do konce zápasu se pak strachovali o vítězství.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      16
+     ],
+     "n": "Martin Horyna"
+    },
+    {
+     "m": [
+      34,
+      35
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [
+    "59. Marek Hančič"
+   ],
    "gf": 3,
    "ga": 4,
    "res": "L",
@@ -536,6 +1957,60 @@
    "half": "1:2",
    "referee": "Roman Vobořil",
    "report": "Běhavý zápas bez velké fotbalové kvality skončil zaslouženou remízou.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      8,
+      50
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -553,6 +2028,71 @@
    "half": "0:0",
    "referee": "Martin Paleček, Pavel Dufek",
    "report": "Dobré utkání. Zvítězil vyspělejší tým.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      58
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 4,
    "res": "L",
@@ -570,6 +2110,71 @@
    "half": "0:5",
    "referee": "Michal Košťál",
    "report": "Pohledné klidné utkání, ve kterém domácí neproměňovali šance a hosté jim dali lekci z produktivity.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      59
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 6,
    "res": "L",
@@ -587,6 +2192,65 @@
    "half": "0:0",
    "referee": "Roman Vobořil",
    "report": "Remíza je naprosto zasloužená.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      37
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -604,6 +2268,65 @@
    "half": "0:2",
    "referee": "Michal Košťál",
    "report": "Pohledné utkání, ve kterém byli hosté produktivněším týmem.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      44
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 5,
    "res": "L",
@@ -621,6 +2344,68 @@
    "half": "1:1",
    "referee": "",
    "report": "Vyrovnaný zápas.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      21,
+      55
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [
+    "42. Ronald K. Howqvist"
+   ],
    "gf": 2,
    "ga": 1,
    "res": "W",
@@ -638,6 +2423,78 @@
    "half": "4:2",
    "referee": "Jindřich Vich",
    "report": "Utkání mělo dobré tempo. Domácí jasně ovládli zápas velmi dobrým proměňováním šancí.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      13
+     ],
+     "n": "Martin Horyna"
+    },
+    {
+     "m": [
+      22,
+      57
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 9,
    "res": "L",
@@ -655,6 +2512,66 @@
    "half": "0:0",
    "referee": "Jakub Houška",
    "report": "Výborný zápas skončil lépe pro domácí i přes to, že neproměnili penaltu.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      44,
+      56
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 0,
    "res": "W",
@@ -672,6 +2589,90 @@
    "half": "3:0",
    "referee": "Jakub Houška",
    "report": "Vyhrocený zápas nakonec rozhodli domácí už do poločasu.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      12
+     ],
+     "n": "Martin Poláček"
+    },
+    {
+     "m": [
+      15
+     ],
+     "n": "Lukáš Černoch"
+    },
+    {
+     "m": [
+      24,
+      46
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 0,
    "res": "W",
@@ -689,6 +2690,77 @@
    "half": "1:0",
    "referee": "Tomáš Andrle, Jan Novák",
    "report": "Relativně vyrovnané utkání se šťastnějším závěrem pro hostující mužstvo, jemuž se podařilo během tří minut srovnat na konečných 3:3.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      5
+     ],
+     "n": "Jan Kolařík"
+    },
+    {
+     "m": [
+      42
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      46
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 3,
    "res": "D",
@@ -706,6 +2778,72 @@
    "half": "2:1",
    "referee": "Tomáš Nykl",
    "report": "Pohyblivější hráči Lesů měli více šancí, které jim ale pochytal gólman. Naopak sami doplatili na absenci brankáře. Zasloužená remíza.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      23,
+      58
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      48
+     ],
+     "n": "Lukáš Černoch"
+    },
+    {
+     "m": [
+      50
+     ],
+     "n": "David Gabriel"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 4,
    "res": "D",
@@ -723,6 +2861,66 @@
    "half": "1:5",
    "referee": "Ondřej Kopecký, Štěpán Fiker",
    "report": "Výsledek odpovídá dění na hřišti. Hosté si od začátku zápasu šli za vítězstvím a byli lepším týmem.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Kolařík",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      27,
+      45
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 7,
    "res": "L",
@@ -740,6 +2938,78 @@
    "half": "3:0",
    "referee": "Petr Dang",
    "report": "Pěkný zápas, domácí byli lepší.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      36,
+      46
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 5,
    "res": "L",
@@ -757,6 +3027,71 @@
    "half": "1:2",
    "referee": "Milan Růžička",
    "report": "Zápas dobré úrovně pro sebe rozhodli důraznější hráči hostů.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      26
+     ],
+     "n": "Martin Poláček"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 4,
    "res": "L",
@@ -774,6 +3109,59 @@
    "half": "1:0",
    "referee": "Tomáš Chlum",
    "report": "Svižný zápas se šancemi na obou stranách.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      45
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 2,
    "res": "L",
@@ -805,6 +3193,80 @@
    "half": "0:4",
    "referee": "Marek Grůša",
    "report": "Lepší tým hostů zaslouženě zvítězil, aniž by inkasoval.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      12
+     ],
+     "n": "Tomáš Bím"
+    },
+    {
+     "m": [
+      22
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      24,
+      26,
+      36,
+      42
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 6,
    "ga": 0,
    "res": "W",
@@ -822,6 +3284,65 @@
    "half": "1:1",
    "referee": "Karel Janďourek",
    "report": "Vyrovnané a svižné utkání. Oba týmy měly dost příležitostí zápas rozhodnout, ale koncovka nebyla jejich silnou stránkou.",
+   "line": [
+    {
+     "n": "Marek Hančič",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      29
+     ],
+     "n": "Tomáš Bím"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -839,6 +3360,73 @@
    "half": "1:1",
    "referee": "Michal Černoch",
    "report": "Už to vypadalo na remízu, ale hosté v poslední minutě dali dva góly a rozhodli o své výhře.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      13,
+      60,
+      60
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      37
+     ],
+     "n": "OG"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 2,
    "res": "W",
@@ -856,6 +3444,59 @@
    "half": "0:1",
    "referee": "Štefan Ševčík",
    "report": "Podprůměrný fotbal s minimem šancí na obou stranách. Více ze hry měli Dromedarians, ale vychytal je gólman. Yamatu se nakonec podařilo alespoň vyrovnat.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      52
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -873,6 +3514,46 @@
    "half": "2:0",
    "referee": "Josef Klail",
    "report": "Pěkné utkání 6. ligy. Zvítězil lepší tým.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 4,
    "res": "L",
@@ -890,6 +3571,71 @@
    "half": "0:2",
    "referee": "Jakub Hendrych",
    "report": "Vyrovnané utkání, ve kterém málem hosté doplatili na nepovedenou koncovku.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      35
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      58
+     ],
+     "n": "Marek Hančič"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 4,
    "res": "L",
@@ -907,6 +3653,79 @@
    "half": "1:3",
    "referee": "Tomáš Andrle",
    "report": "Hosté si vypracovali tříbrankový náskok, ale nakonec ani ten jim na výhru nestačil.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      25,
+      39,
+      60
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      31
+     ],
+     "n": "Lukáš Černoch"
+    },
+    {
+     "m": [
+      49
+     ],
+     "n": "Jan Jelínek"
+    }
+   ],
+   "cards": [],
    "gf": 5,
    "ga": 3,
    "res": "W",
@@ -924,6 +3743,83 @@
    "half": "1:0",
    "referee": "Jakub Plechšmíd",
    "report": "Vyrovnaný zápas skončil zaslouženou remízou.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      37
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -941,6 +3837,72 @@
    "half": "2:0",
    "referee": "Jaromír Šolc",
    "report": "Fotbalovější tým zaslouženě vyhrál.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      12
+     ],
+     "n": "David Šiktanc"
+    },
+    {
+     "m": [
+      23,
+      43
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 1,
    "res": "W",
@@ -958,6 +3920,85 @@
    "half": "1:1",
    "referee": "Marek Valo",
    "report": "Vyrovnané utkání, kdy nakonec vyhrál šťastnější tým.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      3,
+      35,
+      38
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      51
+     ],
+     "n": "Jan Jelínek"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 3,
    "res": "W",
@@ -975,6 +4016,52 @@
    "half": "0:0",
    "referee": "Dušan Melíšek",
    "report": "Vyrovnané utkání s minimem šancí.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Karel Poupě",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 0,
    "res": "D",
@@ -992,6 +4079,71 @@
    "half": "1:1",
    "referee": "Petr Mládek",
    "report": "Domácí tým byl v poli aktivnější i díky hrajícímu gólmanovi. Hosté však vstřelili vždy první branku v každém poločase. Nakonec zasloužená remíza.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      9
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      42
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -1009,6 +4161,68 @@
    "half": "2:1",
    "referee": "Pavel Potměšil",
    "report": "Moc pěkné utkání, zvítězil šťastnější tým.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      11,
+      51
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      14
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [
+    "59. David Gabriel"
+   ],
    "gf": 3,
    "ga": 2,
    "res": "W",
@@ -1026,6 +4240,73 @@
    "half": "1:1",
    "referee": "Václav Dreksler",
    "report": "Vyrovnané utkání, zasloužená remíza.",
+   "line": [
+    {
+     "n": "David Šiktanc",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      26
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      50
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      53
+     ],
+     "n": "Martin Horyna"
+    }
+   ],
+   "cards": [
+    "45. Vojtěch Patočka"
+   ],
    "gf": 3,
    "ga": 3,
    "res": "D",
@@ -1043,6 +4324,66 @@
    "half": "1:3",
    "referee": "Adam Rulf",
    "report": "Zasloužené vítězství hostů. Hezký zápas.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      10,
+      56
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      18
+     ],
+     "n": "David Šiktanc"
+    },
+    {
+     "m": [
+      30
+     ],
+     "n": "Tomáš Bím"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 1,
    "res": "W",
@@ -1060,6 +4401,74 @@
    "half": "1:2",
    "referee": "Lubomír Peklanský",
    "report": "Vyrovnané utkání plné šancí, vyhrál efektivnější tým.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      1
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      12,
+      60
+     ],
+     "n": "Lukáš Černoch"
+    },
+    {
+     "m": [
+      37
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [
+    "53. Lukáš Černoch"
+   ],
    "gf": 4,
    "ga": 1,
    "res": "W",
@@ -1077,6 +4486,65 @@
    "half": "1:3",
    "referee": "Tomáš Procházka",
    "report": "Dramatické a bojovné utkání se zaslouženou výhrou hostů.",
+   "line": [
+    {
+     "n": "Jan Horyna",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      14
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      53
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 4,
    "res": "L",
@@ -1094,6 +4562,46 @@
    "half": "0:2",
    "referee": "Zdeněk Petr, Marek Grůša",
    "report": "Utkání, ve kterém s přehledem vyhrálo mladší mužstvo.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 4,
    "res": "L",
@@ -1111,6 +4619,89 @@
    "half": "3:2",
    "referee": "Martin Filípek",
    "report": "Hosté byli vyrovnaným soupeřem, ale domácí byli lepší.",
+   "line": [
+    {
+     "n": "Martin Poláček",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      10
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      28
+     ],
+     "n": "Martin Horyna"
+    },
+    {
+     "m": [
+      44
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 5,
    "res": "L",
@@ -1128,6 +4719,67 @@
    "half": "1:0",
    "referee": "Kamil Kohout",
    "report": "Domácí hráli z obrany na brejky, což na soupeře platilo.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      25,
+      39,
+      52
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      38
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 0,
    "res": "W",
@@ -1145,6 +4797,67 @@
    "half": "4:3",
    "referee": "Jaroslav Havran",
    "report": "Vyrovnané utkání nakonec skončilo vítězstvím domácích.",
+   "line": [
+    {
+     "n": "Marek Hančič",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jiří Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      5,
+      25,
+      26
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 5,
    "res": "L",
@@ -1162,6 +4875,53 @@
    "half": "0:3",
    "referee": "Václav Dreksler, Petr Jeník",
    "report": "Jednoznačná záležitost v podání hostů.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jiří Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      40
+     ],
+     "n": "Tomáš Bím"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 7,
    "res": "L",
@@ -1179,6 +4939,62 @@
    "half": "0:2",
    "referee": "Lukáš Krajči",
    "report": "Klidný zápas, hosté zaslouženě zvítězili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      6,
+      17,
+      46,
+      49
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 0,
    "res": "W",
@@ -1196,6 +5012,67 @@
    "half": "1:2",
    "referee": "Jaroslav Havran",
    "report": "Zasloužená remíza.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      13
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      34
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [
+    "55. Martin Poláček"
+   ],
    "gf": 2,
    "ga": 2,
    "res": "D",
@@ -1213,6 +5090,66 @@
    "half": "1:1",
    "referee": "Michal Košťál",
    "report": "Domácí měli velmi dobrý vstup do utkání, ale hosté se poté rozjeli a zápas ovládli.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      20
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      50,
+      60
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 6,
    "res": "L",
@@ -1230,6 +5167,89 @@
    "half": "1:2",
    "referee": "Lukáš Krajči",
    "report": "Jednoznačné utkání ve prospěch hostů, kteří mohli dát daleko více branek.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      6
+     ],
+     "n": "Martin Horyna"
+    },
+    {
+     "m": [
+      7
+     ],
+     "n": "OG"
+    },
+    {
+     "m": [
+      37
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      51
+     ],
+     "n": "Tomáš Bím"
+    },
+    {
+     "m": [
+      52
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 5,
    "ga": 1,
    "res": "W",
@@ -1247,6 +5267,65 @@
    "half": "2:4",
    "referee": "Jaroslav Havran",
    "report": "Hosté po zásluze zvítězili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      22
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      29
+     ],
+     "n": "Martin Horyna"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 8,
    "res": "L",
@@ -1264,6 +5343,65 @@
    "half": "1:2",
    "referee": "Michal Košťál",
    "report": "Oba týmy hrály bez střídání. Hosté byli přeci jen trochu fotbalovější a tak berou oba body.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      9
+     ],
+     "n": "Marek Hančič"
+    },
+    {
+     "m": [
+      17
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      48
+     ],
+     "n": "Martin Poláček"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 1,
    "res": "W",
@@ -1281,6 +5419,59 @@
    "half": "0:0",
    "referee": "Michal Košťál",
    "report": "Pohledné utkání s mnoha šancemi na obou stranách. Oba brankáři předváděli famózní výkon. Domácí rozhodli o své výhře v závěru utkání.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      57
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 0,
    "res": "W",
@@ -1298,6 +5489,52 @@
    "half": "1:0",
    "referee": "Dušan Melíšek",
    "report": "Zasloužené vítězství mladších domácích, kteří byli lepší fyzicky i fotbalově.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 3,
    "res": "L",
@@ -1315,6 +5552,67 @@
    "half": "2:0",
    "referee": "Josef Klail",
    "report": "Vyrovnaný zápas vyhráli domácí.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      8
+     ],
+     "n": "David Gabriel"
+    },
+    {
+     "m": [
+      14
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      56
+     ],
+     "n": "Marek Hančič"
+    }
+   ],
+   "cards": [
+    "49. Tomáš Bím"
+   ],
    "gf": 3,
    "ga": 2,
    "res": "W",
@@ -1332,6 +5630,71 @@
    "half": "2:1",
    "referee": "Petr Bach",
    "report": "Sebranka byla lepší a měla více štěstí, proto bere oba body.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      15
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 3,
    "res": "L",
@@ -1349,6 +5712,77 @@
    "half": "3:1",
    "referee": "David Kocman",
    "report": "Jasná výhra hostů.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      4
+     ],
+     "n": "Jan Jelínek"
+    },
+    {
+     "m": [
+      25
+     ],
+     "n": "David Šiktanc"
+    },
+    {
+     "m": [
+      27
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      46
+     ],
+     "n": "Marek Hančič"
+    },
+    {
+     "m": [
+      57
+     ],
+     "n": "Martin Poláček"
+    }
+   ],
+   "cards": [],
    "gf": 5,
    "ga": 1,
    "res": "W",
@@ -1366,6 +5800,59 @@
    "half": "2:1",
    "referee": "Dušan Melíšek",
    "report": "Ani kuriózní branka gólmana přes celé hřiště domácí nerozhodila, skóre postupně navyšovali a zaslouženě zvítězili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      1
+     ],
+     "n": "Jan Jelínek"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 5,
    "res": "L",
@@ -1383,6 +5870,65 @@
    "half": "0:1",
    "referee": "Václav Kovařík",
    "report": "Zasloužení remíza.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Marek Hančič",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      59
+     ],
+     "n": "Martin Horyna"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -1400,6 +5946,53 @@
    "half": "2:1",
    "referee": "Tomáš Voldán",
    "report": "Inter byl lepším mužstvem a zaslouženě vyhrál.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      9
+     ],
+     "n": "Tomáš Bím"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 5,
    "res": "L",
@@ -1417,6 +6010,71 @@
    "half": "2:1",
    "referee": "Vladimír Nedvídek",
    "report": "Velmi vyrovnané utkání, napínavé až do posledních vteřin. Rozhodly dvě proměněné penalty hostů v druhém poločase.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      3
+     ],
+     "n": "Martin Poláček"
+    },
+    {
+     "m": [
+      30
+     ],
+     "n": "Vojtěch Patočka"
+    },
+    {
+     "m": [
+      39
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 4,
    "res": "L",
@@ -1434,6 +6092,72 @@
    "half": "1:0",
    "referee": "",
    "report": "Zasloužená výhra domácích.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": true
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      4,
+      37
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      41
+     ],
+     "n": "David Šiktanc"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 0,
    "res": "W",
@@ -1451,6 +6175,61 @@
    "half": "1:0",
    "referee": "Adam Rulf",
    "report": "Hezké utkání, které nabídlo šance na obou stranách. Oba týmy předvedly skvělý výkon a remíza tomuto utkání sluší.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      49
+     ],
+     "n": "Jan Jelínek"
+    }
+   ],
+   "cards": [
+    "51. David Gabriel"
+   ],
    "gf": 1,
    "ga": 1,
    "res": "D",
@@ -1468,6 +6247,66 @@
    "half": "3:0",
    "referee": "Pavel Potměšil",
    "report": "Vyrovnaný zápas rozhodla lepší efektivita v zakončení na straně domácích.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      14,
+      27
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      19
+     ],
+     "n": "David Gabriel"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 0,
    "res": "W",
@@ -1485,6 +6324,71 @@
    "half": "1:1",
    "referee": "Pavel Potměšil",
    "report": "Zápas na těžkém terénu zvládli lépe domácí.",
+   "line": [
+    {
+     "n": "Jan Horyna",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      6
+     ],
+     "n": "Martin Horyna"
+    },
+    {
+     "m": [
+      34
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      44
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 5,
    "res": "L",
@@ -1502,6 +6406,58 @@
    "half": "",
    "referee": "",
    "report": "Hosté se k utkání nedostavili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "season": "2022-hanspaulska-liga-podzim",
    "label": "podzim 2022",
    "division": "7-h"
@@ -1516,6 +6472,66 @@
    "half": "1:0",
    "referee": "Martin Paleček, František Novotný",
    "report": "Hosté senzačně otočili vývoj zápasu a po zásluze berou oba body.",
+   "line": [
+    {
+     "n": "Jan Horyna",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      44
+     ],
+     "n": "David Šiktanc"
+    },
+    {
+     "m": [
+      45,
+      58
+     ],
+     "n": "Ronald K. Howqvist"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 2,
    "res": "W",
@@ -1533,6 +6549,72 @@
    "half": "1:1",
    "referee": "",
    "report": "Zápas s lepším koncem pro domácí.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": true,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      5,
+      55
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      35
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 3,
    "ga": 2,
    "res": "W",
@@ -1550,6 +6632,70 @@
    "half": "3:0",
    "referee": "Bureš",
    "report": "Utkání dobré úrovně, bez výrazných individualit.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": true
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 4,
    "res": "L",
@@ -1567,6 +6713,53 @@
    "half": "0:1",
    "referee": "Lukáš Krajči, Matouš Vacík",
    "report": "Klidné, vyrovnané utkání vyhráli hosté.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      54
+     ],
+     "n": "Vojtěch Patočka"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 2,
    "res": "L",
@@ -1584,6 +6777,46 @@
    "half": "0:0",
    "referee": "Martin Janda",
    "report": "Hosté ve druhém poločase svého soupeře uběhali.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [],
+   "cards": [],
    "gf": 0,
    "ga": 5,
    "res": "L",
@@ -1601,6 +6834,65 @@
    "half": "0:1",
    "referee": "Lukáš Krajči",
    "report": "Bojovné utkání dovedli hosté do vítězného konce.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Šiktanc",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      55
+     ],
+     "n": "OG"
+    },
+    {
+     "m": [
+      58
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 3,
    "res": "L",
@@ -1618,6 +6910,67 @@
    "half": "2:3",
    "referee": "Kamil Kohout",
    "report": "Hosté byli střelecky produktivnější a zaslouženě zvítězili.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Ronald K. Howqvist",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      5,
+      22,
+      36
+     ],
+     "n": "Ronald K. Howqvist"
+    },
+    {
+     "m": [
+      16
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 4,
    "ga": 2,
    "res": "W",
@@ -1635,6 +6988,65 @@
    "half": "0:0",
    "referee": "Zdeněk Petr, Marek Grůša",
    "report": "Bojovné utkání se šťastnějším koncem pro hosty.",
+   "line": [
+    {
+     "n": "Jan Jelínek",
+     "gk": true,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Jan Horyna",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Lukáš Němec",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      56
+     ],
+     "n": "OG"
+    },
+    {
+     "m": [
+      60
+     ],
+     "n": "Lukáš Černoch"
+    }
+   ],
+   "cards": [],
    "gf": 2,
    "ga": 0,
    "res": "W",
@@ -1652,6 +7064,59 @@
    "half": "0:3",
    "referee": "Jiří Studený",
    "report": "Zasloužená výhra hostí, díky fantastickým zákrokům gólmana.",
+   "line": [
+    {
+     "n": "Jan Horyna",
+     "gk": true,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Tomáš Bím",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Lukáš Černoch",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "David Gabriel",
+     "gk": false,
+     "cap": true,
+     "best": false
+    },
+    {
+     "n": "Martin Horyna",
+     "gk": false,
+     "cap": false,
+     "best": true
+    },
+    {
+     "n": "Vojtěch Patočka",
+     "gk": false,
+     "cap": false,
+     "best": false
+    },
+    {
+     "n": "Martin Poláček",
+     "gk": false,
+     "cap": false,
+     "best": false
+    }
+   ],
+   "goals": [
+    {
+     "m": [
+      57
+     ],
+     "n": "Martin Horyna"
+    }
+   ],
+   "cards": [],
    "gf": 1,
    "ga": 5,
    "res": "L",
@@ -1659,5 +7124,6 @@
    "label": "podzim 2022",
    "division": "7-h"
   }
- ]
+ ],
+ "detail": true
 }
