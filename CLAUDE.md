@@ -18,6 +18,15 @@ build_page.py       the published site             -> docs/ (html, img, data)
 data/overrides.json the per-venue human input      (the important file)
 ```
 
+The document is a real one — doctype, `<html lang="cs">`, head, body. It was a
+bare fragment for a long time, which browsers cope with and link-preview
+scrapers do not: WhatsApp was showing the title with the whole stylesheet run on
+after it. The head carries Open Graph and Twitter card tags, all of them before
+`<style>` so a scraper that reads only the first few kilobytes still finds them,
+and `docs/og.jpg` is a 1200×630 crop of Motorlet with its measured rectangle —
+built by `preview_card()` alongside the photos, so `--no-images` keeps the
+committed one.
+
 The page is served in four pieces: index.html is the shell plus the venue
 records (60 kB), docs/img holds the photos, docs/data/teams.json the fixtures,
 fetched after the pitches are on screen, and docs/data/h-<hash>/ a small file per

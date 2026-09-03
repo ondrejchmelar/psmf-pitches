@@ -1956,12 +1956,59 @@ hist_dir = f'"data/{HIST_DIR}"' if HIST_DIR else "null"
 # naming it. Every competition rolls over together, so one is enough.
 now_season = season_code(seen_seasons["hanspaulska-liga"][0])
 
-html = f"""<meta charset="utf-8">
-<title>Rozpis, hřiště a vzájemné zápasy — PSMF</title>
+# The page was a bare fragment -- no doctype, no head, no body. Browsers cope;
+# the scrapers behind link previews do not, and WhatsApp was showing the title
+# with the whole stylesheet run on after it. A real head, and Open Graph tags so
+# nothing has to be guessed at.
+SITE = "https://ondrejchmelar.github.io/psmf-pitches/"
+DESC = ("Vyberte tým a uvidíte celou sezonu: kdy a kde hraje, jak velké to hřiště je, "
+        "v čem se na něm smí hrát, jestli se kryjí dresy a jak to dopadlo, když jste se "
+        "se soupeřem potkali naposledy. Hanspaulská i všechny tři veteránské soutěže.")
+TITLE = "Rozpis, hřiště a vzájemné zápasy — PSMF"
+# A 1200x630 crop for the link preview: the photo files are 900 wide and the
+# wrong shape, and every chat app that shows a large card wants that size.
+def preview_card(code="MOTO1"):
+    out = OUT / "og.jpg"
+    src = ROOT / f"out/{code}_pitch1.png"
+    if ARGS.no_images or not src.exists():
+        return "og.jpg" if out.exists() else (V.get(code, {}).get("img") or "")
+    import cv2
+    img = cv2.imread(str(src))
+    if img is None:
+        return "og.jpg" if out.exists() else ""
+    h, w = img.shape[:2]
+    want = 1200 / 630
+    # Take the widest band the picture allows, centred, then scale to size.
+    bh = min(h, int(w / want))
+    top = (h - bh) // 2
+    crop = cv2.resize(img[top:top + bh], (1200, 630), interpolation=cv2.INTER_AREA)
+    cv2.imwrite(str(out), crop, [cv2.IMWRITE_JPEG_QUALITY, 82])
+    return "og.jpg"
+
+
+card = preview_card()
+
+html = f"""<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>{TITLE}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Vyberte tým a uvidíte celou sezonu: kdy a kde hraje, jak velké to hřiště je, v čem se na něm smí hrát, jestli se kryjí dresy a jak to dopadlo, když jste se se soupeřem potkali naposledy. Hanspaulská i všechny tři veteránské soutěže.">
+<meta name="description" content="{DESC}">
+<link rel="canonical" href="{SITE}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PSMF — hřiště a rozpisy">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="{TITLE}">
+<meta property="og:description" content="{DESC}">
+<meta property="og:url" content="{SITE}">
+<meta property="og:image" content="{SITE}{card}">
+<meta property="og:image:alt" content="Ortofoto hřiště Motorlet se zakresleným obdélníkem">
+<meta name="twitter:card" content="summary_large_image">
 <style>{CSS}</style>
 <script>{EARLY_JS}</script>
+</head>
+<body>
 
 <div class="wrap">
 <div class="top">
@@ -2032,6 +2079,8 @@ v&nbsp;podkladech.</p>
 const HIST_DIR = {hist_dir};
 const NOW_SEASON = "{now_season}";</script>
 <script>{JS}</script>
+</body>
+</html>
 """
 
 out = ROOT / "docs/index.html"
