@@ -109,6 +109,13 @@ every score in the finished spring season reads as official. No provisional
 result existed anywhere on the site to test against.
 
 `.github/workflows/refresh.yml` runs that twice a day and rebuilds the page.
+Its commit step retries a rejected push with `git pull --rebase -X theirs`, and
+the `theirs` is load-bearing: during a rebase that means the commit being
+replayed, i.e. the page this run has just built. A plain `--rebase` cannot
+survive, because docs/index.html is generated and both sides rewrite it, so it
+conflicts every single time. That is what broke the re-run of 15 September — a
+re-run starts from the original run's commit, so it is behind before it begins,
+and the fallback had no way to recover.
 It installs `requests` and `pyproj` and nothing else — `build_page.py
 --no-images` reuses the committed photos and imports opencv only when it has to
 write one, which is why measuring stays a local, by-hand job. The image cache

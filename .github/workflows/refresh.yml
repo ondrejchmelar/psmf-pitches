@@ -62,5 +62,14 @@ jobs:
           fi
           scored=$(python -c 'import json;d=json.load(open("data/season.json"));print(sum(1 for t in d["teams"] for f in t["fixtures"] if f.get("score")))')
           git commit -m "Výsledky k $(date -u +%d.%m.%Y): ${scored} zápasů se skóre"
-          # Someone may have pushed while this ran; rebase onto them and retry.
-          git push || (git pull --rebase --autostash && git push)
+          # The branch can have moved while this ran -- and a re-run of an older
+          # run starts from that run's commit, so it is behind before it begins.
+          # A plain --rebase cannot recover: docs/index.html is generated, both
+          # sides rewrote it, and it conflicts every single time. -X theirs
+          # resolves in favour of the commit being replayed, which during a
+          # rebase is ours -- the page we have just built from the results we
+          # have just fetched, which are at least as fresh as anybody's.
+          if ! git push; then
+            git pull --rebase -X theirs --autostash
+            git push
+          fi
