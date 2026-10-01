@@ -142,13 +142,23 @@ def refresh_results(pause: float, today=None, window=RESULT_WINDOW,
         except Exception as e:                       # noqa: BLE001
             print(f"  {t['slug']}: {e}", file=sys.stderr)
             continue
-        before = {(f["date"], f["venue_code"], f["opponent"]): f.get("score", "")
-                  for f in t["fixtures"]}
+        prior = {(f["date"], f["venue_code"], f["opponent"]): f for f in t["fixtures"]}
+        before = {k: f.get("score", "") for k, f in prior.items()}
         t["fixtures"] = [{k: f[k] for k in
                           ("round", "date", "time", "venue_code", "opponent",
                            "home", "score", "official")} for f in fixtures]
         for f in t["fixtures"]:
-            was = before.get((f["date"], f["venue_code"], f["opponent"]), "")
+            key = (f["date"], f["venue_code"], f["opponent"])
+            was = before.get(key, "")
+            # A read with no score never erases one already held. psmf.cz
+            # blanks a match for a while between the provisional score and the
+            # official one -- 265 scores vanished from the page in three days at
+            # the end of September, most coming back days later as official --
+            # and once even blanked a result it had already marked official.
+            # The match stays unofficial, so the refresh keeps asking about it.
+            if not f["score"] and was:
+                f["score"], f["official"] = was, prior[key].get("official", False)
+                continue
             if f["score"] and f["score"] != was:
                 got += 1
                 if was:

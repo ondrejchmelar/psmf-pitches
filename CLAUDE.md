@@ -38,7 +38,10 @@ dated `?v=` expired everything on a date roll and nothing on a same-day
 re-measure, and some caches drop query strings anyway. The previous teams file
 is kept alongside the current one — as is the previous history directory —
 because for a few minutes after a build a reader can still hold an index.html
-that asks for it.
+that asks for it. "Previous" means whatever the index.html being replaced points
+to, not the newest by mtime: a CI checkout gives every committed file the same
+mtime, and sorting on it kept one stale pair for days while deleting the file
+readers actually held.
 Opening index.html over file:// leaves the
 picker empty — serve it instead.
 
@@ -100,7 +103,11 @@ trusting a number too early, and the behaviour degrades to what it did before.
 `scrape_season.py --results` re-reads, within a ten-day window, every team with
 a match not yet marked official. That is ~900 teams while nothing is marked and
 ~300 once results start being confirmed — it gets cheaper on its own.
-`--missing-only` is the cheap pass for teams with no score at all. The window is
+A re-read that comes back blank never erases a score already held:
+psmf.cz blanks matches for days between the provisional and the official result
+(265 vanished from the page at the end of September, and one official result
+went too), so the old number stays and, still unofficial, keeps being asked
+about. `--missing-only` is the cheap pass for teams with no score at all. The window is
 what stops it growing: a result that never gets recorded would otherwise keep
 its two teams in the queue for the rest of the season.
 
