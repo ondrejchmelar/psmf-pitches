@@ -386,8 +386,19 @@ def div_label(comp, division):
     return division.upper()
 
 
+def kickoff(f):
+    """(year, month, day, time) from "Čt 17.9.26" and "20:30", for ordering."""
+    d, m, y = (int(n) for n in re.findall(r"\d+", f["date"])[:3])
+    return y, m, d, f["time"].zfill(5)
+
+
 teams = []
 for t in season.get("teams", []):
+    # In date order. psmf.cz lists the played matches newest first and the
+    # rest after them, so the table read 4, 3, 2, 1, 5, 6... Date rather than
+    # round, so a postponed match sits where it is actually played. In place,
+    # because the history pass below pairs these with `fx` by position.
+    t["fixtures"].sort(key=kickoff)
     fx = [{"r": f["round"], "d": f["date"], "t": f["time"], "c": f["venue_code"],
            "o": f["opponent"], "h": f["home"], "s": f.get("score", ""),
            "of": bool(f.get("official"))}

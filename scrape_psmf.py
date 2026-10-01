@@ -154,7 +154,10 @@ def parse_fixtures(html: str) -> tuple[str, list]:
         cls = next((a for a, body in reversed(raw_cells)
                     if re.search(r"\d{1,2}:\d{1,2}", strip_tags(body))), "")
         official = bool(score) and "is-result" in cls and "is-gray" not in cls
-        key = (date, time, code_m.group(1))
+        # A played match is listed twice on the team page, the second time with
+        # the date written "17. 9. 26" instead of "Čt 17.9.26"; compared as
+        # strings the two never matched and every result came out twice.
+        key = (tuple(int(n) for n in re.findall(r"\d+", date)), time, code_m.group(1))
         if key in seen:
             continue
         seen.add(key)
