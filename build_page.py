@@ -55,6 +55,14 @@ def digest(data):
     return hashlib.sha1(data).hexdigest()[:8]
 
 
+# What the page now being replaced asks for. That is the "previous" file worth
+# keeping beside the new one -- not the newest by mtime, which in a fresh CI
+# checkout is every committed file at once, so the sort kept an arbitrary one
+# (the same stale pair for days) and deleted the file readers actually held.
+_live = (OUT / "index.html").read_text("utf-8") if (OUT / "index.html").exists() else ""
+LIVE_NAMES = set(re.findall(r"data/((?:teams\.[0-9a-f]{8}\.json)|h-[0-9a-f]{8})", _live))
+
+
 def write_jpeg(src, code, width=IMG_W, q=IMG_Q):
     """Write one venue photo into docs/img and return its URL.
 
@@ -412,10 +420,10 @@ def publish(stem, payload):
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
     name = f"{stem}.{digest(data)}.json"
     (OUT / "data" / name).write_bytes(data)
-    keep = sorted((OUT / "data").glob(f"{stem}.*.json"),
-                  key=lambda f: f.stat().st_mtime, reverse=True)[:2]
-    for stale in (OUT / "data").glob(f"{stem}.*.json"):
-        if stale not in keep:
+    # An unchanged build keeps what is there: pruning the spare then would make
+    # a commit of nothing but a deletion on every run with no new results.
+    for stale in [] if name in LIVE_NAMES else (OUT / "data").glob(f"{stem}.*.json"):
+        if stale.name != name and stale.name not in LIVE_NAMES:
             stale.unlink()
     return name
 
@@ -572,10 +580,8 @@ if HIST_SRC.exists():
         room.mkdir(parents=True, exist_ok=True)
         for slug, payload in files.items():
             (room / f"{slug}.json").write_bytes(payload)
-        keep = sorted((OUT / "data").glob("h-*"),
-                      key=lambda p: p.stat().st_mtime, reverse=True)[:2]
-        for stale in (OUT / "data").glob("h-*"):
-            if stale not in keep and stale.is_dir():
+        for stale in [] if HIST_DIR in LIVE_NAMES else (OUT / "data").glob("h-*"):
+            if stale.name not in (HIST_DIR, *LIVE_NAMES) and stale.is_dir():
                 shutil.rmtree(stale)
         print(f"   {len(files)} teams carry a head-to-head, {met} pairings, "
               f"{sum(len(v) for v in files.values())/1e6:.1f} MB", file=sys.stderr)
