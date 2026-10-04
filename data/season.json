@@ -31806,6 +31806,16 @@
    "name": "GP Rangers",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "12:30",
+     "venue_code": "ZAK",
+     "opponent": "Hajduk Špit",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "Ne 20.9.26",
      "time": "20:00",
@@ -31834,16 +31844,6 @@
      "home": true,
      "score": "1:4",
      "official": true
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "12:30",
-     "venue_code": "ZAK",
-     "opponent": "Hajduk Špit",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 5,
@@ -32886,6 +32886,16 @@
    "name": "Hajduk Špit",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "12:30",
+     "venue_code": "ZAK",
+     "opponent": "GP Rangers",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "Ne 20.9.26",
      "time": "12:30",
@@ -32913,16 +32923,6 @@
      "opponent": "Lord Mayor Idiot",
      "home": true,
      "score": "6:0",
-     "official": false
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "12:30",
-     "venue_code": "ZAK",
-     "opponent": "GP Rangers",
-     "home": true,
-     "score": "",
      "official": false
     },
     {
@@ -35156,6 +35156,16 @@
    "name": "HeyMed",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Krabice",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "Ne 20.9.26",
      "time": "19:00",
@@ -35184,16 +35194,6 @@
      "home": false,
      "score": "3:3",
      "official": true
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Krabice",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 5,
@@ -47876,6 +47876,16 @@
    "name": "Krabice",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "HeyMed",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "Ne 20.9.26",
      "time": "10:00",
@@ -47904,16 +47914,6 @@
      "home": true,
      "score": "1:1",
      "official": true
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "HeyMed",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 5,
@@ -77086,6 +77086,16 @@
    "name": "Radimovo koule OSSP",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Sigma Churpos TJ",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "Ne 20.9.26",
      "time": "18:45",
@@ -77114,16 +77124,6 @@
      "home": false,
      "score": "10:4",
      "official": true
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Sigma Churpos TJ",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 5,
@@ -85576,6 +85576,16 @@
    "name": "Sigma Churpos TJ",
    "fixtures": [
     {
+     "round": 4,
+     "date": "Ne 4.10.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Radimovo koule OSSP",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 3,
      "date": "So 19.9.26",
      "time": "11:15",
@@ -85604,16 +85614,6 @@
      "home": false,
      "score": "1:4",
      "official": true
-    },
-    {
-     "round": 4,
-     "date": "Ne 4.10.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Radimovo koule OSSP",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 5,
