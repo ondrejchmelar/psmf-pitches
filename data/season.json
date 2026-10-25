@@ -1676,6 +1676,16 @@
    "name": "Adovany FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Ne 25.10.26",
+     "time": "10:00",
+     "venue_code": "STOD",
+     "opponent": "Boners FC",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Ne 18.10.26",
      "time": "17:45",
@@ -1724,16 +1734,6 @@
      "home": false,
      "score": "3:3",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Ne 25.10.26",
-     "time": "10:00",
-     "venue_code": "STOD",
-     "opponent": "Boners FC",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -9656,6 +9656,16 @@
    "name": "Boners FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Ne 25.10.26",
+     "time": "10:00",
+     "venue_code": "STOD",
+     "opponent": "Adovany FC",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Ne 18.10.26",
      "time": "19:45",
@@ -9714,16 +9724,6 @@
      "home": true,
      "score": "3:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Ne 25.10.26",
-     "time": "10:00",
-     "venue_code": "STOD",
-     "opponent": "Adovany FC",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -47876,6 +47876,16 @@
    "name": "Krabice",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Ne 25.10.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Sporting Luka",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Ne 18.10.26",
      "time": "18:45",
@@ -47934,16 +47944,6 @@
      "home": true,
      "score": "1:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Ne 25.10.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Sporting Luka",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -89986,6 +89986,16 @@
    "name": "Sporting Luka",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Ne 25.10.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Krabice",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Ne 18.10.26",
      "time": "18:15",
@@ -90044,16 +90054,6 @@
      "home": true,
      "score": "3:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Ne 25.10.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Krabice",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
