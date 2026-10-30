@@ -263,7 +263,7 @@
      "opponent": "Team Bambus",
      "home": true,
      "score": "5:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -2502,7 +2502,7 @@
      "venue_code": "ARIT",
      "opponent": "Gladiators Beroun",
      "home": true,
-     "score": "",
+     "score": "4:4",
      "official": false
     },
     {
@@ -4512,8 +4512,8 @@
      "venue_code": "MIKU3",
      "opponent": "Milenium Praha FC",
      "home": true,
-     "score": "",
-     "official": false
+     "score": "2:6",
+     "official": true
     },
     {
      "round": 6,
@@ -6066,6 +6066,16 @@
    "name": "Bandidoz",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P2",
+     "opponent": "Intertoto",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:15",
@@ -6124,16 +6134,6 @@
      "home": false,
      "score": "0:6",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P2",
-     "opponent": "Intertoto",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -7136,6 +7136,16 @@
    "name": "Benda 1964 OFC VET",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "DEKAN",
+     "opponent": "J.R.Club VET A",
+     "home": true,
+     "score": "4:3",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:30",
@@ -7194,16 +7204,6 @@
      "home": true,
      "score": "4:0",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "DEKAN",
-     "opponent": "J.R.Club VET A",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -7616,6 +7616,16 @@
    "name": "Bílá pohroma",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "PODV2",
+     "opponent": "Bombeři FC",
+     "home": true,
+     "score": "1:4",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:30",
@@ -7684,16 +7694,6 @@
      "home": true,
      "score": "0:9",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "PODV2",
-     "opponent": "Bombeři FC",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -7862,7 +7862,7 @@
      "venue_code": "DEKAN",
      "opponent": "Galaksia Praha 23 VET",
      "home": true,
-     "score": "",
+     "score": "1:5",
      "official": false
     },
     {
@@ -8222,7 +8222,7 @@
      "venue_code": "HOSTI",
      "opponent": "Kelímci 3.FC",
      "home": true,
-     "score": "",
+     "score": "2:3",
      "official": false
     },
     {
@@ -8336,6 +8336,16 @@
    "name": "Blamáž FK",
    "fixtures": [
     {
+     "round": 6,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "PODV1",
+     "opponent": "Warrior MAC B",
+     "home": true,
+     "score": "4:4",
+     "official": false
+    },
+    {
      "round": 5,
      "date": "Čt 15.10.26",
      "time": "19:15",
@@ -8384,16 +8394,6 @@
      "home": true,
      "score": "2:6",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "PODV1",
-     "opponent": "Warrior MAC B",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 7,
@@ -9536,6 +9536,16 @@
    "name": "Bombeři FC",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "PODV2",
+     "opponent": "Bílá pohroma",
+     "home": false,
+     "score": "1:4",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -9604,16 +9614,6 @@
      "home": false,
      "score": "0:7",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "PODV2",
-     "opponent": "Bílá pohroma",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -9903,7 +9903,7 @@
      "opponent": "Dirty Bastards",
      "home": false,
      "score": "9:3",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -10142,8 +10142,8 @@
      "venue_code": "MIKU1",
      "opponent": "Horká cesta",
      "home": false,
-     "score": "72:44",
-     "official": false
+     "score": "4:4",
+     "official": true
     },
     {
      "round": 6,
@@ -10622,7 +10622,7 @@
      "venue_code": "MOTO1",
      "opponent": "Hostivař AC",
      "home": false,
-     "score": "",
+     "score": "6:4",
      "official": false
     },
     {
@@ -10743,7 +10743,7 @@
      "opponent": "Celtic THK",
      "home": false,
      "score": "4:2",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -11703,7 +11703,7 @@
      "opponent": "Sebranka FC VET",
      "home": true,
      "score": "2:3",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -12282,7 +12282,7 @@
      "venue_code": "HOSTI",
      "opponent": "KáGéčko B",
      "home": true,
-     "score": "",
+     "score": "5:1",
      "official": false
     },
     {
@@ -12523,7 +12523,7 @@
      "opponent": "Hashlerka 1993 A",
      "home": false,
      "score": "1:0",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -13963,7 +13963,7 @@
      "opponent": "Braník City",
      "home": true,
      "score": "4:2",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -15283,7 +15283,7 @@
      "opponent": "RAF Jinonice",
      "home": true,
      "score": "14:3",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -15642,7 +15642,7 @@
      "venue_code": "PODV2",
      "opponent": "PéEsŽé",
      "home": false,
-     "score": "",
+     "score": "11:4",
      "official": false
     },
     {
@@ -15882,7 +15882,7 @@
      "venue_code": "P3",
      "opponent": "Kolíci",
      "home": false,
-     "score": "",
+     "score": "2:4",
      "official": false
     },
     {
@@ -16826,6 +16826,16 @@
    "name": "Crossed sausages FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "METE1",
+     "opponent": "Prtzalona C.F.",
+     "home": true,
+     "score": "2:0",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 15.10.26",
      "time": "19:15",
@@ -16884,16 +16894,6 @@
      "home": false,
      "score": "1:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "METE1",
-     "opponent": "Prtzalona C.F.",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -19523,7 +19523,7 @@
      "opponent": "Veselá Kráva TJ",
      "home": false,
      "score": "1:5",
-     "official": false
+     "official": true
     },
     {
      "round": 4,
@@ -19756,6 +19756,16 @@
    "name": "DHL Brohemians",
    "fixtures": [
     {
+     "round": 6,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MOTO4",
+     "opponent": "Hertha Hostivice",
+     "home": true,
+     "score": "1:2",
+     "official": false
+    },
+    {
      "round": 5,
      "date": "Čt 15.10.26",
      "time": "20:30",
@@ -19804,16 +19814,6 @@
      "home": true,
      "score": "2:4",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MOTO4",
-     "opponent": "Hertha Hostivice",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 7,
@@ -20363,7 +20363,7 @@
      "opponent": "Manchester Eftimov",
      "home": true,
      "score": "3:5",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -20603,7 +20603,7 @@
      "opponent": "Boomers",
      "home": true,
      "score": "9:3",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -21672,7 +21672,7 @@
      "venue_code": "HANSP",
      "opponent": "Mestek 97 FC",
      "home": true,
-     "score": "",
+     "score": "2:5",
      "official": false
     },
     {
@@ -22612,7 +22612,7 @@
      "venue_code": "MIKU4",
      "opponent": "Vojenské lesy VET",
      "home": true,
-     "score": "",
+     "score": "2:6",
      "official": false
     },
     {
@@ -23926,6 +23926,16 @@
    "name": "Educasoft",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "ZAK",
+     "opponent": "Úžas 1.FC A",
+     "home": true,
+     "score": "2:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:15",
@@ -23984,16 +23994,6 @@
      "home": false,
      "score": "1:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "ZAK",
-     "opponent": "Úžas 1.FC A",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -27016,6 +27016,16 @@
    "name": "Ferax FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MOTO1",
+     "opponent": "Metro AFK VET",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:00",
@@ -27074,16 +27084,6 @@
      "home": false,
      "score": "4:6",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MOTO1",
-     "opponent": "Metro AFK VET",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -27622,8 +27622,8 @@
      "venue_code": "CESMI",
      "opponent": "Talpy Horská FC",
      "home": true,
-     "score": "",
-     "official": false
+     "score": "4:5",
+     "official": true
     },
     {
      "round": 6,
@@ -27863,7 +27863,7 @@
      "opponent": "Killing power FC",
      "home": true,
      "score": "1:7",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -29302,7 +29302,7 @@
      "venue_code": "DEKAN",
      "opponent": "Bílý lev CF VET",
      "home": false,
-     "score": "",
+     "score": "1:5",
      "official": false
     },
     {
@@ -30016,6 +30016,16 @@
    "name": "GFC",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "SANC1",
+     "opponent": "Kapr tým 86 B",
+     "home": true,
+     "score": "2:2",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -30084,16 +30094,6 @@
      "home": true,
      "score": "3:5",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "SANC1",
-     "opponent": "Kapr tým 86 B",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -30262,7 +30262,7 @@
      "venue_code": "ZAK",
      "opponent": "SC Xaverov SUP",
      "home": false,
-     "score": "",
+     "score": "2:3",
      "official": false
     },
     {
@@ -30732,7 +30732,7 @@
      "venue_code": "ARIT",
      "opponent": "Al-Arab FK A",
      "home": false,
-     "score": "",
+     "score": "4:4",
      "official": false
     },
     {
@@ -31926,6 +31926,16 @@
    "name": "Gremio",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P3",
+     "opponent": "Orange Predators B",
+     "home": true,
+     "score": "1:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 21.10.26",
      "time": "18:15",
@@ -31984,16 +31994,6 @@
      "home": false,
      "score": "7:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P3",
-     "opponent": "Orange Predators B",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -32772,7 +32772,7 @@
      "venue_code": "METE1",
      "opponent": "Huňáč PK B",
      "home": true,
-     "score": "",
+     "score": "2:9",
      "official": false
     },
     {
@@ -33733,7 +33733,7 @@
      "opponent": "Bylo nás pět plus jedna",
      "home": true,
      "score": "1:0",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -34093,7 +34093,7 @@
      "opponent": "SCG VET",
      "home": false,
      "score": "0:1",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -34203,7 +34203,7 @@
      "opponent": "LHC",
      "home": true,
      "score": "5:7",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -34796,6 +34796,16 @@
    "name": "Hertha Hostivice",
    "fixtures": [
     {
+     "round": 6,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MOTO4",
+     "opponent": "DHL Brohemians",
+     "home": false,
+     "score": "1:2",
+     "official": false
+    },
+    {
      "round": 5,
      "date": "Čt 15.10.26",
      "time": "19:15",
@@ -34844,16 +34854,6 @@
      "home": true,
      "score": "3:1",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MOTO4",
-     "opponent": "DHL Brohemians",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 7,
@@ -36242,8 +36242,8 @@
      "venue_code": "MIKU1",
      "opponent": "Borussia Dortšpunt B",
      "home": true,
-     "score": "72:44",
-     "official": false
+     "score": "4:4",
+     "official": true
     },
     {
      "round": 6,
@@ -36962,7 +36962,7 @@
      "venue_code": "MOTO1",
      "opponent": "BP AC",
      "home": true,
-     "score": "",
+     "score": "6:4",
      "official": false
     },
     {
@@ -37682,7 +37682,7 @@
      "venue_code": "METE1",
      "opponent": "Hajduk Hůrka A",
      "home": false,
-     "score": "",
+     "score": "2:9",
      "official": false
     },
     {
@@ -39923,7 +39923,7 @@
      "opponent": "S nadhledem",
      "home": true,
      "score": "3:3",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -40036,6 +40036,16 @@
    "name": "Intertoto",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P2",
+     "opponent": "Bandidoz",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 21.10.26",
      "time": "18:15",
@@ -40092,16 +40102,6 @@
      "venue_code": "HRAB2",
      "opponent": "Tohle není hokej?",
      "home": true,
-     "score": "",
-     "official": false
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P2",
-     "opponent": "Bandidoz",
-     "home": false,
      "score": "",
      "official": false
     },
@@ -41243,7 +41243,7 @@
      "opponent": "Libeň SK A",
      "home": false,
      "score": "1:2",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -41836,6 +41836,16 @@
    "name": "J.R.Club VET A",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "DEKAN",
+     "opponent": "Benda 1964 OFC VET",
+     "home": false,
+     "score": "4:3",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -41894,16 +41904,6 @@
      "home": true,
      "score": "1:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "DEKAN",
-     "opponent": "Benda 1964 OFC VET",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -42442,7 +42442,7 @@
      "venue_code": "PODV1",
      "opponent": "Tuscarora 03",
      "home": false,
-     "score": "",
+     "score": "4:1",
      "official": false
     },
     {
@@ -42682,7 +42682,7 @@
      "venue_code": "HOSTI",
      "opponent": "Buzhora FC",
      "home": false,
-     "score": "",
+     "score": "5:1",
      "official": false
     },
     {
@@ -43036,6 +43036,16 @@
    "name": "Kapr tým 86 B",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "SANC1",
+     "opponent": "GFC",
+     "home": false,
+     "score": "2:2",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -43104,16 +43114,6 @@
      "home": true,
      "score": "0:7",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "SANC1",
-     "opponent": "GFC",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -43626,6 +43626,16 @@
    "name": "Kehar club VET",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "HOSTI",
+     "opponent": "Pražská náplava A",
+     "home": true,
+     "score": "4:3",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -43684,16 +43694,6 @@
      "home": true,
      "score": "4:6",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "HOSTI",
-     "opponent": "Pražská náplava A",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -44233,7 +44233,7 @@
      "opponent": "Forejt FC",
      "home": false,
      "score": "1:7",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -45973,7 +45973,7 @@
      "opponent": "Tatra 04 VET",
      "home": true,
      "score": "3:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -46206,6 +46206,16 @@
    "name": "Kluci z Vršovic",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MALES",
+     "opponent": "Zavináč FC",
+     "home": true,
+     "score": "6:4",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 21.10.26",
      "time": "18:15",
@@ -46264,16 +46274,6 @@
      "home": false,
      "score": "1:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MALES",
-     "opponent": "Zavináč FC",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -46682,7 +46682,7 @@
      "venue_code": "P3",
      "opponent": "Chrontodont ARV",
      "home": true,
-     "score": "",
+     "score": "2:4",
      "official": false
     },
     {
@@ -47162,7 +47162,7 @@
      "venue_code": "ZAK",
      "opponent": "One Team, One Dream",
      "home": false,
-     "score": "",
+     "score": "2:2",
      "official": false
     },
     {
@@ -48832,7 +48832,7 @@
      "venue_code": "DEKAN",
      "opponent": "Letňany United VET",
      "home": false,
-     "score": "",
+     "score": "5:1",
      "official": false
     },
     {
@@ -50602,8 +50602,8 @@
      "venue_code": "METE1",
      "opponent": "Torpédo Hulín VET",
      "home": false,
-     "score": "3:2",
-     "official": false
+     "score": "4:2",
+     "official": true
     },
     {
      "round": 7,
@@ -51552,7 +51552,7 @@
      "venue_code": "DEKAN",
      "opponent": "Kumpáni VET",
      "home": true,
-     "score": "",
+     "score": "5:1",
      "official": false
     },
     {
@@ -51653,7 +51653,7 @@
      "opponent": "Heliport SK",
      "home": false,
      "score": "5:7",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -51773,7 +51773,7 @@
      "opponent": "Ještěři FC",
      "home": true,
      "score": "1:2",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -53213,7 +53213,7 @@
      "opponent": "Rošambo",
      "home": false,
      "score": "3:3",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -53572,7 +53572,7 @@
      "venue_code": "P2",
      "opponent": "Paprication",
      "home": false,
-     "score": "",
+     "score": "0:1",
      "official": false
     },
     {
@@ -54053,7 +54053,7 @@
      "opponent": "Dikobraz FC",
      "home": false,
      "score": "3:5",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -55712,7 +55712,7 @@
      "venue_code": "MIKU4",
      "opponent": "Slovan S. Bohemia",
      "home": true,
-     "score": "",
+     "score": "0:4",
      "official": false
     },
     {
@@ -56193,7 +56193,7 @@
      "opponent": "Ukradený širáci",
      "home": true,
      "score": "5:5",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -56312,7 +56312,7 @@
      "venue_code": "MALES",
      "opponent": "Parta AC",
      "home": false,
-     "score": "",
+     "score": "6:1",
      "official": false
     },
     {
@@ -56912,7 +56912,7 @@
      "venue_code": "HANSP",
      "opponent": "Dromedarians Praha",
      "home": false,
-     "score": "",
+     "score": "2:5",
      "official": false
     },
     {
@@ -57386,6 +57386,16 @@
    "name": "Metro AFK VET",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MOTO1",
+     "opponent": "Ferax FC",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:30",
@@ -57444,16 +57454,6 @@
      "home": false,
      "score": "1:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MOTO1",
-     "opponent": "Ferax FC",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -57872,8 +57872,8 @@
      "venue_code": "MIKU3",
      "opponent": "Atlético Strašnice",
      "home": false,
-     "score": "",
-     "official": false
+     "score": "2:6",
+     "official": true
     },
     {
      "round": 6,
@@ -60506,6 +60506,16 @@
    "name": "Na zdraví p.Macháčka",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "ZABEH",
+     "opponent": "VaPeTo Sporting",
+     "home": false,
+     "score": "3:7",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:30",
@@ -60574,16 +60584,6 @@
      "home": false,
      "score": "3:5",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "ZABEH",
-     "opponent": "VaPeTo Sporting",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -61703,7 +61703,7 @@
      "opponent": "Střílíme veverky FC",
      "home": false,
      "score": "5:1",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -62063,7 +62063,7 @@
      "opponent": "Po Útlumu 06",
      "home": false,
      "score": "2:6",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -62542,7 +62542,7 @@
      "venue_code": "MOTO4",
      "opponent": "Tohle není hokej?",
      "home": true,
-     "score": "",
+     "score": "2:3",
      "official": false
     },
     {
@@ -63243,7 +63243,7 @@
      "opponent": "Pivosauři VET",
      "home": true,
      "score": "7:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -63476,6 +63476,16 @@
    "name": "Ol´school Fellas BK",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "METE2",
+     "opponent": "Těsně vedle",
+     "home": true,
+     "score": "0:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -63536,16 +63546,6 @@
      "official": true
     },
     {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "METE2",
-     "opponent": "Těsně vedle",
-     "home": true,
-     "score": "",
-     "official": false
-    },
-    {
      "round": 8,
      "date": "Čt 5.11.26",
      "time": "18:00",
@@ -63602,7 +63602,7 @@
      "venue_code": "ZAK",
      "opponent": "Koně FC",
      "home": true,
-     "score": "",
+     "score": "2:2",
      "official": false
     },
     {
@@ -64076,6 +64076,16 @@
    "name": "Orange Predators B",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P3",
+     "opponent": "Gremio",
+     "home": false,
+     "score": "1:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 21.10.26",
      "time": "18:15",
@@ -64134,16 +64144,6 @@
      "home": true,
      "score": "7:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P3",
-     "opponent": "Gremio",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -65156,6 +65156,16 @@
    "name": "Panteři Buštěhrad",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "CESMI",
+     "opponent": "Strahovská 10 B",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -65224,16 +65234,6 @@
      "home": false,
      "score": "8:1",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "CESMI",
-     "opponent": "Strahovská 10 B",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -65522,7 +65522,7 @@
      "venue_code": "P2",
      "opponent": "Lunochod 1.MFK A",
      "home": true,
-     "score": "",
+     "score": "0:1",
      "official": false
     },
     {
@@ -66122,7 +66122,7 @@
      "venue_code": "MALES",
      "opponent": "Mejla FC",
      "home": true,
-     "score": "",
+     "score": "6:1",
      "official": false
     },
     {
@@ -66603,7 +66603,7 @@
      "opponent": "Tábor žije",
      "home": false,
      "score": "2:0",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -66722,7 +66722,7 @@
      "venue_code": "PODV2",
      "opponent": "Chmelsea FC B",
      "home": true,
-     "score": "",
+     "score": "11:4",
      "official": false
     },
     {
@@ -69362,7 +69362,7 @@
      "venue_code": "MALES",
      "opponent": "Zbytečná Libeň",
      "home": false,
-     "score": "",
+     "score": "1:4",
      "official": false
     },
     {
@@ -69483,7 +69483,7 @@
      "opponent": "Oldhunters VET",
      "home": false,
      "score": "7:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -69722,8 +69722,8 @@
      "venue_code": "CESMI",
      "opponent": "Vošach gang-bang",
      "home": false,
-     "score": "",
-     "official": false
+     "score": "2:3",
+     "official": true
     },
     {
      "round": 5,
@@ -74336,6 +74336,16 @@
    "name": "Pražská náplava A",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "HOSTI",
+     "opponent": "Kehar club VET",
+     "home": false,
+     "score": "4:3",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "19:00",
@@ -74394,16 +74404,6 @@
      "home": false,
      "score": "2:0",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "HOSTI",
-     "opponent": "Kehar club VET",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -76132,8 +76132,8 @@
      "venue_code": "MIKU4",
      "opponent": "Schrödingerovi kocouři",
      "home": true,
-     "score": "5:1",
-     "official": false
+     "score": "6:1",
+     "official": true
     },
     {
      "round": 6,
@@ -76366,6 +76366,16 @@
    "name": "Prtzalona C.F.",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "METE1",
+     "opponent": "Crossed sausages FC",
+     "home": false,
+     "score": "2:0",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 15.10.26",
      "time": "19:00",
@@ -76426,16 +76436,6 @@
      "official": true
     },
     {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "METE1",
-     "opponent": "Crossed sausages FC",
-     "home": false,
-     "score": "",
-     "official": false
-    },
-    {
      "round": 8,
      "date": "St 4.11.26",
      "time": "18:00",
@@ -76485,6 +76485,16 @@
    "comp": "2026-hanspaulska-liga-podzim",
    "name": "Pyjavíce FK",
    "fixtures": [
+    {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P1",
+     "opponent": "Rapid Libeň",
+     "home": true,
+     "score": "",
+     "official": false
+    },
     {
      "round": 6,
      "date": "Čt 22.10.26",
@@ -76544,16 +76554,6 @@
      "home": false,
      "score": "0:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P1",
-     "opponent": "Rapid Libeň",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -77323,7 +77323,7 @@
      "opponent": "Chlapi FK",
      "home": false,
      "score": "14:3",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -77556,6 +77556,16 @@
    "name": "Rapid Libeň",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "P1",
+     "opponent": "Pyjavíce FK",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -77614,16 +77624,6 @@
      "home": false,
      "score": "1:3",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "P1",
-     "opponent": "Pyjavíce FK",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -80193,7 +80193,7 @@
      "opponent": "Lucián FC B",
      "home": true,
      "score": "3:3",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -80786,6 +80786,16 @@
    "name": "Rum Zahořany HT",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "TEMPO",
+     "opponent": "Strašný kouře FC",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 15.10.26",
      "time": "18:30",
@@ -80844,16 +80854,6 @@
      "home": true,
      "score": "5:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "TEMPO",
-     "opponent": "Strašný kouře FC",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -81272,7 +81272,7 @@
      "venue_code": "TEMPO",
      "opponent": "Trops 1.SK",
      "home": true,
-     "score": "",
+     "score": "6:7",
      "official": false
     },
     {
@@ -83263,7 +83263,7 @@
      "opponent": "Heart Attack",
      "home": true,
      "score": "0:1",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -83372,8 +83372,8 @@
      "venue_code": "MIKU4",
      "opponent": "Proradost FK",
      "home": false,
-     "score": "5:1",
-     "official": false
+     "score": "6:1",
+     "official": true
     },
     {
      "round": 6,
@@ -83492,7 +83492,7 @@
      "venue_code": "ZAK",
      "opponent": "GFC Regent SUP",
      "home": true,
-     "score": "",
+     "score": "2:3",
      "official": false
     },
     {
@@ -83943,7 +83943,7 @@
      "opponent": "Brosway Team VET",
      "home": false,
      "score": "2:3",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -84623,7 +84623,7 @@
      "opponent": "Yakuza",
      "home": true,
      "score": "4:6",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -87383,7 +87383,7 @@
      "opponent": "Inter Prague",
      "home": false,
      "score": "3:3",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -87743,7 +87743,7 @@
      "opponent": "Zlatý krysy SUP",
      "home": true,
      "score": "1:5",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -88342,7 +88342,7 @@
      "venue_code": "ZAK",
      "opponent": "Torzo AFZ",
      "home": false,
-     "score": "",
+     "score": "3:0",
      "official": false
     },
     {
@@ -91626,6 +91626,16 @@
    "name": "Strahovská 10 B",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "CESMI",
+     "opponent": "Panteři Buštěhrad",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "St 21.10.26",
      "time": "20:45",
@@ -91694,16 +91704,6 @@
      "home": true,
      "score": "1:4",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "CESMI",
-     "opponent": "Panteři Buštěhrad",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -92226,6 +92226,16 @@
    "name": "Strašný kouře FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "TEMPO",
+     "opponent": "Rum Zahořany HT",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 14.10.26",
      "time": "18:00",
@@ -92284,16 +92294,6 @@
      "home": false,
      "score": "5:2",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "TEMPO",
-     "opponent": "Rum Zahořany HT",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -92473,7 +92473,7 @@
      "opponent": "New Jersey Devils B",
      "home": true,
      "score": "5:1",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -93793,7 +93793,7 @@
      "opponent": "Patočkova brána FC",
      "home": true,
      "score": "2:0",
-     "official": false
+     "official": true
     },
     {
      "round": 7,
@@ -94272,8 +94272,8 @@
      "venue_code": "CESMI",
      "opponent": "Footside",
      "home": false,
-     "score": "",
-     "official": false
+     "score": "4:5",
+     "official": true
     },
     {
      "round": 6,
@@ -94393,7 +94393,7 @@
      "opponent": "Touš KK",
      "home": false,
      "score": "3:1",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -94623,7 +94623,7 @@
      "opponent": "Klokan club VET",
      "home": false,
      "score": "3:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -95213,7 +95213,7 @@
      "opponent": "4077 DUCKS",
      "home": false,
      "score": "5:1",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -95566,6 +95566,16 @@
    "name": "Těsně vedle",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "METE2",
+     "opponent": "Ol´school Fellas BK",
+     "home": false,
+     "score": "0:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "18:15",
@@ -95624,16 +95634,6 @@
      "home": false,
      "score": "3:5",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "METE2",
-     "opponent": "Ol´school Fellas BK",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -95813,7 +95813,7 @@
      "opponent": "Tycho de Brahe FC A",
      "home": true,
      "score": "3:2",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -96292,7 +96292,7 @@
      "venue_code": "MOTO4",
      "opponent": "Nulová šance",
      "home": false,
-     "score": "",
+     "score": "2:3",
      "official": false
     },
     {
@@ -96752,8 +96752,8 @@
      "venue_code": "METE1",
      "opponent": "Legends are back",
      "home": true,
-     "score": "3:2",
-     "official": false
+     "score": "4:2",
+     "official": true
     },
     {
      "round": 7,
@@ -96992,7 +96992,7 @@
      "venue_code": "ZAK",
      "opponent": "Sokol Vysočany SUP",
      "home": true,
-     "score": "",
+     "score": "3:0",
      "official": false
     },
     {
@@ -97113,7 +97113,7 @@
      "opponent": "Tatarský biftek VET",
      "home": true,
      "score": "3:1",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -98142,7 +98142,7 @@
      "venue_code": "TEMPO",
      "opponent": "Sací komando Modřany",
      "home": false,
-     "score": "",
+     "score": "6:7",
      "official": false
     },
     {
@@ -98942,7 +98942,7 @@
      "venue_code": "PODV1",
      "opponent": "Juventus Pivus",
      "home": true,
-     "score": "",
+     "score": "4:1",
      "official": false
     },
     {
@@ -99423,7 +99423,7 @@
      "opponent": "The Hamptons",
      "home": false,
      "score": "3:2",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -101173,7 +101173,7 @@
      "opponent": "Medvídkova tlapička",
      "home": false,
      "score": "5:5",
-     "official": false
+     "official": true
     },
     {
      "round": 1,
@@ -102816,6 +102816,16 @@
    "name": "Úžas 1.FC A",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:45",
+     "venue_code": "ZAK",
+     "opponent": "Educasoft",
+     "home": false,
+     "score": "2:5",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -102874,16 +102884,6 @@
      "home": false,
      "score": "2:1",
      "official": true
-    },
-    {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:45",
-     "venue_code": "ZAK",
-     "opponent": "Educasoft",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 8,
@@ -103526,6 +103526,16 @@
    "name": "VaPeTo Sporting",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Čt 29.10.26",
+     "time": "20:15",
+     "venue_code": "ZABEH",
+     "opponent": "Na zdraví p.Macháčka",
+     "home": true,
+     "score": "3:7",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Čt 22.10.26",
      "time": "20:45",
@@ -103594,16 +103604,6 @@
      "home": false,
      "score": "2:2",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Čt 29.10.26",
-     "time": "20:15",
-     "venue_code": "ZABEH",
-     "opponent": "Na zdraví p.Macháčka",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -104373,7 +104373,7 @@
      "opponent": "D.G.Team",
      "home": true,
      "score": "1:5",
-     "official": false
+     "official": true
     },
     {
      "round": 5,
@@ -105932,7 +105932,7 @@
      "venue_code": "MIKU4",
      "opponent": "Dynamix",
      "home": false,
-     "score": "",
+     "score": "2:6",
      "official": false
     },
     {
@@ -106292,8 +106292,8 @@
      "venue_code": "CESMI",
      "opponent": "Pivson a Pofel",
      "home": true,
-     "score": "",
-     "official": false
+     "score": "2:3",
+     "official": true
     },
     {
      "round": 5,
@@ -107846,6 +107846,16 @@
    "name": "Warrior MAC B",
    "fixtures": [
     {
+     "round": 6,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "PODV1",
+     "opponent": "Blamáž FK",
+     "home": false,
+     "score": "4:4",
+     "official": false
+    },
+    {
      "round": 4,
      "date": "Čt 22.10.26",
      "time": "19:15",
@@ -107894,16 +107904,6 @@
      "home": true,
      "score": "3:8",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "PODV1",
-     "opponent": "Blamáž FK",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 7,
@@ -108453,7 +108453,7 @@
      "opponent": "Senioři Praha A",
      "home": false,
      "score": "4:6",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
@@ -109626,6 +109626,16 @@
    "name": "Zavináč FC",
    "fixtures": [
     {
+     "round": 7,
+     "date": "Čt 29.10.26",
+     "time": "20:30",
+     "venue_code": "MALES",
+     "opponent": "Kluci z Vršovic",
+     "home": false,
+     "score": "6:4",
+     "official": false
+    },
+    {
      "round": 6,
      "date": "St 21.10.26",
      "time": "18:15",
@@ -109686,16 +109696,6 @@
      "official": true
     },
     {
-     "round": 7,
-     "date": "Čt 29.10.26",
-     "time": "20:30",
-     "venue_code": "MALES",
-     "opponent": "Kluci z Vršovic",
-     "home": false,
-     "score": "",
-     "official": false
-    },
-    {
      "round": 8,
      "date": "St 4.11.26",
      "time": "20:45",
@@ -109752,7 +109752,7 @@
      "venue_code": "MALES",
      "opponent": "Pivní pohoda AC",
      "home": true,
-     "score": "",
+     "score": "1:4",
      "official": false
     },
     {
@@ -110833,7 +110833,7 @@
      "opponent": "Socra SUP",
      "home": false,
      "score": "1:5",
-     "official": false
+     "official": true
     },
     {
      "round": 6,
