@@ -19282,7 +19282,7 @@
      "venue_code": "DEKAN",
      "opponent": "Máčkaři FK",
      "home": true,
-     "score": "",
+     "score": "2:4",
      "official": false
     },
     {
@@ -53692,7 +53692,7 @@
      "venue_code": "DEKAN",
      "opponent": "Deportivo Estudiantil FC A",
      "home": false,
-     "score": "",
+     "score": "2:4",
      "official": false
     },
     {
@@ -56786,6 +56786,16 @@
    "name": "Messynové FC",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 1.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Sokol V.-Notorax B",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Ne 25.10.26",
      "time": "15:00",
@@ -56854,16 +56864,6 @@
      "home": true,
      "score": "1:3",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 1.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Sokol V.-Notorax B",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -71612,7 +71612,7 @@
      "venue_code": "CZU",
      "opponent": "Prague United ČZU",
      "home": true,
-     "score": "",
+     "score": "10:2",
      "official": false
     },
     {
@@ -73172,7 +73172,7 @@
      "venue_code": "CZU",
      "opponent": "Posálbongové FC",
      "home": false,
-     "score": "",
+     "score": "10:2",
      "official": false
     },
     {
@@ -85576,6 +85576,16 @@
    "name": "Sigma Churpos TJ",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 1.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Smrtijedi FK",
+     "home": false,
+     "score": "4:2",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Pá 23.10.26",
      "time": "18:30",
@@ -85644,16 +85654,6 @@
      "home": false,
      "score": "1:4",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 1.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Smrtijedi FK",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -87136,6 +87136,16 @@
    "name": "Smrtijedi FK",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 1.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Sigma Churpos TJ",
+     "home": true,
+     "score": "4:2",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Ne 25.10.26",
      "time": "11:15",
@@ -87194,16 +87204,6 @@
      "home": true,
      "score": "2:7",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 1.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Sigma Churpos TJ",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -87976,6 +87976,16 @@
    "name": "Sokol V.-Notorax B",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 1.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Messynové FC",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Ne 25.10.26",
      "time": "11:15",
@@ -88044,16 +88054,6 @@
      "home": true,
      "score": "0:6",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 1.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Messynové FC",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
