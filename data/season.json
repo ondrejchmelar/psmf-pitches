@@ -3086,6 +3086,16 @@
    "name": "Al Nasser FC A",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "10:00",
+     "venue_code": "STOD",
+     "opponent": "Boners FC",
+     "home": true,
+     "score": "0:1",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "18:45",
@@ -3154,16 +3164,6 @@
      "home": true,
      "score": "4:4",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "10:00",
-     "venue_code": "STOD",
-     "opponent": "Boners FC",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -3546,6 +3546,16 @@
    "name": "Améby AFC A",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 8.11.26",
+     "time": "11:15",
+     "venue_code": "STOD",
+     "opponent": "Sporting Luka",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Ne 25.10.26",
      "time": "18:45",
@@ -3614,16 +3624,6 @@
      "home": true,
      "score": "0:4",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 8.11.26",
-     "time": "11:15",
-     "venue_code": "STOD",
-     "opponent": "Sporting Luka",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
@@ -9656,6 +9656,16 @@
    "name": "Boners FC",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "10:00",
+     "venue_code": "STOD",
+     "opponent": "Al Nasser FC A",
+     "home": false,
+     "score": "0:1",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "16:15",
@@ -9734,16 +9744,6 @@
      "home": true,
      "score": "3:1",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "10:00",
-     "venue_code": "STOD",
-     "opponent": "Al Nasser FC A",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -23812,7 +23812,7 @@
      "venue_code": "CZU",
      "opponent": "Hoši 3.C",
      "home": false,
-     "score": "",
+     "score": "2:1",
      "official": false
     },
     {
@@ -32886,6 +32886,16 @@
    "name": "Hajduk Špit",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Sigma Churpos TJ",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "12:30",
@@ -32963,16 +32973,6 @@
      "opponent": "Lord Mayor Idiot",
      "home": true,
      "score": "6:0",
-     "official": false
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Sigma Churpos TJ",
-     "home": false,
-     "score": "",
      "official": false
     },
     {
@@ -36722,7 +36722,7 @@
      "venue_code": "CZU",
      "opponent": "Eagles B",
      "home": true,
-     "score": "",
+     "score": "2:1",
      "official": false
     },
     {
@@ -47402,7 +47402,7 @@
      "venue_code": "TEMPO",
      "opponent": "Milion plus xG",
      "home": false,
-     "score": "",
+     "score": "9:4",
      "official": false
     },
     {
@@ -50236,6 +50236,16 @@
    "name": "Laxní přístup",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Sokol V.-Notorax B",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "17:30",
@@ -50304,16 +50314,6 @@
      "home": true,
      "score": "0:2",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Sokol V.-Notorax B",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 1,
@@ -57992,7 +57992,7 @@
      "venue_code": "TEMPO",
      "opponent": "Kopačky na pivu",
      "home": true,
-     "score": "",
+     "score": "9:4",
      "official": false
     },
     {
@@ -85576,6 +85576,16 @@
    "name": "Sigma Churpos TJ",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Hajduk Špit",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "10:00",
@@ -85654,16 +85664,6 @@
      "home": false,
      "score": "1:4",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Hajduk Špit",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -87976,6 +87976,16 @@
    "name": "Sokol V.-Notorax B",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 8.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Laxní přístup",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 1.11.26",
      "time": "11:15",
@@ -88054,16 +88064,6 @@
      "home": true,
      "score": "0:6",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 8.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Laxní přístup",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -89986,6 +89986,16 @@
    "name": "Sporting Luka",
    "fixtures": [
     {
+     "round": 8,
+     "date": "Ne 8.11.26",
+     "time": "11:15",
+     "venue_code": "STOD",
+     "opponent": "Améby AFC A",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 7,
      "date": "Ne 25.10.26",
      "time": "10:00",
@@ -90054,16 +90064,6 @@
      "home": true,
      "score": "3:1",
      "official": true
-    },
-    {
-     "round": 8,
-     "date": "Ne 8.11.26",
-     "time": "11:15",
-     "venue_code": "STOD",
-     "opponent": "Améby AFC A",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 9,
