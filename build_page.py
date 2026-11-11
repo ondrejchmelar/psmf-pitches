@@ -1978,6 +1978,20 @@ now_season = season_code(seen_seasons["hanspaulska-liga"][0])
 # with the whole stylesheet run on after it. A real head, and Open Graph tags so
 # nothing has to be guessed at.
 SITE = "https://ondrejchmelar.github.io/psmf-pitches/"
+
+# Cloudflare Web Analytics, the same site token as parainsights: both are served from
+# ondrejchmelar.github.io, and Cloudflare keys a site on its hostname, so the visits land in
+# one dashboard and are told apart by path. No cookies, nothing stored on the reader's
+# device. Loaded only on the published host, so a page opened locally neither counts nor
+# calls out.
+ANALYTICS_TOKEN = "fb27179888c0414ca33f514014e088d2"
+ANALYTICS = (
+    "<script>if (location.hostname === 'ondrejchmelar.github.io') {"
+    "const s = document.createElement('script'); s.defer = true;"
+    "s.src = 'https://static.cloudflareinsights.com/beacon.min.js';"
+    f"s.dataset.cfBeacon = '{{\"token\": \"{ANALYTICS_TOKEN}\"}}';"
+    "document.head.appendChild(s); }</script>"
+)
 DESC = ("Vyberte tým a uvidíte celou sezonu: kdy a kde hraje, jak velké to hřiště je, "
         "v čem se na něm smí hrát, jestli se kryjí dresy a jak to dopadlo, když jste se "
         "se soupeřem potkali naposledy. Hanspaulská i všechny tři veteránské soutěže.")
@@ -2080,7 +2094,8 @@ Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazuj�
 u&nbsp;{len(with_squad)} týmů ({", ".join(sorted(with_squad))}) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
 <a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
 a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
-nic se odsud neposílá dál a&nbsp;stránka nemá analytiku ani reklamu.</p>
+nic se odsud neposílá dál a&nbsp;stránka nemá reklamu. Návštěvy počítá
+Cloudflare Web Analytics, bez cookies a&nbsp;bez ukládání čehokoli do vašeho prohlížeče.</p>
 
 <p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
 stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
@@ -2096,6 +2111,7 @@ v&nbsp;podkladech.</p>
 const HIST_DIR = {hist_dir};
 const NOW_SEASON = "{now_season}";</script>
 <script>{JS}</script>
+{ANALYTICS}
 </body>
 </html>
 """
