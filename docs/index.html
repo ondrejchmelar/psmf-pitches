@@ -399,7 +399,8 @@ Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazuj�
 u&nbsp;3 týmů (Yamato Day 22, Yellow Dildos A, Zde je místo ...) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
 <a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
 a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
-nic se odsud neposílá dál a&nbsp;stránka nemá analytiku ani reklamu.</p>
+nic se odsud neposílá dál a&nbsp;stránka nemá reklamu. Návštěvy počítá
+Cloudflare Web Analytics, bez cookies a&nbsp;bez ukládání čehokoli do vašeho prohlížeče.</p>
 
 <p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
 stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
@@ -1444,5 +1445,6 @@ if (window.requestAnimationFrame) {
   boot();
 }
 </script>
+<script>if (location.hostname === 'ondrejchmelar.github.io') {const s = document.createElement('script'); s.defer = true;s.src = 'https://static.cloudflareinsights.com/beacon.min.js';s.dataset.cfBeacon = '{"token": "fb27179888c0414ca33f514014e088d2"}';document.head.appendChild(s); }</script>
 </body>
 </html>

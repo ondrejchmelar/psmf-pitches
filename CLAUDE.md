@@ -194,8 +194,8 @@ CSS are one flat namespace; check before adding one.
 
 The footer carries a privacy note, because the page publishes amateurs' names.
 It says who runs it, that it is non-commercial, which teams are named and in
-what terms, that there is no analytics and nothing leaves the page, and how to
-be taken off. **`data/opt-out.json` is what makes that last part true**: names
+what terms, that nothing leaves the page and visits are counted without cookies,
+and how to be taken off. **`data/opt-out.json` is what makes that last part true**: names
 in `players`, and whole sides in `teams`, are dropped at build time from every
 squad table and from the counts beside them, so a refresh cannot bring anybody
 back. Yellow Dildos B are in it — their line-ups are still on disk and their
@@ -203,6 +203,13 @@ head-to-heads still work, but nobody from that side is named. The match itself s
 that is the league's record, not ours — only the name goes. Tested by putting a
 name in and watching the team's 301 matches stay 301 while the squad went from
 21 people to 20.
+
+Visits are counted by Cloudflare Web Analytics, as on parainsights, and with
+the same site token: Cloudflare keys a site on its hostname and both are served
+from ondrejchmelar.github.io, so they share one dashboard and are told apart by
+path. The beacon is loaded only on that host, so a page served locally neither
+counts nor calls out. It sets no cookie and stores nothing in the browser, which
+is what lets the privacy note stay true.
 
 psmf.cz is credited in the same footer as the source of the fixtures, results,
 line-ups and referee write-ups, and linked from the privacy note as the place to
