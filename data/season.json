@@ -13116,6 +13116,16 @@
    "name": "Candy Kickers",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 15.11.26",
+     "time": "12:30",
+     "venue_code": "LITVI",
+     "opponent": "Plameňáci 1.FC A",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 8.11.26",
      "time": "17:30",
@@ -13194,16 +13204,6 @@
      "home": true,
      "score": "0:0",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 15.11.26",
-     "time": "12:30",
-     "venue_code": "LITVI",
-     "opponent": "Plameňáci 1.FC A",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
@@ -30022,7 +30022,7 @@
      "venue_code": "STER1",
      "opponent": "Kelímci 3.FC",
      "home": false,
-     "score": "",
+     "score": "3:3",
      "official": false
     },
     {
@@ -38502,7 +38502,7 @@
      "venue_code": "STER2",
      "opponent": "Kipsta FC",
      "home": true,
-     "score": "",
+     "score": "2:2",
      "official": false
     },
     {
@@ -43752,7 +43752,7 @@
      "venue_code": "STER1",
      "opponent": "GFC",
      "home": true,
-     "score": "",
+     "score": "3:3",
      "official": false
     },
     {
@@ -44472,7 +44472,7 @@
      "venue_code": "STER2",
      "opponent": "InBev Tigers",
      "home": false,
-     "score": "",
+     "score": "2:2",
      "official": false
     },
     {
@@ -69936,6 +69936,16 @@
    "name": "Plameňáci 1.FC A",
    "fixtures": [
     {
+     "round": 9,
+     "date": "Ne 15.11.26",
+     "time": "12:30",
+     "venue_code": "LITVI",
+     "opponent": "Candy Kickers",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 8,
      "date": "Ne 8.11.26",
      "time": "12:30",
@@ -70014,16 +70024,6 @@
      "home": false,
      "score": "3:0",
      "official": true
-    },
-    {
-     "round": 9,
-     "date": "Ne 15.11.26",
-     "time": "12:30",
-     "venue_code": "LITVI",
-     "opponent": "Candy Kickers",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 10,
