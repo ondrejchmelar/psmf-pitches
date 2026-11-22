@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<!-- One folder down, so /hriste/ needs no .html; the photos and links resolve
+     from the site root like index.html's do. -->
+<base href="../">
+<title>Všechna hřiště v adresáři — PSMF</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="39 hřišť Pražského svazu malého fotbalu, každé proměřené podle čar v ortofotomapě IPR Praha: rozměr, plocha a v čem se na něm smí hrát.">
+<link rel="canonical" href="https://ondrejchmelar.github.io/psmf-pitches/hriste/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PSMF — hřiště a rozpisy">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="Všechna hřiště v adresáři — PSMF">
+<meta property="og:description" content="39 hřišť Pražského svazu malého fotbalu, každé proměřené podle čar v ortofotomapě IPR Praha: rozměr, plocha a v čem se na něm smí hrát.">
+<meta property="og:url" content="https://ondrejchmelar.github.io/psmf-pitches/hriste/">
+<meta property="og:image" content="https://ondrejchmelar.github.io/psmf-pitches/og.jpg">
+<meta property="og:image:alt" content="Ortofoto hřiště Motorlet se zakresleným obdélníkem">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root {
+  --ground:#F6F7F3; --surface:#FFFFFF; --sunk:#EDEFE8;
+  --ink:#161A15; --muted:#5B655A; --faint:#8B948A;
+  --rule:#DDE1D7; --accent:#8A6A00; --mark:#E0B400;
+  --home:#2F6B4F; --away:#7A4A2C;
+  --shadow:0 1px 2px rgba(20,26,18,.05),0 8px 24px -16px rgba(20,26,18,.28);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:#0F120E; --surface:#171B15; --sunk:#1E231C;
+    --ink:#E9EDE5; --muted:#9AA396; --faint:#6E776C;
+    --rule:#2A3027; --accent:#E9C34A; --mark:#F2CE55;
+    --home:#7BC49B; --away:#DDA277;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"] {
+  --ground:#0F120E; --surface:#171B15; --sunk:#1E231C;
+  --ink:#E9EDE5; --muted:#9AA396; --faint:#6E776C;
+  --rule:#2A3027; --accent:#E9C34A; --mark:#F2CE55;
+  --home:#7BC49B; --away:#DDA277;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--ground); color:var(--ink);
+  font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:1440px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(18px,4vw,36px) 96px; }
+.eyebrow {
+  font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+}
+h1 { font-size:clamp(30px,5vw,46px); line-height:1.06; letter-spacing:-.022em;
+  font-weight:680; margin:0 0 14px; text-wrap:balance; }
+.lede { max-width:64ch; color:var(--muted); font-size:17px; margin:0 0 8px; }
+.rule { height:1px; background:var(--rule); margin:34px 0 28px; border:0; }
+.stats { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-bottom:8px; }
+.stat { background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:16px 18px; }
+/* A balance is one number, not three: "112-28-161" broken across two lines
+   reads as two different figures. It shrinks to fit instead. */
+.stat b { display:block; font:600 26px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em; white-space:nowrap; }
+.stat b.long { font-size:clamp(17px, 4.4vw, 22px); }
+.stat span { display:block; margin-top:6px; font-size:12px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--faint); }
+h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+  font-weight:600; margin:0 0 16px; }
+.pick { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  padding:18px 20px; display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+  box-shadow:var(--shadow); }
+.pick label { font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
+.pick input { flex:1 1 260px; min-width:0; font:inherit; font-size:16px; padding:9px 12px;
+  color:var(--ink); background:var(--ground); border:1px solid var(--rule); border-radius:3px; }
+.pick input:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+.pick input:disabled { opacity:.6; cursor:progress; }
+.pick .who { font-size:13px; color:var(--faint); }
+.combo { position:relative; flex:1 1 260px; min-width:0; }
+.combo input { width:100%; padding-right:38px; }
+.clear { position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  width:26px; height:26px; display:grid; place-items:center; padding:0;
+  border:0; border-radius:3px; background:none; color:var(--faint);
+  font:400 20px/1 system-ui,sans-serif; cursor:pointer; }
+.clear:hover { background:var(--sunk); color:var(--ink); }
+.clear[hidden] { display:none; }
+.top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+.theme { font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
+  white-space:nowrap; flex:none; }
+.theme:hover { color:var(--ink); border-color:var(--muted); }
+.h2row { display:flex; justify-content:space-between; align-items:center; gap:16px;
+  flex-wrap:wrap; margin-bottom:16px; }
+.h2row h2 { margin:0; }
+.ics { font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
+  white-space:nowrap; flex:none; }
+.ics:hover { color:var(--ink); border-color:var(--muted); }
+a.ics { text-decoration:none; }
+.sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
+  max-height:320px; overflow-y:auto; background:var(--surface);
+  border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
+.sugg[hidden] { display:none; }
+.sugg button { display:block; width:100%; text-align:left; font:inherit; font-size:15px;
+  padding:7px 10px; border:0; border-radius:2px; background:none; color:var(--ink); cursor:pointer; }
+.sugg button:hover, .sugg button[aria-selected="true"] { background:var(--sunk); }
+.sugg button span { color:var(--faint); font-size:13px; margin-left:6px; }
+.sugg .none { padding:8px 10px; color:var(--faint); font-size:14px; }
+.scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface); }
+table { border-collapse:collapse; width:100%; min-width:580px; font-size:14.5px; }
+th { text-align:left; font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--faint);
+  padding:13px 14px; border-bottom:1px solid var(--rule); white-space:nowrap; }
+td { padding:11px 12px; border-bottom:1px solid var(--rule); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:0; }
+tbody tr:hover { background:var(--sunk); }
+.num, .dim { font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+.dim { text-align:left; font-weight:600; }
+.date { white-space:nowrap; }
+/* The kick-off under the date rather than beside it: two short lines instead of
+   one long one, and the column stops being the widest thing in the table. */
+.date .t { display:block; color:var(--faint); font-size:13px; margin-top:2px; }
+/* max-content so the table asks for the width that keeps each cell on one
+   line, max-width so it still folds rather than overflow when the screen is a
+   phone and the column cannot have it. */
+.cell { display:flex; align-items:center; flex-wrap:wrap; gap:4px 8px;
+  width:max-content; max-width:100%; }
+.cell .kit, .cell .clash, .cell .h2h, .cell .more, .cell .pin.lead { margin:0; }
+/* The pin belongs to the name, not beside it: as its own flex item it was the
+   thing that fitted when the name did not, and sat alone on a line above it. */
+.gname { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+.oname { min-width:0; }
+/* On a phone the table is scrolled sideways whatever we do, so width is worth
+   more than a tidy single line: the cells fold again and the padding comes
+   down, which is the difference between reaching the ground column and not. */
+@media (max-width:640px) {
+  th { padding:11px 9px; }
+  td { padding:10px 9px; }
+  .cell { width:auto; }
+  /* The cell folds, but never inside a name: "Orange / Predators B" over two
+     ragged lines was the thing that looked broken, not the shirt and the
+     balance sitting on a line of their own underneath it. */
+  .oname, .gname { white-space:nowrap; }
+  /* Both cells break the same way every row: the name, then the badges under
+     it. Most rows fold there anyway -- only the short names fit beside their
+     shirt -- and a column that folds only sometimes reads worse than one that
+     always does. */
+  .oname, .ground .gname { flex:1 0 100%; }
+}
+code { font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); padding:2px 5px; border-radius:2px; }
+/* Stretch, not start: with the photos all one shape the only thing left making
+   a row ragged is how much text a card carries, and a card is happier with a
+   little space under its last line than the row is with a step in it. */
+.grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+.card { background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; }
+/* One box for every photo. Left to themselves they run from 1.6:1 to 0.6:1 --
+   a pitch is as tall as it is aimed -- and a row of cards had Aritma at three
+   times Meteor's height. Cropped rather than letterboxed, around the measured
+   rectangle rather than the middle: at Hrabákova the pitch is the top third of
+   a parent field, and centring would frame the two we do not play on. */
+.card figure { margin:0; background:var(--sunk); border-bottom:1px solid var(--rule);
+  aspect-ratio:1/1; min-height:0; }
+.card img { display:block; width:100%; height:100%; object-fit:cover; }
+/* Aritma's pitch is longer than its photo is wide, so a square of it cannot
+   contain the goals. That one is scaled down to fit rather than cropped: the
+   whole pitch is the thing the card is for. */
+.card img.whole { object-fit:contain; }
+.card .body { padding:16px 18px 18px; display:flex; flex-direction:column; gap:9px; }
+.ch { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+.ch h3 { margin:0; font-size:15.5px; font-weight:640; letter-spacing:-.01em;
+  display:flex; align-items:center; gap:7px; }
+.ch h3 .pin { margin:0; }
+.ch .d { margin:0; font:600 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; color:var(--accent); white-space:nowrap; }
+.bar { position:relative; height:20px; background:var(--sunk); border-radius:2px;
+  display:flex; align-items:center; }
+.bar i { position:absolute; inset:0 auto 0 0; background:var(--mark); opacity:.42; border-radius:2px; }
+.bar span { position:relative; margin-left:8px; font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; color:var(--ink); }
+.fx { margin:4px 0 0; font-size:12.5px; color:var(--muted); }
+.nt { margin:2px 0 0; font-size:12px; line-height:1.45; color:var(--faint); }
+.bio { margin:-6px 0 16px; font-size:13.5px; line-height:1.55; color:var(--muted);
+  max-width:78ch; }
+/* Wide rather than shrunk: at 430px the whole thing scaled to about 0.6, the
+   labels with it, and there is now a place beside every dot to keep legible. It
+   scrolls sideways as the tables do -- but without their frame, which would box
+   in a drawing that already has its own edges. */
+.crscroll { overflow-x:auto; }
+.career { width:100%; min-width:620px; height:auto; display:block; margin:8px 0 4px; }
+.career .mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+/* Painted into the chart, not beside it: stroked in the page's own background
+   so a label crossing the line is still readable and the line is not cut.
+   The size is in user units, which the viewBox scales down with everything
+   else -- so on a phone, where the chart renders at about 0.6, it has to be
+   set larger to come out the same. */
+.career .lab { font-size:11px; paint-order:stroke; stroke:var(--ground);
+  stroke-width:3px; stroke-linejoin:round; }
+.career .pl { font-size:8px; fill:var(--muted); stroke-width:2.5px; }
+.legend { display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--faint);
+  margin:0 0 2px; }
+.legend i { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; }
+.priv { margin:14px 0 0; max-width:78ch; }
+.priv b { color:var(--muted); font-weight:640; }
+/* Same width as the drawing it holds, not the scroll box it sits in: without
+   the min-width it takes the container's 394px on a phone while the chart
+   overflows to 620, and the tooltip gets clamped to the wrong edge. */
+.crwrap { position:relative; min-width:620px; }
+.crtip { position:absolute; z-index:2; pointer-events:none; white-space:nowrap;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule);
+  border-radius:3px; box-shadow:var(--shadow); padding:5px 9px;
+  font:600 12px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; }
+.crtip[hidden] { display:none; }
+/* On a phone the row is nearly as wide as the screen, so let it fold. */
+@media (max-width:640px) {
+  .crtip { white-space:normal; max-width:min(300px, 82vw); }
+}
+.career .hit { cursor:pointer; }
+/* Only inside the career block. Three dense things stacked -- chart, cards,
+   squad -- and at the spacing the rest of the page uses they read as one wall.
+   Scoped to #past so the team's own summary cards keep their own rhythm. */
+#past .stats { margin:32px 0 10px; }
+.sqpick { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px;
+  font:600 11px/1
+  ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--faint); }
+.sqpick select { font:inherit; letter-spacing:0; text-transform:none; font-size:13px;
+  color:var(--ink); background:var(--surface); border:1px solid var(--rule);
+  border-radius:3px; padding:5px 8px; }
+.sqpick i { font-style:normal; color:var(--faint); }
+.career .out { opacity:.22; }
+.sortby { font:inherit; color:inherit; letter-spacing:inherit; text-transform:inherit;
+  background:none; border:0; padding:0; cursor:pointer; white-space:nowrap; }
+.sortby:hover { color:var(--ink); }
+.span { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer;
+  white-space:nowrap; border-bottom:1px solid transparent; }
+.span:hover { color:var(--accent); border-bottom-color:currentColor; }
+.sortby[aria-sort] { color:var(--ink); }
+#past .bio { margin:26px 0 12px; }
+.boots { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; border:1px solid currentColor;
+  white-space:nowrap; }
+.boots.lisovky { color:var(--home); }
+.boots.no { color:var(--mark); }
+.boots.turf { color:var(--away); }
+.conf { font:600 10px/16px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--faint); }
+.conf.low { color:var(--away); }
+.meta { margin:2px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.kit { display:inline-flex; vertical-align:-2px; margin-left:6px; border-radius:2px;
+  overflow:hidden; border:1px solid var(--rule); height:13px; }
+.kit i { display:block; width:9px; height:100%; }
+h2 .kit { height:15px; }
+h2 .kit i { width:11px; }
+.more { font:600 11px/17px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
+  padding:0 7px; cursor:pointer; }
+.more:hover, .more.open { color:var(--ink); border-color:var(--muted); }
+dialog#prog { border:0; padding:0; background:none; max-width:min(560px, 94vw); width:100%; }
+dialog#prog::backdrop { background:rgba(0,0,0,.5); }
+.progbox { background:var(--surface); color:var(--ink); border:1px solid var(--rule);
+  border-radius:4px; box-shadow:var(--shadow); padding:18px 20px 20px; }
+.progbox header { display:flex; justify-content:space-between; align-items:baseline;
+  gap:12px; margin-bottom:14px; }
+.progbox h3 { margin:0; font-size:15px; font-weight:640; }
+.progbox .x { border:0; background:none; color:var(--faint); font:400 24px/1 system-ui,sans-serif;
+  cursor:pointer; padding:0 2px; }
+.progbox .x:hover { color:var(--ink); }
+.programme { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
+.programme li { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline;
+  font-size:14.5px; padding-bottom:9px; border-bottom:1px solid var(--rule); }
+.programme li:last-child { border-bottom:0; padding-bottom:0; }
+.programme li.self { color:var(--accent); font-weight:600; }
+.programme .who { flex:1 1 220px; min-width:0; }
+.programme .meta2 { display:flex; gap:8px; align-items:baseline; margin-left:auto; }
+.programme b { font:600 13.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; }
+.programme i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.h2h { font:600 11px/17px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted);
+  background:var(--sunk); border:1px solid var(--rule); border-radius:2px;
+  padding:0 7px; margin-left:8px; cursor:pointer; white-space:nowrap; }
+.h2h:hover { color:var(--ink); border-color:var(--muted); }
+.hsum { margin:-6px 0 14px; font-size:13px; color:var(--faint); }
+.hist { list-style:none; margin:0; padding:0; display:grid; gap:14px;
+  max-height:min(62vh, 640px); overflow-y:auto; }
+.hist li { padding-bottom:12px; border-bottom:1px solid var(--rule); }
+.hist li:last-child { border-bottom:0; padding-bottom:0; }
+.hline { display:flex; flex-wrap:wrap; gap:4px 10px; align-items:baseline; font-size:14.5px; }
+.hist .who { flex:1 1 140px; min-width:0; }
+.hist .hf { font:400 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--faint); }
+.hist .meta2 { display:flex; gap:8px; align-items:baseline; margin-left:auto; }
+.hist i { font-style:normal; font-size:12px; color:var(--faint); white-space:nowrap; }
+.hist .rep { margin:6px 0 0; font-size:13.5px; line-height:1.5; color:var(--muted); }
+.hist .ref { margin:3px 0 0; font-size:12px; color:var(--faint); }
+.programme a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
+.programme a.tlink:hover { color:var(--accent); border-color:currentColor; }
+td a.tlink { color:inherit; text-decoration:none; border-bottom:1px solid var(--rule); }
+td a.tlink:hover { color:var(--accent); border-color:currentColor; }
+.res { font:600 12.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-variant-numeric:tabular-nums; padding:2px 6px; border-radius:2px;
+  background:var(--sunk); color:var(--muted); white-space:nowrap; }
+.res.win { color:var(--home); }
+.res.loss { color:var(--away); }
+.res.draw { color:var(--muted); }
+.res.prov { opacity:.65; font-style:italic; }
+.res.pend { color:var(--faint); background:transparent; border:1px dashed var(--rule); }
+.role { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
+  color:var(--faint); border:1px solid var(--rule); }
+.glove { color:var(--muted); flex:none; }
+.capt { display:inline-flex; align-items:center; justify-content:center; flex:none;
+  width:16px; height:16px; border-radius:50%; border:1px solid currentColor;
+  color:var(--faint); font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace; }
+.clash { font:600 10.5px/17px ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.03em; padding:0 6px; border-radius:2px; white-space:nowrap;
+  color:var(--away); border:1px solid currentColor; margin-left:8px; }
+tr.warn td { background:color-mix(in srgb, var(--away) 9%, transparent); }
+.pin { display:inline-flex; vertical-align:-3px; margin-left:5px; color:var(--faint); }
+/* leading the venue column, so the pins line up down the table */
+.pin.lead { margin:0 7px 0 0; }
+.pin:hover { color:var(--accent); }
+.empty { color:var(--faint); font-size:14px; }
+.loading { display:flex; align-items:center; gap:12px; color:var(--faint); font-size:15px;
+  padding:28px 0; }
+.loading[hidden] { display:none; }
+.sp { width:18px; height:18px; flex:none; border-radius:50%;
+  border:2px solid var(--rule); border-top-color:var(--accent);
+  animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .sp { animation-duration:2.4s; } }
+footer { margin-top:46px; padding-top:20px; border-top:1px solid var(--rule);
+  font-size:12.5px; color:var(--faint); }
+a { color:var(--accent); }
+a:focus-visible, tr:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media (prefers-reduced-motion:reduce) { * { animation:none!important; transition:none!important; } }
+</style>
+<script>
+try {
+  var t = localStorage.getItem('psmf-theme');
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+} catch (e) { }
+</script>
+</head>
+<body>
+
+<div class="wrap">
+<div class="top">
+  <p class="eyebrow"><a href="./">PSMF &middot; rozpisy týmů</a> &middot; podzim 2026</p>
+  <button type="button" class="theme" id="theme" aria-live="polite">motiv</button>
+</div>
+<h1>Všechna hřiště v adresáři</h1>
+<p class="lede" style="margin-bottom:18px">39 hřišť, každé proměřené
+podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel. Nejmenší z nich,
+SC Běchovice, by se do největšího (Motorlet)
+vešlo 1.8&times;.</p>
+
+<hr class="rule">
+<h2>Od největšího</h2>
+<div class="grid" id="all"></div>
+<p class="loading" id="loading"><span class="sp" aria-hidden="true"></span>Načítám hřiště&hellip;</p>
+
+<footer>
+Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
+zvlášť pro každé hřiště. Rozpisy, výsledky, sestavy i komentáře rozhodčích jsou
+z&nbsp;<a href="https://www.psmf.cz/">psmf.cz</a>, oficiálního webu Pražského svazu malého
+fotbalu. Bez něj by tahle stránka nebyla a&nbsp;tam se dá všechno ověřit.
+Vygenerováno 22. 11. 2026.
+
+<p class="priv"><b>Jména hráčů a osobní údaje.</b> Tuhle stránku dělá jeden hráč
+Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazují jen
+u&nbsp;3 týmů (Yamato Day 22, Yellow Dildos A, Zde je místo ...) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
+<a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
+a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
+nic se odsud neposílá dál a&nbsp;stránka nemá reklamu. Návštěvy počítá
+Cloudflare Web Analytics, bez cookies a&nbsp;bez ukládání čehokoli do vašeho prohlížeče.</p>
+
+<p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
+stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
+sem</a>. Zápas zůstane, protože to je záznam soutěže, ale vaše jméno u&nbsp;něj ne.
+Platí to i&nbsp;pro celý tým. Když je něco špatně, napište taky — a&nbsp;nejspíš
+i&nbsp;na <a href="https://www.psmf.cz/">psmf.cz</a>, protože chyba bývá už
+v&nbsp;podkladech.</p>
+</footer>
+</div>
+
+<script type="application/json" id="psmf-data">{"venues":{"ARIT":{"code":"ARIT","venue":"Aritma","l":55,"w":24,"area":1320,"exact":"54.9 x 23.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.09788,"lon":14.337529,"addr":"Nad Lávkou 672/5, Praha 6","note":"Middle of three pitches at Aritma; the PSMF GPS point lands on it. The ROI stops in the gap before the full-size pitch to its east.","img":"img/ARIT.823f9083.jpg","fp":null},"BECH":{"code":"BECH","venue":"Běchovice 2","l":44,"w":24,"area":1056,"exact":"43.9 x 23.91","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.075448,"lon":14.598036,"addr":"Na Korunce 580, Praha 9","note":"Single artificial pitch beside the clay tennis courts.","img":"img/BECH.d6415786.jpg","fp":[50,51]},"CESMI":{"code":"CESMI","venue":"Čechie Smíchov","l":45,"w":22,"area":990,"exact":"44.8 x 21.91","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.074826,"lon":14.365401,"addr":"Smrčinská 3346/5, Praha 5","note":"Single artificial pitch north of the natural-grass field. East edge nudged in: the automatic fit ran past the touchline onto the surround.","img":"img/CESMI.74f72355.jpg","fp":[43,50]},"CZU":{"code":"CZU","venue":"Sportcentrum ČZU","l":44,"w":24,"area":1056,"exact":"44.28 x 24.38","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.129712,"lon":14.378538,"addr":"Kamýcká 1275, Praha 6","note":"Single artificial pitch at the CZU sport centre; found on defaults, all four edges on the paint.","img":"img/CZU.f45505b6.jpg","fp":[55,50]},"DEKAN":{"code":"DEKAN","venue":"Děkanka","l":40,"w":23,"area":920,"exact":"40.39 x 23.11","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ i kopačky AG zakázány!","lat":50.053066,"lon":14.42984,"addr":"Děkanská vinice I 987/5, Praha 4","note":"Single artificial pitch at SK Nusle. The west edge ran 3.5 m past the goal line onto a carpet line; the real goal lines are confirmed by the halfway line at their midpoint and penalty areas 5.7 m inside each.","img":"img/DEKAN.7de07b01.jpg","fp":[55,50]},"HANSP":{"code":"HANSP","venue":"Hanspaulka","l":44,"w":21,"area":924,"exact":"44.26 x 21.31","kind":"whole_pitch","capture":"2024 leaf-off","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.105273,"lon":14.377884,"addr":"Na Hanspaulce 166/2, Praha 6","note":"Single artificial pitch among the tennis courts. Pinned to the 2024 leaf-off capture: in summer flights a tree shadow swallows the east end. The search band starts 1 m inside the carpet because the bright teal kerb sits exactly where the touchline search would otherwise land.","img":"img/HANSP.e6b36a96.jpg","fp":[43,50]},"HOSTI":{"code":"HOSTI","venue":"SK Hostivař","l":44,"w":29,"area":1276,"exact":"43.85 x 28.98","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.052564,"lon":14.520818,"addr":"Švehlova 1362/36, Praha 10","note":"Two nested rectangles here, and the pitch is the inner one: the fit had taken the outer line on one axis and the inner on the other, so it was too big on all four sides. The south touchline is the awkward one. Three candidates sit within 4 m of each other -- the carpet edge (bright), a line 2.78 m inside it (3x), and the paint at 4.08 m, worn down to 1.2x background. It is the last of those, confirmed from the ground; the brighter two are the carpet and an older marking, and no automatic score will prefer the right one here.","img":"img/HOSTI.cd8c8506.jpg","fp":[56,50]},"HRAB1":{"code":"HRAB1","venue":"Hrabákova","l":45,"w":24,"area":1080,"exact":"44.89 x 23.8","kind":"section_1_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029824,"lon":14.481772,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 1 of 3 marked across the stadium field at Hrabakova, goals on the parent's touchlines. The parent's own markings (goal lines 6.4/95.7, penalty areas 22.4/79.6, halfway 51.0) are brighter than the cross-pitch lines and chroma sees the latter not at all, so the edges are measured, as at Prazacka. PSMF numbers from the restaurant ('c. 1 prvni zprava'), which the imagery cannot place; taken as running from the north. All three measure within a metre of each other, so the order costs little either way.","img":"img/HRAB1.e05aa26f.jpg","fp":[50,0]},"HRAB2":{"code":"HRAB2","venue":"Hrabákova","l":45,"w":25,"area":1125,"exact":"44.89 x 24.9","kind":"section_2_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029579,"lon":14.481843,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 2 of 3 at Hrabakova, the middle one. See the HRAB1 note.","img":"img/HRAB2.fed24c9c.jpg","fp":[50,48]},"HRAB3":{"code":"HRAB3","venue":"Hrabákova","l":45,"w":24,"area":1080,"exact":"44.89 x 23.8","kind":"section_3_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029334,"lon":14.481913,"addr":"Hrabákova 2001/21, Praha 4","note":"Pitch 3 of 3 at Hrabakova. See the HRAB1 note on the numbering.","img":"img/HRAB3.d24510cd.jpg","fp":[50,100]},"KORAB":{"code":"KORAB","venue":"SC Koráb","l":46,"w":25,"area":1150,"exact":"45.58 x 24.99","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky AG, kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.113225,"lon":14.46595,"addr":"Krejčího 2261/2a, Praha 8","note":"Single artificial pitch. The paint sits 2.5 m inside the carpet on the west side and 4.3 m in on the east, and the carpet edge outshines it, so the search starts inside the turf as at Hanspaulka. The halfway line at 25.26 m confirms the goal lines at 2.56 and 47.96.","img":"img/KORAB.58bc84cb.jpg","fp":[50,49]},"LITVI":{"code":"LITVI","venue":"Litvínovská","l":44,"w":22,"area":968,"exact":"43.63 x 21.89","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky“ zakázány!","lat":50.12024,"lon":14.4876,"addr":"Litvínovská 500/5, Praha 9","note":"Single artificial pitch at Sportcentrum Prosek; found on defaults.","img":"img/LITVI.2f916f68.jpg","fp":[50,50]},"MALES":{"code":"MALES","venue":"AFK Malešice","l":44,"w":22,"area":968,"exact":"43.86 x 21.91","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.08527,"lon":14.514805,"addr":"Heldova 555/1, Praha 10","note":"Single artificial pitch. The north edge fitted the carpet edge, 5.7 m beyond the goal line, and the west edge another carpet line 2.95 m out; both nudged onto the paint. Confirmed by the halfway line at 27.47 m, the exact midpoint of the goal lines, and penalty areas 5.9 m inside each.","img":"img/MALES.90ba6f24.jpg","fp":[50,66]},"METE1":{"code":"METE1","venue":"Meteor 8","l":40,"w":28,"area":1120,"exact":"40.2 x 27.87","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109419,"lon":14.469691,"addr":"U Meteoru 29/3, Praha 8","note":"Pitch 1 of 2 marked across the UMT field inside the running track, the western of the two and so the one nearer the kabiny (PSMF: 'c. 1 blize kabinam', which are past the main grass pitch to the west; confirmed by longitude). Each is 40.2 x 29 m -- the goal lines are the parent's touchlines, 40.2 m apart, which falls outside the 42-50 m the goal-line search accepts, so the rectangle is the measured one. The parent's own markings (goal lines 4.2/96.8, penalty areas 20.6/80.7, halfway 50.6) are far brighter than these.","img":"img/METE1.438f4e09.jpg","fp":[3,50]},"METE2":{"code":"METE2","venue":"Meteor 8","l":40,"w":28,"area":1120,"exact":"40.23 x 27.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109457,"lon":14.470359,"addr":"U Meteoru 29/3, Praha 8","note":"Pitch 2 of 2 at Meteor, the eastern one, nearer Zenklova street. See the METE1 note. The search band is tightened here because the fit otherwise walked 3.3 m onto a marking inside the goal line.","img":"img/METE2.014198cf.jpg","fp":[100,50]},"MIKU1":{"code":"MIKU1","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.89 x 23.9","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.030012,"lon":14.510843,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 1 of 4 at Mikulova: the east column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU1.fe7a7e06.jpg","fp":[50,0]},"MIKU2":{"code":"MIKU2","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.88 x 23.91","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.02996,"lon":14.510384,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 2 of 4 at Mikulova: the west column, north row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU2.b72462f5.jpg","fp":[50,0]},"MIKU3":{"code":"MIKU3","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.91 x 23.9","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029499,"lon":14.510981,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 3 of 4 at Mikulova: the east column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU3.b86e7752.jpg","fp":[50,100]},"MIKU4":{"code":"MIKU4","venue":"Mikulova","l":44,"w":24,"area":1056,"exact":"43.9 x 23.92","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.029447,"lon":14.510522,"addr":"Mikulova 1594/4, Praha 4","note":"Pitch 4 of 4 at Mikulova: the west column, south row. Four pitches are marked in two columns and two rows on one full-size field, which `sections` cannot express, and their paint is far fainter than the parent's, so the rectangle is the measured one. Each runs to the parent's own goal line (5.95 and 107.75) rather than stopping at its goal area -- reading those two as the goal lines is what had them 5.9 m short at the outer end. Goal areas at 11.85, 43.95, 69.85 and 101.85 sit 5.9 m inside each end and confirm it. The pairing of numbers to quadrants is PSMF's, from the kabiny, and was corrected by hand.","img":"img/MIKU4.a7d6c70d.jpg","fp":[50,100]},"MOTO1":{"code":"MOTO1","venue":"Motorlet","l":50,"w":31,"area":1550,"exact":"49.8 x 30.83","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.051424,"lon":14.361776,"addr":"Butovická 592/35, Praha 5","note":"Pitch 1 at Motorlet, the one behind the club's office building (PSMF: 'c. 1 je vpravo za administrativni budovou'); found on defaults. MOTO4 is the small pitch beyond the UMT field.","img":"img/MOTO1.cae3f104.jpg","fp":[49,50]},"MOTO4":{"code":"MOTO4","venue":"Motorlet","l":50,"w":31,"area":1550,"exact":"49.62 x 30.79","kind":"whole_pitch","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.050293,"lon":14.360081,"addr":"Butovická 592/35, Praha 5","note":"Pitch 4 = the small pitch beside the big UMT field (PSMF: 'c. 4 je za fotbalovym hristem s UMT'). Leaf-off capture gives the cleanest touchlines here.","img":"img/MOTO4.9a4688f8.jpg","fp":[50,50]},"P1":{"code":"P1","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 23.95","kind":"section_1_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.093081,"lon":14.475182,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 1 of 3 at Prazacka: the eastern third, nearest the kabiny (PSMF: 'c. 1 nejblize kabinam'). Which end that is cannot be read off the imagery -- confirmed by hand, hence first_end E. Same parent and same measured edges as P2. We have no fixture here; measured so the number is ready if we are drawn on it.","img":"img/P1.ffdb7aff.jpg","fp":[100,50]},"P2":{"code":"P2","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 23.9","kind":"section_2_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.092926,"lon":14.474843,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 2 of 3 marked across the stadium infield (PSMF: 'c. 1 nejblize kabinam', which is the east end). The three are 24 m wide with 5.7 m between them, all sharing goal lines 45.3 m apart. They cannot be fitted -- the parent's own goal, penalty and halfway lines are twice as bright as the cross-pitch ones -- so section_edges_m carries the positions read off the orthophoto instead of a fit plus a compensating nudge. Middle third, so unaffected by which end the numbering starts from.","img":"img/P2.486aac2d.jpg","fp":[75,50]},"P3":{"code":"P3","venue":"Pražačka","l":45,"w":24,"area":1080,"exact":"45.27 x 24.0","kind":"section_3_of_3","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.092771,"lon":14.474506,"addr":"Za Žižkovskou vozovnou 2716/19, Praha 3","note":"Pitch 3 of 3 at Prazacka, the western third and so the one furthest from the kabiny. See the P1 note on which end is which.","img":"img/P3.bd3ec55f.jpg","fp":[0,50]},"PLAM":{"code":"PLAM","venue":"Plamínkové","l":45,"w":24,"area":1080,"exact":"44.88 x 24.12","kind":"section_1_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.053067,"lon":14.435159,"addr":"Plamínkové 1593/2, Praha 4","note":"One carpet with two pitches stacked across it, each 44.9 x 23.9 m with a 6.1 m gap; PSMF gives the ground a single code and the two measure the same. Section 1 is the northern. The division lines are white here, invisible to the chroma fit, so the edges are the measured ones.","img":"img/PLAM.b13a14ea.jpg","fp":[50,0]},"PODV1":{"code":"PODV1","venue":"Podvinný mlýn","l":46,"w":22,"area":1012,"exact":"45.87 x 21.95","kind":"section_1_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109342,"lon":14.491987,"addr":"Kovanecká, Praha 9","note":"Pitch 1 of 2 at Podvinny mlyn: two pitches side by side on one carpet, each 22 m wide, with goal lines 45.8 m apart. Their side lines are ORANGE, not white -- they barely lift luminance and are lost in chroma, but stand out in b* (yellow). The white lines further out are the carpet's own, which is what the fit first took. PSMF numbers from the toilet cabins ('c.1 blize bunkam'), which the imagery cannot place; both measure the same.","img":"img/PODV1.9e66ae67.jpg","fp":[50,100]},"PODV2":{"code":"PODV2","venue":"Podvinný mlýn","l":46,"w":22,"area":1012,"exact":"45.89 x 21.9","kind":"section_2_of_2","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109571,"lon":14.491991,"addr":"Kovanecká, Praha 9","note":"Pitch 2 of 2 at Podvinny mlyn. See the PODV1 note: the side lines are orange, not the white ones further out.","img":"img/PODV2.ba9a2498.jpg","fp":[50,0]},"PRKOP":{"code":"PRKOP","venue":"Přední Kopanina","l":43,"w":23,"area":989,"exact":"43.48 x 22.68","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.114951,"lon":14.295543,"addr":"Ke Goniu 123, Praha 6","note":"Single artificial pitch at FC Predni Kopanina; found on defaults.","img":"img/PRKOP.17073e32.jpg","fp":[52,50]},"SANC1":{"code":"SANC1","venue":"SC Měcholupy","l":45,"w":24,"area":1080,"exact":"45.18 x 24.07","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.038704,"lon":14.548819,"addr":"Turínská 1483/3, Praha 10","note":"Left of the two adjacent pitches; north edge nudged in off a stray marking.","img":"img/SANC1.f03b7570.jpg","fp":[50,53]},"SANC2":{"code":"SANC2","venue":"SC Měcholupy","l":45,"w":25,"area":1125,"exact":"45.1 x 25.16","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.038831,"lon":14.549214,"addr":"Turínská 1483/3, Praha 10","note":"Right of the two adjacent pitches; west and north edges nudged in off the surround.","img":"img/SANC2.3e4cdf95.jpg","fp":[50,51]},"SCBEC":{"code":"SCBEC","venue":"SC Běchovice","l":40,"w":22,"area":880,"exact":"39.85 x 21.81","kind":"whole_pitch","capture":"2025","boots":"bez lisovek","bootsClass":"no","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" zakázány!","lat":50.079699,"lon":14.620106,"addr":"Richtrova 536, Praha 9","note":"The pitch sits inside a small running track; without an ROI the blob search wandered off to a roof 50 m north-east. The north edge then fitted the carpet edge 10 m beyond the goal line: the real pair is 10.13 and 50.03, confirmed by the halfway line at 30.03 and penalty areas 5.9 m inside each.","img":"img/SCBEC.ad6bc013.jpg","fp":[91,50]},"SLIVE":{"code":"SLIVE","venue":"AFK Slivenec","l":50,"w":29,"area":1450,"exact":"49.81 x 28.66","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.021305,"lon":14.356461,"addr":"U Sportoviště 54/5, Praha 5","note":"Single artificial pitch at AFK Slivenec. The north edge fitted 3 m beyond the goal line; the pair that works is confirmed by the halfway line at their midpoint.","img":"img/SLIVE.8fdab746.jpg","fp":[50,49]},"STER1":{"code":"STER1","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.08 x 24.07","kind":"section_1_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070761,"lon":14.553346,"addr":"U Školy 430, Praha 10","note":"Pitch 1 of 3 at Sterboholy -- the third nearest the hall, which is the west end and is visible in the imagery, so unlike Prazacka the numbering here is not ambiguous. No fixture of ours this season. The gap fit finds its side lines unaided; only the goal-line nudges are its own.","img":"img/STER1.215a0fc4.jpg","fp":[0,50]},"STER2":{"code":"STER2","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.14 x 23.75","kind":"section_2_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070859,"lon":14.553701,"addr":"U Školy 430, Praha 10","note":"Pitch 2 of 3 marked across the big UMT field (PSMF: 'c. 1 je nejblize hale'). Side lines are faint blue, but the north goal line coincides with the white marking, so that edge is aligned to the white line rather than the blue. The three pitches do not touch: ~3.8 m of spare turf sits between them, so each has its own pair of blue side lines and section_gap_m lets the fit find them.","img":"img/STER2.37b757a0.jpg","fp":[45,50]},"STER3":{"code":"STER3","venue":"Štěrboholy","l":48,"w":24,"area":1152,"exact":"48.2 x 23.79","kind":"section_3_of_3","capture":"2024 leaf-off","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.070958,"lon":14.554055,"addr":"U Školy 430, Praha 10","note":"Pitch 3 of 3 on the same parent field as STER2, easternmost. North edge aligned to the white line as for STER2; south edge trimmed 0.4 m onto its own marking. Same ~3.8 m gap to its neighbour, hence section_gap_m.","img":"img/STER3.dd0f81b0.jpg","fp":[100,50]},"STOD":{"code":"STOD","venue":"Sokol Stodůlky","l":46,"w":26,"area":1196,"exact":"45.53 x 26.23","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, \"lisovky\" i kopačky AG zakázány!","lat":50.051191,"lon":14.310978,"addr":"Kovářova 545, Praha 5","note":"The carpet runs 30 m east past the pitch and the pitch's own halfway line cuts the turf blob in two, so the detector sees a fragment -- the western half, goal line to halfway -- rather than a pitch. That fragment does give the angle and the width; the rectangle here extends it east by its own length to the far goal line, and the fit then settles it onto the paint.","img":"img/STOD.75649efa.jpg","fp":[51,50]},"TEMPO":{"code":"TEMPO","venue":"FC Tempo","l":43,"w":26,"area":1118,"exact":"43.19 x 25.95","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.020775,"lon":14.432648,"addr":"Ve Lhotce 1045/3, Praha 4","note":"Single artificial pitch at FC Tempo. The north edge sat 0.9 m outside its line, on a fainter marking; the real one reads 10x. The corners are under leaf cover, so go by the line rather than the turf edge.","img":"img/TEMPO.a0268da8.jpg","fp":[51,50]},"ZABEH":{"code":"ZABEH","venue":"Záběhlice","l":44,"w":23,"area":1012,"exact":"44.0 x 22.93","kind":"whole_pitch","capture":"2025","boots":"jen turfy","bootsClass":"turf","bootsText":"Obuv: povoleny kopačky turfy, gumotextilní nebo sálové, „lisovky“ i kopačky AG zakázány!","lat":50.053804,"lon":14.486978,"addr":"Záběhlická 82/3, Praha 10","note":"Single artificial pitch at the Ovcin centre; found on defaults.","img":"img/ZABEH.143cfaeb.jpg","fp":[49,50]},"ZAK":{"code":"ZAK","venue":"Zákostelní","l":45,"w":30,"area":1350,"exact":"44.69 x 29.88","kind":"whole_pitch","capture":"2025","boots":"lisovky OK","bootsClass":"lisovky","bootsText":"Obuv: kopačky povoleny i s lisovanými kolíky.","lat":50.109063,"lon":14.505691,"addr":"Novoškolská 696/2, Praha 9","note":"Single artificial pitch at TJ Sokol Vysocany; found on defaults.","img":"img/ZAK.cef09870.jpg","fp":[51,50]}}}</script>
+<script>
+const D = JSON.parse(document.getElementById('psmf-data').textContent);
+D.teams = [];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g,
+  c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mx = Math.max(...Object.values(D.venues).map(v => v.area));
+
+function bootsTag(v) {
+  return v.boots ? `<span class="boots ${v.bootsClass}">${esc(v.boots)}</span>` : '';
+}
+
+// Where a tap on the coordinates should land. Android and iOS hand them to
+// whatever navigation app is installed; a desktop has no such handler, so it
+// gets mapy.com, which is the one people here actually use.
+const ua = navigator.userAgent || '';
+const isAndroid = /Android/i.test(ua);
+const isIOS = /iPad|iPhone|iPod/i.test(ua) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+function mapHref(v) {
+  const q = encodeURIComponent(v.venue + ' ' + v.code);
+  if (isAndroid) return `geo:${v.lat},${v.lon}?q=${v.lat},${v.lon}(${q})`;
+  if (isIOS) return `https://maps.apple.com/?ll=${v.lat},${v.lon}&q=${q}`;
+  return `https://mapy.com/zakladni?source=coor&id=${v.lon},${v.lat}` +
+         `&x=${v.lon}&y=${v.lat}&z=18`;
+}
+const PIN = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
+  '<path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z' +
+  'm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>';
+
+function mapLink(v, cls) {
+  const t = `Otevřít ${esc(v.venue)} v mapě`;
+  return `<a class="pin${cls ? ' ' + cls : ''}" href="${mapHref(v)}" target="_blank"
+    rel="noopener noreferrer" title="${t}" aria-label="${t}">${PIN}</a>`;
+}
+
+function card(v, sub) {
+  const kind = v.kind.indexOf('section') === 0
+    ? `hřiště ${v.kind.split('_')[1]} ze ${v.kind.split('_')[3]}` : 'celé hřiště';
+  return `<article class="card">
+    <figure><img src="${v.img}" alt="Ortofoto hřiště ${esc(v.venue)} se zakresleným obdélníkem"
+      loading="lazy"${v.fp ? ` style="object-position:${v.fp[0]}% ${v.fp[1]}%"` : ' class="whole"'}></figure>
+    <div class="body">
+      <header class="ch">
+        <h3>${esc(v.venue)} <code>${esc(v.code)}</code>${mapLink(v)}</h3>
+        <p class="d">${v.l} &times; ${v.w} m</p>
+      </header>
+      <div class="bar"><i style="width:${(100 * v.area / mx).toFixed(1)}%"></i><span>${v.area} m&sup2;</span></div>
+      ${sub || ''}
+      ${v.boots ? `<p class="meta">${bootsTag(v)}</p>` : ''}
+      <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
+    </div></article>`;
+}
+
+
+// ---- theme: system by default, with an explicit choice remembered.
+const THEMES = [
+  ['auto',  'motiv: systém'],
+  ['light', 'motiv: světlý'],
+  ['dark',  'motiv: tmavý'],
+];
+const themeBtn = document.getElementById('theme');
+let themeIdx = 0;
+try {
+  const stored = localStorage.getItem('psmf-theme');
+  const n = THEMES.findIndex(t => t[0] === stored);
+  if (n > 0) themeIdx = n;
+} catch (e) { }
+
+function applyTheme() {
+  const [name, text] = THEMES[themeIdx];
+  const root = document.documentElement;
+  if (name === 'auto') root.removeAttribute('data-theme');
+  else root.setAttribute('data-theme', name);
+  themeBtn.textContent = text;
+  try {
+    if (name === 'auto') localStorage.removeItem('psmf-theme');
+    else localStorage.setItem('psmf-theme', name);
+  } catch (e) { /* private window, blocked storage: the toggle still works */ }
+}
+themeBtn.addEventListener('click', () => {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  applyTheme();
+});
+applyTheme();
+
+
+
+function renderAll() {
+  document.getElementById('all').innerHTML = Object.values(D.venues)
+    .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
+}
+
+
+// Laying out forty-odd cards takes a moment and the script runs last, so
+// without yielding first the browser never paints the spinner it replaces.
+function boot() {
+  renderAll();
+  const load = document.getElementById('loading');
+  if (load) load.hidden = true;
+}
+if (window.requestAnimationFrame) {
+  requestAnimationFrame(() => requestAnimationFrame(boot));
+} else {
+  boot();
+}
+</script>
+<script>if (location.hostname === 'ondrejchmelar.github.io') {const s = document.createElement('script'); s.defer = true;s.src = 'https://static.cloudflareinsights.com/beacon.min.js';s.dataset.cfBeacon = '{"token": "fb27179888c0414ca33f514014e088d2"}';document.head.appendChild(s); }</script>
+</body>
+</html>

@@ -696,6 +696,7 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
   border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
   white-space:nowrap; flex:none; }
 .ics:hover { color:var(--ink); border-color:var(--muted); }
+a.ics { text-decoration:none; }
 .sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
   max-height:320px; overflow-y:auto; background:var(--surface);
   border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
@@ -937,7 +938,10 @@ a:focus-visible, tr:focus-visible { outline:2px solid var(--accent); outline-off
 @media (prefers-reduced-motion:reduce) { * { animation:none!important; transition:none!important; } }
 """
 
-JS = r"""
+# Shared by both pages: the venue records, the map link and the card. The
+# bar under each card is scaled to the largest pitch in the directory on
+# both, so a card reads the same wherever it is drawn.
+VENUE_JS = r"""
 const D = JSON.parse(document.getElementById('psmf-data').textContent);
 D.teams = [];
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g,
@@ -990,6 +994,51 @@ function card(v, sub) {
     </div></article>`;
 }
 
+"""
+
+THEME_JS = r"""
+// ---- theme: system by default, with an explicit choice remembered.
+const THEMES = [
+  ['auto',  'motiv: systém'],
+  ['light', 'motiv: světlý'],
+  ['dark',  'motiv: tmavý'],
+];
+const themeBtn = document.getElementById('theme');
+let themeIdx = 0;
+try {
+  const stored = localStorage.getItem('psmf-theme');
+  const n = THEMES.findIndex(t => t[0] === stored);
+  if (n > 0) themeIdx = n;
+} catch (e) { }
+
+function applyTheme() {
+  const [name, text] = THEMES[themeIdx];
+  const root = document.documentElement;
+  if (name === 'auto') root.removeAttribute('data-theme');
+  else root.setAttribute('data-theme', name);
+  themeBtn.textContent = text;
+  try {
+    if (name === 'auto') localStorage.removeItem('psmf-theme');
+    else localStorage.setItem('psmf-theme', name);
+  } catch (e) { /* private window, blocked storage: the toggle still works */ }
+}
+themeBtn.addEventListener('click', () => {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  applyTheme();
+});
+applyTheme();
+
+"""
+
+RENDER_ALL = r"""
+function renderAll() {
+  document.getElementById('all').innerHTML = Object.values(D.venues)
+    .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
+}
+
+"""
+
+JS = VENUE_JS + THEME_JS + r"""
 // PSMF writes the score home:away, and the row already says which we were, so
 // it is shown as written; the colour carries the outcome.
 function outcome(f) {
@@ -1559,8 +1608,6 @@ function renderTeam(i) {
   shown = i;
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
-  document.getElementById('all-head').textContent =
-    t ? 'Všechna hřiště v adresáři · od největšího' : 'Všechna hřiště · od největšího';
   if (!t) { host.innerHTML = ''; return; }
 
   let warnings = 0;
@@ -1634,7 +1681,10 @@ function renderTeam(i) {
       <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
       <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
     </div>
-    <h2>Hřiště tohoto týmu &middot; od největšího</h2>
+    <div class="h2row">
+      <h2>Hřiště tohoto týmu &middot; od největšího</h2>
+      <a class="ics" href="hriste/">Všechna hřiště v adresáři</a>
+    </div>
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
@@ -1735,42 +1785,6 @@ document.getElementById('team').addEventListener('click', e => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 });
-
-function renderAll() {
-  document.getElementById('all').innerHTML = Object.values(D.venues)
-    .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
-}
-
-// ---- theme: system by default, with an explicit choice remembered.
-const THEMES = [
-  ['auto',  'motiv: systém'],
-  ['light', 'motiv: světlý'],
-  ['dark',  'motiv: tmavý'],
-];
-const themeBtn = document.getElementById('theme');
-let themeIdx = 0;
-try {
-  const stored = localStorage.getItem('psmf-theme');
-  const n = THEMES.findIndex(t => t[0] === stored);
-  if (n > 0) themeIdx = n;
-} catch (e) { }
-
-function applyTheme() {
-  const [name, text] = THEMES[themeIdx];
-  const root = document.documentElement;
-  if (name === 'auto') root.removeAttribute('data-theme');
-  else root.setAttribute('data-theme', name);
-  themeBtn.textContent = text;
-  try {
-    if (name === 'auto') localStorage.removeItem('psmf-theme');
-    else localStorage.setItem('psmf-theme', name);
-  } catch (e) { /* private window, blocked storage: the toggle still works */ }
-}
-themeBtn.addEventListener('click', () => {
-  themeIdx = (themeIdx + 1) % THEMES.length;
-  applyTheme();
-});
-applyTheme();
 
 const input = document.getElementById('team-input');
 const sugg = document.getElementById('sugg');
@@ -1924,13 +1938,9 @@ dlg.addEventListener('click', e => {
   if (e.target.closest('.x') || !e.target.closest('.progbox')) dlg.close();
 });
 
-// Parsing four megabytes of JSON and laying out thirty-nine cards takes a
-// moment, and the script runs last, so without yielding first the browser never
-// paints the spinner it is about to replace. Two frames guarantees one paint.
+// The script runs last; yielding two frames first lets the page paint before
+// the fixtures are asked for.
 function boot() {
-  renderAll();                       // the pitches: they are already in the page
-  const load = document.getElementById('loading');
-  if (load) load.hidden = true;
   loadTeams();
 }
 
@@ -1961,6 +1971,26 @@ function loadTeams() {
     });
 }
 
+if (window.requestAnimationFrame) {
+  requestAnimationFrame(() => requestAnimationFrame(boot));
+} else {
+  boot();
+}
+"""
+
+# The directory page: every measured ground, largest first. It was the foot of
+# index.html, under the team, where it pushed the footer two screens down and
+# was the same for every reader; it is its own page now, linked from a team's
+# grounds and from where it used to be.
+ALL_JS = VENUE_JS + THEME_JS + r"""
+""" + RENDER_ALL + r"""
+// Laying out forty-odd cards takes a moment and the script runs last, so
+// without yielding first the browser never paints the spinner it replaces.
+function boot() {
+  renderAll();
+  const load = document.getElementById('loading');
+  if (load) load.hidden = true;
+}
 if (window.requestAnimationFrame) {
   requestAnimationFrame(() => requestAnimationFrame(boot));
 } else {
@@ -2019,6 +2049,31 @@ def preview_card(code="MOTO1"):
 
 card = preview_card()
 
+# Both pages carry the same footer: the credit and the privacy note belong
+# wherever a name or a measurement is shown.
+FOOTER = f"""<footer>
+Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
+zvlášť pro každé hřiště. Rozpisy, výsledky, sestavy i komentáře rozhodčích jsou
+z&nbsp;<a href="https://www.psmf.cz/">psmf.cz</a>, oficiálního webu Pražského svazu malého
+fotbalu. Bez něj by tahle stránka nebyla a&nbsp;tam se dá všechno ověřit.
+Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
+
+<p class="priv"><b>Jména hráčů a osobní údaje.</b> Tuhle stránku dělá jeden hráč
+Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazují jen
+u&nbsp;{len(with_squad)} týmů ({", ".join(sorted(with_squad))}) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
+<a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
+a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
+nic se odsud neposílá dál a&nbsp;stránka nemá reklamu. Návštěvy počítá
+Cloudflare Web Analytics, bez cookies a&nbsp;bez ukládání čehokoli do vašeho prohlížeče.</p>
+
+<p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
+stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
+sem</a>. Zápas zůstane, protože to je záznam soutěže, ale vaše jméno u&nbsp;něj ne.
+Platí to i&nbsp;pro celý tým. Když je něco špatně, napište taky — a&nbsp;nejspíš
+i&nbsp;na <a href="https://www.psmf.cz/">psmf.cz</a>, protože chyba bývá už
+v&nbsp;podkladech.</p>
+</footer>"""
+
 html = f"""<!doctype html>
 <html lang="cs">
 <head>
@@ -2074,36 +2129,10 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 <dialog id="prog" aria-label="Program na hřišti"></dialog>
 
 <hr class="rule">
-<h2 id="all-head">Všechna hřiště &middot; od největšího</h2>
-<p class="lede" style="margin-bottom:18px">{len(play)} hřišť, každé proměřené
-podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel. Nejmenší z nich,
-{smallest["venue"]}, by se do největšího ({largest["venue"]})
-vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
-<div class="grid" id="all"></div>
-<p class="loading" id="loading"><span class="sp" aria-hidden="true"></span>Načítám hřiště&hellip;</p>
+<p class="lede"><a href="hriste/">Všechna hřiště v adresáři</a> &middot;
+{len(play)} hřišť od největšího, každé proměřené podle čar v ortofotomapě.</p>
 
-<footer>
-Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
-zvlášť pro každé hřiště. Rozpisy, výsledky, sestavy i komentáře rozhodčích jsou
-z&nbsp;<a href="https://www.psmf.cz/">psmf.cz</a>, oficiálního webu Pražského svazu malého
-fotbalu. Bez něj by tahle stránka nebyla a&nbsp;tam se dá všechno ověřit.
-Vygenerováno {date.today().strftime("%-d. %-m. %Y")}.
-
-<p class="priv"><b>Jména hráčů a osobní údaje.</b> Tuhle stránku dělá jeden hráč
-Hanspaulské ligy ve volném čase a nekomerčně. Jména hráčů se tu ukazují jen
-u&nbsp;{len(with_squad)} týmů ({", ".join(sorted(with_squad))}) a&nbsp;jen v&nbsp;rozsahu, v&nbsp;jakém je vede
-<a href="https://www.psmf.cz/">psmf.cz</a>: odehrané zápasy, góly, chytané zápasy
-a&nbsp;kolikrát vás rozhodčí označil za nejlepšího na hřišti. Nic víc se tu nedopočítává,
-nic se odsud neposílá dál a&nbsp;stránka nemá reklamu. Návštěvy počítá
-Cloudflare Web Analytics, bez cookies a&nbsp;bez ukládání čehokoli do vašeho prohlížeče.</p>
-
-<p class="priv">Nechcete-li tu být uvedeni, stačí říct a&nbsp;při nejbližším sestavení
-stránky zmizíte — <a href="https://github.com/ondrejchmelar/psmf-pitches/issues">napište
-sem</a>. Zápas zůstane, protože to je záznam soutěže, ale vaše jméno u&nbsp;něj ne.
-Platí to i&nbsp;pro celý tým. Když je něco špatně, napište taky — a&nbsp;nejspíš
-i&nbsp;na <a href="https://www.psmf.cz/">psmf.cz</a>, protože chyba bývá už
-v&nbsp;podkladech.</p>
-</footer>
+{FOOTER}
 </div>
 
 <script type="application/json" id="psmf-data">{blob}</script>
@@ -2122,3 +2151,63 @@ out.parent.mkdir(exist_ok=True)
 out.write_text(html, "utf-8")
 print(f"{out}  {out.stat().st_size/1e6:.2f} MB  "
       f"({len(play)} venues, {len(teams)} teams)")
+
+ALL_TITLE = "Všechna hřiště v adresáři — PSMF"
+ALL_DESC = (f"{len(play)} hřišť Pražského svazu malého fotbalu, každé proměřené podle čar "
+            "v ortofotomapě IPR Praha: rozměr, plocha a v čem se na něm smí hrát.")
+all_html = f"""<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<!-- One folder down, so /hriste/ needs no .html; the photos and links resolve
+     from the site root like index.html's do. -->
+<base href="../">
+<title>{ALL_TITLE}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{ALL_DESC}">
+<link rel="canonical" href="{SITE}hriste/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PSMF — hřiště a rozpisy">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="{ALL_TITLE}">
+<meta property="og:description" content="{ALL_DESC}">
+<meta property="og:url" content="{SITE}hriste/">
+<meta property="og:image" content="{SITE}{card}">
+<meta property="og:image:alt" content="Ortofoto hřiště Motorlet se zakresleným obdélníkem">
+<meta name="twitter:card" content="summary_large_image">
+<style>{CSS}</style>
+<script>{EARLY_JS}</script>
+</head>
+<body>
+
+<div class="wrap">
+<div class="top">
+  <p class="eyebrow"><a href="./">PSMF &middot; rozpisy týmů</a> &middot; podzim 2026</p>
+  <button type="button" class="theme" id="theme" aria-live="polite">motiv</button>
+</div>
+<h1>Všechna hřiště v adresáři</h1>
+<p class="lede" style="margin-bottom:18px">{len(play)} hřišť, každé proměřené
+podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel. Nejmenší z nich,
+{smallest["venue"]}, by se do největšího ({largest["venue"]})
+vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
+
+<hr class="rule">
+<h2>Od největšího</h2>
+<div class="grid" id="all"></div>
+<p class="loading" id="loading"><span class="sp" aria-hidden="true"></span>Načítám hřiště&hellip;</p>
+
+{FOOTER}
+</div>
+
+<script type="application/json" id="psmf-data">{blob}</script>
+<script>{ALL_JS}</script>
+{ANALYTICS}
+</body>
+</html>
+"""
+
+(ROOT / "docs/hriste.html").unlink(missing_ok=True)
+all_out = ROOT / "docs/hriste/index.html"
+all_out.parent.mkdir(exist_ok=True)
+all_out.write_text(all_html, "utf-8")
+print(f"{all_out}  {all_out.stat().st_size/1e6:.2f} MB")
