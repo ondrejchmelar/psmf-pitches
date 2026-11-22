@@ -405,6 +405,7 @@ for t in season.get("teams", []):
           for f in t["fixtures"]]
     if fx:
         teams.append({"name": t["name"], "sl": t.get("slug", ""),
+                      "u": t.get("url", ""),
                       "div": div_label(t.get("comp"), t["division"]), "fx": fx,
                       "bio": bio(t.get("slug", ""), t.get("comp", "")),
                       "kit": t.get("colours", ""),
@@ -697,6 +698,7 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
   white-space:nowrap; flex:none; }
 .ics:hover { color:var(--ink); border-color:var(--muted); }
 a.ics { text-decoration:none; }
+.btns { display:flex; gap:8px; flex-wrap:wrap; }
 .sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
   max-height:320px; overflow-y:auto; background:var(--surface);
   border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
@@ -1655,11 +1657,15 @@ function renderTeam(i) {
   // The fixtures first. The numbers above them are about the grounds, so they
   // belong with the grounds -- and they were the first thing a reader saw after
   // picking a team, which is not what anybody picked a team for.
+  // Where the team is on psmf.cz: the source of everything in the table, and
+  // the only place a reader can check it or see what we leave out.
+  const psmf = t.u ? 'https://www.psmf.cz' + t.u : '';
   host.innerHTML = `
     <hr class="rule">
     <div class="h2row">
       <h2>${esc(t.name)}${kit(t.sw, t.kit)} &middot; ${esc(t.div)} &middot; rozpis zápasů</h2>
-      <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button>
+      <div class="btns">${psmf ? `<a class="ics" href="${esc(psmf)}" target="_blank" rel="noopener">Tým na psmf.cz ↗</a>` : ''}
+      <button type="button" class="ics" id="ics">Stáhnout do kalendáře (.ics)</button></div>
     </div>
     ${bioLine(t)}
     <div class="scroll"><table>
