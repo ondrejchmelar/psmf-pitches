@@ -1683,7 +1683,7 @@ function renderTeam(i) {
     </div>
     <div class="h2row">
       <h2>Hřiště tohoto týmu &middot; od největšího</h2>
-      <a class="ics" href="hriste.html">Všechna hřiště v adresáři</a>
+      <a class="ics" href="hriste/">Všechna hřiště v adresáři</a>
     </div>
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
@@ -2129,7 +2129,7 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 <dialog id="prog" aria-label="Program na hřišti"></dialog>
 
 <hr class="rule">
-<p class="lede"><a href="hriste.html">Všechna hřiště v adresáři</a> &middot;
+<p class="lede"><a href="hriste/">Všechna hřiště v adresáři</a> &middot;
 {len(play)} hřišť od největšího, každé proměřené podle čar v ortofotomapě.</p>
 
 {FOOTER}
@@ -2159,16 +2159,19 @@ all_html = f"""<!doctype html>
 <html lang="cs">
 <head>
 <meta charset="utf-8">
+<!-- One folder down, so /hriste/ needs no .html; the photos and links resolve
+     from the site root like index.html's do. -->
+<base href="../">
 <title>{ALL_TITLE}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{ALL_DESC}">
-<link rel="canonical" href="{SITE}hriste.html">
+<link rel="canonical" href="{SITE}hriste/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PSMF — hřiště a rozpisy">
 <meta property="og:locale" content="cs_CZ">
 <meta property="og:title" content="{ALL_TITLE}">
 <meta property="og:description" content="{ALL_DESC}">
-<meta property="og:url" content="{SITE}hriste.html">
+<meta property="og:url" content="{SITE}hriste/">
 <meta property="og:image" content="{SITE}{card}">
 <meta property="og:image:alt" content="Ortofoto hřiště Motorlet se zakresleným obdélníkem">
 <meta name="twitter:card" content="summary_large_image">
@@ -2203,6 +2206,8 @@ vešlo {largest["area"] / smallest["area"]:.1f}&times;.</p>
 </html>
 """
 
-all_out = ROOT / "docs/hriste.html"
+(ROOT / "docs/hriste.html").unlink(missing_ok=True)
+all_out = ROOT / "docs/hriste/index.html"
+all_out.parent.mkdir(exist_ok=True)
 all_out.write_text(all_html, "utf-8")
 print(f"{all_out}  {all_out.stat().st_size/1e6:.2f} MB")
