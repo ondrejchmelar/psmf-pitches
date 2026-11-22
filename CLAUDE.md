@@ -45,6 +45,12 @@ readers actually held.
 Opening index.html over file:// leaves the
 picker empty — serve it instead.
 
+Every measured ground is on its own page, `docs/hriste.html`, built in the same
+run from the same venue blob, CSS, card and footer (`VENUE_JS`, `THEME_JS`,
+`FOOTER`). It used to be the foot of index.html, the same forty cards under every
+team; now a team's "Hřiště tohoto týmu" links to it, and a line where it stood
+does too. The card bar is scaled to the largest ground on both pages.
+
 The page is for the whole league, not just us, and it is in Czech: every venue
 in the directory, every team's fixtures, and the team picked in the browser.
 The choice goes into the URL (`?team=`) so a link shares the view, and each

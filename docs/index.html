@@ -97,6 +97,7 @@ h2 { font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(-
   border:1px solid var(--rule); border-radius:3px; padding:8px 11px; cursor:pointer;
   white-space:nowrap; flex:none; }
 .ics:hover { color:var(--ink); border-color:var(--muted); }
+a.ics { text-decoration:none; }
 .sugg { position:absolute; z-index:20; left:0; right:0; top:calc(100% + 4px);
   max-height:320px; overflow-y:auto; background:var(--surface);
   border:1px solid var(--rule); border-radius:3px; box-shadow:var(--shadow); padding:4px; }
@@ -379,13 +380,8 @@ takže tahle část potřebuje JavaScript. Samotná měření jsou v souboru
 <dialog id="prog" aria-label="Program na hřišti"></dialog>
 
 <hr class="rule">
-<h2 id="all-head">Všechna hřiště &middot; od největšího</h2>
-<p class="lede" style="margin-bottom:18px">39 hřišť, každé proměřené
-podle čar v ortofotomapě IPR Praha s rozlišením 5&nbsp;cm na pixel. Nejmenší z nich,
-SC Běchovice, by se do největšího (Motorlet)
-vešlo 1.8&times;.</p>
-<div class="grid" id="all"></div>
-<p class="loading" id="loading"><span class="sp" aria-hidden="true"></span>Načítám hřiště&hellip;</p>
+<p class="lede"><a href="hriste.html">Všechna hřiště v adresáři</a> &middot;
+39 hřišť od největšího, každé proměřené podle čar v ortofotomapě.</p>
 
 <footer>
 Podklad: ortofotomapa IPR Praha, 0,05&nbsp;m/px, EPSG:5514 (S-JTSK); snímkování vybráno
@@ -466,6 +462,39 @@ function card(v, sub) {
       <p class="nt">${kind} &middot; ${esc(v.exact)} m${v.bootsText ? ' &middot; ' + esc(v.bootsText) : ''}</p>
     </div></article>`;
 }
+
+
+// ---- theme: system by default, with an explicit choice remembered.
+const THEMES = [
+  ['auto',  'motiv: systém'],
+  ['light', 'motiv: světlý'],
+  ['dark',  'motiv: tmavý'],
+];
+const themeBtn = document.getElementById('theme');
+let themeIdx = 0;
+try {
+  const stored = localStorage.getItem('psmf-theme');
+  const n = THEMES.findIndex(t => t[0] === stored);
+  if (n > 0) themeIdx = n;
+} catch (e) { }
+
+function applyTheme() {
+  const [name, text] = THEMES[themeIdx];
+  const root = document.documentElement;
+  if (name === 'auto') root.removeAttribute('data-theme');
+  else root.setAttribute('data-theme', name);
+  themeBtn.textContent = text;
+  try {
+    if (name === 'auto') localStorage.removeItem('psmf-theme');
+    else localStorage.setItem('psmf-theme', name);
+  } catch (e) { /* private window, blocked storage: the toggle still works */ }
+}
+themeBtn.addEventListener('click', () => {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  applyTheme();
+});
+applyTheme();
+
 
 // PSMF writes the score home:away, and the row already says which we were, so
 // it is shown as written; the colour carries the outcome.
@@ -1036,8 +1065,6 @@ function renderTeam(i) {
   shown = i;
   const host = document.getElementById('team');
   const t = i == null ? null : D.teams[i];
-  document.getElementById('all-head').textContent =
-    t ? 'Všechna hřiště v adresáři · od největšího' : 'Všechna hřiště · od největšího';
   if (!t) { host.innerHTML = ''; return; }
 
   let warnings = 0;
@@ -1111,7 +1138,10 @@ function renderTeam(i) {
       <div class="stat"><b>${areas.length ? Math.max(...areas) + ' m²' : '—'}</b><span>Největší</span></div>
       <div class="stat"><b>${ratio}</b><span>Největší ÷ nejmenší</span></div>
     </div>
-    <h2>Hřiště tohoto týmu &middot; od největšího</h2>
+    <div class="h2row">
+      <h2>Hřiště tohoto týmu &middot; od největšího</h2>
+      <a class="ics" href="hriste.html">Všechna hřiště v adresáři</a>
+    </div>
     <div class="grid">${cards || '<p class="empty">Pro tento tým nejsou změřená hřiště.</p>'}</div>`;
   const btn = document.getElementById('ics');
   if (btn) btn.addEventListener('click', () => downloadIcs(t));
@@ -1212,42 +1242,6 @@ document.getElementById('team').addEventListener('click', e => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 });
-
-function renderAll() {
-  document.getElementById('all').innerHTML = Object.values(D.venues)
-    .sort((a, b) => b.area - a.area).map(v => card(v, '')).join('');
-}
-
-// ---- theme: system by default, with an explicit choice remembered.
-const THEMES = [
-  ['auto',  'motiv: systém'],
-  ['light', 'motiv: světlý'],
-  ['dark',  'motiv: tmavý'],
-];
-const themeBtn = document.getElementById('theme');
-let themeIdx = 0;
-try {
-  const stored = localStorage.getItem('psmf-theme');
-  const n = THEMES.findIndex(t => t[0] === stored);
-  if (n > 0) themeIdx = n;
-} catch (e) { }
-
-function applyTheme() {
-  const [name, text] = THEMES[themeIdx];
-  const root = document.documentElement;
-  if (name === 'auto') root.removeAttribute('data-theme');
-  else root.setAttribute('data-theme', name);
-  themeBtn.textContent = text;
-  try {
-    if (name === 'auto') localStorage.removeItem('psmf-theme');
-    else localStorage.setItem('psmf-theme', name);
-  } catch (e) { /* private window, blocked storage: the toggle still works */ }
-}
-themeBtn.addEventListener('click', () => {
-  themeIdx = (themeIdx + 1) % THEMES.length;
-  applyTheme();
-});
-applyTheme();
 
 const input = document.getElementById('team-input');
 const sugg = document.getElementById('sugg');
@@ -1401,13 +1395,9 @@ dlg.addEventListener('click', e => {
   if (e.target.closest('.x') || !e.target.closest('.progbox')) dlg.close();
 });
 
-// Parsing four megabytes of JSON and laying out thirty-nine cards takes a
-// moment, and the script runs last, so without yielding first the browser never
-// paints the spinner it is about to replace. Two frames guarantees one paint.
+// The script runs last; yielding two frames first lets the page paint before
+// the fixtures are asked for.
 function boot() {
-  renderAll();                       // the pitches: they are already in the page
-  const load = document.getElementById('loading');
-  if (load) load.hidden = true;
   loadTeams();
 }
 
