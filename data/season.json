@@ -4392,7 +4392,7 @@
      "venue_code": "HANSP",
      "opponent": "Beach attack 90210",
      "home": false,
-     "score": "",
+     "score": "2:8",
      "official": false
     },
     {
@@ -6672,7 +6672,7 @@
      "venue_code": "HANSP",
      "opponent": "Atlético Invicto",
      "home": true,
-     "score": "",
+     "score": "2:8",
      "official": false
     },
     {
@@ -33006,6 +33006,16 @@
    "name": "Halandovo kladivo FK",
    "fixtures": [
     {
+     "round": 6,
+     "date": "So 28.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Milion plus xG",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 10,
      "date": "So 21.11.26",
      "time": "12:30",
@@ -33094,16 +33104,6 @@
      "home": true,
      "score": "1:7",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "So 28.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Milion plus xG",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 11,
@@ -33372,7 +33372,7 @@
      "venue_code": "P1",
      "opponent": "Hospůdka U Kuklů",
      "home": true,
-     "score": "",
+     "score": "3:4",
      "official": false
     },
     {
@@ -34682,7 +34682,7 @@
      "venue_code": "DEKAN",
      "opponent": "Los Bimbananos",
      "home": false,
-     "score": "",
+     "score": "6:1",
      "official": false
     },
     {
@@ -36842,7 +36842,7 @@
      "venue_code": "P1",
      "opponent": "Hanspaulský beton B",
      "home": false,
-     "score": "",
+     "score": "3:4",
      "official": false
     },
     {
@@ -52732,7 +52732,7 @@
      "venue_code": "DEKAN",
      "opponent": "Herní sepse",
      "home": true,
-     "score": "",
+     "score": "6:1",
      "official": false
     },
     {
@@ -57986,6 +57986,16 @@
    "name": "Milion plus xG",
    "fixtures": [
     {
+     "round": 6,
+     "date": "So 28.11.26",
+     "time": "11:15",
+     "venue_code": "ZAK",
+     "opponent": "Halandovo kladivo FK",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 10,
      "date": "So 21.11.26",
      "time": "12:30",
@@ -58074,16 +58084,6 @@
      "home": true,
      "score": "4:5",
      "official": true
-    },
-    {
-     "round": 6,
-     "date": "So 28.11.26",
-     "time": "11:15",
-     "venue_code": "ZAK",
-     "opponent": "Halandovo kladivo FK",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 11,
@@ -64922,7 +64922,7 @@
      "venue_code": "P2",
      "opponent": "Past FC",
      "home": true,
-     "score": "",
+     "score": "0:5",
      "official": false
     },
     {
@@ -66242,7 +66242,7 @@
      "venue_code": "P2",
      "opponent": "Panská boys",
      "home": false,
-     "score": "",
+     "score": "0:5",
      "official": false
     },
     {
@@ -79116,6 +79116,16 @@
    "name": "Red Lions",
    "fixtures": [
     {
+     "round": 1,
+     "date": "So 28.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Vysočanští hřebci",
+     "home": true,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 10,
      "date": "So 21.11.26",
      "time": "10:00",
@@ -79204,16 +79214,6 @@
      "home": true,
      "score": "0:6",
      "official": true
-    },
-    {
-     "round": 1,
-     "date": "So 28.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Vysočanští hřebci",
-     "home": true,
-     "score": "",
-     "official": false
     },
     {
      "round": 11,
@@ -85222,7 +85222,7 @@
      "venue_code": "P3",
      "opponent": "SH Stejskalova",
      "home": true,
-     "score": "",
+     "score": "4:3",
      "official": false
     },
     {
@@ -85342,7 +85342,7 @@
      "venue_code": "P3",
      "opponent": "Shooters Brozany",
      "home": false,
-     "score": "",
+     "score": "4:3",
      "official": false
     },
     {
@@ -107366,6 +107366,16 @@
    "name": "Vysočanští hřebci",
    "fixtures": [
     {
+     "round": 1,
+     "date": "So 28.11.26",
+     "time": "10:00",
+     "venue_code": "ZAK",
+     "opponent": "Red Lions",
+     "home": false,
+     "score": "",
+     "official": false
+    },
+    {
      "round": 10,
      "date": "So 21.11.26",
      "time": "11:15",
@@ -107454,16 +107464,6 @@
      "home": true,
      "score": "2:8",
      "official": true
-    },
-    {
-     "round": 1,
-     "date": "So 28.11.26",
-     "time": "10:00",
-     "venue_code": "ZAK",
-     "opponent": "Red Lions",
-     "home": false,
-     "score": "",
-     "official": false
     },
     {
      "round": 11,
